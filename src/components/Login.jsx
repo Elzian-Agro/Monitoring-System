@@ -34,8 +34,8 @@ function Login({ setPage }) {
   };
 
   return (
-    <div className="flex-1 flex items-center flex-col xl:justify-center h-full w-full gap-2 xxs:gap-0">
-      <h1 className="font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5">
+    <div className="flex-1 flex items-center flex-col lg:justify-center h-full w-full gap-2 xxs:gap-0">
+      <h1 className="font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5 sm:leading-10">
         LOG IN
       </h1>
       <p className="font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10">
@@ -83,9 +83,7 @@ function Login({ setPage }) {
           </button>
         </div>
 
-        {error && (
-          <ErrorMessage message={error} />
-        )}
+        {error && <ErrorMessage message={error} />}
 
         <Button text="Login" />
       </form>

@@ -21,6 +21,7 @@ function ForgotPassword({ setPage }) {
     //handle api...
 
     setError(null);
+    setPage("ResetPassword")
   };
 
   return (
@@ -33,8 +34,8 @@ function ForgotPassword({ setPage }) {
         <p className="flex-1 font-zenkaku text-[12px]">Go Back</p>
       </button>
 
-      <div className="flex-1 flex items-center flex-col xl:justify-center h-full w-full">
-        <h1 className="font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5">
+      <div className="flex-1 flex items-center flex-col lg:justify-center h-full w-full">
+        <h1 className="font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5 sm:leading-10">
           FORGOT PASSWORD?
         </h1>
         <p className="font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10">
@@ -54,9 +55,7 @@ function ForgotPassword({ setPage }) {
             setValue={setEmail}
           />
 
-          {error && (
-            <ErrorMessage message={error} />
-          )}
+          {error && <ErrorMessage message={error} />}
 
           <Button text="Continue" />
         </form>
