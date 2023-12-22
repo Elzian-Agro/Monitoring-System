@@ -5,7 +5,7 @@ import Login from "../components/Login";
 import ResetPassword from "../components/ResetPassword";
 
 function LoginPage() {
-  const [page, setPage] = useState("ResetPassword");
+  const [page, setPage] = useState("Login");
 
   return (
     <div className="flex justify-center items-center w-[100vw] h-[100vh]">
