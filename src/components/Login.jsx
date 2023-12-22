@@ -1,16 +1,12 @@
 import React, { useState } from "react";
-import {
-  EnvelopeIcon,
-  LockClosedIcon,
-} from "@heroicons/react/24/outline";
+import { UserIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import Button from "./utils/login/Button";
 import TextBox from "./utils/login/TextBox";
 import ErrorMessage from "./utils/login/ErrorMessage";
-import { isValidEmail } from "./utils/login/Validator";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 
 function Login({ setPage }) {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
   const [error, setError] = useState(null);
@@ -18,14 +14,14 @@ function Login({ setPage }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!isValidEmail(email)) {
-      setError("Please Enter a Valid Email Address!");
+    if (!username) {
+      setError("Please Enter Username!");
       return;
     }
 
-    if(!password){
-        setError("Please Enter Password!");
-        return;
+    if (!password) {
+      setError("Please Enter Password!");
+      return;
     }
 
     //handle api...
@@ -47,12 +43,12 @@ function Login({ setPage }) {
         onSubmit={handleSubmit}
       >
         <TextBox
-          placeholder="Enter your email"
-          label="Email Address"
-          type="email"
-          Icon={EnvelopeIcon}
-          value={email}
-          setValue={setEmail}
+          placeholder="Enter your username"
+          label="Username"
+          type="text"
+          Icon={UserIcon}
+          value={username}
+          setValue={setUsername}
         />
 
         <TextBox
