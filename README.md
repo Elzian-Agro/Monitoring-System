@@ -6,6 +6,18 @@ This repository is created for the EA monitoring system using React
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Dependencies
+
+### TailwindCSS
+
+- **Documentation**: [TailwindCSS Documentation](https://v2.tailwindcss.com/docs).
+
+### Heroicons
+
+- **Documentation**: [Heroicons GitHub Repository](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react).
+- **Official Site**: [heroicons](https://heroicons.com/)
+
+
 ## Available Scripts
 
 In the project directory, you can run:
