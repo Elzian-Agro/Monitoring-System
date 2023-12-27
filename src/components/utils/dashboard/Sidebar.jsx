@@ -1,6 +1,6 @@
 import React from "react";
 // import { SiShopware } from "react-icons/si";
-// import logo from "../../../assest/constants/images/logo.png"
+import logo from "../../../assest/constants/images/logo.png"
 // import { MdOutlineCancel } from "react-icons/md";
 
 import { Link, NavLink } from "react-router-dom";
@@ -11,7 +11,7 @@ const Sidebar = () => {
   const activeLink =
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white bg-green-500 text-md m-2";
   const normalLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2";
+    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-light-gray m-2";
 
   return (
     <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
@@ -19,13 +19,13 @@ const Sidebar = () => {
       {activeMenu && (
         <>
           <div className="flex justify-between items-center">
+          
             <Link
-              to="/"
+              to="/dashboard"
               onClick={() => {}}
-              className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
+              className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight text-slate-900"
             >
-              {/* <SiShopware /> <span>Shoppy</span> */}
-              {/* <img src={logo} alt="Elzian Agro logo"/> */}
+              <img className="w-20" src={logo} alt="Elzian Agro logo"/>
               <span>Elzian Agro</span>
             </Link>
             <button
@@ -96,7 +96,7 @@ const Sidebar = () => {
             <NavLink
               to="/"
               onClick={() => {}}
-              className= "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2"
+              className= "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-light-gray m-2"
             >
               Logout
             </NavLink>
