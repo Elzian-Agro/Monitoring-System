@@ -1,9 +1,9 @@
 import React from "react";
 
-import Navbar from "pages/dashboard/components/navbar";
-import Footer from "pages/dashboard/components/footer";
-import Sidebar from "pages/dashboard/components/sidebar";
-import ThemeSetting from "pages/dashboard/components/theme-settings";
+import Navbar from "components/common/navbar";
+import Footer from "components/common/footer";
+import Sidebar from "components/common/sidebar";
+import ThemeSettings from "pages/dashboard/components/common/theme-settings";
 
 function Dashboard() {
   const activeMenu = true;
