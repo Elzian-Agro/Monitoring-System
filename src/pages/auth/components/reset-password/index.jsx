@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { ArrowLeftIcon, LockClosedIcon } from "@heroicons/react/24/outline";
-import Button from "./utils/login/Button";
-import TextBox from "./utils/login/TextBox";
-import ErrorMessage from "./utils/login/ErrorMessage";
+import Button from "components/Button";
+import TextBox from "components/TextBox";
+import ErrorMessage from "components/ErrorMessage";
 import PropTypes from "prop-types";
-import { isValidPassword } from "./utils/login/Validator";
+import { isValidPassword } from "pages/auth/utils";
 
 function ResetPassword({ setPage }) {
   const [tempPass, setTempPass] = useState("");

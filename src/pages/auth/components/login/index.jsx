@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { UserIcon, LockClosedIcon } from "@heroicons/react/24/outline";
-import Button from "./utils/login/Button";
-import TextBox from "./utils/login/TextBox";
-import ErrorMessage from "./utils/login/ErrorMessage";
+import Button from "components/Button";
+import TextBox from "components/TextBox";
+import ErrorMessage from "components/ErrorMessage";
 import PropTypes from "prop-types";
 
 function Login({ setPage }) {

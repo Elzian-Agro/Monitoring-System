@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
-import Dashboard from "./pages/Dashboard"; 
+import LoginPage from "pages/auth/components/container";
+import Dashboard from "pages/dashboard/components/container";
 
 function App() {
   return (
@@ -19,7 +19,6 @@ function App() {
 
         {/* Charts */}
         <Route path="/pie" element={<Dashboard />} />
-
       </Routes>
     </Router>
   );

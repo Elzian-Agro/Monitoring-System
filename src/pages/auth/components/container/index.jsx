@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import logo from "../assest/constants/images/logo.png";
-import ForgotPassword from "../components/ForgotPassword";
-import Login from "../components/Login";
-import ResetPassword from "../components/ResetPassword";
-import useViewportHeight from "../components/utils/useViewportHeight";
+import logo from "assets/images/logo.png";
+import ForgotPassword from "pages/auth/components/forgot-password";
+import Login from "pages/auth/components/login";
+import ResetPassword from "pages/auth/components/reset-password";
 
 function LoginPage() {
   const [page, setPage] = useState("Login");
-  useViewportHeight();
 
   return (
-    <div className="flex justify-center items-center w-[100vw] h-[var(--viewport-height)]">
+    <div className="flex justify-center items-center w-[100vw] h-[100dvh]">
       <div className="w-[100%] h-[100%] sm:w-[95%] sm:h-[95%] md:w-[90%] md:h-[90%] bg-transparent sm:bg-[#fff] shadow-lg flex flex-col p-5 sm:p-10 gap-10 overflow-y-scroll no-scrollbar rounded-md">
         <div className="w-[100%] flex-1 flex flex-col lg:flex-row rounded-lg gap-5 xs:gap-10">
           <div className="flex-[0.3] flex justify-center items-center lg:border-r-2 lg:px-10">

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { ArrowLeftIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
-import Button from "./utils/login/Button";
-import TextBox from "./utils/login/TextBox";
-import ErrorMessage from "./utils/login/ErrorMessage";
-import { isValidEmail } from "./utils/login/Validator";
+import Button from "components/Button";
+import TextBox from "components/TextBox";
+import ErrorMessage from "components/ErrorMessage";
+import { isValidEmail } from "pages/auth/utils";
 import PropTypes from "prop-types";
 
 function ForgotPassword({ setPage }) {
@@ -21,7 +21,7 @@ function ForgotPassword({ setPage }) {
     //handle api...
 
     setError(null);
-    setPage("ResetPassword")
+    setPage("ResetPassword");
   };
 
   return (

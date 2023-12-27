@@ -1,6 +1,6 @@
 import React from "react";
 import { UserIcon, ArrowTrendingUpIcon, Cog6ToothIcon, PlusIcon, ArrowUpTrayIcon, XMarkIcon, Squares2X2Icon } from '@heroicons/react/24/outline'
-import logo from "../../../assest/constants/images/logo.png"
+import logo from "assets/images/logo.png"
 
 import { Link, NavLink } from "react-router-dom";
 
