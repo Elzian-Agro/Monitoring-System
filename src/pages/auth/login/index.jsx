@@ -8,8 +8,9 @@ import PropTypes from "prop-types";
 function Login({ setPage }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [checked, setChecked] = useState(false);
+  const [remember, setRemember] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -24,9 +25,18 @@ function Login({ setPage }) {
       return;
     }
 
-    //handle api...
+    // Handle api
+    try {
+      setError(null);
+      setLoading(true);
 
-    setError(null);
+      // login request and save token
+
+      //setLoading(false);
+    } catch {
+      setLoading(false);
+      setError("Invalid username or password");
+    }
   };
 
   return (
@@ -65,8 +75,8 @@ function Login({ setPage }) {
             <input
               type="checkbox"
               id="checkbox"
-              checked={checked}
-              onChange={() => setChecked(!checked)}
+              checked={remember}
+              onChange={() => setRemember(!remember)}
             />
             <label htmlFor="checkbox">Remember me</label>
           </div>
@@ -81,7 +91,7 @@ function Login({ setPage }) {
 
         {error && <ErrorMessage message={error} />}
 
-        <Button text="Login" />
+        <Button text={loading ? "Logging in..." : "Login"} disabled={loading} />
       </form>
     </div>
   );
