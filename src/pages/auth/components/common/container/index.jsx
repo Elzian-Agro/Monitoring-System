@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import logo from "assets/images/logo.png";
-import ForgotPassword from "pages/auth/components/forgot-password";
-import Login from "pages/auth/components/login";
-import ResetPassword from "pages/auth/components/reset-password";
+import ForgotPassword from "pages/auth/forgot-password";
+import Login from "pages/auth/login";
+import ResetPassword from "pages/auth/reset-password";
 
 function LoginPage() {
   const [page, setPage] = useState("Login");

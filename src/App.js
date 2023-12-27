@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from "pages/auth/components/container";
+import LoginPage from "pages/auth/components/common/container";
 import Dashboard from "pages/dashboard/components/container";
 
 function App() {
