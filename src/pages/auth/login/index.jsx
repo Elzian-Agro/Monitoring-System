@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { UserIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import Button from "components/Button";
 import TextBox from "components/TextBox";
@@ -12,7 +12,19 @@ function Login({ setPage }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event) => {
+  // Retrieve remembered credentials from localStorage
+  useEffect(() => {
+    if (
+      localStorage.getItem("rememberedUsername") &&
+      localStorage.getItem("rememberedPassword")
+    ) {
+      setUsername(localStorage.getItem("rememberedUsername"));
+      setPassword(localStorage.getItem("rememberedPassword"));
+      setRemember(true);
+    }
+  }, []);
+
+  const handleLogin = (event) => {
     event.preventDefault();
 
     if (!username) {
@@ -32,6 +44,15 @@ function Login({ setPage }) {
 
       // login request and save token
 
+      // Save the username and password if "Remember me" is checked
+      if (remember) {
+        localStorage.setItem("rememberedUsername", username);
+        localStorage.setItem("rememberedPassword", password);
+      } else {
+        localStorage.removeItem("rememberedUsername");
+        localStorage.removeItem("rememberedPassword");
+      }
+
       //setLoading(false);
     } catch {
       setLoading(false);
@@ -50,7 +71,7 @@ function Login({ setPage }) {
 
       <form
         className="flex flex-col items-center p-2 xs:p-4 gap-4 w-full"
-        onSubmit={handleSubmit}
+        onSubmit={handleLogin}
       >
         <TextBox
           placeholder="Enter your username"
