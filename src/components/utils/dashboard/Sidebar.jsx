@@ -1,7 +1,6 @@
 import React from "react";
-// import { SiShopware } from "react-icons/si";
+import { UserIcon, ArrowTrendingUpIcon, Cog6ToothIcon, PlusIcon, ArrowUpTrayIcon, XMarkIcon, Squares2X2Icon } from '@heroicons/react/24/outline'
 import logo from "../../../assest/constants/images/logo.png"
-// import { MdOutlineCancel } from "react-icons/md";
 
 import { Link, NavLink } from "react-router-dom";
 
@@ -11,7 +10,7 @@ const Sidebar = () => {
   const activeLink =
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white bg-green-500 text-md m-2";
   const normalLink =
-    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-light-gray m-2";
+    "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-gray-100 m-2";
 
   return (
     <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
@@ -43,6 +42,7 @@ const Sidebar = () => {
               onClick={() => {}}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
+              <Squares2X2Icon className="h-6 w-6"/>
               Dashboard
             </NavLink>
             <NavLink
@@ -50,6 +50,7 @@ const Sidebar = () => {
               onClick={() => {}}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
+              <UserIcon className="h-6 w-6"/>
               Customers
             </NavLink>
             <NavLink
@@ -57,6 +58,7 @@ const Sidebar = () => {
               onClick={() => {}}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
+              <ArrowTrendingUpIcon className="h-6 w-6"/>
               Orders
             </NavLink>
             <NavLink
@@ -64,6 +66,7 @@ const Sidebar = () => {
               onClick={() => {}}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
+              <ArrowTrendingUpIcon className="h-6 w-6"/>
               Analytics
             </NavLink>
             <NavLink
@@ -71,6 +74,7 @@ const Sidebar = () => {
               onClick={() => {}}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
+              <Cog6ToothIcon className="h-6 w-6"/>
               Settings
             </NavLink>
             <NavLink
@@ -78,6 +82,7 @@ const Sidebar = () => {
               onClick={() => {}}
               className={({ isActive }) => (isActive ? activeLink : normalLink)}
             >
+              <PlusIcon className="h-6 w-6"/>
               Add Products
             </NavLink>
             <div className="Title">
@@ -96,8 +101,9 @@ const Sidebar = () => {
             <NavLink
               to="/"
               onClick={() => {}}
-              className= "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-light-gray m-2"
+              className= "flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-red-500 m-2 duration-300"
             >
+              <ArrowUpTrayIcon className="h-6 w-6 rotate-90"/>
               Logout
             </NavLink>
           </div>
