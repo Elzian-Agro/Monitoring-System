@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { ArrowLeftIcon, EnvelopeIcon } from "@heroicons/react/24/outline";
-import Button from "components/Button";
-import TextBox from "components/TextBox";
-import ErrorMessage from "components/ErrorMessage";
+import Button from "pages/auth/components/base/Button";
+import TextBox from "pages/auth/components/base/TextBox";
+import ErrorMessage from "pages/auth/components/base/ErrorMessage";
 import { isValidEmail } from "pages/auth/utils";
 import PropTypes from "prop-types";
 
