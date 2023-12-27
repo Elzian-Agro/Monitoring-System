@@ -17,6 +17,14 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - **Documentation**: [Heroicons GitHub Repository](https://github.com/tailwindlabs/heroicons?tab=readme-ov-file#react).
 - **Official Site**: [heroicons](https://heroicons.com/)
 
+### Axios
+
+- **Documentation**: [Axios Documentation](https://axios-http.com/docs/intro).
+- **Official Site**: [axios](https://axios-http.com/)
+
+### Js-sha256
+
+- **Documentation**: [Js-sha256 Documentation](https://www.npmjs.com/package/js-sha256).
 
 ## Available Scripts
 
@@ -84,7 +92,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
 
 ### Postman Documentation
 
