@@ -13,7 +13,7 @@ const Sidebar = () => {
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-gray-100 m-2";
 
   return (
-    <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
+    <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-2 ">
     
       {activeMenu && (
         <>
@@ -33,7 +33,7 @@ const Sidebar = () => {
               // style={{ color: currentColor }}
               className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden"
             >
-              {/* <MdOutlineCancel /> */}
+              <XMarkIcon className="h-6 w-6"/>
             </button>
           </div>
           <div className="sidebar-items mt-10">
@@ -107,6 +107,10 @@ const Sidebar = () => {
               Logout
             </NavLink>
           </div>
+          <footer className="text-gray-400 text-xs text-center">
+            <p>Copyright 2023 Elzian Agro.</p>
+            <p>All Rights Reserved</p>
+          </footer>
         </>
       )}
     </div>
