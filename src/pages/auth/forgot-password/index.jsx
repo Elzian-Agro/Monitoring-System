@@ -7,11 +7,14 @@ import { isValidEmail } from "pages/auth/utils";
 import PropTypes from "prop-types";
 import { sha256 } from "js-sha256";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { updateEmail } from "../slice/emailSlice";
 
 function ForgotPassword({ setPage }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -26,9 +29,10 @@ function ForgotPassword({ setPage }) {
     const hashedEmail = sha256(email);
 
     axios
-      .post("url", hashedEmail)
+      .post("url", {email: hashedEmail})
       .then(() => {
         setError(null);
+        dispatch(updateEmail(hashedEmail))
         setIsLoading(false);
         setPage("ResetPassword");
       })

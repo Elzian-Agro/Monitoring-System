@@ -5,30 +5,57 @@ import TextBox from "pages/auth/components/base/TextBox";
 import ErrorMessage from "pages/auth/components/base/ErrorMessage";
 import PropTypes from "prop-types";
 import { isValidPassword } from "pages/auth/utils";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { updateEmail } from "../slice/emailSlice";
 
 function ResetPassword({ setPage }) {
   const [tempPass, setTempPass] = useState("");
   const [newPass, setNewPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const hashedEmail = useSelector((state) => state.email.value);
+  const dispatch = useDispatch();
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (!tempPass) {
-      setError('emptyTempPassword');
+      setError("emptyTempPassword");
       return 0;
     } else if (!isValidPassword(newPass)) {
-      setError('passwordRegexFailed');
+      setError("passwordRegexFailed");
       return 0;
     } else if (newPass !== confirmPass) {
-      setError('passwordNoMatch');
+      setError("passwordNoMatch");
       return 0;
     }
 
-    //handle api...
+    setIsLoading(true);
 
-    setError(null);
+    const data = {
+      email: hashedEmail,
+      temporaryPassword: tempPass,
+      newPassword: newPass,
+    };
+
+    axios
+      .post("url", data)
+      .then(() => {
+        setError(null);
+        dispatch(updateEmail(null));
+        setIsLoading(false);
+        setPage("Login");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        if (error.response.status === 401) {
+          setError("wrongTempPassword");
+        } else {
+          setError("serverError");
+        }
+      });
   };
 
   return (
@@ -82,7 +109,7 @@ function ResetPassword({ setPage }) {
 
           {error && <ErrorMessage message={error} />}
 
-          <Button text="Continue" />
+          <Button text="Continue" disabled={isLoading} />
         </form>
       </div>
     </div>
