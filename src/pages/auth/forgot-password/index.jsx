@@ -5,10 +5,13 @@ import TextBox from "pages/auth/components/base/TextBox";
 import ErrorMessage from "pages/auth/components/base/ErrorMessage";
 import { isValidEmail } from "pages/auth/utils";
 import PropTypes from "prop-types";
+import { sha256 } from "js-sha256";
+import axios from "axios";
 
 function ForgotPassword({ setPage }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -18,10 +21,25 @@ function ForgotPassword({ setPage }) {
       return;
     }
 
-    //handle api...
+    setIsLoading(true);
 
-    setError(null);
-    setPage("ResetPassword");
+    const hashedEmail = sha256(email);
+
+    axios
+      .post("url", hashedEmail)
+      .then(() => {
+        setError(null);
+        setIsLoading(false);
+        setPage("ResetPassword");
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        if (error.response.status === 404) {
+          setError("userNotfound");
+        } else {
+          setError("serverError");
+        }
+      });
   };
 
   return (
@@ -57,7 +75,7 @@ function ForgotPassword({ setPage }) {
 
           {error && <ErrorMessage message={error} />}
 
-          <Button text="Continue" />
+          <Button text={isLoading? "Loading..." : "Continue"} disabled={isLoading}/>
         </form>
       </div>
     </div>
