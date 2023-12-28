@@ -30,6 +30,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - **Documentation**: [i18next Documentation](https://react.i18next.com/)
 
+### Redux Toolkit
+
+- **Documentation**: [Redux Toolkit Documentation](https://redux-toolkit.js.org/)
+
+
 ## Available Scripts
 
 In the project directory, you can run:
