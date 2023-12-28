@@ -8,6 +8,7 @@ import { isValidPassword } from "pages/auth/utils";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { updateEmail } from "../slice/emailSlice";
+import { sha256 } from "js-sha256";
 
 function ResetPassword({ setPage }) {
   const [tempPass, setTempPass] = useState("");
@@ -36,8 +37,8 @@ function ResetPassword({ setPage }) {
 
     const data = {
       email: hashedEmail,
-      temporaryPassword: tempPass,
-      newPassword: newPass,
+      temporaryPassword: sha256(tempPass),
+      newPassword: sha256(newPass),
     };
 
     axios
