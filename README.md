@@ -26,6 +26,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - **Documentation**: [Js-sha256 Documentation](https://www.npmjs.com/package/js-sha256).
 
+### i18next
+
+- **Documentation**: [i18next Documentation](https://react.i18next.com/)
+
 ## Available Scripts
 
 In the project directory, you can run:

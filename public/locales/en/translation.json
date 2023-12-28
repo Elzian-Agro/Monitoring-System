@@ -1,0 +1,9 @@
+{
+    "emptyUsername": "Please enter the username",
+    "emptyPassword": "Please enter the password",
+    "invalidCredentials": "Invalid username or password",
+    "emptyTempPassword": "Please enter the temporary password sent to your email",
+    "emailRegexFailed": "Please Enter a Valid Email Address!",
+    "passwordRegexFailed": "Password too weak. Should contain atleast 8 characters including upper and lower case letters + numbers + special chars.",
+    "passwordNoMatch": "Passwords do not match"
+}

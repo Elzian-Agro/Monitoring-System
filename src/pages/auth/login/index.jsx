@@ -28,12 +28,12 @@ function Login({ setPage }) {
     event.preventDefault();
 
     if (!username) {
-      setError("Please Enter Username!");
+      setError("emptyUsername");
       return;
     }
 
     if (!password) {
-      setError("Please Enter Password!");
+      setError("emptyPassword");
       return;
     }
 
@@ -56,7 +56,7 @@ function Login({ setPage }) {
       //setLoading(false);
     } catch {
       setLoading(false);
-      setError("Invalid username or password");
+      setError("invalidCredentials");
     }
   };
 
@@ -98,12 +98,13 @@ function Login({ setPage }) {
               id="checkbox"
               checked={remember}
               onChange={() => setRemember(!remember)}
+              className="accent-[#0B8021]"
             />
             <label htmlFor="checkbox">Remember me</label>
           </div>
 
           <button
-            className="hover:text-[#0000EE] transition-all"
+            className="hover:text-[#0B8021] transition-all"
             onClick={() => setPage("ForgotPassword")}
           >
             Forgot Password?

@@ -14,7 +14,7 @@ function ForgotPassword({ setPage }) {
     event.preventDefault();
 
     if (!isValidEmail(email)) {
-      setError("Please Enter a Valid Email Address!");
+      setError("emailRegexFailed");
       return;
     }
 

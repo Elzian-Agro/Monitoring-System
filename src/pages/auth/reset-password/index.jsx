@@ -16,15 +16,13 @@ function ResetPassword({ setPage }) {
     event.preventDefault();
 
     if (!tempPass) {
-      setError("Invalid Field Input");
+      setError('emptyTempPassword');
       return 0;
     } else if (!isValidPassword(newPass)) {
-      setError(
-        "Password too weak.  At least 8 letters or numbers + special chars."
-      );
+      setError('passwordRegexFailed');
       return 0;
     } else if (newPass !== confirmPass) {
-      setError("Passwords do not match");
+      setError('passwordNoMatch');
       return 0;
     }
 
