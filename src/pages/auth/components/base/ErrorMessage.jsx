@@ -1,13 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types"
 import { useTranslation } from "react-i18next";
 
 function ErrorMessage({ message }) {
-  const { t, i18n } = useTranslation();
-
-  useEffect(()=> {
-    i18n.changeLanguage("en");
-  }, [])
+  const { t } = useTranslation();
   
   return <p className="text-red-500 text-xs font-zenkaku">{t(message)}</p>;
 }
