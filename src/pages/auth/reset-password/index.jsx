@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowLeftIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import Button from "pages/auth/components/base/Button";
 import TextBox from "pages/auth/components/base/TextBox";
@@ -8,6 +8,7 @@ import { isValidPassword } from "pages/auth/utils";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { updateEmail } from "../slice/emailSlice";
+import { sha256 } from "js-sha256";
 
 function ResetPassword({ setPage }) {
   const [tempPass, setTempPass] = useState("");
@@ -17,6 +18,7 @@ function ResetPassword({ setPage }) {
   const [isLoading, setIsLoading] = useState(false);
   const hashedEmail = useSelector((state) => state.email.value);
   const dispatch = useDispatch();
+  const [timer, setTimer] = useState(60);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -36,8 +38,8 @@ function ResetPassword({ setPage }) {
 
     const data = {
       email: hashedEmail,
-      temporaryPassword: tempPass,
-      newPassword: newPass,
+      temporaryPassword: sha256(tempPass),
+      newPassword: sha256(newPass),
     };
 
     axios
@@ -55,6 +57,30 @@ function ResetPassword({ setPage }) {
         } else {
           setError("serverError");
         }
+      });
+  };
+
+   useEffect(() => {
+    let interval;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  
+  const handleResendEmail = () => {
+    axios
+      .post("url")
+      .then(() => {
+        setTimer(60);
+      })
+      .catch((error) => {
+        alert(`${error.response.status}: An Unexpected Error Occured!`)
       });
   };
 
@@ -111,6 +137,19 @@ function ResetPassword({ setPage }) {
 
           <Button text="Continue" disabled={isLoading} />
         </form>
+
+        <div>
+          {timer > 0 ? (
+            <p className="font-zenkaku font-light text-[12px] text-center">Email Sent! Didn't Recieve? Resend Email in {timer} Seconds</p>
+          ) : (
+            <button
+              onClick={handleResendEmail}
+              className="text-blue-500 hover:text-blue-700 font-zenkaku"
+            >
+              Resend Email
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
