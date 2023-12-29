@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import PropTypes from "prop-types";
 
 function Redirect({ setPage, Icon, message, type }) {
   const [timer, setTimer] = useState(10);
@@ -41,5 +41,13 @@ function Redirect({ setPage, Icon, message, type }) {
     </div>
   );
 }
+
+
+Redirect.propTypes = {
+  setPage: PropTypes.func.isRequired,
+  Icon: PropTypes.elementType,
+  message: PropTypes.string,
+  type: PropTypes.string,
+};
 
 export default Redirect;
