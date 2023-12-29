@@ -45,9 +45,9 @@ function Redirect({ setPage, Icon, message, type }) {
 
 Redirect.propTypes = {
   setPage: PropTypes.func.isRequired,
-  Icon: PropTypes.elementType,
-  message: PropTypes.string,
-  type: PropTypes.string,
+  Icon: PropTypes.elementType.isRequired,
+  message: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export default Redirect;
