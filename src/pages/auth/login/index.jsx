@@ -3,6 +3,7 @@ import { UserIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import Button from "pages/auth/components/base/Button";
 import TextBox from "pages/auth/components/base/TextBox";
 import ErrorMessage from "pages/auth/components/base/ErrorMessage";
+import { isValidEmail } from "pages/auth/utils";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -35,6 +36,11 @@ function Login({ setPage }) {
 
     if (!email) {
       setError("emptyEmail");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError("emailRegexFailed");
       return;
     }
 
