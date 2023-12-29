@@ -4,31 +4,37 @@ import Button from "pages/auth/components/base/Button";
 import TextBox from "pages/auth/components/base/TextBox";
 import ErrorMessage from "pages/auth/components/base/ErrorMessage";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login({ setPage }) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
+  const baseURL = "http://localhost:5000";
+
   // Retrieve remembered credentials from localStorage
   useEffect(() => {
     if (
-      localStorage.getItem("rememberedUsername") &&
+      localStorage.getItem("rememberedEmail") &&
       localStorage.getItem("rememberedPassword")
     ) {
-      setUsername(localStorage.getItem("rememberedUsername"));
+      setEmail(localStorage.getItem("rememberedEmail"));
       setPassword(localStorage.getItem("rememberedPassword"));
       setRemember(true);
     }
   }, []);
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
-    if (!username) {
-      setError("emptyUsername");
+    if (!email) {
+      setError("emptyEmail");
       return;
     }
 
@@ -37,26 +43,45 @@ function Login({ setPage }) {
       return;
     }
 
-    // Handle api
     try {
       setError(null);
       setLoading(true);
 
-      // login request and save token
+      // Login request
+      const response = await axios.post(`${baseURL}/auth/login`, {
+        email,
+        password,
+      });
 
-      // Save the username and password if "Remember me" is checked
-      if (remember) {
-        localStorage.setItem("rememberedUsername", username);
-        localStorage.setItem("rememberedPassword", password);
-      } else {
-        localStorage.removeItem("rememberedUsername");
-        localStorage.removeItem("rememberedPassword");
+      if (response.status === 200) {
+        // Save the token in localStorage
+        localStorage.setItem("jwtToken", response.data.accessToken);
+
+        // Save or remove the username and password from local storage
+        if (remember) {
+          localStorage.setItem("rememberedEmail", email);
+          localStorage.setItem("rememberedPassword", password);
+        } else {
+          localStorage.removeItem("rememberedEmail");
+          localStorage.removeItem("rememberedPassword");
+        }
+
+        setLoading(false);
+        navigate("/dashboard");
       }
-
-      //setLoading(false);
-    } catch {
+    } catch (error) {
       setLoading(false);
-      setError("invalidCredentials");
+
+      if (error.response) {
+        const { status } = error.response;
+        if (status === 401) {
+          setError("invalidCredentials");
+        } else if (status === 500) {
+          setError("serverError");
+        }
+      } else {
+        setError("networkError");
+      }
     }
   };
 
@@ -74,12 +99,12 @@ function Login({ setPage }) {
         onSubmit={handleLogin}
       >
         <TextBox
-          placeholder="Enter your username"
-          label="Username"
+          placeholder="Enter your Email"
+          label="Email"
           type="text"
           Icon={UserIcon}
-          value={username}
-          setValue={setUsername}
+          value={email}
+          setValue={setEmail}
         />
 
         <TextBox
