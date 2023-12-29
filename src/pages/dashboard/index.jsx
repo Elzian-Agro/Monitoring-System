@@ -10,7 +10,7 @@ function Dashboard() {
 
   return (
     <div>
-      <div className="flex relative dark:bg-main-dark-bg">
+      <div className="flex relative dark:bg-main-dark-bg bg-gray-100">
         {activeMenu ? (
           <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white">
             <Sidebar />
