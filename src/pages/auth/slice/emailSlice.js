@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const emailSlice = createSlice({
-  name: "hashedEmail",
+  name: "email",
   initialState,
   reducers: {
     updateEmail: (state, action) => {

@@ -5,7 +5,6 @@ import TextBox from "pages/auth/components/base/TextBox";
 import ErrorMessage from "pages/auth/components/base/ErrorMessage";
 import { isValidEmail } from "pages/auth/utils";
 import PropTypes from "prop-types";
-import { sha256 } from "js-sha256";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { updateEmail } from "../slice/emailSlice";
@@ -26,13 +25,13 @@ function ForgotPassword({ setPage }) {
 
     setIsLoading(true);
 
-    const hashedEmail = sha256(email);
-
     axios
-      .post("url", {email: hashedEmail})
+      .post("http://localhost:5000/auth/forget-password", {
+        email: email,
+      })
       .then(() => {
         setError(null);
-        dispatch(updateEmail(hashedEmail))
+        dispatch(updateEmail(email));
         setIsLoading(false);
         setPage("ResetPassword");
       })
@@ -79,7 +78,10 @@ function ForgotPassword({ setPage }) {
 
           {error && <ErrorMessage message={error} />}
 
-          <Button text={isLoading? "Loading..." : "Continue"} disabled={isLoading}/>
+          <Button
+            text={isLoading ? "Loading..." : "Continue"}
+            disabled={isLoading}
+          />
         </form>
       </div>
     </div>
