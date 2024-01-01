@@ -53,6 +53,7 @@ function ForgotPassword({ setPage }) {
 
           default:
             setError("networkError");
+            break;
         }
       });
   };
