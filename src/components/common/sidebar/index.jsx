@@ -4,8 +4,13 @@ import logo from "assets/images/logo.png"
 
 import { Link, NavLink } from "react-router-dom";
 
+import { useDispatch, useSelector } from "react-redux";
+import {selectActiveMenu, setActiveMenu} from "../../../pages/dashboard/slice/appSlice";
+
 const Sidebar = () => {
-  const activeMenu = true;
+  
+  const dispatch = useDispatch();
+  const activeMenu = useSelector(selectActiveMenu);
 
   const activeLink =
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white bg-green-500 text-md m-2";
@@ -21,7 +26,9 @@ const Sidebar = () => {
           
             <Link
               to="/dashboard"
-              onClick={() => {}}
+              onClick={() => {
+                dispatch(setActiveMenu(false));
+              }}
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight text-slate-900 "
             >
               <img className="w-20" src={logo} alt="Elzian Agro logo"/>
@@ -29,7 +36,9 @@ const Sidebar = () => {
             </Link>
             <button
               type="button"
-              onClick={() => {}}
+              onClick={() => {
+                dispatch(setActiveMenu(!activeMenu));
+              }}
               // style={{ color: currentColor }}
               className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden"
             >
