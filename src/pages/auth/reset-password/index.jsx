@@ -4,6 +4,7 @@ import {
   LockClosedIcon,
   ExclamationTriangleIcon,
   CheckCircleIcon,
+  XCircleIcon,
 } from "@heroicons/react/24/outline";
 import Button from "pages/auth/components/base/Button";
 import TextBox from "pages/auth/components/base/TextBox";
@@ -26,6 +27,7 @@ function ResetPassword({ setPage }) {
   const dispatch = useDispatch();
   const [timer, setTimer] = useState(60);
   const [success, setSuccess] = useState(false);
+  const [blocked, setBlocked] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -63,11 +65,18 @@ function ResetPassword({ setPage }) {
         switch (error.response?.status) {
           case 401:
             setError("wrongTempPassword");
-            setincorrectTempPasswordCount((prevCount) => prevCount + 1);
+            break;
+
+          case 423:
+            setBlocked(true);
             break;
 
           case 500:
             setError("serverError");
+            break;
+
+          default:
+            setError("networkError");
             break;
         }
       });
@@ -113,7 +122,7 @@ function ResetPassword({ setPage }) {
         <p className="flex-1 font-zenkaku text-[12px]">Go Back</p>
       </button>
 
-      {email && !success && (
+      {email && !success && !blocked && (
         <div className="flex-1 flex items-center flex-col lg:justify-center h-full w-full">
           <h1 className="font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5 sm:leading-10">
             RESET PASSWORD
@@ -175,21 +184,30 @@ function ResetPassword({ setPage }) {
         </div>
       )}
 
-      {!email && !success && (
+      {!email && !success && !blocked && (
         <Redirect
           setPage={setPage}
           Icon={ExclamationTriangleIcon}
-          message={"Unauthorized Access"}
+          message={"unauthorizedAccess"}
           type={"warning"}
         />
       )}
 
-      {success && (
+      {success && !blocked && (
         <Redirect
           setPage={setPage}
           Icon={CheckCircleIcon}
-          message={"Password Reset Successfully"}
+          message={"passwordResetSuccessfully"}
           type={"success"}
+        />
+      )}
+
+      {blocked && (
+        <Redirect
+          setPage={setPage}
+          Icon={XCircleIcon}
+          message={"userBlocked"}
+          type={"warning"}
         />
       )}
     </div>
