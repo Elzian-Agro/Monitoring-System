@@ -37,10 +37,22 @@ function ForgotPassword({ setPage }) {
       })
       .catch((error) => {
         setIsLoading(false);
-        if (error.response.status === 404) {
-          setError("userNotfound");
-        } else {
-          setError("serverError");
+
+        switch (error.response?.status) {
+          case 404:
+            setError("userNotFound");
+            break;
+
+          case 423:
+            setError("userBlocked");
+            break;
+
+          case 500:
+            setError("serverError");
+            break;
+
+          default:
+            setError("networkError");
         }
       });
   };

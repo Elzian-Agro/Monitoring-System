@@ -9,5 +9,6 @@
   "userNotfound": "User Not Found!",
   "serverError": "Oops! an error occured. Please try again later",
   "wrongTempPassword": "Incorrect Temporary Password",
-  "networkError": "Network error! Please try again later"
+  "networkError": "Network error! Please try again later",
+  "userBlocked": "User is blocked! Contact admin"
 }

@@ -59,10 +59,15 @@ function ResetPassword({ setPage }) {
       })
       .catch((error) => {
         setIsLoading(false);
-        if (error.response.status === 401) {
-          setError("wrongTempPassword");
-        } else {
-          setError("serverError");
+
+        switch (error.response?.status) {
+          case 401:
+            setError("wrongTempPassword");
+            break;
+
+          case 500:
+            setError("serverError");
+            break;
         }
       });
   };
@@ -93,7 +98,7 @@ function ResetPassword({ setPage }) {
         setTimer(60);
       })
       .catch((error) => {
-        alert(`${error.response.status}: An Unexpected Error Occured!`);
+        alert(`${error.message}`);
       });
   };
 
