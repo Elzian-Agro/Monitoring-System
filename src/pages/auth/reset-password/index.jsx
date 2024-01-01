@@ -26,6 +26,8 @@ function ResetPassword({ setPage }) {
   const dispatch = useDispatch();
   const [timer, setTimer] = useState(60);
   const [success, setSuccess] = useState(false);
+  const [incorrectTempPasswordCount, setincorrectTempPasswordCount] =
+    useState(0);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -47,6 +49,7 @@ function ResetPassword({ setPage }) {
       email: email,
       temporaryPassword: sha256(tempPass),
       newPassword: sha256(newPass),
+      blockedStatus: incorrectTempPasswordCount >= 5,
     };
 
     axios
@@ -63,6 +66,7 @@ function ResetPassword({ setPage }) {
         switch (error.response?.status) {
           case 401:
             setError("wrongTempPassword");
+            setincorrectTempPasswordCount((prevCount) => prevCount + 1);
             break;
 
           case 500:
