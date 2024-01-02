@@ -1,12 +1,17 @@
 import React from "react";
+import "./index.css"
+
 
 import Navbar from "components/common/navbar";
-import Footer from "components/common/footer";
 import Sidebar from "components/common/sidebar";
-import ThemeSettings from "pages/dashboard/components/common/theme-settings";
+
+import { useSelector } from "react-redux";
+import { selectActiveMenu } from "./slice/appSlice"
+
 
 function Dashboard() {
-  const activeMenu = true;
+  
+  const activeMenu = useSelector(selectActiveMenu);
 
   return (
     <div>

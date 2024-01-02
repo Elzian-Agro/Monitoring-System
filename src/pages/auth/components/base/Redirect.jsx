@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next";
 
 function Redirect({ setPage, Icon, message, type }) {
   const [timer, setTimer] = useState(10);
+  const { t } = useTranslation();
 
   useEffect(() => {
-      let interval;
-      if (timer > 0) {
-        interval = setInterval(() => {
-          setTimer((prevTimer) => prevTimer - 1);
-        }, 1000);
-      } else if (timer === 0) {
-        clearInterval(interval);
-        setPage("Login");
-      }
-      return () => clearInterval(interval);
+    let interval;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else if (timer === 0) {
+      clearInterval(interval);
+      setPage("Login");
+    }
+    return () => clearInterval(interval);
   }, [timer]);
 
   return (
@@ -25,11 +27,11 @@ function Redirect({ setPage, Icon, message, type }) {
         }`}
       />
       <p
-        className={`font-zenkaku font-bold text-[24px] ${
+        className={`font-zenkaku font-bold text-[24px] text-center ${
           type === "warning" ? "text-red-300" : "text-[#0B802199]"
         }`}
       >
-        {message}
+        {t(message)}
       </p>
       <p
         className={`font-zenkaku font-light text-[14px] ${
@@ -41,7 +43,6 @@ function Redirect({ setPage, Icon, message, type }) {
     </div>
   );
 }
-
 
 Redirect.propTypes = {
   setPage: PropTypes.func.isRequired,

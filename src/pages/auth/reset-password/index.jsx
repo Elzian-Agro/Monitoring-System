@@ -3,7 +3,8 @@ import {
   ArrowLeftIcon,
   LockClosedIcon,
   ExclamationTriangleIcon,
-  CheckCircleIcon
+  CheckCircleIcon,
+  XCircleIcon,
 } from "@heroicons/react/24/outline";
 import Button from "pages/auth/components/base/Button";
 import TextBox from "pages/auth/components/base/TextBox";
@@ -22,10 +23,11 @@ function ResetPassword({ setPage }) {
   const [confirmPass, setConfirmPass] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const hashedEmail = useSelector((state) => state.email.value);
+  const email = useSelector((state) => state.email.value);
   const dispatch = useDispatch();
   const [timer, setTimer] = useState(60);
   const [success, setSuccess] = useState(false);
+  const [blocked, setBlocked] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,13 +46,13 @@ function ResetPassword({ setPage }) {
     setIsLoading(true);
 
     const data = {
-      email: hashedEmail,
+      email: email,
       temporaryPassword: sha256(tempPass),
       newPassword: sha256(newPass),
     };
 
     axios
-      .post("url", data)
+      .post("http://localhost:5000/auth/reset-password", data)
       .then(() => {
         setError(null);
         dispatch(updateEmail(null));
@@ -59,10 +61,23 @@ function ResetPassword({ setPage }) {
       })
       .catch((error) => {
         setIsLoading(false);
-        if (error.response.status === 401) {
-          setError("wrongTempPassword");
-        } else {
-          setError("serverError");
+
+        switch (error.response?.status) {
+          case 401:
+            setError("wrongTempPassword");
+            break;
+
+          case 423:
+            setBlocked(true);
+            break;
+
+          case 500:
+            setError("serverError");
+            break;
+
+          default:
+            setError("networkError");
+            break;
         }
       });
   };
@@ -86,12 +101,14 @@ function ResetPassword({ setPage }) {
 
   const handleResendEmail = () => {
     axios
-      .post("url")
+      .post("http://localhost:5000/auth/resend-password", {
+        email: email,
+      })
       .then(() => {
         setTimer(60);
       })
       .catch((error) => {
-        alert(`${error.response.status}: An Unexpected Error Occured!`);
+        alert(`${error.message}`);
       });
   };
 
@@ -105,7 +122,7 @@ function ResetPassword({ setPage }) {
         <p className="flex-1 font-zenkaku text-[12px]">Go Back</p>
       </button>
 
-      {hashedEmail && !success && (
+      {email && !success && !blocked && (
         <div className="flex-1 flex items-center flex-col lg:justify-center h-full w-full">
           <h1 className="font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5 sm:leading-10">
             RESET PASSWORD
@@ -167,21 +184,30 @@ function ResetPassword({ setPage }) {
         </div>
       )}
 
-      {(!hashedEmail && !success) && (
+      {!email && !success && !blocked && (
         <Redirect
           setPage={setPage}
           Icon={ExclamationTriangleIcon}
-          message={"Unauthorized Access"}
+          message={"unauthorizedAccess"}
           type={"warning"}
         />
       )}
 
-      {success && (
+      {success && !blocked && (
         <Redirect
           setPage={setPage}
           Icon={CheckCircleIcon}
-          message={"Password Reset Successfully"}
+          message={"passwordResetSuccessfully"}
           type={"success"}
+        />
+      )}
+
+      {blocked && (
+        <Redirect
+          setPage={setPage}
+          Icon={XCircleIcon}
+          message={"userBlocked"}
+          type={"warning"}
         />
       )}
     </div>

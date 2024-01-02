@@ -1,11 +1,17 @@
 import React from "react";
-import { UserIcon, ArrowTrendingUpIcon, Cog6ToothIcon, PlusIcon, ArrowUpTrayIcon, XMarkIcon, Squares2X2Icon, ChartPieIcon } from '@heroicons/react/24/outline'
+import { ArrowUpTrayIcon, XMarkIcon, ChartPieIcon } from '@heroicons/react/24/outline'
 import logo from "assets/images/logo.png"
 
 import { Link, NavLink } from "react-router-dom";
 
+import { useDispatch, useSelector } from "react-redux";
+import {selectActiveMenu, setActiveMenu} from "../../../pages/dashboard/slice/appSlice";
+import { sidebarLinks } from "./sidebarConstants";
+
 const Sidebar = () => {
-  const activeMenu = true;
+  
+  const dispatch = useDispatch();
+  const activeMenu = useSelector(selectActiveMenu);
 
   const activeLink =
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white bg-green-500 text-md m-2";
@@ -21,7 +27,9 @@ const Sidebar = () => {
           
             <Link
               to="/dashboard"
-              onClick={() => {}}
+              onClick={() => {
+                dispatch(setActiveMenu(false));
+              }}
               className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight text-slate-900 "
             >
               <img className="w-20" src={logo} alt="Elzian Agro logo"/>
@@ -29,7 +37,9 @@ const Sidebar = () => {
             </Link>
             <button
               type="button"
-              onClick={() => {}}
+              onClick={() => {
+                dispatch(setActiveMenu(!activeMenu));
+              }}
               // style={{ color: currentColor }}
               className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden"
             >
@@ -37,55 +47,19 @@ const Sidebar = () => {
             </button>
           </div>
           <div className="sidebar-items mt-10">
-            <NavLink
-              to="/dashboard"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-              
-            >
-              <Squares2X2Icon className="h-6 w-6"/>
-              Dashboard
-            </NavLink>
-            <NavLink
-              to="/customer"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <UserIcon className="h-6 w-6"/>
-              Customers
-            </NavLink>
-            <NavLink
-              to="/orders"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <ArrowTrendingUpIcon className="h-6 w-6"/>
-              Orders
-            </NavLink>
-            <NavLink
-              to="/analytics"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <ArrowTrendingUpIcon className="h-6 w-6"/>
-              Analytics
-            </NavLink>
-            <NavLink
-              to="/settings"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <Cog6ToothIcon className="h-6 w-6"/>
-              Settings
-            </NavLink>
-            <NavLink
-              to="/addProducts"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <PlusIcon className="h-6 w-6"/>
-              Add Products
-            </NavLink>
+          {sidebarLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                onClick={() => {}}
+                className={({ isActive }) => (isActive ? activeLink : normalLink)}
+              >
+                <link.icon className="h-6 w-6" />
+                {link.text}
+              </NavLink>
+            ))}
+
+            {/* Title Charts */}
             <div className="Title">
               <p className=" text-gray-400 m-3 mt-4 uppercase">Charts</p>
             </div>
@@ -99,7 +73,7 @@ const Sidebar = () => {
               Pie
             </NavLink>
 
-
+            {/* Logout */}
             <NavLink
               to="/"
               onClick={() => {}}
