@@ -7,6 +7,7 @@ import { isValidEmail } from "pages/auth/utils";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+const sha256 = require("js-sha256").sha256;
 
 function Login({ setPage }) {
   const [email, setEmail] = useState("");
@@ -53,10 +54,12 @@ function Login({ setPage }) {
       setError(null);
       setLoading(true);
 
+      let hashedPassword = sha256(password);
+
       // Login request
       const response = await axios.post(`${baseURL}/auth/login`, {
         email,
-        password,
+        hashedPassword,
       });
 
       if (response.status === 200) {
@@ -105,7 +108,7 @@ function Login({ setPage }) {
         onSubmit={handleLogin}
       >
         <TextBox
-          placeholder="Enter your Email"
+          placeholder="Enter your email"
           label="Email"
           type="text"
           Icon={UserIcon}
