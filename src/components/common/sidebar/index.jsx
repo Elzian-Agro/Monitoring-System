@@ -1,11 +1,12 @@
 import React from "react";
-import { UserIcon, ArrowTrendingUpIcon, Cog6ToothIcon, PlusIcon, ArrowUpTrayIcon, XMarkIcon, Squares2X2Icon, ChartPieIcon } from '@heroicons/react/24/outline'
+import { ArrowUpTrayIcon, XMarkIcon, ChartPieIcon } from '@heroicons/react/24/outline'
 import logo from "assets/images/logo.png"
 
 import { Link, NavLink } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import {selectActiveMenu, setActiveMenu} from "../../../pages/dashboard/slice/appSlice";
+import { sidebarLinks } from "./sidebarConstants";
 
 const Sidebar = () => {
   
@@ -46,55 +47,19 @@ const Sidebar = () => {
             </button>
           </div>
           <div className="sidebar-items mt-10">
-            <NavLink
-              to="/dashboard"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-              
-            >
-              <Squares2X2Icon className="h-6 w-6"/>
-              Dashboard
-            </NavLink>
-            <NavLink
-              to="/customer"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <UserIcon className="h-6 w-6"/>
-              Customers
-            </NavLink>
-            <NavLink
-              to="/orders"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <ArrowTrendingUpIcon className="h-6 w-6"/>
-              Orders
-            </NavLink>
-            <NavLink
-              to="/analytics"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <ArrowTrendingUpIcon className="h-6 w-6"/>
-              Analytics
-            </NavLink>
-            <NavLink
-              to="/settings"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <Cog6ToothIcon className="h-6 w-6"/>
-              Settings
-            </NavLink>
-            <NavLink
-              to="/addProducts"
-              onClick={() => {}}
-              className={({ isActive }) => (isActive ? activeLink : normalLink)}
-            >
-              <PlusIcon className="h-6 w-6"/>
-              Add Products
-            </NavLink>
+          {sidebarLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                onClick={() => {}}
+                className={({ isActive }) => (isActive ? activeLink : normalLink)}
+              >
+                <link.icon className="h-6 w-6" />
+                {link.text}
+              </NavLink>
+            ))}
+
+            {/* Title Charts */}
             <div className="Title">
               <p className=" text-gray-400 m-3 mt-4 uppercase">Charts</p>
             </div>
@@ -108,7 +73,7 @@ const Sidebar = () => {
               Pie
             </NavLink>
 
-
+            {/* Logout */}
             <NavLink
               to="/"
               onClick={() => {}}
