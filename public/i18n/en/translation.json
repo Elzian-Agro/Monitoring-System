@@ -6,7 +6,7 @@
   "emailRegexFailed": "Please Enter a Valid Email Address!",
   "passwordRegexFailed": "Password too weak. Should contain atleast 8 characters including upper and lower case letters + numbers + special chars.",
   "passwordNoMatch": "Passwords do not match",
-  "userNotfound": "User Not Found!",
+  "userNotFound": "User Not Found!",
   "serverError": "Oops! an error occured. Please try again later",
   "wrongTempPassword": "Incorrect Temporary Password",
   "networkError": "Network error! Please try again later",
