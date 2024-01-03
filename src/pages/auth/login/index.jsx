@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { UserIcon, LockClosedIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import Button from "pages/auth/components/base/Button";
 import TextBox from "pages/auth/components/base/TextBox";
 import ErrorMessage from "pages/auth/components/base/ErrorMessage";
@@ -111,7 +111,7 @@ function Login({ setPage }) {
           placeholder="Enter your email"
           label="Email"
           type="text"
-          Icon={UserIcon}
+          Icon={EnvelopeIcon}
           value={email}
           setValue={setEmail}
         />
