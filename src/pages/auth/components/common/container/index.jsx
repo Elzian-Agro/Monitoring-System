@@ -38,7 +38,7 @@ function LoginPage() {
         </div>
 
         <div className="flex justify-center items-center text-center text-[#ccc] font-zenkaku text-[12px]">
-          Copyright 2023 Elzian Agro. All Rights Reserved
+          Copyright 2024 Elzian Agro. All Rights Reserved
         </div>
       </div>
     </div>
