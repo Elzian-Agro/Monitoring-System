@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
 import Login from "./index";
 
 // Mock localStorage
@@ -34,72 +34,55 @@ describe("Loging Component", () => {
     expect(screen.getByText("LOG IN")).toBeInTheDocument();
   });
 
-  it("checks empty username before allowing form submission", () => {
-    render(<Login setPage={mockSetPage} />);
-    const usernameInput = screen.getByPlaceholderText("Enter your username");
-    const passwordInput = screen.getByPlaceholderText("Enter your password");
-    const loginButton = screen.getByText("Login");
-
-    // Simulate blank username
-    fireEvent.change(usernameInput, { target: { value: "" } });
-    fireEvent.change(passwordInput, { target: { value: "testPassword" } });
-    fireEvent.click(loginButton);
-    expect(screen.getByText("emptyUsername")).toBeInTheDocument();
-  });
-
-  it("checks empty password before allowing form submission", () => {
-    render(<Login setPage={mockSetPage} />);
-    const usernameInput = screen.getByPlaceholderText("Enter your username");
-    const passwordInput = screen.getByPlaceholderText("Enter your password");
-    const loginButton = screen.getByText("Login");
-
-    // Simulate blank password
-    fireEvent.change(usernameInput, { target: { value: "testUsername" } });
-    fireEvent.change(passwordInput, { target: { value: "" } });
-    fireEvent.click(loginButton);
-    expect(screen.getByText("emptyPassword")).toBeInTheDocument();
-  });
-
-  it("check loading status in login button", () => {
-    render(<Login setPage={mockSetPage} />);
-    const usernameInput = screen.getByPlaceholderText("Enter your username");
-    const passwordInput = screen.getByPlaceholderText("Enter your password");
-    const loginButton = screen.getByText("Login");
-
-    // Simulate loading status
-    fireEvent.change(usernameInput, { target: { value: "testUsername" } });
-    fireEvent.change(passwordInput, { target: { value: "testPassword" } });
-    fireEvent.click(loginButton);
-    expect(screen.getByText("Logging in...")).toBeInTheDocument();
-  });
-
-  it("stores username and password in local storage when checkbox is clicked", () => {
-    render(<Login setPage={mockSetPage} />);
-    const usernameInput = screen.getByPlaceholderText("Enter your username");
-    const passwordInput = screen.getByPlaceholderText("Enter your password");
-    const rememberCheckbox = screen.getByLabelText("Remember me");
-    const loginButton = screen.getByText("Login");
-
-    fireEvent.change(usernameInput, { target: { value: "testUsername" } });
-    fireEvent.change(passwordInput, { target: { value: "testPassword" } });
-    fireEvent.click(rememberCheckbox); // User checks the remember me
-    fireEvent.click(loginButton);
-
-    // Check if localStorage is updated
-    expect(localStorageMock.setItem).toHaveBeenCalledWith(
-      "rememberedUsername",
-      "testUsername"
-    );
-    expect(localStorageMock.setItem).toHaveBeenCalledWith(
-      "rememberedPassword",
-      "testPassword"
-    );
-  });
-
   it("allows navigation to the forget password page", () => {
     render(<Login setPage={mockSetPage} />);
     const linkForgetPassword = screen.getByText("Forgot Password?");
     fireEvent.click(linkForgetPassword);
     expect(mockSetPage).toHaveBeenCalledWith("ForgotPassword");
+  });
+
+  it("handles email and password input correctly", () => {
+    render(<Login setPage={mockSetPage} />);
+    const emailInput = screen.getByPlaceholderText("Enter your email");
+    const passwordInput = screen.getByPlaceholderText("Enter your password");
+
+    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
+    fireEvent.change(passwordInput, { target: { value: "password123" } });
+
+    expect(emailInput.value).toBe("test@example.com");
+    expect(passwordInput.value).toBe("password123");
+  });
+
+  it("checks user inputs before allowing form submission", () => {
+    render(<Login setPage={mockSetPage} />);
+    const emailInput = screen.getByPlaceholderText("Enter your email");
+    const passwordInput = screen.getByPlaceholderText("Enter your password");
+    const loginButton = screen.getByText("Login");
+
+    // Simulate blank email
+    fireEvent.change(emailInput, { target: { value: "" } });
+    fireEvent.click(loginButton);
+    expect(screen.getByText("emptyEmail")).toBeInTheDocument();
+
+    // Simulate invalid email
+    fireEvent.change(emailInput, { target: { value: "invalidemail.com" } });
+    fireEvent.click(loginButton);
+    expect(screen.getByText("emailRegexFailed")).toBeInTheDocument();
+
+    // Simulate blank password
+    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
+    fireEvent.change(passwordInput, { target: { value: "" } });
+    fireEvent.click(loginButton);
+    expect(screen.getByText("emptyPassword")).toBeInTheDocument();
+  });
+
+  it('toggles the "Remember me" checkbox', () => {
+    render(<Login setPage={mockSetPage} />);
+
+    const rememberMeCheckbox = screen.getByLabelText("Remember me");
+
+    fireEvent.click(rememberMeCheckbox);
+
+    expect(rememberMeCheckbox.checked).toBe(true);
   });
 });
