@@ -11,7 +11,7 @@ function LoginPage() {
   return (
     <div className="flex justify-center items-center w-[100vw] h-[100dvh] bg-gradient-to-t from-[#DEE4EA] to-[#F9FCFF]">
       <div className="w-[100%] h-[100%] sm:w-[95%] sm:h-[95%] md:w-[90%] md:h-[90%] bg-[#F9F9FA] shadow-2xl flex flex-col p-5 sm:p-10 gap-10 overflow-y-scroll no-scrollbar rounded-md">
-        <div className="flex justify-start items-center">
+        <div className="flex justify-end items-center">
           <LanguageSelector />
         </div>
         <div className="w-[100%] flex-1 flex flex-col justify-center lg:flex-row rounded-lg lg:gap-10">
