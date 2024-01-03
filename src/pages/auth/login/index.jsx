@@ -32,7 +32,7 @@ function Login({ setPage }) {
     }
   }, []);
 
-  const handleLogin = async (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
 
     if (!email) {
@@ -50,19 +50,18 @@ function Login({ setPage }) {
       return;
     }
 
-    try {
-      setError(null);
-      setLoading(true);
+    setError(null);
+    setLoading(true);
 
-      let hashedPassword = sha256(password);
+    let hashedPassword = sha256(password);
 
-      // Login request
-      const response = await axios.post(`${baseURL}/auth/login`, {
+    // Login request
+    axios
+      .post(`${baseURL}/auth/login`, {
         email,
         hashedPassword,
-      });
-
-      if (response.status === 200) {
+      })
+      .then((response) => {
         // Save the token in localStorage
         localStorage.setItem("jwtToken", response.data.accessToken);
 
@@ -77,21 +76,23 @@ function Login({ setPage }) {
 
         setLoading(false);
         navigate("/dashboard");
-      }
-    } catch (error) {
-      setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        switch (error.response?.status) {
+          case 401:
+            setError("invalidCredentials");
+            break;
 
-      if (error.response) {
-        const { status } = error.response;
-        if (status === 401) {
-          setError("invalidCredentials");
-        } else if (status === 500) {
-          setError("serverError");
+          case 500:
+            setError("serverError");
+            break;
+
+          default:
+            setError("networkError");
+            break;
         }
-      } else {
-        setError("networkError");
-      }
-    }
+      });
   };
 
   return (
