@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 
 function TextBox({
   label = null,
@@ -9,6 +10,14 @@ function TextBox({
   value,
   setValue,
 }) {
+  const isPassword = type === "password";
+
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className="relative border-2 border-gray-300 w-[100%] sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] rounded">
       {label && (
@@ -19,12 +28,21 @@ function TextBox({
       <div className="flex items-center p-2">
         {Icon && <Icon className="h-6 w-6 text-gray-300 mr-2" />}
         <input
-          type={type}
+          type={isPassword && showPassword ? "text" : type}
           placeholder={placeholder}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           className="appearance-none bg-transparent border-none w-full h-full text-gray-700 p-2 leading-tight focus:outline-none"
         />
+        {isPassword && (
+          <div className="ml-2 cursor-pointer" onClick={handleTogglePassword}>
+            {showPassword ? (
+              <EyeSlashIcon className="h-6 w-6 text-gray-300" />
+            ) : (
+              <EyeIcon className="h-6 w-6 text-gray-300" />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
