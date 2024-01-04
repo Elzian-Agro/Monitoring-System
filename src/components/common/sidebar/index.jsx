@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowUpTrayIcon, XMarkIcon, ChartPieIcon } from '@heroicons/react/24/outline'
+import { ArrowUpTrayIcon, ArrowLeftCircleIcon, ChartPieIcon } from '@heroicons/react/24/outline'
 import logo from "assets/images/logo.png"
 
 import { Link, NavLink } from "react-router-dom";
@@ -43,9 +43,8 @@ const Sidebar = () => {
                 dispatch(setActiveMenu(!activeMenu));
               }}
               // style={{ color: currentColor }}
-              className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden"
-            >
-              <XMarkIcon className="h-6 w-6"/>
+              className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden" >
+              <ArrowLeftCircleIcon className="h-6 w-6"/>
             </button>
           </div>
           <div className="sidebar-items mt-10">
@@ -54,8 +53,7 @@ const Sidebar = () => {
                 key={link.to}
                 to={link.to}
                 onClick={() => {}}
-                className={({ isActive }) => (isActive ? activeLink : normalLink)}
-              >
+                className={({ isActive }) => (isActive ? activeLink : normalLink)} >
                 <link.icon className="h-6 w-6" />
                 {link.text}
               </NavLink>
@@ -74,13 +72,12 @@ const Sidebar = () => {
             <ChartPieIcon className="h-6 w-6"/>
               Pie
             </NavLink>
-
+            
             {/* Logout */}
             <NavLink
               to="/"
               onClick={() => {}}
-              className= "flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-red-500 m-2 duration-300"
-            >
+              className= "flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-red-500 m-2 duration-300" >
               <ArrowUpTrayIcon className="h-6 w-6 rotate-90"/>
               Logout
             </NavLink>
