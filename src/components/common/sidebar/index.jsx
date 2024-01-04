@@ -13,6 +13,8 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const activeMenu = useSelector(selectActiveMenu);
 
+  const currentYear = new Date().getFullYear();
+
   const activeLink =
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white bg-green-500 text-md m-2";
   const normalLink =
@@ -84,7 +86,7 @@ const Sidebar = () => {
             </NavLink>
           </div>
           <footer className="text-gray-400 text-xs text-center">
-            <p>Copyright 2023 Elzian Agro.</p>
+            <p>Copyright { currentYear } Elzian Agro.</p>
             <p>All Rights Reserved</p>
           </footer>
         </>

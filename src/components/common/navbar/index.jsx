@@ -1,8 +1,6 @@
 import React from "react";
-
 import { Bars3Icon, ChevronDownIcon } from '@heroicons/react/24/outline'
 import avatar from "../../../assets/images/avatar.jpg"
-
 
 import { useDispatch, useSelector } from "react-redux";
 import {setActiveMenu, selectActiveMenu} from "../../../pages/dashboard/slice/appSlice";
