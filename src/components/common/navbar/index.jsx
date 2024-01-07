@@ -9,14 +9,30 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const activeMenu = useSelector(selectActiveMenu);
 
+  const toggleActiveMenu = () => {
+    let newActiveMenu;
+
+    if (activeMenu === "open") {
+      newActiveMenu = "onlyIcon";
+    } else if (activeMenu === "onlyIcon") {
+      newActiveMenu = "close";
+    } else {
+      newActiveMenu = "open";
+    }
+
+    dispatch(setActiveMenu(newActiveMenu));
+  };
+
+
+
   return (
-    <div className="flex justify-between p-2 md:ml-6 md:mr-6 relative">
+    <div className="flex justify-between p-2 md:mr-6 relative">
 
       <button
         type="button"
         className="relative text-xl rounded-full p-3 hover:bg-light-gray"
         
-        onClick={() => dispatch(setActiveMenu(!activeMenu))}
+        onClick={toggleActiveMenu}
 
       >
         {/* <span
