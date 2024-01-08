@@ -38,14 +38,10 @@ function Login({ setPage }) {
     if (!email) {
       setError("emptyEmail");
       return;
-    }
-
-    if (!isValidEmail(email)) {
+    } else if (!isValidEmail(email)) {
       setError("emailRegexFailed");
       return;
-    }
-
-    if (!password) {
+    } else if (!password) {
       setError("emptyPassword");
       return;
     }
@@ -53,14 +49,13 @@ function Login({ setPage }) {
     setError(null);
     setLoading(true);
 
-    let hashedPassword = sha256(password);
+    const userCredintials = {
+      email: email,
+      password: sha256(password),
+    };
 
-    // Login request
     axios
-      .post(`${baseURL}/auth/login`, {
-        email,
-        hashedPassword,
-      })
+      .post(`${baseURL}/auth/login`, userCredintials)
       .then((response) => {
         // Save the token in localStorage
         localStorage.setItem("jwtToken", response.data.accessToken);
