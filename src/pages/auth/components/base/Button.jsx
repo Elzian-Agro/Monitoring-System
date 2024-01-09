@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 function Button({ text, disabled = false }) {
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0);
@@ -16,7 +18,7 @@ function Button({ text, disabled = false }) {
       } ${disabled ? 'bg-[#0B802199] hover:cursor-not-allowed' : 'bg-[#0B8021]'} `}
       type="submit"
       disabled={disabled}>
-      <p className="flex-1 w-full text-left">{text}</p>
+      <p className="flex-1 w-full text-left">{t(text)}</p>
       <ArrowRightIcon className={`h-6 w-6 mr-5 transition-all ${disabled ? '' : 'group-hover:mr-0'}`} />
     </button>
   );

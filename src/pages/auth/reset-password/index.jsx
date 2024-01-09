@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateEmail } from '../slice/emailSlice';
 import { sha256 } from 'js-sha256';
 import Redirect from 'pages/auth/components/base/Redirect';
+import { useTranslation } from 'react-i18next';
 
 function ResetPassword({ setPage }) {
   const [tempPass, setTempPass] = useState('');
@@ -22,6 +23,7 @@ function ResetPassword({ setPage }) {
   const [timer, setTimer] = useState(60);
   const [success, setSuccess] = useState(false);
   const [blocked, setBlocked] = useState(false);
+  const { t } = useTranslation();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -110,32 +112,34 @@ function ResetPassword({ setPage }) {
     <div className="flex flex-col h-full w-full gap-5 md:gap-0 items-start">
       <button onClick={handleGoBack} className="group w-[100px] flex items-center">
         <ArrowLeftIcon className="w-[20px] group-hover:ml-[-20px] transition-all" />
-        <p className="flex-1 font-zenkaku text-[12px]">Go Back</p>
+        <p className="flex-1 font-zenkaku text-[12px]">{t('Go Back')}</p>
       </button>
 
       {email && !success && !blocked && (
         <div className="flex-1 flex items-center flex-col lg:justify-center h-full w-full">
-          <h1 className="font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5 sm:leading-10">RESET PASSWORD</h1>
-          <p className="font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10">TEMPORARY PASSWORD HAS BEEN SENT TO YOUR EMAIL</p>
+          <h1 className="font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5 sm:leading-10">{t('RESET PASSWORD')}</h1>
+          <p className="font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10">{t('TEMPORARY PASSWORD HAS BEEN SENT TO YOUR EMAIL')}</p>
 
           <form className="flex flex-col items-center p-2 xs:p-4 gap-4 w-full" onSubmit={handleSubmit}>
-            <TextBox placeholder="Enter  Temporary Password" label="Temporary Password" type="password" Icon={LockClosedIcon} value={tempPass} setValue={setTempPass} />
+            <TextBox placeholder="Enter Temporary Password" label="Temporary Password" type="password" Icon={LockClosedIcon} value={tempPass} setValue={setTempPass} />
 
             <TextBox placeholder="Enter New Password" label="New Password" type="password" Icon={LockClosedIcon} value={newPass} setValue={setNewPass} />
 
-            <TextBox placeholder="Enter New Password Again" label="Confirm Password " type="password" Icon={LockClosedIcon} value={confirmPass} setValue={setConfirmPass} />
+            <TextBox placeholder="Enter New Password Again" label="Confirm Password" type="password" Icon={LockClosedIcon} value={confirmPass} setValue={setConfirmPass} />
 
             {error && <ErrorMessage message={error} />}
 
-            <Button text="Continue" disabled={isLoading} />
+            <Button text={isLoading ? 'Loading...' : 'Continue'} disabled={isLoading} />
           </form>
 
           <div>
             {timer > 0 ? (
-              <p className="font-zenkaku font-light text-[12px] text-center">Email Sent! Didn't Recieve? Resend Email in {timer} Seconds</p>
+              <p className="font-zenkaku font-light text-[12px] text-center">
+                {t("Email Sent! Didn't Recieve? Resend Email in")} {timer} {t('Seconds')}
+              </p>
             ) : (
               <button onClick={handleResendEmail} className="text-blue-500 hover:text-blue-700 font-zenkaku">
-                Resend Email
+                {t('Resend Email')}
               </button>
             )}
           </div>

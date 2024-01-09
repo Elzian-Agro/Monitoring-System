@@ -23,7 +23,9 @@ function Redirect({ setPage, Icon, message, type }) {
     <div className="flex-1 flex items-center flex-col lg:justify-center h-full w-full">
       <Icon className={`w-[50px] ${type === 'warning' ? 'text-red-300' : 'text-[#0B802199]'}`} />
       <p className={`font-zenkaku font-bold text-[24px] text-center ${type === 'warning' ? 'text-red-300' : 'text-[#0B802199]'}`}>{t(message)}</p>
-      <p className={`font-zenkaku font-light text-[14px] ${type === 'warning' ? 'text-red-300' : 'text-[#0B802199]'}`}>You will be redirected in {timer} seconds</p>
+      <p className={`font-zenkaku font-light text-[14px] ${type === 'warning' ? 'text-red-300' : 'text-[#0B802199]'}`}>
+        {t('You will be redirected in')} {timer} {t('Seconds')}
+      </p>
     </div>
   );
 }
