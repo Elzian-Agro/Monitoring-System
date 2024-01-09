@@ -1,31 +1,31 @@
-import React from "react";
-import "./index.css";
+import React from 'react';
+import './index.css';
 
-import Navbar from "components/common/navbar";
-import Sidebar from "components/common/sidebar";
+import Navbar from 'components/common/navbar';
+import Sidebar from 'components/common/sidebar';
 
-import { useSelector } from "react-redux";
-import { selectActiveMenu } from "./slice/appSlice";
+import { useSelector } from 'react-redux';
+import { selectActiveMenu } from './slice/appSlice';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
-    case "open":
-      return "w-72 fixed";
-    case "onlyIcon":
-      return "w-30";
+    case 'open':
+      return 'w-72 fixed';
+    case 'onlyIcon':
+      return 'w-30';
     default:
-      return "w-0";
+      return 'w-0';
   }
 };
 
 const getMainContentMargin = (activeMenu) => {
   switch (activeMenu) {
-    case "open":
-      return "md:ml-72";
-    case "onlyIcon":
-      return "md:ml-2";
+    case 'open':
+      return 'md:ml-72';
+    case 'onlyIcon':
+      return 'md:ml-2';
     default:
-      return "flex-2";
+      return 'flex-2';
   }
 };
 

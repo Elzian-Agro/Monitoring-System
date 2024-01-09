@@ -1,13 +1,29 @@
-import React from 'react';
-import { Bars3Icon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import React, { useState } from 'react';
+import { Bars3Icon, ChevronDownIcon, BellIcon } from '@heroicons/react/24/outline';
 import avatar from '../../../assets/images/avatar.jpg';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setActiveMenu, selectActiveMenu } from '../../../pages/dashboard/slice/appSlice';
+import UserProfile from 'pages/dashboard/components/common/user-profile';
+import Notification from 'pages/dashboard/components/common/notification-set';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const activeMenu = useSelector(selectActiveMenu);
+  const [isProfileOpen, setisProfileOpen] = useState(false);
+  const [isNotificationOpen, setisNotificationOpen] = useState(false);
+
+  // Function to handle the click on the profile button
+  const handleProfileClick = () => {
+    setisProfileOpen(!isProfileOpen);
+    setisNotificationOpen(false); // Close notification when profile is opened
+  };
+
+  // Function to handle the click on the notification button
+  const handleNotificationClick = () => {
+    setisNotificationOpen(!isNotificationOpen);
+    setisProfileOpen(false); // Close profile when notification is opened
+  };
 
   const toggleActiveMenu = () => {
     let newActiveMenu;
@@ -25,10 +41,7 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between p-2 md:mr-6 relative">
-      <button
-        type="button"
-        className="relative text-xl rounded-full p-3 hover:bg-light-gray"
-        onClick={toggleActiveMenu}>
+      <button type="button" className="relative text-xl rounded-full p-3 hover:bg-light-gray" onClick={toggleActiveMenu}>
         {/* <span
           style={{ background: dotColor }}
           className="absolute inline-flex rounded-full h-2 w-2 right-2 top-2"
@@ -37,14 +50,19 @@ const Navbar = () => {
       </button>
 
       <div className="flex">
-        <div className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg">
+        <button type="button" className="relative text-xl rounded-full p-3 hover:bg-light-gray" onClick={handleNotificationClick}>
+          <span style={{ background: 'red' }} className="absolute inline-flex rounded-full h-2 w-2 right-2 top-2" />
+          <BellIcon className="h-6 w-6 text-14 " />
+        </button>
+        <div className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg" onClick={handleProfileClick}>
           <img className="rounded-full w-8 h-8" src={avatar} alt="user-profile" />
           <p>
-            <span className="text-gray-400 text-14">Hi,</span>{' '}
-            <span className="text-gray-400 font-bold ml-1 text-14">Michael</span>
+            <span className="text-gray-400 text-14">Hi,</span> <span className="text-gray-400 font-bold ml-1 text-14">Michael</span>
           </p>
           <ChevronDownIcon className="h-6 w-6 text-14 text-gray-400" />
         </div>
+        {isProfileOpen && <UserProfile />}
+        {isNotificationOpen && <Notification />}
       </div>
     </div>
   );
