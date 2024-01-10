@@ -5,7 +5,7 @@ import Navbar from 'components/common/navbar';
 import Sidebar from 'components/common/sidebar';
 
 import { useSelector } from 'react-redux';
-import { selectActiveMenu } from './slice/appSlice';
+import { selectActiveMenu } from './slice/dashboardLayoutSlice';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
