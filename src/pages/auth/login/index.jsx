@@ -52,7 +52,7 @@ function Login({ setPage }) {
     };
 
     try {
-      userCredintials.password = encryptData(password);
+      userCredintials.password = await encryptData(password);
     } catch {
       setError('encryptionFailed');
       return;
