@@ -39,5 +39,6 @@
   "Remember me": "Remember me",
   "Forgot Password?": "Forgot Password?",
   "Logging in...": "Logging in...",
-  "Login": "Login"
+  "Login": "Login",
+  "encryptionFailed": "An error occured! Please try agian"
 }

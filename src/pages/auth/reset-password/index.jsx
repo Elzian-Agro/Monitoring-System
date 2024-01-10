@@ -8,9 +8,9 @@ import { isValidPassword } from 'pages/auth/utils';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateEmail } from '../slice/emailSlice';
-import { sha256 } from 'js-sha256';
 import Redirect from 'pages/auth/components/base/Redirect';
 import { useTranslation } from 'react-i18next';
+import { encryptData } from 'pages/auth/utils';
 
 function ResetPassword({ setPage }) {
   const [tempPass, setTempPass] = useState('');
@@ -25,7 +25,7 @@ function ResetPassword({ setPage }) {
   const [blocked, setBlocked] = useState(false);
   const { t } = useTranslation();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!tempPass) {
@@ -43,9 +43,15 @@ function ResetPassword({ setPage }) {
 
     const data = {
       email: email,
-      temporaryPassword: sha256(tempPass),
-      newPassword: sha256(newPass),
     };
+
+    try {
+      data.temporaryPassword = await encryptData(tempPass);
+      data.newPassword = await encryptData(newPass);
+    } catch (error) {
+      setError('encryptionFailed');
+      return;
+    }
 
     axios
       .post('http://localhost:5000/auth/reset-password', data)

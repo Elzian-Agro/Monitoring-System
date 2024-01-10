@@ -3,12 +3,11 @@ import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import Button from 'pages/auth/components/base/Button';
 import TextBox from 'pages/auth/components/base/TextBox';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
-import { isValidEmail } from 'pages/auth/utils';
+import { isValidEmail, encryptData } from 'pages/auth/utils';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-const sha256 = require('js-sha256').sha256;
 
 function Login({ setPage }) {
   const [email, setEmail] = useState('');
@@ -31,7 +30,7 @@ function Login({ setPage }) {
     }
   }, []);
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
     if (!email) {
@@ -50,8 +49,14 @@ function Login({ setPage }) {
 
     const userCredintials = {
       email: email,
-      password: sha256(password),
     };
+
+    try {
+      userCredintials.password = encryptData(password);
+    } catch {
+      setError('encryptionFailed');
+      return;
+    }
 
     axios
       .post(`${baseURL}/auth/login`, userCredintials)
