@@ -12,6 +12,7 @@ const Navbar = () => {
   const activeMenu = useSelector(selectActiveMenu);
   const [isProfileOpen, setisProfileOpen] = useState(false);
   const [isNotificationOpen, setisNotificationOpen] = useState(false);
+  const userName = 'Michael';
 
   // Function to handle the click on the profile button
   const handleProfileClick = () => {
@@ -42,10 +43,6 @@ const Navbar = () => {
   return (
     <div className="flex justify-between p-2 md:mr-6 relative">
       <button type="button" className="relative text-xl rounded-full p-3 hover:bg-light-gray" onClick={toggleActiveMenu}>
-        {/* <span
-          style={{ background: dotColor }}
-          className="absolute inline-flex rounded-full h-2 w-2 right-2 top-2"
-        /> */}
         <Bars3Icon className="h-6 w-6 cursor-pointer" />
       </button>
 
@@ -57,7 +54,11 @@ const Navbar = () => {
         <div className="flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg" onClick={handleProfileClick}>
           <img className="rounded-full w-8 h-8" src={avatar} alt="user-profile" />
           <p>
-            <span className="text-gray-400 text-14">Hi,</span> <span className="text-gray-400 font-bold ml-1 text-14">Michael</span>
+            <span className="text-gray-400 text-14 hidden md:inline-block">Hi,</span>
+            <span className="text-gray-400 font-bold ml-1 text-14">
+              <span class="md:hidden">{userName.charAt(0)}</span>
+              <span class="hidden md:inline">{userName}</span>
+            </span>
           </p>
           <ChevronDownIcon className="h-6 w-6 text-14 text-gray-400" />
         </div>
