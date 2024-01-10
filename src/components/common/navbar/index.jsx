@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setActiveMenu, selectActiveMenu } from '../../../pages/dashboard/slice/dashboardLayoutSlice';
 import UserProfile from 'pages/dashboard/components/common/user-profile';
 import Notification from 'pages/dashboard/components/common/notification-set';
+import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ const Navbar = () => {
       </button>
 
       <div className="flex">
+        <ThemeSettings />
         <button type="button" className="relative text-xl rounded-full p-3 hover:bg-light-gray" onClick={handleNotificationClick}>
           <span style={{ background: 'red' }} className="absolute inline-flex rounded-full h-2 w-2 right-2 top-2" />
           <BellIcon className="h-6 w-6 text-14 " />
