@@ -5,7 +5,7 @@ import logo from 'assets/images/logo.png';
 import { Link, NavLink } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { selectActiveMenu, setActiveMenu } from '../../../pages/dashboard/slice/appSlice';
+import { selectActiveMenu, setActiveMenu } from '../../../pages/dashboard/slice/dashboardLayoutSlice';
 import { sidebarLinks } from './sidebarConstants';
 
 const Sidebar = () => {

@@ -3,7 +3,7 @@ import { Bars3Icon, ChevronDownIcon, BellIcon } from '@heroicons/react/24/outlin
 import avatar from '../../../assets/images/avatar.jpg';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setActiveMenu, selectActiveMenu } from '../../../pages/dashboard/slice/appSlice';
+import { setActiveMenu, selectActiveMenu } from '../../../pages/dashboard/slice/dashboardLayoutSlice';
 import UserProfile from 'pages/dashboard/components/common/user-profile';
 import Notification from 'pages/dashboard/components/common/notification-set';
 
