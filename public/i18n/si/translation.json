@@ -32,7 +32,7 @@
   "Seconds": "තත්පර",
   "Resend Email": "ඊමේල් නැවත යවන්න",
   "You will be redirected in": "ඔබ හරවා යවනු ඇත",
-   "LOG IN": "පුරන්න",
+  "LOG IN": "පුරන්න",
   "LOG IN TO YOUR DASHBOARD": "ඔබගේ ඩැෂ්බෝඩ් තුළ පුරන්න",
   "Enter your password": "ඔබගේ මුරපදය ඇතුලත් කරන්න",
   "Password": "මුරපදය",
@@ -40,5 +40,6 @@
   "Forgot Password?": "මුරපදය අමතක වූද?",
   "Logging in...": "පුරන්නේ වේ...",
   "Login": "පුරන්න",
-  "encryptionFailed": "දෝෂයක් සිදු විය! කරුණාකර නැවත උත්සාහ කරන්න"
+  "encryptionFailed": "දෝෂයක් සිදු විය! කරුණාකර නැවත උත්සාහ කරන්න",
+  "emailNotVerified": "විද්‍යුත් තැපෑල සත්‍යාපනය කර නැත"
 }
