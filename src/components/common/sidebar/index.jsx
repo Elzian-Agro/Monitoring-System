@@ -21,7 +21,7 @@ const Sidebar = () => {
   const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-gray-100 m-2 hover:translate-x-2 duration-300';
 
   return (
-    <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-2 ">
+    <div className="flex flex-col min-h-screen ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-2 ">
       <div className="flex justify-between items-center">
         <Link
           to="/dashboard"
@@ -44,7 +44,7 @@ const Sidebar = () => {
           </button>
         )}
       </div>
-      <div className="sidebar-items mt-10">
+      <div className="flex-grow sidebar-items mt-10">
         {sidebarLinks.map((link) => (
           <NavLink key={link.to} to={link.to} className={({ isActive }) => (isActive ? activeLink : normalLink)}>
             <link.icon className="h-6 w-6" />
@@ -63,7 +63,7 @@ const Sidebar = () => {
         </NavLink>
 
         {/* Logout */}
-        <NavLink to="/" className="flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-red-500 m-2 duration-300">
+        <NavLink to="/" className="flex mt-8 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:hover:text-black hover:bg-red-500 m-2 duration-300">
           <ArrowUpTrayIcon className="h-6 w-6 rotate-90" />
           {isOpenMenu() && 'Logout'}
         </NavLink>
