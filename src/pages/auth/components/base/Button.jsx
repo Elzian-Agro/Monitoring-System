@@ -16,9 +16,9 @@ function Button({ text, disabled = false }) {
       className={`text-white py-2 px-4 w-[100%] sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] transition-all font-zenkaku font-medium text-[16px] rounded flex group ${
         isTouchDevice ? '' : disabled ? '' : 'hover:bg-[#006102]'
       } ${disabled ? 'bg-[#0B802199] hover:cursor-not-allowed' : 'bg-[#0B8021]'} `}
-      type="submit"
+      type='submit'
       disabled={disabled}>
-      <p className="flex-1 w-full text-left">{t(text)}</p>
+      <p className='flex-1 w-full text-left'>{t(text)}</p>
       <ArrowRightIcon className={`h-6 w-6 mr-5 transition-all ${disabled ? '' : 'group-hover:mr-0'}`} />
     </button>
   );

@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeftIcon, LockClosedIcon, ExclamationTriangleIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowLeftIcon,
+  LockClosedIcon,
+  ExclamationTriangleIcon,
+  CheckCircleIcon,
+  XCircleIcon,
+} from '@heroicons/react/24/outline';
 import Button from 'pages/auth/components/base/Button';
 import TextBox from 'pages/auth/components/base/TextBox';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
@@ -114,23 +120,48 @@ function ResetPassword({ setPage }) {
   };
 
   return (
-    <div className="flex flex-col h-full w-full gap-5 md:gap-0 items-start">
-      <button onClick={handleGoBack} className="group w-[100px] flex items-center">
-        <ArrowLeftIcon className="w-[20px] group-hover:ml-[-20px] transition-all" />
-        <p className="flex-1 font-zenkaku text-[12px]">{t('Go Back')}</p>
+    <div className='flex flex-col h-full w-full gap-5 md:gap-0 items-start'>
+      <button onClick={handleGoBack} className='group w-[100px] flex items-center'>
+        <ArrowLeftIcon className='w-[20px] group-hover:ml-[-20px] transition-all' />
+        <p className='flex-1 font-zenkaku text-[12px]'>{t('Go Back')}</p>
       </button>
 
       {email && !success && !blocked && (
-        <div className="flex-1 flex items-center flex-col lg:justify-center h-full w-full">
-          <h1 className="font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5 sm:leading-10">{t('RESET PASSWORD')}</h1>
-          <p className="font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10">{t('TEMPORARY PASSWORD HAS BEEN SENT TO YOUR EMAIL')}</p>
+        <div className='flex-1 flex items-center flex-col lg:justify-center h-full w-full'>
+          <h1 className='font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
+            {t('RESET PASSWORD')}
+          </h1>
+          <p className='font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10'>
+            {t('TEMPORARY PASSWORD HAS BEEN SENT TO YOUR EMAIL')}
+          </p>
 
-          <form className="flex flex-col items-center p-2 xs:p-4 gap-4 w-full" onSubmit={handleSubmit}>
-            <TextBox placeholder="Enter Temporary Password" label="Temporary Password" type="password" Icon={LockClosedIcon} value={tempPass} setValue={setTempPass} />
+          <form className='flex flex-col items-center p-2 xs:p-4 gap-4 w-full' onSubmit={handleSubmit}>
+            <TextBox
+              placeholder='Enter Temporary Password'
+              label='Temporary Password'
+              type='password'
+              Icon={LockClosedIcon}
+              value={tempPass}
+              setValue={setTempPass}
+            />
 
-            <TextBox placeholder="Enter New Password" label="New Password" type="password" Icon={LockClosedIcon} value={newPass} setValue={setNewPass} />
+            <TextBox
+              placeholder='Enter New Password'
+              label='New Password'
+              type='password'
+              Icon={LockClosedIcon}
+              value={newPass}
+              setValue={setNewPass}
+            />
 
-            <TextBox placeholder="Enter New Password Again" label="Confirm Password" type="password" Icon={LockClosedIcon} value={confirmPass} setValue={setConfirmPass} />
+            <TextBox
+              placeholder='Enter New Password Again'
+              label='Confirm Password'
+              type='password'
+              Icon={LockClosedIcon}
+              value={confirmPass}
+              setValue={setConfirmPass}
+            />
 
             {error && <ErrorMessage message={error} />}
 
@@ -139,11 +170,11 @@ function ResetPassword({ setPage }) {
 
           <div>
             {timer > 0 ? (
-              <p className="font-zenkaku font-light text-[12px] text-center">
+              <p className='font-zenkaku font-light text-[12px] text-center'>
                 {t("Email Sent! Didn't Recieve? Resend Email in")} {timer} {t('Seconds')}
               </p>
             ) : (
-              <button onClick={handleResendEmail} className="text-blue-500 hover:text-blue-700 font-zenkaku">
+              <button onClick={handleResendEmail} className='text-blue-500 hover:text-blue-700 font-zenkaku'>
                 {t('Resend Email')}
               </button>
             )}
@@ -151,9 +182,13 @@ function ResetPassword({ setPage }) {
         </div>
       )}
 
-      {!email && !success && !blocked && <Redirect setPage={setPage} Icon={ExclamationTriangleIcon} message={'unauthorizedAccess'} type={'warning'} />}
+      {!email && !success && !blocked && (
+        <Redirect setPage={setPage} Icon={ExclamationTriangleIcon} message={'unauthorizedAccess'} type={'warning'} />
+      )}
 
-      {success && !blocked && <Redirect setPage={setPage} Icon={CheckCircleIcon} message={'passwordResetSuccessfully'} type={'success'} />}
+      {success && !blocked && (
+        <Redirect setPage={setPage} Icon={CheckCircleIcon} message={'passwordResetSuccessfully'} type={'success'} />
+      )}
 
       {blocked && <Redirect setPage={setPage} Icon={XCircleIcon} message={'userBlocked'} type={'warning'} />}
     </div>
