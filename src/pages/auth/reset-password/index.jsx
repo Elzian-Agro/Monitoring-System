@@ -102,7 +102,7 @@ function ResetPassword({ setPage }) {
 
   const handleResendEmail = () => {
     axios
-      .post('http://localhost:5000/auth/resend-password', {
+      .post('http://localhost:5000/auth/forget-password', {
         email: email,
       })
       .then(() => {

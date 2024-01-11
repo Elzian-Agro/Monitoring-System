@@ -62,7 +62,7 @@ function Login({ setPage }) {
       .post(`${baseURL}/auth/login`, userCredintials)
       .then((response) => {
         // Save the token in localStorage
-        localStorage.setItem('jwtToken', response.data.accessToken);
+        localStorage.setItem('jwtToken', response.data.refreshToken);
 
         // Save or remove the username and password from local storage
         if (remember) {

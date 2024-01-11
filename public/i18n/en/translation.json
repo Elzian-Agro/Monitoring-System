@@ -40,5 +40,6 @@
   "Forgot Password?": "Forgot Password?",
   "Logging in...": "Logging in...",
   "Login": "Login",
-  "encryptionFailed": "An error occured! Please try agian"
+  "encryptionFailed": "An error occured! Please try agian",
+  "emailNotVerified": "Email is not verified"
 }
