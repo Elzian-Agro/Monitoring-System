@@ -79,7 +79,7 @@ function ResetPassword({ setPage }) {
             setError('Incorrect Temporary Password');
             break;
 
-          case 423:
+          case 403:
             setBlocked(true);
             break;
 
@@ -176,7 +176,7 @@ function ResetPassword({ setPage }) {
           <div>
             {timer > 0 ? (
               <p className='font-zenkaku font-light text-[12px] text-center'>
-                {t("Email Sent! Didn't Recieve? Resend Email in", {val: timer})}
+                {t("Email Sent! Didn't Recieve? Resend Email in", { val: timer })}
               </p>
             ) : (
               <button onClick={handleResendEmail} className='text-blue-500 hover:text-blue-700 font-zenkaku'>

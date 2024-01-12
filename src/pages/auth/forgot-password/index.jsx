@@ -49,7 +49,7 @@ function ForgotPassword({ setPage }) {
             setError('Email is not verified');
             break;
 
-          case 423:
+          case 403:
             setError('User is blocked! Contact admin');
             break;
 
