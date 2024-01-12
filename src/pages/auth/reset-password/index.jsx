@@ -10,7 +10,7 @@ import Button from 'pages/auth/components/base/Button';
 import TextBox from 'pages/auth/components/base/TextBox';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
 import PropTypes from 'prop-types';
-import { isValidPassword, encryptData } from 'pages/auth/utils';
+import { isValidPassword, tokenise } from 'pages/auth/utils';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateEmail } from '../slice/emailSlice';
@@ -48,18 +48,21 @@ function ResetPassword({ setPage }) {
 
     const data = {
       email: email,
+      temporaryPassword: tempPass,
+      newPassword: newPass,
     };
 
+    let token;
+
     try {
-      data.temporaryPassword = await encryptData(tempPass);
-      data.newPassword = await encryptData(newPass);
+      token = await tokenise(data);
     } catch (error) {
       setError('encryptionFailed');
       return;
     }
 
     axios
-      .post('http://localhost:5000/auth/reset-password', data)
+      .post('http://localhost:5000/auth/reset-password', { token })
       .then(() => {
         setError(null);
         dispatch(updateEmail(null));

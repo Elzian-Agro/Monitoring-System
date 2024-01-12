@@ -12,7 +12,6 @@ export const isValidPassword = (password) => {
   return passwordRegex.test(password);
 };
 
-
 // Encryption
 async function importPublicKey(pem) {
   // Fetch the part of the PEM string between the header and footer
@@ -61,3 +60,17 @@ export async function encryptData(data) {
   return window.btoa(String.fromCharCode.apply(null, new Uint8Array(encrypted)));
 }
 
+//tokenise
+export const tokenise = async (data) => {
+  const currentTime = new Date().toGMTString();
+  let tokenData = { ...data, time: currentTime };
+  let token = JSON.stringify(tokenData);
+
+  try {
+    token = await encryptData(token);
+  } catch (err) {
+    throw err;
+  }
+
+  return token;
+};

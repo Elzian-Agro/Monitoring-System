@@ -3,7 +3,7 @@ import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import Button from 'pages/auth/components/base/Button';
 import TextBox from 'pages/auth/components/base/TextBox';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
-import { isValidEmail, encryptData } from 'pages/auth/utils';
+import { isValidEmail, tokenise } from 'pages/auth/utils';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -49,17 +49,20 @@ function Login({ setPage }) {
 
     const userCredintials = {
       email: email,
+      password: password,
     };
 
+    let token;
+
     try {
-      userCredintials.password = await encryptData(password);
-    } catch {
+      token = await tokenise(userCredintials);
+    } catch (error) {
       setError('encryptionFailed');
       return;
     }
 
     axios
-      .post(`${baseURL}/auth/login`, userCredintials)
+      .post(`${baseURL}/auth/login`, { token })
       .then((response) => {
         // Save the token in localStorage
         localStorage.setItem('jwtToken', response.data.refreshToken);
