@@ -21,7 +21,7 @@ function ForgotPassword({ setPage }) {
     event.preventDefault();
 
     if (!isValidEmail(email)) {
-      setError('emailRegexFailed');
+      setError('Please Enter a Valid Email Address!');
       return;
     }
 
@@ -42,23 +42,23 @@ function ForgotPassword({ setPage }) {
 
         switch (error.response?.status) {
           case 404:
-            setError('userNotFound');
+            setError('User Not Found!');
             break;
 
           case 400:
-            setError('emailNotVerified');
+            setError('Email is not verified');
             break;
 
           case 423:
-            setError('userBlocked');
+            setError('User is blocked! Contact admin');
             break;
 
           case 500:
-            setError('serverError');
+            setError('Oops! an error occured. Please try again later');
             break;
 
           default:
-            setError('networkError');
+            setError('Network error! Please try again later');
             break;
         }
       });

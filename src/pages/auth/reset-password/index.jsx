@@ -34,13 +34,15 @@ function ResetPassword({ setPage }) {
     event.preventDefault();
 
     if (!tempPass) {
-      setError('emptyTempPassword');
+      setError('Please enter the temporary password sent to your email');
       return 0;
     } else if (!isValidPassword(newPass)) {
-      setError('passwordRegexFailed');
+      setError(
+        'Password too weak. Should contain atleast 8 characters including upper and lower case letters + numbers + special chars.'
+      );
       return 0;
     } else if (newPass !== confirmPass) {
-      setError('passwordNoMatch');
+      setError('Passwords do not match');
       return 0;
     }
 
@@ -57,7 +59,7 @@ function ResetPassword({ setPage }) {
     try {
       token = await tokenise(data);
     } catch (error) {
-      setError('encryptionFailed');
+      setError('An error occured! Please try agian');
       return;
     }
 
@@ -74,7 +76,7 @@ function ResetPassword({ setPage }) {
 
         switch (error.response?.status) {
           case 401:
-            setError('wrongTempPassword');
+            setError('Incorrect Temporary Password');
             break;
 
           case 423:
@@ -82,11 +84,11 @@ function ResetPassword({ setPage }) {
             break;
 
           case 500:
-            setError('serverError');
+            setError('Oops! an error occured. Please try again later');
             break;
 
           default:
-            setError('networkError');
+            setError('Network error! Please try again later');
             break;
         }
       });
@@ -186,14 +188,16 @@ function ResetPassword({ setPage }) {
       )}
 
       {!email && !success && !blocked && (
-        <Redirect setPage={setPage} Icon={ExclamationTriangleIcon} message={'unauthorizedAccess'} type={'warning'} />
+        <Redirect setPage={setPage} Icon={ExclamationTriangleIcon} message={'Unauthorized Access'} type={'warning'} />
       )}
 
       {success && !blocked && (
-        <Redirect setPage={setPage} Icon={CheckCircleIcon} message={'passwordResetSuccessfully'} type={'success'} />
+        <Redirect setPage={setPage} Icon={CheckCircleIcon} message={'Password Reset Successfully'} type={'success'} />
       )}
 
-      {blocked && <Redirect setPage={setPage} Icon={XCircleIcon} message={'userBlocked'} type={'warning'} />}
+      {blocked && (
+        <Redirect setPage={setPage} Icon={XCircleIcon} message={'User is blocked! Contact admin'} type={'warning'} />
+      )}
     </div>
   );
 }

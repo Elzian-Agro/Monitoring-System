@@ -34,13 +34,13 @@ function Login({ setPage }) {
     event.preventDefault();
 
     if (!email) {
-      setError('emptyEmail');
+      setError('Please enter the email');
       return;
     } else if (!isValidEmail(email)) {
-      setError('emailRegexFailed');
+      setError('Please Enter a Valid Email Address!');
       return;
     } else if (!password) {
-      setError('emptyPassword');
+      setError('Please enter the password');
       return;
     }
 
@@ -57,7 +57,7 @@ function Login({ setPage }) {
     try {
       token = await tokenise(userCredintials);
     } catch (error) {
-      setError('encryptionFailed');
+      setError('An error occured! Please try agian');
       return;
     }
 
@@ -83,15 +83,15 @@ function Login({ setPage }) {
         setLoading(false);
         switch (error.response?.status) {
           case 401:
-            setError('invalidCredentials');
+            setError('Invalid email or password');
             break;
 
           case 500:
-            setError('serverError');
+            setError('Oops! an error occured. Please try again later');
             break;
 
           default:
-            setError('networkError');
+            setError('Network error! Please try again later');
             break;
         }
       });
