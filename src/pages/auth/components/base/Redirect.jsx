@@ -29,7 +29,7 @@ function Redirect({ setPage, Icon, message, type }) {
         {t(message)}
       </p>
       <p className={`font-zenkaku font-light text-[14px] ${type === 'warning' ? 'text-red-300' : 'text-[#0B802199]'}`}>
-        {t('You will be redirected in')} {timer} {t('Seconds')}
+        {t('You will be redirected in', {val: timer})}
       </p>
     </div>
   );
