@@ -137,7 +137,7 @@ function Login({ setPage }) {
             <label htmlFor='checkbox'>{t('Remember me')}</label>
           </div>
 
-          <button className='hover:text-[#0B8021] transition-all' onClick={() => setPage('ForgotPassword')}>
+          <button type='button' className='hover:text-[#0B8021] transition-all' onClick={() => setPage('ForgotPassword')}>
             {t('Forgot Password?')}
           </button>
         </div>
