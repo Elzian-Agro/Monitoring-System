@@ -62,8 +62,8 @@ export async function encryptData(data) {
 
 //tokenise
 export const tokenise = async (data) => {
-  const currentTime = new Date().toGMTString();
-  let token = JSON.stringify({ ...data, time: currentTime });
+  const expiryTime = new Date(new Date().getTime() + (2 * 60 * 1000)).toGMTString();
+  let token = JSON.stringify({ ...data, expiry: expiryTime });
 
   try {
     token = await encryptData(token);
@@ -73,3 +73,4 @@ export const tokenise = async (data) => {
 
   return token;
 };
+
