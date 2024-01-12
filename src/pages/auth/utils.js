@@ -63,8 +63,7 @@ export async function encryptData(data) {
 //tokenise
 export const tokenise = async (data) => {
   const currentTime = new Date().toGMTString();
-  let tokenData = { ...data, time: currentTime };
-  let token = JSON.stringify(tokenData);
+  let token = JSON.stringify({ ...data, time: currentTime });
 
   try {
     token = await encryptData(token);
