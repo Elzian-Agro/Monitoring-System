@@ -6,7 +6,7 @@ import ResetPassword from 'pages/auth/reset-password';
 import LanguageSelector from 'pages/auth/components/base/LanguageSelector';
 
 function LoginPage() {
-  const [page, setPage] = useState('ResetPassword');
+  const [page, setPage] = useState('Login');
 
   return (
     <div className='flex justify-center items-center w-[100vw] h-[100dvh] bg-gradient-to-t from-[#DEE4EA] to-[#F9FCFF]'>
