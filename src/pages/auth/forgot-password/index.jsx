@@ -40,20 +40,16 @@ function ForgotPassword({ setPage }) {
       .catch((error) => {
         setIsLoading(false);
 
-        switch (error.response?.status) {
-          case 404:
+        switch (error.response?.data?.code) {
+          case 17002:
             setError('User Not Found!');
             break;
 
-          case 400:
-            setError('Email is not verified');
-            break;
-
-          case 403:
+          case 13001:
             setError('User is blocked! Contact admin');
             break;
 
-          case 500:
+          case 17001:
             setError('Oops! an error occured. Please try again later');
             break;
 

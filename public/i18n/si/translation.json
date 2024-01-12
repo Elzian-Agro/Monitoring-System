@@ -40,5 +40,6 @@
   "Logging in...": "පුරන්නේ වේ...",
   "Login": "පුරන්න",
   "An error occured! Please try agian": "දෝෂයක් සිදු විය! කරුණාකර නැවත උත්සාහ කරන්න",
-  "Email is not verified": "විද්‍යුත් තැපෑල සත්‍යාපනය කර නැත"
+  "Email is not verified": "විද්‍යුත් තැපෑල සත්‍යාපනය කර නැත",
+  "Time Out": "කාලය හමාරයි"
 }

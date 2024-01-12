@@ -81,12 +81,17 @@ function Login({ setPage }) {
       })
       .catch((error) => {
         setLoading(false);
-        switch (error.response?.status) {
-          case 401:
+        console.log(error.response)
+        switch (error.response?.data?.code) {
+          case 17003:
             setError('Invalid email or password');
             break;
 
-          case 500:
+          case 17007:
+            setError('Time Out');
+            break;
+
+          case 17001:
             setError('Oops! an error occured. Please try again later');
             break;
 

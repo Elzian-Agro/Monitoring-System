@@ -40,5 +40,6 @@
   "Logging in...": "Logging in...",
   "Login": "Login",
   "An error occured! Please try agian": "An error occured! Please try agian",
-  "Email is not verified": "Email is not verified"
+  "Email is not verified": "Email is not verified",
+  "Time Out": "Time Out"
 }

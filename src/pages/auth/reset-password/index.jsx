@@ -74,16 +74,20 @@ function ResetPassword({ setPage }) {
       .catch((error) => {
         setIsLoading(false);
 
-        switch (error.response?.status) {
-          case 401:
+        switch (error.response?.data?.code) {
+          case 13003:
             setError('Incorrect Temporary Password');
             break;
 
-          case 403:
+          case 13001:
             setBlocked(true);
             break;
 
-          case 500:
+          case 17002:
+            setError('Time Out');
+            break;
+
+          case 17001:
             setError('Oops! an error occured. Please try again later');
             break;
 
