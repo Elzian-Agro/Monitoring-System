@@ -81,7 +81,7 @@ function Login({ setPage }) {
       })
       .catch((error) => {
         setLoading(false);
-        console.log(error.response)
+
         switch (error.response?.data?.code) {
           case 17003:
             setError('Invalid email or password');
@@ -142,7 +142,10 @@ function Login({ setPage }) {
             <label htmlFor='checkbox'>{t('Remember me')}</label>
           </div>
 
-          <button type='button' className='hover:text-[#0B8021] transition-all' onClick={() => setPage('ForgotPassword')}>
+          <button
+            type='button'
+            className='hover:text-[#0B8021] transition-all'
+            onClick={() => setPage('ForgotPassword')}>
             {t('Forgot Password?')}
           </button>
         </div>

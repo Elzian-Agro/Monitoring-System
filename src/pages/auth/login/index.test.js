@@ -1,48 +1,57 @@
-import React from 'react';
-import { render, screen, fireEvent, act } from '@testing-library/react';
-import Login from './index';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import LoginPage from '../components/common/container';
+import axios from 'axios';
+import { store } from 'store/store';
 
-// Mock localStorage
-const localStorageMock = (() => {
-  let store = {};
-  return {
-    getItem: jest.fn((key) => store[key]),
-    setItem: jest.fn((key, value) => {
-      store[key] = value.toString();
-    }),
-    removeItem: jest.fn((key) => {
-      delete store[key];
-    }),
-    clear: jest.fn(() => {
-      store = {};
-    }),
-  };
-})();
+jest.mock('axios');
 
-beforeEach(() => {
-  Object.defineProperty(window, 'localStorage', {
-    value: localStorageMock,
+jest.mock('react-i18next', () => ({
+  useTranslation: () => {
+    return {
+      t: (key) => key,
+      i18n: { changeLanguage: jest.fn() },
+    };
+  },
+  initReactI18next: {
+    type: '3rdParty',
+    init: jest.fn(),
+  },
+}));
+
+describe('LoginPage Component', () => {
+  beforeEach(() => {
+    axios.mockClear();
   });
-});
 
-describe('Loging Component', () => {
-  // Mock the setPage function
-  const mockSetPage = jest.fn();
+  const renderWithProviders = (component) => {
+    return render(
+      <Provider store={store}>
+        <BrowserRouter>{component}</BrowserRouter>
+      </Provider>
+    );
+  };
 
-  it('renders without crashing', () => {
-    render(<Login setPage={mockSetPage} />);
+  it('renders the login form by default', () => {
+    renderWithProviders(<LoginPage />);
     expect(screen.getByText('LOG IN')).toBeInTheDocument();
   });
 
-  it('allows navigation to the forget password page', () => {
-    render(<Login setPage={mockSetPage} />);
-    const linkForgetPassword = screen.getByText('Forgot Password?');
-    fireEvent.click(linkForgetPassword);
-    expect(mockSetPage).toHaveBeenCalledWith('ForgotPassword');
+  it('navigates to Forgot Password page', () => {
+    renderWithProviders(<LoginPage />);
+
+    // Assuming 'Forgot Password?' is a button or link in your component
+    const forgotPasswordLink = screen.getByText('Forgot Password?');
+    fireEvent.click(forgotPasswordLink);
+
+    // Adjust this to match the text/content you expect to see in Forgot Password page
+    expect(screen.getByText('FORGOT PASSWORD?')).toBeInTheDocument();
   });
 
   it('handles email and password input correctly', () => {
-    render(<Login setPage={mockSetPage} />);
+    renderWithProviders(<LoginPage />);
     const emailInput = screen.getByPlaceholderText('Enter your email');
     const passwordInput = screen.getByPlaceholderText('Enter your password');
 
@@ -54,7 +63,7 @@ describe('Loging Component', () => {
   });
 
   it('checks user inputs before allowing form submission', () => {
-    render(<Login setPage={mockSetPage} />);
+    renderWithProviders(<LoginPage />);
     const emailInput = screen.getByPlaceholderText('Enter your email');
     const passwordInput = screen.getByPlaceholderText('Enter your password');
     const loginButton = screen.getByText('Login');
@@ -77,10 +86,11 @@ describe('Loging Component', () => {
   });
 
   it('toggles the "Remember me" checkbox', () => {
-    render(<Login setPage={mockSetPage} />);
+    renderWithProviders(<LoginPage />);
 
     const rememberMeCheckbox = screen.getByLabelText('Remember me');
 
+    // Simulate click checkbox
     fireEvent.click(rememberMeCheckbox);
 
     expect(rememberMeCheckbox.checked).toBe(true);
