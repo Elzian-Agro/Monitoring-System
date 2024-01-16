@@ -5,6 +5,7 @@ import '@testing-library/jest-dom';
 import LoginPage from '../components/common/container';
 import axios from 'axios';
 import { store } from 'store/store';
+import { tokenise } from 'pages/auth/utils';
 
 jest.mock('axios');
 
@@ -21,9 +22,14 @@ jest.mock('react-i18next', () => ({
   },
 }));
 
+jest.mock('pages/auth/utils', () => ({
+  ...jest.requireActual('pages/auth/utils'),
+  tokenise: jest.fn().mockResolvedValue('mocked-token'),
+}));
+
 describe('LoginPage Component', () => {
   beforeEach(() => {
-    axios.mockClear();
+    axios.post.mockClear();
   });
 
   const renderWithProviders = (component) => {
@@ -34,6 +40,14 @@ describe('LoginPage Component', () => {
     );
   };
 
+  const setupLoginForm = () => {
+    renderWithProviders(<LoginPage />);
+    const emailInput = screen.getByPlaceholderText('Enter your email');
+    const passwordInput = screen.getByPlaceholderText('Enter your password');
+    const loginButton = screen.getByText('Login');
+    return { emailInput, passwordInput, loginButton };
+  };
+
   it('renders the login form by default', () => {
     renderWithProviders(<LoginPage />);
     expect(screen.getByText('LOG IN')).toBeInTheDocument();
@@ -42,18 +56,14 @@ describe('LoginPage Component', () => {
   it('navigates to Forgot Password page', () => {
     renderWithProviders(<LoginPage />);
 
-    // Assuming 'Forgot Password?' is a button or link in your component
     const forgotPasswordLink = screen.getByText('Forgot Password?');
-    fireEvent.click(forgotPasswordLink);
 
-    // Adjust this to match the text/content you expect to see in Forgot Password page
+    fireEvent.click(forgotPasswordLink);
     expect(screen.getByText('FORGOT PASSWORD?')).toBeInTheDocument();
   });
 
   it('handles email and password input correctly', () => {
-    renderWithProviders(<LoginPage />);
-    const emailInput = screen.getByPlaceholderText('Enter your email');
-    const passwordInput = screen.getByPlaceholderText('Enter your password');
+    const { emailInput, passwordInput } = setupLoginForm();
 
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
     fireEvent.change(passwordInput, { target: { value: 'password123' } });
@@ -63,10 +73,7 @@ describe('LoginPage Component', () => {
   });
 
   it('checks user inputs before allowing form submission', () => {
-    renderWithProviders(<LoginPage />);
-    const emailInput = screen.getByPlaceholderText('Enter your email');
-    const passwordInput = screen.getByPlaceholderText('Enter your password');
-    const loginButton = screen.getByText('Login');
+    const { emailInput, passwordInput, loginButton } = setupLoginForm();
 
     // Simulate blank email
     fireEvent.change(emailInput, { target: { value: '' } });
@@ -92,7 +99,83 @@ describe('LoginPage Component', () => {
 
     // Simulate click checkbox
     fireEvent.click(rememberMeCheckbox);
-
     expect(rememberMeCheckbox.checked).toBe(true);
+  });
+
+  it('displays error message for invalid credentials', async () => {
+    axios.post.mockRejectedValue({ response: { data: { code: 17003 } } });
+
+    const { emailInput, passwordInput, loginButton } = setupLoginForm();
+
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+    fireEvent.click(loginButton);
+
+    await waitFor(() => {
+      expect(tokenise).toHaveBeenCalled();
+      expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/auth/login', {
+        token: 'mocked-token',
+      });
+      expect(screen.getByText('Invalid email or password')).toBeInTheDocument();
+    });
+  });
+
+  it('displays error message for time out', async () => {
+    axios.post.mockRejectedValue({ response: { data: { code: 17007 } } });
+
+    const { emailInput, passwordInput, loginButton } = setupLoginForm();
+
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+    fireEvent.click(loginButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Time Out')).toBeInTheDocument();
+    });
+  });
+
+  it('displays error message for general error', async () => {
+    axios.post.mockRejectedValue({ response: { data: { code: 17001 } } });
+    const { emailInput, passwordInput, loginButton } = setupLoginForm();
+
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+    fireEvent.click(loginButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Oops! an error occured. Please try again later')).toBeInTheDocument();
+    });
+  });
+
+  it('display error message for network error', async () => {
+    axios.post.mockRejectedValue({}); // Error without a response object
+
+    const { emailInput, passwordInput, loginButton } = setupLoginForm();
+
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+    fireEvent.click(loginButton);
+
+    await waitFor(() => {
+      expect(screen.getByText('Network error! Please try again later')).toBeInTheDocument();
+    });
+  });
+
+  it('sucssesfull login', async () => {
+    axios.post.mockResolvedValue({ data: { refreshToken: 'test-token' } });
+
+    const { emailInput, passwordInput, loginButton } = setupLoginForm();
+
+    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
+    fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
+    fireEvent.click(loginButton);
+
+    await waitFor(() => {
+      expect(tokenise).toHaveBeenCalled();
+      expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/auth/login', {
+        token: 'mocked-token',
+      });
+      expect(localStorage.getItem('jwtToken')).toBe('test-token');
+    });
   });
 });
