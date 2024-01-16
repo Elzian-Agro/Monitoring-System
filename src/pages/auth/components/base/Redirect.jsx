@@ -17,7 +17,7 @@ function Redirect({ setPage, Icon, message, type }) {
       setPage('Login');
     }
     return () => clearInterval(interval);
-  }, [timer]);
+  }, [timer, setPage]);
 
   return (
     <div className='flex-1 flex items-center flex-col lg:justify-center h-full w-full'>
