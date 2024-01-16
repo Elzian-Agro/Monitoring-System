@@ -81,6 +81,7 @@
    "jest": {
     "moduleNameMapper": {
       "^axios$": "axios/dist/node/axios.cjs"
-    }
+    },
+    "resetMocks": false
   }
 }

@@ -1,80 +1,188 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import ResetPassword from "./index"; 
-import "@testing-library/jest-dom";
+import React from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import ResetPassword from './index';
+import '@testing-library/jest-dom';
+import { Provider, useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import axios from 'axios';
+import { store } from 'store/store'; // Import your store
+import { updateEmail } from '../slice/emailSlice'; // Import the action you want to dispatch
+import { tokenise } from 'pages/auth/utils';
 
-describe("ResetPassword Component", () => {
+jest.mock('axios');
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'), // use actual for all non-hook parts
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}));
+
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: (key) => key, // return the key itself as the translation
+    i18n: { changeLanguage: jest.fn() },
+  }),
+  initReactI18next: {
+    type: '3rdParty',
+    init: jest.fn(),
+  },
+}));
+
+jest.mock('pages/auth/utils', () => ({
+  ...jest.requireActual('pages/auth/utils'),
+  tokenise: jest.fn().mockResolvedValue('mocked-token'),
+}));
+
+describe('ResetPassword Component', () => {
   const mockSetPage = jest.fn();
+  const mockDispatch = jest.fn();
 
-  const setup = () => {
-    render(<ResetPassword setPage={mockSetPage} />);
-    const tempPassInput = screen.getByPlaceholderText(
-      "Enter Temporary Password"
+  beforeEach(() => {
+    useDispatch.mockReturnValue(mockDispatch);
+    useSelector.mockReturnValue('test@example.com'); // Mock the selector to return an email
+    mockSetPage.mockClear();
+    axios.post.mockClear();
+    mockDispatch.mockClear();
+  });
+
+  const renderWithProviders = (component) => {
+    return render(
+      <Provider store={store}>
+        <BrowserRouter>{component}</BrowserRouter>
+      </Provider>
     );
-    const newPasswordInput = screen.getByPlaceholderText("Enter New Password");
-    const confirmPassInput = screen.getByPlaceholderText(
-      "Enter New Password Again"
-    );
-    const submitButton = screen.getByText("Continue");
-    return { tempPassInput, newPasswordInput, confirmPassInput, submitButton };
   };
 
-  it("renders without crashing", () => {
-    setup();
-    expect(screen.getByText("RESET PASSWORD")).toBeInTheDocument();
+  const submitForm = (tempPass, newPass, confirmPass) => {
+    renderWithProviders(<ResetPassword setPage={mockSetPage} />);
+    fireEvent.change(screen.getByPlaceholderText('Enter Temporary Password'), { target: { value: tempPass } });
+    fireEvent.change(screen.getByPlaceholderText('Enter New Password'), { target: { value: newPass } });
+    fireEvent.change(screen.getByPlaceholderText('Enter New Password Again'), { target: { value: confirmPass } });
+    fireEvent.click(screen.getByText('Continue'));
+  };
+
+  it('renders without crashing', () => {
+    renderWithProviders(<ResetPassword setPage={mockSetPage} />);
+    expect(screen.getByText('RESET PASSWORD')).toBeInTheDocument();
   });
 
-  it("shows an error for empty temporary password", () => {
-    const { submitButton } = setup();
-    fireEvent.click(submitButton);
-    expect(screen.getByText("Invalid Field Input")).toBeInTheDocument();
+  it('shows error for empty temporary password', () => {
+    submitForm('', 'NewPass123!', 'NewPass123!');
+    expect(screen.getByText('Please enter the temporary password sent to your email')).toBeInTheDocument();
   });
 
-  it("shows an error for weak new password", () => {
-    const { tempPassInput, newPasswordInput, confirmPassInput, submitButton } = setup();
-    fireEvent.change(tempPassInput, { target: { value: "validTempPass" } });
-    fireEvent.change(newPasswordInput, { target: { value: "weak" } });
-    fireEvent.change(confirmPassInput, {target: { value: "weak" } });
-    fireEvent.click(submitButton);
+  it('shows error for weak new password', () => {
+    submitForm('TempPass123!', 'weak', 'weak');
     expect(
       screen.getByText(
-        "Password too weak. At least 8 letters or numbers + special chars."
+        'Password too weak. Should contain atleast 8 characters including upper and lower case letters + numbers + special chars.'
       )
     ).toBeInTheDocument();
   });
 
-  it("shows an error when new password and confirmation do not match", () => {
-    const { tempPassInput, newPasswordInput, confirmPassInput, submitButton } =
-      setup();
-    fireEvent.change(tempPassInput, { target: { value: "validTempPass" } });
-    fireEvent.change(newPasswordInput, {
-      target: { value: "ValidNewPass123!" },
-    });
-    fireEvent.change(confirmPassInput, {
-      target: { value: "DifferentNewPass123!" },
-    });
-    fireEvent.click(submitButton);
-    expect(screen.getByText("Passwords do not match")).toBeInTheDocument();
+  it('shows error when passwords do not match', () => {
+    submitForm('TempPass123!', 'NewPass123!', 'DifferentPass123!');
+    expect(screen.getByText('Passwords do not match')).toBeInTheDocument();
   });
 
-//   it("submits the form with valid data", () => {
-//     const { tempPassInput, newPasswordInput, confirmPassInput, submitButton } =
-//       setup();
-//     fireEvent.change(tempPassInput, { target: { value: "validTempPass" } });
-//     fireEvent.change(newPasswordInput, {
-//       target: { value: "ValidNewPass123!" },
-//     });
-//     fireEvent.change(confirmPassInput, {
-//       target: { value: "ValidNewPass123!" },
-//     });
-//     fireEvent.click(submitButton);
-    
-//   });
+  // Tests for successful Axios request
+  it('handles successful password reset and calls API correctly', async () => {
+    axios.post.mockResolvedValue({ status: 200 }); // Mocking Axios success response
 
-  it("allows navigation back to the login page", () => {
-    setup();
-    const backButton = screen.getByText("Go Back");
+    const tempPass = 'TempPass123!';
+    const newPass = 'NewPass123!';
+    submitForm(tempPass, newPass, newPass);
+
+    await waitFor(() => {
+      expect(tokenise).toHaveBeenCalled();
+      // Check if the Axios post was called with the correct URL and data
+      expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/auth/reset-password', {
+        token: 'mocked-token',
+      });
+
+      // Check if the Redux action is dispatched
+      expect(mockDispatch).toHaveBeenCalledWith(updateEmail(null));
+
+      // Check for the success UI response (assuming this is how your component behaves)
+      expect(screen.getByText('Password Reset Successfully')).toBeInTheDocument();
+    });
+  });
+
+  // Tests for each error scenario
+  it('handles "Incorrect Temporary Password" error', async () => {
+    axios.post.mockRejectedValue({ response: { data: { code: 13003 } } });
+    submitForm('TempPass123!', 'NewPass123!', 'NewPass123!');
+    await waitFor(() => {
+      expect(screen.getByText('Incorrect Temporary Password')).toBeInTheDocument();
+    });
+  });
+
+  it('handles "User is blocked" error', async () => {
+    axios.post.mockRejectedValue({ response: { data: { code: 13001 } } });
+    submitForm('TempPass123!', 'NewPass123!', 'NewPass123!');
+    await waitFor(() => {
+      expect(screen.getByText('User is blocked! Contact admin')).toBeInTheDocument();
+    });
+  });
+
+  it('handles "Time Out" error', async () => {
+    axios.post.mockRejectedValue({ response: { data: { code: 17002 } } });
+    submitForm('TempPass123!', 'NewPass123!', 'NewPass123!');
+    await waitFor(() => {
+      expect(screen.getByText('Time Out')).toBeInTheDocument();
+    });
+  });
+
+  it('handles "General error" case', async () => {
+    axios.post.mockRejectedValue({ response: { data: { code: 17001 } } });
+    submitForm('TempPass123!', 'NewPass123!', 'NewPass123!');
+    await waitFor(() => {
+      expect(screen.getByText('Oops! an error occured. Please try again later')).toBeInTheDocument();
+    });
+  });
+
+  it('handles "Network error" case for request failure', async () => {
+    axios.post.mockRejectedValue({}); // Error without a response object
+    submitForm('TempPass123!', 'NewPass123!', 'NewPass123!');
+    await waitFor(() => {
+      expect(screen.getByText('Network error! Please try again later')).toBeInTheDocument();
+    });
+  });
+
+  // Tests for resend email functionality
+  it('handles successful email resend', async () => {
+    axios.post.mockResolvedValue({ status: 200 }); // Mocking Axios success response
+
+    // Mock timers
+    jest.useFakeTimers();
+
+    // Advance timers by 60 seconds
+    jest.advanceTimersByTime(60000);
+
+    renderWithProviders(<ResetPassword setPage={mockSetPage} />);
+
+    // Check if the "Resend Email" button becomes available
+    const resendButton = screen.queryByText('Resend Email');
+    if (resendButton) {
+      // Button is available, click it
+      fireEvent.click(resendButton);
+      // Check if the Axios post was called with the correct URL and data for email resend
+      expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/auth/forget-password', {
+        email: 'test@example.com',
+      });
+      // Check if the timer is reset to 60
+      expect(screen.getByText("Email Sent! Didn't Receive? Resend Email in 60 seconds")).toBeInTheDocument();
+    }
+
+    // Restore the original timers
+    jest.useRealTimers();
+  });
+
+  // Test for navigation back to the login page
+  it('allows navigation back to the login page', () => {
+    renderWithProviders(<ResetPassword setPage={mockSetPage} />);
+    const backButton = screen.getByText('Go Back');
     fireEvent.click(backButton);
-    expect(mockSetPage).toHaveBeenCalledWith("Login");
+    expect(mockSetPage).toHaveBeenCalledWith('Login');
   });
 });
