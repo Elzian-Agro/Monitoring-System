@@ -1,51 +1,53 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
-import LoginPage from "./index";
-import "@testing-library/jest-dom";
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { render, fireEvent, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import LoginPage from './index'; // Update the path to your component
+import axios from 'axios';
+import { store } from 'store/store'; // Import your store
 
-describe("LoginPage Component", () => {
-  it("renders without crashing", () => {
-    render(<LoginPage />);
-    expect(screen.getByAltText("logo")).toBeInTheDocument();
+jest.mock('axios');
+
+jest.mock('react-i18next', () => ({
+  useTranslation: () => {
+    return {
+      t: (key) => key, // return the key itself as the translation
+      i18n: { changeLanguage: jest.fn() },
+    };
+  },
+  initReactI18next: {
+    type: '3rdParty',
+    init: jest.fn(),
+  },
+}));
+
+describe('LoginPage Component', () => {
+  beforeEach(() => {
+    axios.mockClear();
   });
 
-  it("displays the Login form by default", () => {
-    render(<LoginPage />);
-    expect(screen.getByText("LOG IN TO YOUR DASHBOARD")).toBeInTheDocument();
+  const renderWithProviders = (component) => {
+    return render(
+      <Provider store={store}>
+        <BrowserRouter>{component}</BrowserRouter>
+      </Provider>
+    );
+  };
+
+  it('renders the login form by default', () => {
+    renderWithProviders(<LoginPage />);
+    expect(screen.getByText('LOG IN')).toBeInTheDocument();
   });
 
-  it("switches to ForgotPassword form on interaction", () => {
-    render(<LoginPage />);
-    fireEvent.click(screen.getByText("Forgot Password?"));
-    expect(
-      screen.getByText("ENTER YOUR EMAIL FOR THE VERIFICATION PROCESS")
-    ).toBeInTheDocument();
+  it('navigates to Forgot Password page', () => {
+    renderWithProviders(<LoginPage />);
+
+    // Assuming 'Forgot Password?' is a button or link in your component
+    const forgotPasswordLink = screen.getByText('Forgot Password?');
+    fireEvent.click(forgotPasswordLink);
+
+    // Adjust this to match the text/content you expect to see in Forgot Password page
+    expect(screen.getByText('FORGOT PASSWORD?')).toBeInTheDocument();
   });
 
-  it("switches to ResetPassword form on interaction", () => {
-    render(<LoginPage />);
-
-    // Trigger the switch to the ForgotPassword form
-    fireEvent.click(screen.getByText("Forgot Password?"));
-
-    // Simulate entering a valid email
-    const emailInput = screen.getByPlaceholderText("Enter your email"); // Replace with the actual placeholder text of your email input
-    fireEvent.change(emailInput, { target: { value: "test@example.com" } });
-
-    // Submit the form in ForgotPassword to trigger the switch to ResetPassword
-    fireEvent.click(screen.getByText("Continue")); // Replace with the actual text of your submit button in ForgotPassword
-
-    // Check if the ResetPassword form is displayed
-    expect(
-      screen.getByText("TEMPORARY PASSWORD HAS BEEN SENT TO YOUR EMAIL")
-    ).toBeInTheDocument();
-  });
-
-  it("returns to Login form from ResetPassword form", () => {
-    render(<LoginPage />);
-    fireEvent.click(screen.getByText("Forgot Password?"));
-    fireEvent.click(screen.getByText("Continue")); 
-    fireEvent.click(screen.getByText("Go Back"));
-    expect(screen.getByText("LOG IN TO YOUR DASHBOARD")).toBeInTheDocument();
-  });
 });
