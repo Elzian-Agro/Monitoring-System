@@ -23,9 +23,9 @@ function Login({ setPage }) {
 
   // Retrieve remembered credentials from localStorage
   useEffect(() => {
-    if (localStorage.getItem('rememberedEmail') && localStorage.getItem('rememberedPassword')) {
-      setEmail(localStorage.getItem('rememberedEmail'));
-      setPassword(localStorage.getItem('rememberedPassword'));
+    if (localStorage.getItem('Email') && localStorage.getItem('Password')) {
+      setEmail(localStorage.getItem('Email'));
+      setPassword(localStorage.getItem('Password'));
       setRemember(true);
     }
   }, []);
@@ -64,16 +64,17 @@ function Login({ setPage }) {
     axios
       .post(`${baseURL}/auth/login`, { token })
       .then((response) => {
-        // Save the token in localStorage
-        localStorage.setItem('jwtToken', response.data.refreshToken);
+        // Save the tokens in localStorage
+        localStorage.setItem('jwtAccessToken', response.data.accessToken);
+        localStorage.setItem('jwtRefreshToken', response.data.refreshToken);
 
         // Save or remove the username and password from local storage
         if (remember) {
-          localStorage.setItem('rememberedEmail', email);
-          localStorage.setItem('rememberedPassword', password);
+          localStorage.setItem('Email', email);
+          localStorage.setItem('Password', password);
         } else {
-          localStorage.removeItem('rememberedEmail');
-          localStorage.removeItem('rememberedPassword');
+          localStorage.removeItem('Email');
+          localStorage.removeItem('Password');
         }
 
         setLoading(false);
