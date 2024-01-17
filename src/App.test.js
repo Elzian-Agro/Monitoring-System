@@ -12,7 +12,7 @@ jest.mock('react-i18next', () => ({
   },
 }));
 
-test('renders learn react link', () => {
+test('renders auth page by default', () => {
   render(<App />);
   const linkElement = screen.getByText("LOG IN");
   expect(linkElement).toBeInTheDocument();
