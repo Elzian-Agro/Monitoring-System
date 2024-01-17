@@ -86,7 +86,7 @@ describe('ForgotPassword Component', () => {
     submitForm('test@example.com');
 
     await waitFor(() => {
-      expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/auth/forget-password', {
+      expect(axios.post).toHaveBeenCalledWith(`${process.env.REACT_APP_BASE_URL}/auth/forget-password`, {
         email: 'test@example.com',
       });
       expect(mockDispatch).toHaveBeenCalledWith(updateEmail('test@example.com'));

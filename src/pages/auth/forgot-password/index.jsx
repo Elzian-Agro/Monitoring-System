@@ -28,7 +28,7 @@ function ForgotPassword({ setPage }) {
     setIsLoading(true);
 
     axios
-      .post('http://localhost:5000/auth/forget-password', {
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/forget-password`, {
         email: email,
       })
       .then(() => {

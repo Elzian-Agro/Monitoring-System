@@ -64,7 +64,7 @@ function ResetPassword({ setPage }) {
     }
 
     axios
-      .post('http://localhost:5000/auth/reset-password', { token })
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/reset-password`, { token })
       .then(() => {
         setError(null);
         dispatch(updateEmail(null));
@@ -117,14 +117,30 @@ function ResetPassword({ setPage }) {
 
   const handleResendEmail = () => {
     axios
-      .post('http://localhost:5000/auth/forget-password', {
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/forget-password`, {
         email: email,
       })
       .then(() => {
         setTimer(60);
       })
       .catch((error) => {
-        alert(`${error.message}`);
+        switch (error.response?.data?.code) {
+          case 17002:
+            setError('User Not Found!');
+            break;
+
+          case 13001:
+            setError('User is blocked! Contact admin');
+            break;
+
+          case 17001:
+            setError('Oops! an error occured. Please try again later');
+            break;
+
+          default:
+            setError('Network error! Please try again later');
+            break;
+        }
       });
   };
 
