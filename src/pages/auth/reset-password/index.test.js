@@ -96,7 +96,7 @@ describe('ResetPassword Component', () => {
     await waitFor(() => {
       expect(tokenise).toHaveBeenCalled();
       // Check if the Axios post was called with the correct URL and data
-      expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/auth/reset-password', {
+      expect(axios.post).toHaveBeenCalledWith(`${process.env.REACT_APP_BASE_URL}/auth/reset-password`, {
         token: 'mocked-token',
       });
 
@@ -167,7 +167,7 @@ describe('ResetPassword Component', () => {
       // Button is available, click it
       fireEvent.click(resendButton);
       // Check if the Axios post was called with the correct URL and data for email resend
-      expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/auth/forget-password', {
+      expect(axios.post).toHaveBeenCalledWith(`${process.env.REACT_APP_BASE_URL}/auth/forget-password`, {
         email: 'test@example.com',
       });
       // Check if the timer is reset to 60

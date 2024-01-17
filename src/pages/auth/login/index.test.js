@@ -113,7 +113,7 @@ describe('LoginPage Component', () => {
 
     await waitFor(() => {
       expect(tokenise).toHaveBeenCalled();
-      expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/auth/login', {
+      expect(axios.post).toHaveBeenCalledWith(`${process.env.REACT_APP_BASE_URL}/auth/login`, {
         token: 'mocked-token',
       });
       expect(screen.getByText('Invalid email or password')).toBeInTheDocument();
@@ -177,7 +177,7 @@ describe('LoginPage Component', () => {
 
     await waitFor(() => {
       expect(tokenise).toHaveBeenCalled();
-      expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/auth/login', {
+      expect(axios.post).toHaveBeenCalledWith(`${process.env.REACT_APP_BASE_URL}/auth/login`, {
         token: 'mocked-token',
       });
       expect(localStorage.getItem('jwtAccessToken')).toBe('mocked-access-token');

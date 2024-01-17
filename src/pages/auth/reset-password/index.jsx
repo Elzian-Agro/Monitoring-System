@@ -64,7 +64,7 @@ function ResetPassword({ setPage }) {
     }
 
     axios
-      .post('http://localhost:5000/auth/reset-password', { token })
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/reset-password`, { token })
       .then(() => {
         setError(null);
         dispatch(updateEmail(null));
@@ -117,7 +117,7 @@ function ResetPassword({ setPage }) {
 
   const handleResendEmail = () => {
     axios
-      .post('http://localhost:5000/auth/forget-password', {
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/forget-password`, {
         email: email,
       })
       .then(() => {

@@ -18,7 +18,7 @@ function Login({ setPage }) {
 
   const navigate = useNavigate();
 
-  const baseURL = 'http://localhost:5000';
+  const baseURL = process.env.REACT_APP_BASE_URL;
   const { t } = useTranslation();
 
   // Retrieve remembered credentials from localStorage
