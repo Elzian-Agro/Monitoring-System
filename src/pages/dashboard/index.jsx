@@ -5,7 +5,7 @@ import Navbar from 'components/common/navbar';
 import Sidebar from 'components/common/sidebar';
 
 import { useSelector } from 'react-redux';
-import { selectActiveMenu } from './slice/dashboardLayoutSlice';
+import { selectActiveMenu, selectTheme } from './slice/dashboardLayoutSlice';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -33,9 +33,10 @@ const Dashboard = () => {
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
+  const currentMode = useSelector(selectTheme)
 
   return (
-    <div>
+    <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <div className="flex relative dark:bg-main-dark-bg bg-gray-100">
         <div className={`${sidebarWidth} sidebar dark:bg-secondary-dark-bg bg-white`}>
           <Sidebar />

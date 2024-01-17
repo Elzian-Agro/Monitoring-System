@@ -34,7 +34,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - **Documentation**: [Redux Toolkit Documentation](https://redux-toolkit.js.org/)
 
-
 ## Available Scripts
 
 In the project directory, you can run:
@@ -106,3 +105,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 This link is for the postman documentation reference.
 https://documenter.getpostman.com/view/32012154/2s9Ykt6KYB
+
+## Deployment
+
+The application is deployed successfully in this domain: http://monitoring.elzian.com/

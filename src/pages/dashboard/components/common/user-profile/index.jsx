@@ -4,8 +4,19 @@ import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 
 import avatar from '../../../../../../src/assets/images/avatar.jpg';
+import { setProfileOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
+import { useDispatch } from 'react-redux';
+
 
 const UserProfile = () => {
+
+  const dispatch = useDispatch();
+
+  const closeProfile = () => {
+    dispatch(setProfileOpen(false));
+  };
+
+
   const userProfileData = [
     {
       icon: <ChatBubbleBottomCenterIcon className="h-6 w-6" />,
@@ -34,7 +45,7 @@ const UserProfile = () => {
     <div className="nav-item absolute right-1 top-16 bg-white  p-8 rounded-lg w-96">
       <div className="flex justify-between items-center">
         <p className="font-semibold text-lg">User Profile</p>
-        <button>
+        <button onClick={closeProfile}>
           <XCircleIcon className="h-6 w-6" />
         </button>
 
