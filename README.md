@@ -108,4 +108,6 @@ https://documenter.getpostman.com/view/32012154/2s9Ykt6KYB
 
 ## Deployment
 
-The application is deployed successfully in this domain: http://monitoring.elzian.com/
+The application is deployed successfully in Dev and Prod
+Dev: http://monitoring-dev.elzian.com/
+Prod: http://monitoring.elzian.com/
