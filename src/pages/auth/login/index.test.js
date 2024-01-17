@@ -162,7 +162,12 @@ describe('LoginPage Component', () => {
   });
 
   it('sucssesfull login', async () => {
-    axios.post.mockResolvedValue({ data: { refreshToken: 'test-token' } });
+    axios.post.mockResolvedValue({
+      data: {
+        accessToken: 'mocked-access-token',
+        refreshToken: 'mocked-refresh-token',
+      },
+    });
 
     const { emailInput, passwordInput, loginButton } = setupLoginForm();
 
@@ -175,7 +180,8 @@ describe('LoginPage Component', () => {
       expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/auth/login', {
         token: 'mocked-token',
       });
-      expect(localStorage.getItem('jwtToken')).toBe('test-token');
+      expect(localStorage.getItem('jwtAccessToken')).toBe('mocked-access-token');
+      expect(localStorage.getItem('jwtRefreshToken')).toBe('mocked-refresh-token');
     });
   });
 });
