@@ -3,10 +3,13 @@ import logo from 'assets/images/logo.png';
 import ForgotPassword from 'pages/auth/forgot-password';
 import Login from 'pages/auth/login';
 import ResetPassword from 'pages/auth/reset-password';
-import LanguageSelector from 'pages/auth/components/base/LanguageSelector';
+import LanguageSelector from 'components/common/language-selector';
+import { useTranslation } from 'react-i18next';
 
 function LoginPage() {
   const [page, setPage] = useState('Login');
+
+  const { t } = useTranslation();
 
   return (
     <div className='flex justify-center items-center w-[100vw] h-[100dvh] bg-gradient-to-t from-[#DEE4EA] to-[#F9FCFF]'>
@@ -34,7 +37,7 @@ function LoginPage() {
         </div>
 
         <div className='flex justify-center items-center text-center text-[#ccc] font-zenkaku text-[12px]'>
-          Copyright 2024 Elzian Agro. All Rights Reserved
+          {t('Copyright Elzian Agro. All Rights Reserved', { val: new Date().getFullYear() })}
         </div>
       </div>
     </div>
