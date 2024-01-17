@@ -124,7 +124,23 @@ function ResetPassword({ setPage }) {
         setTimer(60);
       })
       .catch((error) => {
-        alert(`${error.message}`);
+        switch (error.response?.data?.code) {
+          case 17002:
+            setError('User Not Found!');
+            break;
+
+          case 13001:
+            setError('User is blocked! Contact admin');
+            break;
+
+          case 17001:
+            setError('Oops! an error occured. Please try again later');
+            break;
+
+          default:
+            setError('Network error! Please try again later');
+            break;
+        }
       });
   };
 
