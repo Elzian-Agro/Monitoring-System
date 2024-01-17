@@ -25,7 +25,7 @@ function Login({ setPage }) {
   useEffect(() => {
     if (localStorage.getItem('Email') && localStorage.getItem('Password')) {
       setEmail(localStorage.getItem('Email'));
-      setPassword(localStorage.getItem('Password'));
+      setPassword(atob(localStorage.getItem('Password')));
       setRemember(true);
     }
   }, []);
@@ -71,7 +71,7 @@ function Login({ setPage }) {
         // Save or remove the username and password from local storage
         if (remember) {
           localStorage.setItem('Email', email);
-          localStorage.setItem('Password', password);
+          localStorage.setItem('Password', btoa(password));
         } else {
           localStorage.removeItem('Email');
           localStorage.removeItem('Password');
