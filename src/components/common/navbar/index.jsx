@@ -1,5 +1,5 @@
 import { Bars3Icon, ChevronDownIcon, BellIcon } from '@heroicons/react/24/outline';
-import avatar from '../../../assets/images/avatar.jpg';
+import avatar from '../../../assets/images/avatar.png';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {

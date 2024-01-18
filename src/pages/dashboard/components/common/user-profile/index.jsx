@@ -3,7 +3,7 @@ import { ChatBubbleBottomCenterIcon, XCircleIcon } from '@heroicons/react/24/out
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 
-import avatar from '../../../../../../src/assets/images/avatar.jpg';
+import avatar from '../../../../../../src/assets/images/avatar.png';
 import { setProfileOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import { useDispatch } from 'react-redux';
 
