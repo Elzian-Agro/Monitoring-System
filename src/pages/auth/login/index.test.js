@@ -6,6 +6,7 @@ import LoginPage from '../components/common/container';
 import axios from 'axios';
 import { store } from 'store/store';
 import { tokenise } from 'pages/auth/utils';
+import { errorType } from 'constant';
 
 jest.mock('axios');
 
@@ -103,7 +104,7 @@ describe('LoginPage Component', () => {
   });
 
   it('displays error message for invalid credentials', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 13005 } } });
+    axios.post.mockRejectedValue({ response: { data: { code: errorType.invalidCredentials.code } } });
 
     const { emailInput, passwordInput, loginButton } = setupLoginForm();
 
@@ -116,12 +117,12 @@ describe('LoginPage Component', () => {
       expect(axios.post).toHaveBeenCalledWith(`${process.env.REACT_APP_BASE_URL}/auth/login`, {
         token: 'mocked-token',
       });
-      expect(screen.getByText('Invalid email or password')).toBeInTheDocument();
+      expect(screen.getByText(errorType.invalidCredentials.message)).toBeInTheDocument();
     });
   });
 
   it('displays error message for time out', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 13004 } } });
+    axios.post.mockRejectedValue({ response: { data: { code: errorType.timeOut.code } } });
 
     const { emailInput, passwordInput, loginButton } = setupLoginForm();
 
@@ -130,12 +131,12 @@ describe('LoginPage Component', () => {
     fireEvent.click(loginButton);
 
     await waitFor(() => {
-      expect(screen.getByText('Time Out')).toBeInTheDocument();
+      expect(screen.getByText(errorType.timeOut.message)).toBeInTheDocument();
     });
   });
 
-  it('displays error message for general error', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 17001 } } });
+  it('displays error message for server error', async () => {
+    axios.post.mockRejectedValue({ response: { data: { code: errorType.serverError.code } } });
     const { emailInput, passwordInput, loginButton } = setupLoginForm();
 
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
@@ -143,7 +144,7 @@ describe('LoginPage Component', () => {
     fireEvent.click(loginButton);
 
     await waitFor(() => {
-      expect(screen.getByText('Oops! an error occured. Please try again later')).toBeInTheDocument();
+      expect(screen.getByText(errorType.serverError.message)).toBeInTheDocument();
     });
   });
 

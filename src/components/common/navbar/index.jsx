@@ -12,7 +12,7 @@ import {
 import UserProfile from 'pages/dashboard/components/common/user-profile';
 import Notification from 'pages/dashboard/components/common/notification';
 import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
-import { menuMode } from 'constants';
+import { menuMode } from 'constant';
 
 const Navbar = () => {
   const dispatch = useDispatch();

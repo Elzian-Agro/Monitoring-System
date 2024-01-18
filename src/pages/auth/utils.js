@@ -1,4 +1,4 @@
-import { authRegex } from "../../constants";
+import { authRegex, errorType } from 'constant';
 
 // Email validation function
 export const isValidEmail = (email) => {
@@ -66,4 +66,14 @@ export const tokenise = async (data) => {
   }
 
   return token;
+};
+
+//error handling
+const errorMessages = {};
+Object.keys(errorType).forEach((key) => {
+  errorMessages[errorType[key].code] = errorType[key].message;
+});
+
+export const identifyError = (code) => {
+  return errorMessages[code] || 'Network error! Please try again later';
 };

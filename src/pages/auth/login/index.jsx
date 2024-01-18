@@ -3,7 +3,7 @@ import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import Button from 'pages/auth/components/base/Button';
 import TextBox from 'pages/auth/components/base/TextBox';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
-import { isValidEmail, tokenise } from 'pages/auth/utils';
+import { isValidEmail, tokenise, identifyError } from 'pages/auth/utils';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -83,23 +83,7 @@ function Login({ setPage }) {
       .catch((error) => {
         setLoading(false);
 
-        switch (error.response?.data?.code) {
-          case 13005:
-            setError('Invalid email or password');
-            break;
-
-          case 13004:
-            setError('Time Out');
-            break;
-
-          case 17001:
-            setError('Oops! an error occured. Please try again later');
-            break;
-
-          default:
-            setError('Network error! Please try again later');
-            break;
-        }
+        setError(identifyError(error.response?.data?.code));
       });
   };
 

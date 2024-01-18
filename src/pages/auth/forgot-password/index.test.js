@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import { store } from 'store/store'; // Import your store
 import { updateEmail } from '../slice/emailSlice'; // Import the action you want to dispatch
+import { errorType } from 'constant';
 
 jest.mock('axios');
 
@@ -96,28 +97,28 @@ describe('ForgotPassword Component', () => {
 
   // Add tests for different error scenarios here
   it('handles "User Not Found" error', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 15001 } } });
+    axios.post.mockRejectedValue({ response: { data: { code: errorType.userNotFound.code } } });
     submitForm('nonexistent@example.com');
 
     await waitFor(() => {
-      expect(screen.getByText('User Not Found!')).toBeInTheDocument();
+      expect(screen.getByText(errorType.userNotFound.message)).toBeInTheDocument();
     });
   });
 
   it('handles "User is blocked" error', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 13001 } } });
+    axios.post.mockRejectedValue({ response: { data: { code: errorType.userBlocked.code } } });
     submitForm('blockeduser@example.com');
 
     await waitFor(() => {
-      expect(screen.getByText('User is blocked! Contact admin')).toBeInTheDocument();
+      expect(screen.getByText(errorType.userBlocked.message)).toBeInTheDocument();
     });
   });
 
-  it('handles "General error" case', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 17001 } } });
-    submitForm('generalerror@example.com');
+  it('handles "Server error" case', async () => {
+    axios.post.mockRejectedValue({ response: { data: { code: errorType.serverError.code } } });
+    submitForm('servererror@example.com');
     await waitFor(() => {
-      expect(screen.getByText('Oops! an error occured. Please try again later')).toBeInTheDocument();
+      expect(screen.getByText(errorType.serverError.message)).toBeInTheDocument();
     });
   });
 

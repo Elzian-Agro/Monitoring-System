@@ -8,6 +8,7 @@ import axios from 'axios';
 import { store } from 'store/store'; // Import your store
 import { updateEmail } from '../slice/emailSlice'; // Import the action you want to dispatch
 import { tokenise } from 'pages/auth/utils';
+import { errorType } from 'constant';
 
 jest.mock('axios');
 
@@ -110,34 +111,34 @@ describe('ResetPassword Component', () => {
 
   // Tests for each error scenario
   it('handles "Incorrect Temporary Password" error', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 13003 } } });
+    axios.post.mockRejectedValue({ response: { data: { code: errorType.incorrectTempPassword.code } } });
     submitForm('TempPass123!', 'NewPass123!', 'NewPass123!');
     await waitFor(() => {
-      expect(screen.getByText('Incorrect Temporary Password')).toBeInTheDocument();
+      expect(screen.getByText(errorType.incorrectTempPassword.message)).toBeInTheDocument();
     });
   });
 
   it('handles "User is blocked" error', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 13001 } } });
+    axios.post.mockRejectedValue({ response: { data: { code: errorType.userBlocked.code } } });
     submitForm('TempPass123!', 'NewPass123!', 'NewPass123!');
     await waitFor(() => {
-      expect(screen.getByText('User is blocked! Contact admin')).toBeInTheDocument();
+      expect(screen.getByText(errorType.userBlocked.message)).toBeInTheDocument();
     });
   });
 
   it('handles "Time Out" error', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 13004 } } });
+    axios.post.mockRejectedValue({ response: { data: { code: errorType.timeOut.code } } });
     submitForm('TempPass123!', 'NewPass123!', 'NewPass123!');
     await waitFor(() => {
-      expect(screen.getByText('Time Out')).toBeInTheDocument();
+      expect(screen.getByText(errorType.timeOut.message)).toBeInTheDocument();
     });
   });
 
-  it('handles "General error" case', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 17001 } } });
+  it('handles "Server error" case', async () => {
+    axios.post.mockRejectedValue({ response: { data: { code: errorType.serverError.code } } });
     submitForm('TempPass123!', 'NewPass123!', 'NewPass123!');
     await waitFor(() => {
-      expect(screen.getByText('Oops! an error occured. Please try again later')).toBeInTheDocument();
+      expect(screen.getByText(errorType.serverError.message)).toBeInTheDocument();
     });
   });
 

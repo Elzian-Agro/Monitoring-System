@@ -10,12 +10,13 @@ import Button from 'pages/auth/components/base/Button';
 import TextBox from 'pages/auth/components/base/TextBox';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
 import PropTypes from 'prop-types';
-import { isValidPassword, tokenise } from 'pages/auth/utils';
+import { identifyError, isValidPassword, tokenise } from 'pages/auth/utils';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateEmail } from '../slice/emailSlice';
 import Redirect from 'pages/auth/components/base/Redirect';
 import { useTranslation } from 'react-i18next';
+import { errorType } from 'constant';
 
 function ResetPassword({ setPage }) {
   const [tempPass, setTempPass] = useState('');
@@ -74,27 +75,8 @@ function ResetPassword({ setPage }) {
       .catch((error) => {
         setIsLoading(false);
 
-        switch (error.response?.data?.code) {
-          case 13003:
-            setError('Incorrect Temporary Password');
-            break;
-
-          case 13001:
-            setBlocked(true);
-            break;
-
-          case 13004:
-            setError('Time Out');
-            break;
-
-          case 17001:
-            setError('Oops! an error occured. Please try again later');
-            break;
-
-          default:
-            setError('Network error! Please try again later');
-            break;
-        }
+        if (error.response?.data?.code === errorType.userBlocked.code) setBlocked(true);
+        else setError(identifyError(error.response?.data?.code));
       });
   };
 
@@ -124,23 +106,8 @@ function ResetPassword({ setPage }) {
         setTimer(60);
       })
       .catch((error) => {
-        switch (error.response?.data?.code) {
-          case 15001:
-            setError('User Not Found!');
-            break;
-
-          case 13001:
-            setBlocked(true);
-            break;
-
-          case 17001:
-            setError('Oops! an error occured. Please try again later');
-            break;
-
-          default:
-            setError('Network error! Please try again later');
-            break;
-        }
+        if (error.response?.data?.code === errorType.userBlocked.code) setBlocked(true);
+        else setError(identifyError(error.response?.data?.code));
       });
   };
 

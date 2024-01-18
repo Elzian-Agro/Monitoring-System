@@ -3,7 +3,7 @@ import { ArrowLeftIcon, EnvelopeIcon } from '@heroicons/react/24/outline';
 import Button from 'pages/auth/components/base/Button';
 import TextBox from 'pages/auth/components/base/TextBox';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
-import { isValidEmail } from 'pages/auth/utils';
+import { isValidEmail, identifyError } from 'pages/auth/utils';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
@@ -39,24 +39,7 @@ function ForgotPassword({ setPage }) {
       })
       .catch((error) => {
         setIsLoading(false);
-
-        switch (error.response?.data?.code) {
-          case 15001:
-            setError('User Not Found!');
-            break;
-
-          case 13001:
-            setError('User is blocked! Contact admin');
-            break;
-
-          case 17001:
-            setError('Oops! an error occured. Please try again later');
-            break;
-
-          default:
-            setError('Network error! Please try again later');
-            break;
-        }
+        setError(identifyError(error.response?.data?.code));
       });
   };
 
