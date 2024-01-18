@@ -51,7 +51,7 @@ const Navbar = () => {
     <div className='flex justify-between p-2 md:mr-6 relative'>
       <button
         type='button'
-        className='relative text-xl rounded-full p-3 hover:bg-light-gray'
+        className='relative text-xl rounded-full p-3  dark:text-white hover:bg-light-gray dark:hover:text-black'
         onClick={toggleActiveMenu}>
         <Bars3Icon className='h-6 w-6 cursor-pointer' />
       </button>
@@ -60,7 +60,7 @@ const Navbar = () => {
         <ThemeSettings />
         <button
           type='button'
-          className='relative text-xl rounded-full p-3 hover:bg-light-gray'
+          className='relative text-xl rounded-full p-3 hover:bg-light-gray dark:text-white dark:hover:text-black'
           onClick={handleNotificationClick}>
           <span style={{ background: 'red' }} className='absolute inline-flex rounded-full h-2 w-2 right-2 top-2' />
           <BellIcon className='h-6 w-6 text-14 ' />
