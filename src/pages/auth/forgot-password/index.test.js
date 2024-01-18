@@ -96,7 +96,7 @@ describe('ForgotPassword Component', () => {
 
   // Add tests for different error scenarios here
   it('handles "User Not Found" error', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 17002 } } });
+    axios.post.mockRejectedValue({ response: { data: { code: 15001 } } });
     submitForm('nonexistent@example.com');
 
     await waitFor(() => {
