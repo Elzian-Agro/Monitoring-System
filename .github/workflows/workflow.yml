@@ -7,8 +7,7 @@ name: EA Monitoring System Deployment
 on:
   push:
     branches: [ Master ]
-  pull_request:
-    branches: [ Master ]
+
 
 jobs:
   # Build Job
@@ -31,6 +30,11 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+
+      - name: Load .env file based on environment
+        run: |
+          cp .env.development .env
+        shell: bash
 
       - name: Install 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
