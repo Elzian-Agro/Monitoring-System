@@ -83,7 +83,7 @@ function ResetPassword({ setPage }) {
             setBlocked(true);
             break;
 
-          case 17002:
+          case 13004:
             setError('Time Out');
             break;
 

@@ -103,7 +103,7 @@ describe('LoginPage Component', () => {
   });
 
   it('displays error message for invalid credentials', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 17003 } } });
+    axios.post.mockRejectedValue({ response: { data: { code: 13005 } } });
 
     const { emailInput, passwordInput, loginButton } = setupLoginForm();
 
@@ -121,7 +121,7 @@ describe('LoginPage Component', () => {
   });
 
   it('displays error message for time out', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 17007 } } });
+    axios.post.mockRejectedValue({ response: { data: { code: 13004 } } });
 
     const { emailInput, passwordInput, loginButton } = setupLoginForm();
 

@@ -84,11 +84,11 @@ function Login({ setPage }) {
         setLoading(false);
 
         switch (error.response?.data?.code) {
-          case 17003:
+          case 13005:
             setError('Invalid email or password');
             break;
 
-          case 17007:
+          case 13004:
             setError('Time Out');
             break;
 

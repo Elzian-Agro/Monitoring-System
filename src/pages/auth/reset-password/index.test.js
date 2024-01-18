@@ -126,7 +126,7 @@ describe('ResetPassword Component', () => {
   });
 
   it('handles "Time Out" error', async () => {
-    axios.post.mockRejectedValue({ response: { data: { code: 17002 } } });
+    axios.post.mockRejectedValue({ response: { data: { code: 13004 } } });
     submitForm('TempPass123!', 'NewPass123!', 'NewPass123!');
     await waitFor(() => {
       expect(screen.getByText('Time Out')).toBeInTheDocument();
