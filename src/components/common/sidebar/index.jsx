@@ -39,7 +39,6 @@ const Sidebar = () => {
             onClick={() => {
               dispatch(setActiveMenu('onlyIcon'));
             }}
-            // style={{ color: currentColor }}
             className='text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden'>
             <ArrowLeftCircleIcon className='h-6 w-6' />
           </button>

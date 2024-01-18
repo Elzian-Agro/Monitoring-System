@@ -55,7 +55,9 @@ const Navbar = () => {
       </button>
 
       <div className='flex'>
-        <ThemeSettings />
+        <div className='hidden md:flex  '>
+          <ThemeSettings />
+        </div>
         <button
           type='button'
           className='relative text-xl rounded-full p-3 hover:bg-light-gray dark:text-white dark:hover:text-black'
