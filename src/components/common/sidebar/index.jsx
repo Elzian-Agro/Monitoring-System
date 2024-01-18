@@ -29,7 +29,7 @@ const Sidebar = () => {
           onClick={() => {
             dispatch(setActiveMenu('close'));
           }}
-          className='items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight text-slate-900'>
+          className='items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight text-slate-900 dark:text-green-600'>
           <img className='w-14' src={logo} alt='Elzian Agro logo' />
           {isOpenMenu() && <span className='text-lg'>Elzian Agro</span>}
         </Link>
