@@ -66,7 +66,7 @@ const Sidebar = () => {
         {/* Logout */}
         <NavLink
           to='/'
-          className='flex mt-8 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm text-black dark:text-white dark:hover:text-black hover:bg-red-500 m-2 duration-300'>
+          className='flex mt-8 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm text-black dark:text-white hover:bg-red-500 m-2 duration-300'>
           <ArrowUpTrayIcon className='h-6 w-6 rotate-90' />
           {isOpenMenu() && 'Logout'}
         </NavLink>

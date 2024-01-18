@@ -11,7 +11,7 @@ import {
   selectNotificationOpen,
 } from '../../../pages/dashboard/slice/dashboardLayoutSlice';
 import UserProfile from 'pages/dashboard/components/common/user-profile';
-import Notification from 'pages/dashboard/components/common/notification-set';
+import Notification from 'pages/dashboard/components/common/notification';
 import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
 
 const Navbar = () => {
