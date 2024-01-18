@@ -42,5 +42,7 @@
   "An error occured! Please try agian": "දෝෂයක් සිදු විය! කරුණාකර නැවත උත්සාහ කරන්න",
   "Email is not verified": "විද්‍යුත් තැපැල් ලිපිනය සත්‍යාපනය කර නැත",
   "Time Out": "කාලය හමාරයි",
-  "Copyright Elzian Agro. All Rights Reserved": "ප්‍රකාශන හිමිකම {{val}} Elzian Agro. සියලු හිමිකම් ඇවිරිණි"
+  "Copyright Elzian Agro. All Rights Reserved": "ප්‍රකාශන හිමිකම {{val}} Elzian Agro. සියලු හිමිකම් ඇවිරිණි",
+  "Page Not Found": "පිටුව හමු නොවීය",
+  "Go Home": "ගෙදර යන්න"
 }
