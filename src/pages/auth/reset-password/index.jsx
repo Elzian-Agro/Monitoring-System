@@ -125,7 +125,7 @@ function ResetPassword({ setPage }) {
       })
       .catch((error) => {
         switch (error.response?.data?.code) {
-          case 17002:
+          case 15001:
             setError('User Not Found!');
             break;
 
