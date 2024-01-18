@@ -130,7 +130,7 @@ function ResetPassword({ setPage }) {
             break;
 
           case 13001:
-            setError('User is blocked! Contact admin');
+            setBlocked(true);
             break;
 
           case 17001:
