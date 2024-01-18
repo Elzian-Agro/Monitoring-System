@@ -1,10 +1,12 @@
 import React from 'react';
-import { ChatBubbleBottomCenterIcon, XCircleIcon, ArrowUpTrayIcon } from '@heroicons/react/24/outline';
+import { XCircleIcon, ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 import avatar from 'assets/images/avatar.png';
 import { setProfileOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import { useDispatch } from 'react-redux';
 import ThemeSettings from '../theme-settings';
+import { userProfileData } from 'constant';
+
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -12,17 +14,7 @@ const UserProfile = () => {
   const closeProfile = () => {
     dispatch(setProfileOpen(false));
   };
-
-  const userProfileData = [
-    {
-      icon: <ChatBubbleBottomCenterIcon className='h-6 w-6' />,
-      title: 'My Profile',
-      desc: 'Account Settings',
-      iconColor: '#03C9D7',
-      iconBg: '#E5FAFB',
-    },
-  ];
-
+  
   return (
     <div className='nav-item absolute right-1 top-16 bg-gray-200 dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96'>
       <div className='flex justify-between items-center'>

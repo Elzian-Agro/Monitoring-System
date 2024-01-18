@@ -36,13 +36,17 @@ const Navbar = () => {
   };
 
   const toggleActiveMenu = () => {
-    const nextActiveMenu = {
-      [menuMode.open]: menuMode.partiallyOpen,
-      [menuMode.partiallyOpen]: menuMode.close,
-      [menuMode.close]: menuMode.open,
-    };
+    let nextActiveMenu;
 
-    dispatch(setActiveMenu(nextActiveMenu[activeMenu]));
+    if (activeMenu === menuMode.open) {
+      nextActiveMenu = menuMode.partiallyOpen;
+    } else if (activeMenu === menuMode.partiallyOpen) {
+      nextActiveMenu = menuMode.close;
+    } else {
+      nextActiveMenu = menuMode.open;
+    }
+
+    dispatch(setActiveMenu(nextActiveMenu));
   };
 
   return (

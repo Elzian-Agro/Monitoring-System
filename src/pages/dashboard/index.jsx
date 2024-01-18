@@ -33,17 +33,17 @@ const Dashboard = () => {
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
-  const currentMode = useSelector(selectTheme)
+  const currentMode = useSelector(selectTheme);
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
-      <div className="flex relative dark:bg-main-dark-bg bg-gray-100">
-        <div className={`${sidebarWidth} sidebar dark:bg-secondary-dark-bg bg-white`}>
+      <div className='flex relative dark:bg-main-dark-bg bg-gray-100'>
+        <div className={`${sidebarWidth} z-20 md:z-0 dark:bg-secondary-dark-bg shadow-2xl dark:shadow-none bg-white`}>
           <Sidebar />
         </div>
 
         <div className={`${mainContentMargin} dark:bg-main-dark-bg bg-main-bg min-h-screen w-full`}>
-          <div className="bg-main-bg dark:bg-main-dark-bg navbar w-full">
+          <div className='z-10 bg-main-bg dark:bg-main-dark-bg w-full'>
             <Navbar />
           </div>
         </div>
