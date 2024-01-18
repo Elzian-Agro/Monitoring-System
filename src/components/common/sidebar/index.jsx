@@ -27,7 +27,7 @@ const Sidebar = () => {
         <Link
           to='/dashboard'
           onClick={() => {
-            dispatch(setActiveMenu(false));
+            dispatch(setActiveMenu('close'));
           }}
           className='items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight text-slate-900'>
           <img className='w-14' src={logo} alt='Elzian Agro logo' />
