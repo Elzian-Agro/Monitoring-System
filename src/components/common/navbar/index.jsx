@@ -1,6 +1,5 @@
 import { Bars3Icon, ChevronDownIcon, BellIcon } from '@heroicons/react/24/outline';
-import avatar from '../../../assets/images/avatar.png';
-
+import avatar from 'assets/images/avatar.png';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setActiveMenu,
@@ -9,16 +8,19 @@ import {
   selectProfileOpen,
   setNotificationOpen,
   selectNotificationOpen,
-} from '../../../pages/dashboard/slice/dashboardLayoutSlice';
+} from 'pages/dashboard/slice/dashboardLayoutSlice';
 import UserProfile from 'pages/dashboard/components/common/user-profile';
 import Notification from 'pages/dashboard/components/common/notification';
 import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
+import { menuMode } from 'constants';
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const activeMenu = useSelector(selectActiveMenu);
   const isProfileOpen = useSelector(selectProfileOpen);
   const isNotificationOpen = useSelector(selectNotificationOpen);
+
+  //TODO: Get username through the API
   const userName = 'Michael';
 
   // Function to handle the click on the profile button
@@ -34,17 +36,13 @@ const Navbar = () => {
   };
 
   const toggleActiveMenu = () => {
-    let newActiveMenu;
+    const nextActiveMenu = {
+      [menuMode.open]: menuMode.partiallyOpen,
+      [menuMode.partiallyOpen]: menuMode.close,
+      [menuMode.close]: menuMode.open,
+    };
 
-    if (activeMenu === 'open') {
-      newActiveMenu = 'onlyIcon';
-    } else if (activeMenu === 'onlyIcon') {
-      newActiveMenu = 'close';
-    } else {
-      newActiveMenu = 'open';
-    }
-
-    dispatch(setActiveMenu(newActiveMenu));
+    dispatch(setActiveMenu(nextActiveMenu[activeMenu]));
   };
 
   return (
@@ -72,8 +70,8 @@ const Navbar = () => {
           <p>
             <span className='text-gray-400 text-14 hidden md:inline-block'>Hi,</span>
             <span className='text-gray-400 font-bold ml-1 text-14'>
-              <span class='md:hidden'>{userName.charAt(0)}</span>
-              <span class='hidden md:inline'>{userName}</span>
+              <span className='md:hidden'>{userName.charAt(0)}</span>
+              <span className='hidden md:inline'>{userName}</span>
             </span>
           </p>
           <ChevronDownIcon className='h-6 w-6 text-14 text-gray-400' />

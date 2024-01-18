@@ -1,16 +1,16 @@
 import React from 'react';
 import { ArrowUpTrayIcon, ArrowLeftCircleIcon, ChartPieIcon } from '@heroicons/react/24/outline';
 import logo from 'assets/images/logo.png';
-
 import { Link, NavLink } from 'react-router-dom';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { selectActiveMenu, setActiveMenu } from '../../../pages/dashboard/slice/dashboardLayoutSlice';
+import { selectActiveMenu, setActiveMenu } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import { sidebarLinks } from './sidebarConstants';
+import { useTranslation } from 'react-i18next';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const activeMenu = useSelector(selectActiveMenu);
+  const { t } = useTranslation();
 
   // This function for check if the active menu is 'open' if so will return true
   const isOpenMenu = () => activeMenu === 'open';
@@ -73,8 +73,7 @@ const Sidebar = () => {
       </div>
       {isOpenMenu() && (
         <footer className='text-gray-400 text-xs text-center mt-12'>
-          <p>Copyright {currentYear} Elzian Agro.</p>
-          <p>All Rights Reserved</p>
+          <p>{t('Copyright Elzian Agro. All Rights Reserved', { val: currentYear})}</p>
         </footer>
       )}
     </div>
