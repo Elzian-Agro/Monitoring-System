@@ -72,7 +72,7 @@ const Sidebar = () => {
         </NavLink>
       </div>
       {isOpenMenu() && (
-        <footer className='text-gray-400 text-xs text-center mt-12'>
+        <footer className='text-gray-400 text-xs text-center mt-10'>
           <p>Copyright {currentYear} Elzian Agro.</p>
           <p>All Rights Reserved</p>
         </footer>

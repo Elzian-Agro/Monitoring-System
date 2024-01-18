@@ -16,7 +16,7 @@ const ThemeSettings = () => {
   };
 
   return (
-    <div className=' hidden md:flex mr-6 gap-5 rounded-full hover:bg-red-500 duration-300 px-4' onClick={changeTheme}>
+    <div className='flex mr-6 gap-5 rounded-full hover:bg-red-500 duration-300 px-4 cursor-pointer' onClick={changeTheme}>
       <button>
         <SunIcon className={`h-6 w-6 cursor-pointer rounded-lg ${currTheme === 'Dark' ? '' : 'bg-orange-500'}`} />
       </button>
