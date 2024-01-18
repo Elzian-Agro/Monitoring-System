@@ -22,10 +22,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - **Documentation**: [Axios Documentation](https://axios-http.com/docs/intro).
 - **Official Site**: [axios](https://axios-http.com/)
 
-### Js-sha256
-
-- **Documentation**: [Js-sha256 Documentation](https://www.npmjs.com/package/js-sha256).
-
 ### i18next
 
 - **Documentation**: [i18next Documentation](https://react.i18next.com/)
