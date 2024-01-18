@@ -12,7 +12,7 @@ const Notification = () => {
   };
 
   return (
-    <div className='nav-item absolute right-5 md:right-40 top-16 bg-white dark:bg-secondary-dark-bg p-8 rounded-lg w-72 md:w-96'>
+    <div className='nav-item absolute right-5 md:right-40 top-16 bg-gray-200 dark:bg-secondary-dark-bg p-8 rounded-lg w-72 md:w-96'>
       <div className='flex justify-between items-center'>
         <div className='flex gap-3'>
           <p className='font-semibold text-lg dark:text-white'>Notifications</p>

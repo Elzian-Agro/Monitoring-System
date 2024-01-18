@@ -24,7 +24,7 @@ const UserProfile = () => {
   ];
 
   return (
-    <div className='nav-item absolute right-1 top-16 bg-white dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96'>
+    <div className='nav-item absolute right-1 top-16 bg-gray-200 dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96'>
       <div className='flex justify-between items-center'>
         <p className='font-semibold text-lg dark:text-white'>User Profile</p>
         <button onClick={closeProfile}>
@@ -44,7 +44,7 @@ const UserProfile = () => {
         {userProfileData.map((item, index) => (
           <div
             key={index}
-            className='flex gap-5 border-b-1 border-color p-4 hover:bg-[#F7F7F7] dark:hover:bg-green-400 cursor-pointer'>
+            className='flex gap-5 border-b-1 border-color p-4 rounded-lg hover:bg-[#F7F7F7] dark:hover:bg-green-500 cursor-pointer'>
             <button
               type='button'
               style={{ color: item.iconColor, backgroundColor: item.iconBg }}
