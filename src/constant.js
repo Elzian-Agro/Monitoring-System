@@ -21,7 +21,6 @@ export const userProfileData = [
   },
 ];
 
-
 export const errorType = {
   invalidCredentials: {
     code: 13005,
@@ -34,12 +33,17 @@ export const errorType = {
   },
 
   serverError: {
-    code: 17001,
+    code: 13009,
+    message: 'Oops! an error occured. Please try again later',
+  },
+
+  connectionError: {
+    code: 13010,
     message: 'Oops! an error occured. Please try again later',
   },
 
   userNotFound: {
-    code: 15001,
+    code: 13007,
     message: 'User Not Found!',
   },
 
@@ -51,5 +55,10 @@ export const errorType = {
   incorrectTempPassword: {
     code: 13003,
     message: 'Incorrect Temporary Password',
+  },
+
+  emailNotVerified: {
+    code: 13011,
+    message: 'Email address not verified',
   },
 };
