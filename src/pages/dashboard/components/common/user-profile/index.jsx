@@ -7,27 +7,26 @@ import { useDispatch } from 'react-redux';
 import ThemeSettings from '../theme-settings';
 import { userProfileData } from 'constant';
 
-
 const UserProfile = () => {
   const dispatch = useDispatch();
 
   const closeProfile = () => {
     dispatch(setProfileOpen(false));
   };
-  
+
   return (
     <div className='nav-item absolute right-1 top-16 bg-gray-200 dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96'>
       <div className='flex justify-between items-center'>
-        <p className='font-semibold text-lg dark:text-white'>User Profile</p>
+        <p className='font-semibold md:text-lg dark:text-white'>User Profile</p>
         <button onClick={closeProfile}>
           <XCircleIcon className='h-6 w-6 dark:text-white' />
         </button>
       </div>
       <div className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
-        <img className='rounded-full h-20 md:h-24 w-24' src={avatar} alt='user-profile' />
+        <img className='rounded-full h-20 md:h-24 md:w-24' src={avatar} alt='user-profile' />
         <div>
           {/* TODO: Replace hard coded data with API data  */}
-          <p className='font-semibold text-xl dark:text-white'> Michael Roberts </p>
+          <p className='font-semibold md:text-xl dark:text-white'> Michael Roberts </p>
           <p className='text-gray-500 text-sm'> Administrator </p>
           <p className='text-gray-500 text-sm font-semibold'> ElzianAgro.com </p>
         </div>
@@ -57,7 +56,7 @@ const UserProfile = () => {
       <div className='mt-5'>
         <NavLink
           to='/'
-          className='flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-black dark:text-white dark:hover:text-black hover:bg-red-500 m-2 duration-300'>
+          className='flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm md:text-base text-black dark:text-white dark:hover:text-black hover:bg-red-500 m-2 duration-300'>
           <ArrowUpTrayIcon className='h-6 w-6 rotate-90' />
           Logout
         </NavLink>
