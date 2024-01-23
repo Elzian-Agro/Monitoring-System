@@ -50,7 +50,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className='flex justify-between p-2 md:mr-6 relative'>
+    <div className='flex justify-between xs:pl-2 pt-2 pb-2 pr-2 md:mr-6 relative'>
       <button
         type='button'
         className='relative text-xl rounded-full p-3  dark:text-white hover:bg-light-gray dark:hover:text-black'
@@ -67,13 +67,13 @@ const Navbar = () => {
           className='relative text-xl rounded-full p-3 hover:bg-light-gray dark:text-white dark:hover:text-black'
           onClick={handleNotificationClick}>
           <span style={{ background: 'red' }} className='absolute inline-flex rounded-full h-2 w-2 right-2 top-2' />
-          <BellIcon className='h-6 w-6 text-14 ' />
+          <BellIcon className='h-6 w-6 text-14' />
         </button>
         <div
           className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
           onClick={handleProfileClick}>
           <img className='rounded-full w-8 h-8' src={avatar} alt='user-profile' />
-          <p>
+          <p className='xxs:hidden sm:block'>
             <span className='text-gray-400 text-14 hidden md:inline-block'>Hi,</span>
             <span className='text-gray-400 font-bold ml-1 text-14'>
               <span className='md:hidden'>{userName.charAt(0)}</span>

@@ -30,8 +30,8 @@ const Sidebar = () => {
             dispatch(setActiveMenu('close'));
           }}
           className='items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight text-slate-900 dark:text-green-600'>
-          <img className='w-14' src={logo} alt='Elzian Agro logo' />
-          {isOpenMenu() && <span className='text-lg'>Elzian Agro</span>}
+          <img className='md:w-14 xxs:w-10' src={logo} alt='Elzian Agro logo' />
+          {isOpenMenu() && <span className='text-base md:text-lg'>Elzian Agro</span>}
         </Link>
         {isOpenMenu() && (
           <button
@@ -39,8 +39,8 @@ const Sidebar = () => {
             onClick={() => {
               dispatch(setActiveMenu('onlyIcon'));
             }}
-            className='text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden'>
-            <ArrowLeftCircleIcon className='h-6 w-6' />
+            className='text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden group'>
+            <ArrowLeftCircleIcon className='h-6 w-6 dark:text-white dark:group-hover:text-black' />
           </button>
         )}
       </div>

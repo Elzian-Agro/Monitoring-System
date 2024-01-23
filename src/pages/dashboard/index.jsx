@@ -10,7 +10,7 @@ import { selectActiveMenu, selectTheme } from './slice/dashboardLayoutSlice';
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
     case 'open':
-      return 'w-64 md:w-60 fixed';
+      return 'w-56 md:w-60 fixed';
     case 'onlyIcon':
       return 'w-30';
     default:
@@ -21,7 +21,7 @@ const getSidebarWidth = (activeMenu) => {
 const getMainContentMargin = (activeMenu) => {
   switch (activeMenu) {
     case 'open':
-      return 'ml-64 md:ml-60';
+      return 'ml-56 md:ml-60';
     case 'onlyIcon':
       return 'md:ml-2';
     default:
