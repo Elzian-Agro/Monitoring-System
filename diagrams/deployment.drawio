@@ -1,0 +1,140 @@
+<mxfile host="app.diagrams.net" modified="2024-01-20T13:48:33.620Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0" etag="_qrvjmUK7foqWpxsnDnR" version="22.1.21" type="device">
+  <diagram name="Page-1" id="P0xvitGPKO18Yr7lGJsd">
+    <mxGraphModel dx="1828" dy="507" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="evi_wd6DXzH0UZxxVIMQ-2" target="evi_wd6DXzH0UZxxVIMQ-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-2" value="" style="dashed=0;outlineConnect=0;html=1;align=center;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.weblogos.github" vertex="1" parent="1">
+          <mxGeometry x="30" y="150" width="75" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="evi_wd6DXzH0UZxxVIMQ-4" target="evi_wd6DXzH0UZxxVIMQ-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-4" value="AWS CodePipeline" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.codepipeline;" vertex="1" parent="1">
+          <mxGeometry x="240" y="132.5" width="80" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="evi_wd6DXzH0UZxxVIMQ-5" target="evi_wd6DXzH0UZxxVIMQ-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="evi_wd6DXzH0UZxxVIMQ-5" target="evi_wd6DXzH0UZxxVIMQ-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-5" value="AWS Elastic Beanstalk" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.elastic_beanstalk;" vertex="1" parent="1">
+          <mxGeometry x="470" y="132.5" width="80" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-6" value="AWS Certificate Manager" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.certificate_manager_3;" vertex="1" parent="1">
+          <mxGeometry x="650" y="132.5" width="80" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-11" value="monitoring-system-backend" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="195" y="100" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-12" value="EA-Monitoring-System-Backend" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-30" y="100" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-13" value="EA-Monitoring-System-Backend" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="415" y="100" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-14" value="monitoring-dev-api.elzian.com" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="610" y="100" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-15" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="330" width="700" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="evi_wd6DXzH0UZxxVIMQ-16" target="evi_wd6DXzH0UZxxVIMQ-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-16" value="Application Load Balancer" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.application_load_balancer;" vertex="1" parent="1">
+          <mxGeometry x="350" y="400" width="80" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-17" value="VPC" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_vpc;strokeColor=#879196;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#879196;dashed=0;" vertex="1" parent="1">
+          <mxGeometry x="140" y="550" width="550" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-18" value="Availability zone" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_availability_zone;strokeColor=#545B64;fillColor=none;verticalAlign=top;align=left;spacingLeft=30;fontColor=#545B64;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="170" y="590" width="510" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-23" value="Auto Scaling Group" style="sketch=0;outlineConnect=0;gradientColor=none;html=1;whiteSpace=wrap;fontSize=12;fontStyle=0;shape=mxgraph.aws4.groupCenter;grIcon=mxgraph.aws4.group_auto_scaling_group;grStroke=0;strokeColor=#879196;fillColor=#ECEFEF;verticalAlign=top;align=center;fontColor=#879196;dashed=0;spacingTop=25;" vertex="1" parent="1">
+          <mxGeometry x="200" y="620" width="470" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-20" value="Security group" style="fillColor=none;strokeColor=#DD3522;verticalAlign=top;fontStyle=0;fontColor=#DD3522;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="210" y="670" width="450" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-24" value="Amazon EC2" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.ec2;" vertex="1" parent="1">
+          <mxGeometry x="250" y="740" width="80" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-25" value="Amazon EC2" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.ec2;" vertex="1" parent="1">
+          <mxGeometry x="375" y="740" width="80" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-26" value="Amazon EC2" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.ec2;" vertex="1" parent="1">
+          <mxGeometry x="510" y="735" width="80" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-27" value="awseb--AWSEB-wTB2svn2vSYb" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="320" y="360" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-28" value="vpc-0b5ea39c238fe94ec" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="202.5" y="550" width="175" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-29" value="awseb-e-pidq5zcnxj-stack-AWSEBAutoScalingGroup-f5qnKSfk0thH" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="495" y="630" width="175" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-30" value="awseb-e-pidq5zcnxj-stack-AWSEBLoadBalancerSecurityGroup-TYA1Z3V8VKIC" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="205" y="690" width="455" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-31" value="EA-Monitoring-System-Backend-Dev-env" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="290" y="850" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-34" value="" style="dashed=0;outlineConnect=0;html=1;align=center;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;shape=mxgraph.weblogos.github" vertex="1" parent="1">
+          <mxGeometry y="1240" width="75" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="evi_wd6DXzH0UZxxVIMQ-35" target="evi_wd6DXzH0UZxxVIMQ-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="evi_wd6DXzH0UZxxVIMQ-35" target="evi_wd6DXzH0UZxxVIMQ-37">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="175" y="1420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-35" value="" style="verticalLabelPosition=bottom;html=1;verticalAlign=top;align=center;strokeColor=none;fillColor=#00BEF2;shape=mxgraph.azure.github_code;pointerEvents=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="1253" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="evi_wd6DXzH0UZxxVIMQ-36" target="evi_wd6DXzH0UZxxVIMQ-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-36" value="Amazon S3" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.s3;" vertex="1" parent="1">
+          <mxGeometry x="320" y="1228" width="80" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-43" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="evi_wd6DXzH0UZxxVIMQ-37" target="evi_wd6DXzH0UZxxVIMQ-38">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-37" value="Amazon Cloudfront" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.cloudfront;" vertex="1" parent="1">
+          <mxGeometry x="320" y="1390" width="80" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-38" value="AWS Certificate Manager" style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor=none;strokeColor=#ffffff;fillColor=#232F3E;dashed=0;verticalLabelPosition=middle;verticalAlign=bottom;align=center;html=1;whiteSpace=wrap;fontSize=10;fontStyle=1;spacing=3;shape=mxgraph.aws4.productIcon;prIcon=mxgraph.aws4.certificate_manager_3;" vertex="1" parent="1">
+          <mxGeometry x="495" y="1390" width="80" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="evi_wd6DXzH0UZxxVIMQ-34" target="evi_wd6DXzH0UZxxVIMQ-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-45" value="monitoring-system" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-10" y="1328" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-46" value="Github Action&lt;br&gt;Prod CI" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="130" y="1213" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-49" value="&lt;a style=&quot;background-color: rgb(255, 255, 255); text-decoration-line: none; font-family: &amp;quot;Amazon Ember&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, Roboto, Arial, sans-serif; font-size: 14px; text-align: left;&quot; href=&quot;https://s3.console.aws.amazon.com/s3/buckets/monitoring-system-prod-deployment?region=ap-southeast-1&quot; class=&quot;bucket-name&quot;&gt;monitoring-system-prod-deployment&lt;/a&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="230" y="1183" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-50" value="&lt;a style=&quot;background-color: rgb(255, 255, 255); text-decoration-thickness: 1px; text-decoration-color: currentcolor; -webkit-font-smoothing: auto; border-collapse: separate; border-spacing: 0px; box-sizing: border-box; caption-side: top; cursor: auto; direction: ltr; display: inline; empty-cells: show; font-family: &amp;quot;Amazon Ember&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, Roboto, Arial, sans-serif; font-size: 14px; font-stretch: normal; font-variant-numeric: normal; font-variant-east-asian: normal; font-variant-alternates: normal; font-variant-position: normal; hyphens: none; line-height: var(--line-height-body-m-2zx78l, 22px); list-style: outside none disc; tab-size: 8; text-align: left; text-align-last: auto; text-shadow: none; text-underline-offset: 0.25em; transition-duration: var(--motion-duration-refresh-only-medium-0rwzu1, 165ms); transition-property: color, text-decoration, -webkit-text-decoration; visibility: visible;&quot; href=&quot;https://us-east-1.console.aws.amazon.com/cloudfront/v4/home?region=ap-southeast-1#/distributions/E3SZ1RD948VGXJ&quot; data-analytics-funnel-value=&quot;link98-1705757887253-9061&quot; aria-labelledby=&quot;&quot; class=&quot;awsui_link_4c84z_h59ew_93 awsui_variant-primary_4c84z_h59ew_175 awsui_font-size-body-m_4c84z_h59ew_401&quot; id=&quot;link-self99-1705757887253-3632&quot;&gt;E3SZ1RD948VGXJ&lt;/a&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="285" y="1503" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="evi_wd6DXzH0UZxxVIMQ-52" value="monitoring.elzian.com" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="470" y="1503" width="140" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
