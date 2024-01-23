@@ -1,8 +1,8 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from "pages/auth/components/common/container";
-import Dashboard from "pages/dashboard";
-import NotFoundPage from "pages/404";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LoginPage from 'pages/auth/components/common/container';
+import Dashboard from 'pages/dashboard';
+import NotFoundPage from 'pages/404';
 
 function App() {
   return (
