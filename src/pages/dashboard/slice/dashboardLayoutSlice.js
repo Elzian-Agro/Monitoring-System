@@ -5,6 +5,7 @@ const initialState = {
   isProfileOpen: false,
   isNotificationOpen: false,
   theme: '',
+  areNotificationsUnread: true,
 };
 
 const dashboardLayoutSlice = createSlice({
@@ -23,14 +24,18 @@ const dashboardLayoutSlice = createSlice({
     setTheme: (state, action) => {
       state.theme = action.payload;
     },
+    setAreNotificationsUnread: (state, action) => {
+      state.areNotificationsUnread = action.payload;
+    },
   },
 });
 
-export const { setActiveMenu, setProfileOpen, setNotificationOpen, setTheme } = dashboardLayoutSlice.actions;
+export const { setActiveMenu, setProfileOpen, setNotificationOpen, setTheme, setAreNotificationsUnread, } = dashboardLayoutSlice.actions;
 
 export const selectActiveMenu = (state) => state.dashboardLayout.activeMenu;
 export const selectProfileOpen = (state) => state.dashboardLayout.isProfileOpen;
 export const selectNotificationOpen = (state) => state.dashboardLayout.isNotificationOpen;
 export const selectTheme = (state) => state.dashboardLayout.theme;
+export const selectAreNotificationsUnread = (state) => state.dashboardLayout.areNotificationsUnread;
 
 export default dashboardLayoutSlice.reducer;

@@ -8,6 +8,7 @@ import {
   selectProfileOpen,
   setNotificationOpen,
   selectNotificationOpen,
+  selectAreNotificationsUnread,
 } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import UserProfile from 'pages/dashboard/components/common/user-profile';
 import Notification from 'pages/dashboard/components/common/notification';
@@ -19,6 +20,7 @@ const Navbar = () => {
   const activeMenu = useSelector(selectActiveMenu);
   const isProfileOpen = useSelector(selectProfileOpen);
   const isNotificationOpen = useSelector(selectNotificationOpen);
+  const AreNotificationsUnread = useSelector(selectAreNotificationsUnread);
 
   //TODO: Get username through the API
   const userName = 'Michael';
@@ -66,7 +68,10 @@ const Navbar = () => {
           type='button'
           className='relative text-xl rounded-full p-3 hover:bg-light-gray dark:text-white dark:hover:text-black'
           onClick={handleNotificationClick}>
-          <span style={{ background: 'red' }} className='absolute inline-flex rounded-full h-2 w-2 right-2 top-2' />
+          <span
+            style={{ background: AreNotificationsUnread ? 'red' : '' }}
+            className='absolute inline-flex rounded-full h-2 w-2 right-2 top-2'
+          />
           <BellIcon className='h-6 w-6 text-14' />
         </button>
         <div
