@@ -2,7 +2,7 @@ import React from 'react';
 import DataTable from 'react-data-table-component';
 import Button from '../components/base/Button';
 
-const ManageFarmers = () => {
+const ManageFarmers = ({ theme }) => {
   // Custom styles
   const customStyles = {
     header: {
@@ -12,8 +12,14 @@ const ManageFarmers = () => {
     },
     headRow: {
       style: {
+        borderRightStyle: 'solid',
+        borderRightWidth: '2px',
+        borderRightColor: 'black',
+        borderLeftStyle: 'solid',
+        borderLeftWidth: '2px',
+        borderLeftColor: 'black',
         borderTopStyle: 'solid',
-        borderTopWidth: '1px',
+        borderTopWidth: '2px',
         borderTopColor: 'black',
       },
     },
@@ -21,16 +27,24 @@ const ManageFarmers = () => {
       style: {
         '&:not(:last-of-type)': {
           borderRightStyle: 'solid',
-          borderRightWidth: '1px',
+          borderRightWidth: '2px',
           borderRightColor: 'black',
         },
+        fontWeight: 'bold',
+      },
+    },
+    rows: {
+      style: {
+        borderStyle: 'solid',
+        borderWidth: '2px',
+        borderColor: 'black',
       },
     },
     cells: {
       style: {
         '&:not(:last-of-type)': {
           borderRightStyle: 'solid',
-          borderRightWidth: '1px',
+          borderRightWidth: '2px',
           borderRightColor: 'black',
         },
       },
@@ -63,10 +77,10 @@ const ManageFarmers = () => {
     },
     {
       name: 'Action',
-      cell: (row) => (
+      cell: () => (
         <diV>
-          <Button color='green' text='Edit' onClick={() => handleEdit()} />
-          <Button color='red' text='Edit' onClick={() => handleDelete()} />
+          <Button bgColor='bg-blue-500' text='Edit' onClick={() => handleEdit()} />
+          <Button bgColor='bg-red-500' text='Delete' onClick={() => handleDelete()} />
         </diV>
       ),
     },
@@ -92,20 +106,20 @@ const ManageFarmers = () => {
     <div className='mx-5'>
       <div className='flex items-center justify-between mb-2'>
         <div>
-          <Button color='green' text='Add+' onClick={() => handleCreate()} />
-          <Button color='green' text='Download CSV' onClick={() => handleDownload()} />
+          <Button bgColor='bg-green-500' text='Add+' onClick={() => handleCreate()} />
+          <Button bgColor='bg-green-500' text='Download CSV' onClick={() => handleDownload()} />
         </div>
 
         <div className='mr-3'>
           <input type='text' placeholder='Search...' className='p-2 rounded-l-lg' />
-          <button className='bg-green-500 text-white p-2 rounded-r-lg'>X</button>
+          <button className='bg-red-500 text-white p-2 rounded-r-lg'>X</button>
         </div>
       </div>
       <div className='pr-2 rounded-t-lg b-10'>
         <DataTable
           columns={columns}
           customStyles={customStyles}
-          theme='defalt'
+          theme={theme}
           pagination
           fixedHeader
           fixedHeaderScrollHeight='70vh'
