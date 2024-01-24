@@ -1,6 +1,6 @@
 import React from 'react';
 import DataTable from 'react-data-table-component';
-import Button from '../base/Button';
+import Button from '../components/base/Button';
 
 const ManageFarmers = () => {
   // Custom styles
