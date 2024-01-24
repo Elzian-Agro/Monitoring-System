@@ -21,7 +21,7 @@ const Notification = () => {
           <p className='font-semibold md:text-lg dark:text-white'>Notifications</p>
         </div>
         <div>
-          <button className='pr-10' onClick={allNotificationsRead}>
+          <button className='mr-10' onClick={allNotificationsRead}>
             <EyeSlashIcon className='h-6 w-6 dark:text-white' />
           </button>
           <button onClick={closeNotification}>
