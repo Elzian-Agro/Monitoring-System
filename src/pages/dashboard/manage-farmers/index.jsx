@@ -1,129 +1,153 @@
 import React from 'react';
-import DataTable from 'react-data-table-component';
+import '../index.css';
+import Navbar from 'components/common/navbar';
+import Sidebar from 'components/common/sidebar';
 import Button from '../components/base/Button';
+import { useSelector } from 'react-redux';
+import { selectActiveMenu, selectTheme } from '../slice/dashboardLayoutSlice';
+import DataTable from 'react-data-table-component';
+import { customTableStyles } from 'constant';
 
-const ManageFarmers = ({ theme }) => {
-  // Custom styles
-  const customStyles = {
-    header: {
-      style: {
-        minHeight: '56px',
-      },
-    },
-    headRow: {
-      style: {
-        borderRightStyle: 'solid',
-        borderRightWidth: '2px',
-        borderRightColor: 'black',
-        borderLeftStyle: 'solid',
-        borderLeftWidth: '2px',
-        borderLeftColor: 'black',
-        borderTopStyle: 'solid',
-        borderTopWidth: '2px',
-        borderTopColor: 'black',
-      },
-    },
-    headCells: {
-      style: {
-        '&:not(:last-of-type)': {
-          borderRightStyle: 'solid',
-          borderRightWidth: '2px',
-          borderRightColor: 'black',
-        },
-        fontWeight: 'bold',
-      },
-    },
-    rows: {
-      style: {
-        borderStyle: 'solid',
-        borderWidth: '2px',
-        borderColor: 'black',
-      },
-    },
-    cells: {
-      style: {
-        '&:not(:last-of-type)': {
-          borderRightStyle: 'solid',
-          borderRightWidth: '2px',
-          borderRightColor: 'black',
-        },
-      },
-    },
-  };
+const getSidebarWidth = (activeMenu) => {
+  switch (activeMenu) {
+    case 'open':
+      return 'w-56 md:w-60 fixed';
+    case 'onlyIcon':
+      return 'w-30';
+    default:
+      return 'w-0';
+  }
+};
 
-  // Table columns
-  const columns = [
-    {
-      name: 'First Name',
-      selector: (row) => row.firstName,
-      sortable: true,
-    },
-    {
-      name: 'First Name',
-      selector: (row) => row.lastName,
-      sortable: true,
-    },
-    {
-      name: 'Email',
-      selector: (row) => row.email,
-    },
-    {
-      name: 'NIC',
-      selector: (row) => row.nic,
-    },
-    {
-      name: 'Phone Number',
-      selector: (row) => row.phone,
-    },
-    {
-      name: 'Action',
-      cell: () => (
-        <diV>
-          <Button bgColor='bg-blue-500' text='Edit' onClick={() => handleEdit()} />
-          <Button bgColor='bg-red-500' text='Delete' onClick={() => handleDelete()} />
-        </diV>
-      ),
-    },
-  ];
+const getMainContentMargin = (activeMenu) => {
+  switch (activeMenu) {
+    case 'open':
+      return 'ml-56 md:ml-60';
+    case 'onlyIcon':
+      return 'md:ml-2';
+    default:
+      return 'flex-2';
+  }
+};
 
-  const handleCreate = () => {
-    // TO DO: handle create
-  };
+// Table columns
+const columns = [
+  {
+    name: 'First Name',
+    selector: (row) => row.firstName,
+    sortable: true,
+  },
+  {
+    name: 'Last Name',
+    selector: (row) => row.lastName,
+    sortable: true,
+  },
+  {
+    name: 'Email',
+    selector: (row) => row.email,
+  },
+  {
+    name: 'NIC',
+    selector: (row) => row.nic,
+  },
+  {
+    name: 'Phone Number',
+    selector: (row) => row.phone,
+  },
+  {
+    cell: () => <Button bgColor='bg-blue-500' text='Edit' onClick={() => handleEdit()} />,
+  },
+  {
+    cell: () => <Button bgColor='bg-red-500' text='Delete' onClick={() => handleDelete()} />,
+  },
+];
 
-  const handleEdit = () => {
-    // TO DO: handle edit
-  };
+// REMOVE: after connect backend
+const data = [
+  {
+    id: 1,
+    firstName: 'Kavinda',
+    lastName: 'Deshan',
+    email: 'tkdeshan1103@gmail.com',
+    nic: '983083215V',
+    phone: '0769011854',
+  },
+  {
+    id: 2,
+    firstName: 'Gayan',
+    lastName: 'Chandima',
+    email: 'tkdeshan1103@gmail.com',
+    nic: '983083215V',
+    phone: '0769011854',
+  },
+];
 
-  const handleDelete = () => {
-    // TO DO: handle delete
-  };
+const handleCreate = () => {
+  // TO DO: handle create
+};
 
-  const handleDownload = () => {
-    // TO DO: handle download
-  };
+const handleEdit = () => {
+  // TO DO: handle edit
+};
+
+const handleDelete = () => {
+  // TO DO: handle delete
+};
+
+const handleDownload = () => {
+  // TO DO: handle download
+};
+
+const ManageFarmers = () => {
+  const activeMenu = useSelector(selectActiveMenu);
+  const sidebarWidth = getSidebarWidth(activeMenu);
+  const mainContentMargin = getMainContentMargin(activeMenu);
+  const currentMode = useSelector(selectTheme);
 
   return (
-    <div className='mx-5'>
-      <div className='flex items-center justify-between mb-2'>
-        <div>
-          <Button bgColor='bg-green-500' text='Add+' onClick={() => handleCreate()} />
-          <Button bgColor='bg-green-500' text='Download CSV' onClick={() => handleDownload()} />
+    <div className={currentMode === 'Dark' ? 'dark' : ''}>
+      <div className='flex relative dark:bg-main-dark-bg bg-gray-100'>
+        <div className={`${sidebarWidth} z-20 md:z-0 dark:bg-secondary-dark-bg shadow-2xl dark:shadow-none bg-white`}>
+          <Sidebar />
         </div>
-
-        <div className='mr-3'>
-          <input type='text' placeholder='Search...' className='p-2 rounded-l-lg' />
-          <button className='bg-red-500 text-white p-2 rounded-r-lg'>X</button>
+        <div className={`${mainContentMargin} dark:bg-main-dark-bg bg-main-bg min-h-screen w-full`}>
+          <div className='z-10 bg-main-bg  dark:bg-main-dark-bg w-full'>
+            <Navbar />
+          </div>
+          <div className='mx-5 mt-2'>
+            <div className='flex items-center justify-between mb-4'>
+              <div>
+                <Button bgColor='bg-green-500' text='Add+' onClick={() => handleCreate()} />
+                <Button bgColor='bg-green-500' text='Download' onClick={() => handleDownload()} />
+              </div>
+              <div className='relative mr-2'>
+                <input
+                  type='text'
+                  placeholder='Search...'
+                  className='p-2 rounded-lg dark:bg-secondary-dark-bg dark:text-white border border-solid border-black w-32 sm:w-48 md:w-56'
+                />
+                <button
+                  className='absolute top-0 right-0 p-2 cursor-pointer bg-red-500 rounded-r-lg text-white'
+                  onClick={() => {
+                    // TO DO: clear serch box
+                  }}>
+                  X
+                </button>
+              </div>
+            </div>
+            <div className='pr-2 rounded-t-lg'>
+              <DataTable
+                columns={columns}
+                data={data}
+                customStyles={customTableStyles}
+                theme={currentMode === 'Dark' ? 'dark' : 'defalt'}
+                pagination
+                fixedHeader
+                fixedHeaderScrollHeight='70vh'
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      <div className='pr-2 rounded-t-lg b-10'>
-        <DataTable
-          columns={columns}
-          customStyles={customStyles}
-          theme={theme}
-          pagination
-          fixedHeader
-          fixedHeaderScrollHeight='70vh'
-        />
       </div>
     </div>
   );

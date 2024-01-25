@@ -62,3 +62,37 @@ export const errorType = {
     message: 'Email address not verified',
   },
 };
+
+export const customTableStyles = {
+  header: {
+    style: {
+      minHeight: '56px',
+    },
+  },
+  headCells: {
+    style: {
+      borderTopStyle: 'solid',
+      borderTopWidth: '2px',
+      borderTopColor: 'black',
+      fontWeight: 'bold',
+      justifyContent: 'center',
+      '&:not(:nth-last-child(-n+2))': {
+        borderRightStyle: 'solid',
+        borderRightWidth: '2px',
+        borderRightColor: 'black',
+      },
+    },
+  },
+  cells: {
+    style: {
+      borderTopStyle: 'solid',
+      borderTopWidth: '2px',
+      borderTopColor: 'black',
+      '&:not(:nth-last-child(-n+2))': {
+        borderRightStyle: 'solid',
+        borderRightWidth: '2px',
+        borderRightColor: 'black',
+      },
+    },
+  },
+};
