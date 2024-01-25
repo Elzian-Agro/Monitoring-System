@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from 'pages/auth/components/common/container';
 import Dashboard from 'pages/dashboard';
 import NotFoundPage from 'pages/404';
+import ManageFarmers from 'pages/dashboard/manage-farmers';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Route path='/dashboard' element={<Dashboard />} />
 
         {/* Pages */}
-        <Route path='/customer' element={<Dashboard />} />
+        <Route path='/farmers' element={<ManageFarmers />} />
         <Route path='/orders' element={<Dashboard />} />
         <Route path='/analytics' element={<Dashboard />} />
         <Route path='/settings' element={<Dashboard />} />
