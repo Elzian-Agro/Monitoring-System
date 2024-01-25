@@ -52,15 +52,15 @@ const Notification = () => {
               {/* truncate Or line-clamp-2  - Choose later For now i have choose truncate*/}
               <p className='dark:text-white max-w-60 line-clamp-2'>{eachNotification.desc}</p>
               <div className='flex items-center'>
-                <button className='mr-2'>
-                  <EyeSlashIcon className='h-6 w-6 dark:text-white' />
+                <button className='mr-3'>
+                  <EyeSlashIcon className='h-5 w-5 dark:text-white' />
                 </button>
                 <button onClick={() => deleteNotification(index)}>
-                  <TrashIcon className='h-6 w-6 dark:text-white' />
+                  <TrashIcon className='h-5 w-5 dark:text-white' />
                 </button>
               </div>
             </div>
-            <div className='Date and Time flex justify-between text-gray-500'>
+            <div className='Date and Time pt-1 flex justify-between text-gray-500 text-xs'>
               <p>{eachNotification.date}</p>
               <p>{eachNotification.time}</p>
             </div>
