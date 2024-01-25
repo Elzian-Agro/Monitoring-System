@@ -1,7 +1,8 @@
 import { XCircleIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
+import axios from 'axios';
 
 import { setNotificationOpen, setAreNotificationsUnread } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 const Notification = () => {
@@ -14,6 +15,23 @@ const Notification = () => {
       time: '09:00 AM',
     },
   ]);
+
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/notification/fetch-notification`, {
+        params: {
+          userId: '6599ae73acebfda083c2f1b0',
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        // Update state or dispatch an action based on the response if needed
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  
 
   const closeNotification = () => {
     dispatch(setNotificationOpen(false));
