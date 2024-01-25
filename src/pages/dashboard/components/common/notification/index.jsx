@@ -8,11 +8,12 @@ import { useDispatch } from 'react-redux';
 const Notification = () => {
   const dispatch = useDispatch();
   const [allNotifications, setAllNotoficatins] = useState([
-    { desc: 'This is the First Notification', date: '2024/01/01', time: '08:00 AM' },
+    { desc: 'This is the First Notification', date: '2024/01/01', time: '08:00 AM', read: false },
     {
       desc: 'This is the Second Notification, its length is biiger than the first one.',
       date: '2024/01/02',
       time: '09:00 AM',
+      read: false,
     },
   ]);
 
@@ -31,7 +32,6 @@ const Notification = () => {
         console.log(error);
       });
   }, []);
-  
 
   const closeNotification = () => {
     dispatch(setNotificationOpen(false));
@@ -44,6 +44,12 @@ const Notification = () => {
   const deleteNotification = (index) => {
     const updatedNotifications = [...allNotifications];
     updatedNotifications.splice(index, 1);
+    setAllNotoficatins(updatedNotifications);
+  };
+
+  const readNotification = (index) => {
+    const updatedNotifications = [...allNotifications];
+    updatedNotifications[index].read = true;
     setAllNotoficatins(updatedNotifications);
   };
 
@@ -66,12 +72,13 @@ const Notification = () => {
       <div className='Notifications mt-4'>
         {allNotifications.map((eachNotification, index) => (
           <div className='Each-Notifications mb-4' key={index}>
-            <div className='flex justify-between'>
-              {/* truncate Or line-clamp-2  - Choose later For now i have choose truncate*/}
+            <div
+              className={`${eachNotification.read ? 'line-through' : ''} flex justify-between dark:decoration-white`}>
+              {/* truncate Or line-clamp-2  - Choose later For now i have choosen truncate*/}
               <p className='dark:text-white max-w-60 line-clamp-2'>{eachNotification.desc}</p>
               <div className='flex items-center'>
                 <button className='mr-3'>
-                  <EyeSlashIcon className='h-5 w-5 dark:text-white' />
+                  <EyeSlashIcon onClick={() => readNotification(index)} className='h-5 w-5 dark:text-white' />
                 </button>
                 <button onClick={() => deleteNotification(index)}>
                   <TrashIcon className='h-5 w-5 dark:text-white' />
