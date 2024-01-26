@@ -8,6 +8,7 @@ import DataTable from 'react-data-table-component';
 import Button from '../components/base/Button';
 import { customTableStyles } from 'constant';
 import axios from 'axios';
+import { downloadCSV } from '../utils';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -86,10 +87,6 @@ const handleDelete = () => {
   // TO DO: handle delete
 };
 
-const handleDownload = () => {
-  // TO DO: handle download
-};
-
 const ManageUsers = () => {
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
@@ -111,7 +108,7 @@ const ManageUsers = () => {
       });
   }, []);
 
-  // Function to filter the data based on the search text
+  // Function to filter the user based on the search text
   const filteredUsers = useMemo(() => {
     return users.filter(
       (user) =>
@@ -137,7 +134,7 @@ const ManageUsers = () => {
             <div className='flex items-center justify-between mb-4'>
               <div>
                 <Button bgColor='bg-green-500' text='Add+' onClick={() => handleCreate()} />
-                <Button bgColor='bg-green-500' text='Download' onClick={() => handleDownload()} />
+                <Button bgColor='bg-green-500' text='Download' onClick={() => downloadCSV(filteredUsers)} />
               </div>
               <div className='relative mr-2'>
                 <input
