@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import '../index.css';
 import Navbar from 'components/common/navbar';
 import Sidebar from 'components/common/sidebar';
@@ -59,10 +59,14 @@ const columns = [
     name: 'Action',
     cell: () => (
       <div>
-        <button className='bg-blue-500 text-white py-2 px-2 mx-1 rounded-lg w-16' onClick={() => handleEdit()}>
+        <button
+          className='bg-blue-600 hover:bg-blue-500 text-white py-2 px-2 mx-1 rounded-lg w-16'
+          onClick={() => handleEdit()}>
           Edit
         </button>
-        <button className='bg-red-500 text-white py-2 px-2 mx-1 rounded-lg w-16' onClick={() => handleDelete()}>
+        <button
+          className='bg-red-600 hover:bg-red-500 text-white py-2 px-2 mx-1 rounded-lg w-16'
+          onClick={() => handleDelete()}>
           Delete
         </button>
       </div>
@@ -93,6 +97,7 @@ const ManageUsers = () => {
   const currentMode = useSelector(selectTheme);
   const [users, setUsers] = useState([]);
   const [pending, setPending] = useState(true);
+  const [filterText, setFilterText] = useState('');
 
   useEffect(() => {
     axios
@@ -105,6 +110,18 @@ const ManageUsers = () => {
         //TO DO: handle errors
       });
   }, []);
+
+  // Function to filter the data based on the search text
+  const filteredUsers = useMemo(() => {
+    return users.filter(
+      (user) =>
+        user.firstName.toLowerCase().includes(filterText.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(filterText.toLowerCase()) ||
+        user.email.toLowerCase().includes(filterText.toLowerCase()) ||
+        user.orgName.toLowerCase().includes(filterText.toLowerCase()) ||
+        user.userType.toLowerCase().includes(filterText.toLowerCase())
+    );
+  }, [users, filterText]);
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -126,12 +143,14 @@ const ManageUsers = () => {
                 <input
                   type='text'
                   placeholder='Search...'
-                  className='p-2 rounded-lg dark:bg-secondary-dark-bg dark:text-white border border-solid border-black w-32 sm:w-48 md:w-56'
+                  className='p-2 rounded-lg dark:bg-secondary-dark-bg dark:text-white border border-solid border-black dark:border-white w-32 sm:w-48 md:w-56'
+                  value={filterText}
+                  onChange={(e) => setFilterText(e.target.value)}
                 />
                 <button
                   className='absolute top-0 right-0 p-2 cursor-pointer bg-red-500 rounded-r-lg text-white'
                   onClick={() => {
-                    // TO DO: clear serch box
+                    setFilterText('');
                   }}>
                   X
                 </button>
@@ -140,7 +159,7 @@ const ManageUsers = () => {
             <div className='pr-2 rounded-t-lg'>
               <DataTable
                 columns={columns}
-                data={users}
+                data={filteredUsers}
                 customStyles={customTableStyles}
                 theme={currentMode === 'Dark' ? 'dark' : 'defalt'}
                 pagination
