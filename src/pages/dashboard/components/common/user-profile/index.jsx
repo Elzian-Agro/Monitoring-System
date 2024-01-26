@@ -25,7 +25,7 @@ const UserProfile = () => {
   
 
   return (
-    <div className='nav-item absolute right-1 top-16 bg-gray-200 dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96'>
+    <div className='nav-item absolute right-1 top-16 shadow-lg dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96'>
       <div className='flex justify-between items-center'>
         <p className='font-semibold md:text-lg dark:text-white'>User Profile</p>
         <button onClick={closeProfile}>
