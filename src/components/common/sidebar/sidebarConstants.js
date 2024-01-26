@@ -8,8 +8,8 @@ const sidebarLinks = [
     icon: Squares2X2Icon,
   },
   {
-    to: '/farmers',
-    text: 'Manage Farmers',
+    to: '/users',
+    text: 'Manage Users',
     icon: UserIcon,
   },
   {

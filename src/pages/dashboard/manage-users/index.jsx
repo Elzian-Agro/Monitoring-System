@@ -98,7 +98,7 @@ const handleDownload = () => {
   // TO DO: handle download
 };
 
-const ManageFarmers = () => {
+const ManageUsers = () => {
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
@@ -153,4 +153,4 @@ const ManageFarmers = () => {
   );
 };
 
-export default ManageFarmers;
+export default ManageUsers;
