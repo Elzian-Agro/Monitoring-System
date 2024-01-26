@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../index.css';
 import Navbar from 'components/common/navbar';
 import Sidebar from 'components/common/sidebar';
-import Button from '../components/base/Button';
 import { useSelector } from 'react-redux';
 import { selectActiveMenu, selectTheme } from '../slice/dashboardLayoutSlice';
 import DataTable from 'react-data-table-component';
+import Button from '../components/base/Button';
 import { customTableStyles } from 'constant';
+import axios from 'axios';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -47,38 +48,25 @@ const columns = [
     selector: (row) => row.email,
   },
   {
-    name: 'NIC',
-    selector: (row) => row.nic,
+    name: 'Organization Name',
+    selector: (row) => row.orgName,
   },
   {
-    name: 'Phone Number',
-    selector: (row) => row.phone,
+    name: 'User Type',
+    selector: (row) => row.userType,
   },
   {
-    cell: () => <Button bgColor='bg-blue-500' text='Edit' onClick={() => handleEdit()} />,
-  },
-  {
-    cell: () => <Button bgColor='bg-red-500' text='Delete' onClick={() => handleDelete()} />,
-  },
-];
-
-// REMOVE: after connect backend
-const data = [
-  {
-    id: 1,
-    firstName: 'Kavinda',
-    lastName: 'Deshan',
-    email: 'tkdeshan1103@gmail.com',
-    nic: '983083215V',
-    phone: '0769011854',
-  },
-  {
-    id: 2,
-    firstName: 'Gayan',
-    lastName: 'Chandima',
-    email: 'tkdeshan1103@gmail.com',
-    nic: '983083215V',
-    phone: '0769011854',
+    name: 'Action',
+    cell: () => (
+      <div>
+        <button className='bg-blue-500 text-white py-2 px-2 mx-1 rounded-lg w-16' onClick={() => handleEdit()}>
+          Edit
+        </button>
+        <button className='bg-red-500 text-white py-2 px-2 mx-1 rounded-lg w-16' onClick={() => handleDelete()}>
+          Delete
+        </button>
+      </div>
+    ),
   },
 ];
 
@@ -103,6 +91,18 @@ const ManageUsers = () => {
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
   const currentMode = useSelector(selectTheme);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/user/users')
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        //TO DO: handle errors
+      });
+  }, []);
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -138,7 +138,7 @@ const ManageUsers = () => {
             <div className='pr-2 rounded-t-lg'>
               <DataTable
                 columns={columns}
-                data={data}
+                data={users}
                 customStyles={customTableStyles}
                 theme={currentMode === 'Dark' ? 'dark' : 'defalt'}
                 pagination

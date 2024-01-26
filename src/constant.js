@@ -76,7 +76,7 @@ export const customTableStyles = {
       borderTopColor: 'black',
       fontWeight: 'bold',
       justifyContent: 'center',
-      '&:not(:nth-last-child(-n+2))': {
+      '&:not(:last-child)': {
         borderRightStyle: 'solid',
         borderRightWidth: '2px',
         borderRightColor: 'black',
@@ -88,7 +88,7 @@ export const customTableStyles = {
       borderTopStyle: 'solid',
       borderTopWidth: '2px',
       borderTopColor: 'black',
-      '&:not(:nth-last-child(-n+2))': {
+      '&:not(:last-child)': {
         borderRightStyle: 'solid',
         borderRightWidth: '2px',
         borderRightColor: 'black',
