@@ -14,6 +14,10 @@ const UserProfile = () => {
     dispatch(setProfileOpen(false));
   };
 
+  const logout = () => {
+    localStorage.removeItem('jwtAccessToken');
+  };
+
   return (
     <div className='nav-item absolute right-1 top-16 bg-gray-200 dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96'>
       <div className='flex justify-between items-center'>
@@ -56,7 +60,8 @@ const UserProfile = () => {
       <div className='mt-5'>
         <NavLink
           to='/'
-          className='flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm md:text-base text-black dark:text-white dark:hover:text-black hover:bg-red-500 m-2 duration-300'>
+          className='flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm md:text-base text-black dark:text-white dark:hover:text-black hover:bg-red-500 m-2 duration-300'
+          onClick={logout}>
           <ArrowUpTrayIcon className='h-6 w-6 rotate-90' />
           Logout
         </NavLink>

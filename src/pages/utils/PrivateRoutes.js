@@ -1,8 +1,10 @@
 import { Outlet, Navigate } from 'react-router-dom';
 
 const PrivateRoutes = () => {
-  let auth = { token: true }; // Move this to Redux store.
-  return auth.token ? <Outlet /> : <Navigate to='/' />;
+  // Check if the token is present in localStorage
+  const isAuthenticated = localStorage.getItem('jwtAccessToken') ? true : false;
+
+  return isAuthenticated ? <Outlet /> : <Navigate to='/' />;
 };
 
 export default PrivateRoutes;

@@ -17,6 +17,10 @@ const Sidebar = () => {
 
   const currentYear = new Date().getFullYear();
 
+  const logout = () => {
+    localStorage.removeItem('jwtAccessToken');
+  };
+
   const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white bg-green-500 text-sm m-2';
   const normalLink =
     'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm text-black dark:text-white dark:hover:text-black hover:bg-gray-100 m-2 hover:translate-x-2 duration-300';
@@ -65,14 +69,15 @@ const Sidebar = () => {
         {/* Logout */}
         <NavLink
           to='/'
-          className='flex mt-8 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm text-black dark:text-white hover:bg-red-500 m-2 duration-300'>
+          className='flex mt-8 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm text-black dark:text-white hover:bg-red-500 m-2 duration-300'
+          onClick={logout}>
           <ArrowUpTrayIcon className='h-6 w-6 rotate-90' />
           {isOpenMenu() && 'Logout'}
         </NavLink>
       </div>
       {isOpenMenu() && (
         <footer className='text-gray-400 text-xs text-center mt-12'>
-          <p>{t('Copyright Elzian Agro. All Rights Reserved', { val: currentYear})}</p>
+          <p>{t('Copyright Elzian Agro. All Rights Reserved', { val: currentYear })}</p>
         </footer>
       )}
     </div>
