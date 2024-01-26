@@ -18,8 +18,14 @@ const Sidebar = () => {
   const currentYear = new Date().getFullYear();
 
   const logout = () => {
-    localStorage.removeItem('jwtAccessToken');
+    try {
+      localStorage.removeItem('jwtAccessToken');
+      localStorage.removeItem('jwtRefreshToken');
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
+  
 
   const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white bg-green-500 text-sm m-2';
   const normalLink =

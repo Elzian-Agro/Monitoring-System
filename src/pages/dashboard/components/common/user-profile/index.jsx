@@ -15,8 +15,14 @@ const UserProfile = () => {
   };
 
   const logout = () => {
-    localStorage.removeItem('jwtAccessToken');
+    try {
+      localStorage.removeItem('jwtAccessToken');
+      localStorage.removeItem('jwtRefreshToken');
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
+  
 
   return (
     <div className='nav-item absolute right-1 top-16 bg-gray-200 dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96'>
