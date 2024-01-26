@@ -92,11 +92,13 @@ const ManageUsers = () => {
   const mainContentMargin = getMainContentMargin(activeMenu);
   const currentMode = useSelector(selectTheme);
   const [users, setUsers] = useState([]);
+  const [pending, setPending] = useState(true);
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/user/users')
+      .get(`${process.env.REACT_APP_BASE_URL}/user/users`)
       .then((response) => {
+        setPending(false);
         setUsers(response.data);
       })
       .catch((error) => {
@@ -144,6 +146,7 @@ const ManageUsers = () => {
                 pagination
                 fixedHeader
                 fixedHeaderScrollHeight='70vh'
+                progressPending={pending}
               />
             </div>
           </div>
