@@ -1,3 +1,4 @@
+import React from 'react';
 import './index.css';
 
 import Navbar from 'components/common/navbar';
@@ -29,7 +30,7 @@ const getMainContentMargin = (activeMenu) => {
   }
 };
 
-const Dashboard = () => {
+const Dashboard = ({ page }) => {
   const dispatch = useDispatch();
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
@@ -53,6 +54,7 @@ const Dashboard = () => {
           <div className='z-10 bg-main-bg dark:bg-main-dark-bg w-full'>
             <Navbar />
           </div>
+          {page}
         </div>
       </div>
     </div>

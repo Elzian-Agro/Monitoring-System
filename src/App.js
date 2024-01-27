@@ -14,7 +14,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
 
           {/* Pages */}
-          <Route path='/users' element={<ManageUsers />} />
+          <Route path='/users' element={<Dashboard page={<ManageUsers />} />} />
           <Route path='/orders' element={<Dashboard />} />
           <Route path='/analytics' element={<Dashboard />} />
           <Route path='/settings' element={<Dashboard />} />
