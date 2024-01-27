@@ -1,57 +1,13 @@
 import { XCircleIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
-import axios from 'axios';
 
 import { setNotificationOpen, setAreNotificationsUnread } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { selectAllNotifications, setAllNotifications } from 'pages/dashboard/slice/notificationSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Notification = () => {
   const dispatch = useDispatch();
-  const [allNotifications, setAllNotifications] = useState([]);
-
-  useEffect(() => {
-    axios
-      .post(`${process.env.REACT_APP_BASE_URL}/notification/fetch-notification`, {
-        userId: '6599ae73acebfda083c2f1b0',
-      })
-      .then((response) => {
-        const datas = response.data.result;
-
-        const notifications = datas.map((data) => {
-          // get the Date from the timestampString
-          const timestampString = data.dateTime;
-          const timestamp = new Date(timestampString);
-
-          // Extracting date components
-          const year = timestamp.getUTCFullYear();
-          const month = (timestamp.getUTCMonth() + 1).toString().padStart(2, '0');
-          const day = timestamp.getUTCDate().toString().padStart(2, '0');
-
-          // Extracting time components
-          let  hours = timestamp.getUTCHours().toString().padStart(2, '0');
-          const minutes = timestamp.getUTCMinutes().toString().padStart(2, '0');
-          // Determining AM/PM
-          const ampm = hours >= 12 ? 'PM' : 'AM';
-          // Converting to 12-hour format
-          hours = hours % 12 || 12;
-
-          // Forming the date-only and timeonly  string
-          const dateOnly = `${year}-${month}-${day}`;
-          const timeOnly = `${hours}-${minutes} ${ampm}`;
-
-          return {
-            desc: data.notification,
-            date: dateOnly,
-            time: timeOnly,
-            read: false,
-          };
-        });
-        setAllNotifications(notifications);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const allNotifications = useSelector(selectAllNotifications);
+  console.log(allNotifications);
 
   const closeNotification = () => {
     dispatch(setNotificationOpen(false));
@@ -62,15 +18,14 @@ const Notification = () => {
   };
 
   const deleteNotification = (index) => {
-    const updatedNotifications = [...allNotifications];
-    updatedNotifications.splice(index, 1);
-    setAllNotifications(updatedNotifications);
+    dispatch(setAllNotifications(allNotifications.filter((_, i) => i !== index)));
   };
 
   const readNotification = (index) => {
-    const updatedNotifications = [...allNotifications];
+    // belows is a  deep cloning bcs spread  operator's shallow copy not working as expected with object.
+    const updatedNotifications = JSON.parse(JSON.stringify(allNotifications));
     updatedNotifications[index].read = true;
-    setAllNotifications(updatedNotifications);
+    dispatch(setAllNotifications(updatedNotifications));
   };
 
   return (
