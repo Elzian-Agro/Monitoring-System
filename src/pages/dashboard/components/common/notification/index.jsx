@@ -22,9 +22,6 @@ const Notification = () => {
   };
 
   const deleteNotification = async (index) => {
-    dispatch(setAllNotifications(allNotifications.filter((_, i) => i !== index))); // Remove from the local List
-    dispatch(setNotificationsCount(allNotifications.length - 1));
-
     const token = localStorage.getItem('jwtAccessToken');
 
     try {
@@ -38,7 +35,13 @@ const Notification = () => {
         },
       });
 
-      // Set Notification Count
+      // Remove from the local list
+      const updatedNotifications = allNotifications.filter((_, i) => i !== index);
+      dispatch(setAllNotifications(updatedNotifications));
+
+      // Set Notification Count based on updatedNotifications
+      const readNotificationsCount = updatedNotifications.filter((data) => !data.read).length;
+      dispatch(setNotificationsCount(readNotificationsCount));
     } catch (error) {
       console.error('Error deleting notification:', error);
     }
@@ -47,13 +50,15 @@ const Notification = () => {
   const readNotification = async (index) => {
     const notificationId = allNotifications[index].notificationId; // Later Change it to = _id and remove this notificationId
 
+    // Change the flage to true on local copy
     // Deep cloning because the spread operator's shallow copy may not work as expected with nested objects.
     const updatedNotifications = JSON.parse(JSON.stringify(allNotifications));
     updatedNotifications[index].read = true;
     dispatch(setAllNotifications(updatedNotifications));
 
-    const token = localStorage.getItem('jwtAccessToken'); // Assuming the token comes from localStorage
+    const token = localStorage.getItem('jwtAccessToken');
 
+    //Change the flage to true on database
     try {
       await axios.post(
         `${process.env.REACT_APP_BASE_URL}/notification/view-notification`,
@@ -69,6 +74,10 @@ const Notification = () => {
     } catch (error) {
       console.error('Error marking notification as read:', error);
     }
+
+    // Count the number of objects where readFlag is true from the updatedNotifications
+    const readNotificationsCount = updatedNotifications.filter((data) => !data.read).length;
+    dispatch(setNotificationsCount(readNotificationsCount));
   };
 
   return (

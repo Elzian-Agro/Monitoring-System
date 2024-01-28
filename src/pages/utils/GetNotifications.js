@@ -20,7 +20,9 @@ export const GetNotifications = async () => {
 
     const datas = response.data.result;
 
-    dispatch(setNotificationsCount(datas.length));
+    // Count the number of objects where readFlag is true
+    const readNotificationsCount = datas.filter((data) => !data.readFlag).length;
+    dispatch(setNotificationsCount(readNotificationsCount));
 
     const notifications = datas.map((data) => {
       // get the Date from the timestampString
