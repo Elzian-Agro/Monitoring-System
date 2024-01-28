@@ -40,11 +40,19 @@ const Notification = () => {
     }
   };
 
-  const readNotification = (index) => {
+  const readNotification = async (index) => {
+    const userId = '6599ae73acebfda083c2f1b0';
+    const notificationId = allNotifications[index].notificationId; //Later Change it to =  _id and remove this notificationId
+
     // belows is a  deep cloning bcs spread  operator's shallow copy not working as expected with object.
     const updatedNotifications = JSON.parse(JSON.stringify(allNotifications));
     updatedNotifications[index].read = true;
     dispatch(setAllNotifications(updatedNotifications));
+
+    await axios.post(`${process.env.REACT_APP_BASE_URL}/notification/view-notification`, {
+      userId,
+      notificationId,
+    });
   };
 
   return (
