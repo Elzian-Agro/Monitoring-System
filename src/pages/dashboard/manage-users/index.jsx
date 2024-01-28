@@ -154,7 +154,9 @@ const ManageUsers = () => {
           <div className='flex items-center justify-between mb-4'>
             <div className='flex gap-2'>
               <Button bgColor='bg-green-500' text='Add+' onClick={BtnAddClik} />
-              <Button bgColor='bg-green-500' text='Download' onClick={() => downloadCSV(filteredUsers)} />
+              {filteredUsers.length > 0 && (
+                <Button bgColor='bg-green-500' text='Download' onClick={() => downloadCSV(filteredUsers)} />
+              )}
             </div>
 
             <div className='relative mr-2'>
@@ -187,10 +189,6 @@ const ManageUsers = () => {
             />
           </div>
         </div>
-      )}
-
-      {error && (
-        <div className='flex bg-red-500 text-white p-4 mb-4 rounded-md justify-center items-center'>{error}</div>
       )}
     </div>
   );
