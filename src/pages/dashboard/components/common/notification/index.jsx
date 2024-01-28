@@ -1,20 +1,19 @@
 import { XCircleIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
 
-import { setNotificationOpen, setAreNotificationsUnread } from 'pages/dashboard/slice/dashboardLayoutSlice';
+import { setNotificationOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import { selectAllNotifications, setAllNotifications } from 'pages/dashboard/slice/notificationSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Notification = () => {
   const dispatch = useDispatch();
   const allNotifications = useSelector(selectAllNotifications);
-  console.log(allNotifications);
 
   const closeNotification = () => {
     dispatch(setNotificationOpen(false));
   };
 
   const allNotificationsRead = () => {
-    dispatch(setAreNotificationsUnread(false));
+    //Need to complete this function
   };
 
   const deleteNotification = (index) => {

@@ -1,13 +1,18 @@
 import axios from 'axios';
-import { setAllNotifications } from 'pages/dashboard/slice/notificationSlice';
+import { setAllNotifications, setNotificationsCount } from 'pages/dashboard/slice/notificationSlice';
+import { useDispatch } from 'react-redux';
 
-export const GetNotifications = async (userId, dispatch) => {
+export const GetNotifications = async (userId) => {
+  const dispatch = useDispatch();
+
   try {
     const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/notification/fetch-notification`, {
       userId,
     });
 
     const datas = response.data.result;
+
+    dispatch(setNotificationsCount(datas.length));
 
     const notifications = datas.map((data) => {
       // get the Date from the timestampString

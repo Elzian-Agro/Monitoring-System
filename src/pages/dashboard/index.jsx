@@ -4,7 +4,7 @@ import './index.css';
 import Navbar from 'components/common/navbar';
 import Sidebar from 'components/common/sidebar';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectActiveMenu, selectTheme } from './slice/dashboardLayoutSlice';
 import { GetNotifications } from 'pages/utils/GetNotifications';
 
@@ -31,7 +31,6 @@ const getMainContentMargin = (activeMenu) => {
 };
 
 const Dashboard = ({ page }) => {
-  const dispatch = useDispatch();
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
@@ -41,7 +40,7 @@ const Dashboard = ({ page }) => {
   const userId = '6599ae73acebfda083c2f1b0';
 
   // Get Notifications for the user and save it inside the reduxtoolkit (allNotifications)
-  GetNotifications(userId, dispatch);
+  GetNotifications(userId);
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>

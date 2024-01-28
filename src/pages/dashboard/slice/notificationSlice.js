@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   allNotifications: [],
+  notificationsCount: null,
 };
 
 const notificationsSlice = createSlice({
@@ -11,10 +12,14 @@ const notificationsSlice = createSlice({
     setAllNotifications: (state, action) => {
       state.allNotifications = action.payload;
     },
+    setNotificationsCount: (state, action) => {
+      state.notificationsCount = action.payload;
+    },
   },
 });
 
-export const { setAllNotifications } = notificationsSlice.actions;
+export const { setAllNotifications, setNotificationsCount } = notificationsSlice.actions;
 export const selectAllNotifications = (state) => state.notifications.allNotifications;
+export const selectNotificationsCount = (state) => state.notifications.notificationsCount;
 
 export default notificationsSlice.reducer;
