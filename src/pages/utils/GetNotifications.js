@@ -2,13 +2,21 @@ import axios from 'axios';
 import { setAllNotifications, setNotificationsCount } from 'pages/dashboard/slice/notificationSlice';
 import { useDispatch } from 'react-redux';
 
-export const GetNotifications = async (userId) => {
+export const GetNotifications = async () => {
   const dispatch = useDispatch();
 
+  const token = localStorage.getItem('jwtAccessToken');
+
   try {
-    const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/notification/fetch-notification`, {
-      userId,
-    });
+    const response = await axios.post(
+      `${process.env.REACT_APP_BASE_URL}/notification/fetch-notification`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     const datas = response.data.result;
 
@@ -42,7 +50,6 @@ export const GetNotifications = async (userId) => {
         time: timeOnly,
         read: data.readFlag,
         notificationId: data.notificationId,
-        userId: data.userId,
       };
     });
 

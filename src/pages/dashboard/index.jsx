@@ -37,10 +37,10 @@ const Dashboard = ({ page }) => {
   const currentMode = useSelector(selectTheme);
 
   // TODO: Get the userId from the server
-  const userId = '6599ae73acebfda083c2f1b0';
+  // const userId = '6599ae73acebfda083c2f1b0';
 
   // Get Notifications for the user and save it inside the reduxtoolkit (allNotifications)
-  GetNotifications(userId);
+  GetNotifications();
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>

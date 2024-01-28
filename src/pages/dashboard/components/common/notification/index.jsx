@@ -25,12 +25,16 @@ const Notification = () => {
     dispatch(setAllNotifications(allNotifications.filter((_, i) => i !== index))); // Remove from the local List
     dispatch(setNotificationsCount(allNotifications.length - 1));
 
+    const token = localStorage.getItem('jwtAccessToken');
+
     try {
       // Delete from the database
       await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/delete-notification`, {
         data: {
-          userId: allNotifications[index].userId,
-          notificationId: allNotifications[index].notificationId, //Later Change it to =  _id and remove this notificationId
+          notificationId: allNotifications[index].notificationId, // Later Change it to = _id and remove this notificationId
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -41,18 +45,30 @@ const Notification = () => {
   };
 
   const readNotification = async (index) => {
-    const userId = '6599ae73acebfda083c2f1b0';
-    const notificationId = allNotifications[index].notificationId; //Later Change it to =  _id and remove this notificationId
+    const notificationId = allNotifications[index].notificationId; // Later Change it to = _id and remove this notificationId
 
-    // belows is a  deep cloning bcs spread  operator's shallow copy not working as expected with object.
+    // Deep cloning because the spread operator's shallow copy may not work as expected with nested objects.
     const updatedNotifications = JSON.parse(JSON.stringify(allNotifications));
     updatedNotifications[index].read = true;
     dispatch(setAllNotifications(updatedNotifications));
 
-    await axios.post(`${process.env.REACT_APP_BASE_URL}/notification/view-notification`, {
-      userId,
-      notificationId,
-    });
+    const token = localStorage.getItem('jwtAccessToken'); // Assuming the token comes from localStorage
+
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/notification/view-notification`,
+        {
+          notificationId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
+    }
   };
 
   return (
