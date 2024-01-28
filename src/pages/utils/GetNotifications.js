@@ -41,6 +41,8 @@ export const GetNotifications = async (userId) => {
         date: dateOnly,
         time: timeOnly,
         read: false,
+        notificationId: data.notificationId,
+        userId: data.userId,
       };
     });
 

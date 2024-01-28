@@ -1,7 +1,12 @@
 import { XCircleIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
+import axios from 'axios';
 
 import { setNotificationOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import { selectAllNotifications, setAllNotifications } from 'pages/dashboard/slice/notificationSlice';
+import {
+  selectAllNotifications,
+  setAllNotifications,
+  setNotificationsCount,
+} from 'pages/dashboard/slice/notificationSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Notification = () => {
@@ -17,7 +22,25 @@ const Notification = () => {
   };
 
   const deleteNotification = (index) => {
-    dispatch(setAllNotifications(allNotifications.filter((_, i) => i !== index)));
+    dispatch(setAllNotifications(allNotifications.filter((_, i) => i !== index))); // Remove from the local List
+
+    // Delete form the database
+    axios
+      .delete(`${process.env.REACT_APP_BASE_URL}/notification/delete-notification`, {
+        data: {
+          userId: allNotifications[index].userId,
+          notificationId: allNotifications[index].notificationId, //Later Change it to =  _id and remove this notificationId
+        },
+      })
+      .then((response) => {
+        console.log('Notification deleted successfully:', response.data);
+      })
+      .catch((error) => {
+        console.error('Error deleting notification:', error);
+      });
+
+    //Set Notfication Count
+    dispatch(setNotificationsCount(allNotifications.length));
   };
 
   const readNotification = (index) => {
