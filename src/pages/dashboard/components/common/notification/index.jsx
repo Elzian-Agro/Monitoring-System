@@ -21,26 +21,23 @@ const Notification = () => {
     //Need to complete this function
   };
 
-  const deleteNotification = (index) => {
+  const deleteNotification = async (index) => {
     dispatch(setAllNotifications(allNotifications.filter((_, i) => i !== index))); // Remove from the local List
+    dispatch(setNotificationsCount(allNotifications.length - 1));
 
-    // Delete form the database
-    axios
-      .delete(`${process.env.REACT_APP_BASE_URL}/notification/delete-notification`, {
+    try {
+      // Delete from the database
+      await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/delete-notification`, {
         data: {
           userId: allNotifications[index].userId,
           notificationId: allNotifications[index].notificationId, //Later Change it to =  _id and remove this notificationId
         },
-      })
-      .then((response) => {
-        console.log('Notification deleted successfully:', response.data);
-      })
-      .catch((error) => {
-        console.error('Error deleting notification:', error);
       });
 
-    //Set Notfication Count
-    dispatch(setNotificationsCount(allNotifications.length));
+      // Set Notification Count
+    } catch (error) {
+      console.error('Error deleting notification:', error);
+    }
   };
 
   const readNotification = (index) => {
