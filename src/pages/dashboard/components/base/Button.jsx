@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ text, onClick }) => {
+const Button = ({ bgColor, text, onClick }) => {
   return (
     <button
-      className={'bg-green-500 hover:bg-green-400 text-white py-2 px-4 mr-2 rounded-lg w-24 md:w-32'}
+      className={`${bgColor} hover:opacity-75 text-white text-sm px-2 py-2 rounded-lg w-20 md:w-32`}
       onClick={onClick}>
       {text}
     </button>
@@ -12,6 +12,7 @@ const Button = ({ text, onClick }) => {
 };
 
 Button.propTypes = {
+  bgColor: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
 };

@@ -7,7 +7,7 @@ export const refreshTokenMiddleware = async () => {
     localStorage.setItem('jwtAccessToken', response.data.accessToken);
     return true;
   } catch (error) {
-    if (error.response.data.code === 13002) {
+    if (error.response?.data?.code === 13002) {
       return false;
     }
   }
