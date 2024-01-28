@@ -17,8 +17,35 @@ const Notification = () => {
     dispatch(setNotificationOpen(false));
   };
 
-  const allNotificationsRead = () => {
+  const allNotificationsRead = async () => {
     //Need to complete this function
+    const token = localStorage.getItem('jwtAccessToken');
+
+    try {
+      // Delete from the database
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/notification/view-all-notification`,
+        {}, // Fix: Removed unnecessary curly braces here
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Update the local list to mark all notifications as read
+      const updatedNotifications = allNotifications.map((notification) => ({
+        ...notification,
+        read: true,
+      }));
+      dispatch(setAllNotifications(updatedNotifications));
+
+      // Set Notification Count based on updatedNotifications
+      const readNotificationsCount = updatedNotifications.filter((data) => !data.read).length;
+      dispatch(setNotificationsCount(readNotificationsCount));
+    } catch (error) {
+      console.error('Error marking all notifications as read', error);
+    }
   };
 
   const deleteNotification = async (index) => {
