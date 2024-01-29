@@ -140,7 +140,7 @@ const ManageUsers = () => {
       {showForm ? (
         <Form onClose={closeForm} visible={showForm} user={selectedUser} />
       ) : (
-        <div>
+        <div className='flex flex-col shadow-lg shadow-gray-500/50 dark:shadow-sm dark:shadow-gray-600 p-4 rounded-lg'>
           <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
             <div className='flex gap-2 mb-2 md:mb-0'>
               <VariantButton text='Add User' Icon={PlusIcon} onClick={BtnAddClik} />
@@ -156,7 +156,7 @@ const ManageUsers = () => {
               }}
             />
           </div>
-          <div className='flex flex-col pr-2 rounded-t-lg'>
+          <div className='flex flex-col rounded-t-lg'>
             <DataTable
               columns={columns}
               data={filteredUsers}
@@ -164,7 +164,7 @@ const ManageUsers = () => {
               theme={currentMode === 'Dark' ? 'dark' : ''}
               pagination
               fixedHeader
-              fixedHeaderScrollHeight='70vh'
+              fixedHeaderScrollHeight='65vh'
               progressPending={pending}
             />
           </div>
