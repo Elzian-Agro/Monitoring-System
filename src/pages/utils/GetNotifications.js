@@ -8,9 +8,8 @@ export const GetNotifications = async () => {
   const token = localStorage.getItem('jwtAccessToken');
 
   try {
-    const response = await axios.post(
-      `${process.env.REACT_APP_BASE_URL}/notification/fetch-notification`,
-      {},
+    const response = await axios.get(
+      `${process.env.REACT_APP_BASE_URL}/notification/`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -19,6 +18,7 @@ export const GetNotifications = async () => {
     );
 
     const datas = response.data.result;
+    console.log(datas);
 
     // Count the number of objects where readFlag is true
     const readNotificationsCount = datas.filter((data) => !data.readFlag).length;
@@ -51,7 +51,7 @@ export const GetNotifications = async () => {
         date: dateOnly,
         time: timeOnly,
         read: data.readFlag,
-        notificationId: data.notificationId, // Later Change it to = _id and remove this notificationId
+        notificationId: data._id,
       };
     });
 

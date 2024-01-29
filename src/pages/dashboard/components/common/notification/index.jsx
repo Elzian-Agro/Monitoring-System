@@ -19,8 +19,8 @@ const Notification = () => {
 
   const readAllNotifications = async () => {
     try {
-      await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/notification/view-all-notification`,
+      await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/notification/readByUserId`,
         {},
         {
           headers: {
@@ -46,9 +46,9 @@ const Notification = () => {
   const deleteNotification = async (index) => {
     // Delete from the database
     try {
-      await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/delete-notification`, {
+      await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/`, {
         data: {
-          notificationId: allNotifications[index].notificationId, // Later Change it to = _id and remove this notificationId
+          notificationId: allNotifications[index].notificationId,
         },
         headers: {
           Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ const Notification = () => {
   };
 
   const readNotification = async (index) => {
-    const notificationId = allNotifications[index].notificationId; // Later Change it to = _id and remove this notificationId
+    const notificationId = allNotifications[index].notificationId;
 
     // Change the flage to true on local list.
     // Deep cloning because the spread operator's shallow copy may not work as expected with nested objects.
@@ -78,8 +78,8 @@ const Notification = () => {
 
     //Change the flage to true on database
     try {
-      await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/notification/view-notification`,
+      await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/notification/readByNotificationId`,
         {
           notificationId,
         },
