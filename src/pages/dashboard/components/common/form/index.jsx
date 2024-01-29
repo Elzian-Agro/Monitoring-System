@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Button from '../../base/Button';
+import { PrimaryButton } from '../../base/Button';
 import TextBox from '../../base/TextBox';
 import Dropdown from '../../base/Dropdown';
 
@@ -33,8 +33,8 @@ const Form = ({ visible, onClose }) => {
         <TextBox placeholder='Organization Name' type='text' value={orgName} setValue={setOrgName} />
       </form>
       <div className='flex justify-end gap-2 mt-2 md:mt-5'>
-        <Button bgColor='bg-red-600' text='Cancel' onClick={onClose} />
-        <Button bgColor='bg-blue-600' text='Submit' onClick={handleSubmit} />
+        <PrimaryButton bgEffect='bg-red-500 border-red-600' text='Cancel' onClick={onClose} />
+        <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text='Submit' onClick={handleSubmit} />
       </div>
     </div>
   );

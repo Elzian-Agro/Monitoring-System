@@ -16,7 +16,6 @@ function TextBox({ placeholder = '', type = 'text', value, setValue }) {
 TextBox.propTypes = {
   placeholder: PropTypes.string,
   type: PropTypes.string,
-
   value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
 };

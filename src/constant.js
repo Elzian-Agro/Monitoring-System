@@ -64,37 +64,27 @@ export const errorType = {
 };
 
 export const customTableStyles = {
-  header: {
+  headRow: {
     style: {
-      minHeight: '56px',
+      backgroundColor: '#494d4a',
+      color: '#ffffff',
     },
   },
-  headCells: {
+  rows: {
     style: {
-      borderTopStyle: 'solid',
-      borderTopWidth: '2px',
-      borderTopColor: 'black',
-      fontWeight: 'bold',
-      justifyContent: 'center',
-      '&:not(:nth-last-child(-n+2))': {
-        borderRightStyle: 'solid',
-        borderRightWidth: '2px',
-        borderRightColor: 'black',
+      backgroundColor: 'blue',
+      '&:nth-child(even)': {
+        backgroundColor: '#ffffff',
+      },
+      '&:nth-child(odd)': {
+        backgroundColor: '#dcf3f7',
       },
     },
   },
   cells: {
     style: {
-      borderTopStyle: 'solid',
-      borderTopWidth: '2px',
-      borderTopColor: 'black',
-      '&:not(:nth-last-child(-n+2))': {
-        borderRightStyle: 'solid',
-        borderRightWidth: '2px',
-        borderRightColor: 'black',
-      },
-      '&:nth-last-child(-n+2)': {
-        justifyContent: 'center',
+      '&:last-child': {
+        width: '50px',
       },
     },
   },

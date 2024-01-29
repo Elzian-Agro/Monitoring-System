@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../slice/dashboardLayoutSlice';
-import Button from '../components/base/Button';
+import { PrimaryButton, VariantButton } from '../components/base/Button';
 import { customTableStyles } from 'constant';
 import { useNavigate } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
@@ -9,6 +9,8 @@ import axios from 'axios';
 import { downloadCSV } from '../utils/download';
 import { refreshTokenMiddleware } from '../utils/refreshTokenMiddleware';
 import Form from '../components/common/form';
+import { ArrowDownTrayIcon, PlusIcon } from '@heroicons/react/24/outline';
+import SearchBox from '../components/base/SearchBox';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -23,17 +25,17 @@ const ManageUsers = () => {
 
   const columns = [
     {
-      name: 'First Name',
+      name: 'FIRST NAME',
       selector: (row) => row.firstName,
       sortable: true,
     },
     {
-      name: 'Last Name',
+      name: 'LAST NAME',
       selector: (row) => row.lastName,
       sortable: true,
     },
     {
-      name: 'Email',
+      name: 'EMAIL',
       selector: (row) => row.email,
       sortable: true,
     },
@@ -43,38 +45,26 @@ const ManageUsers = () => {
       sortable: true,
     },
     {
-      name: 'Phone Number',
+      name: 'TEL. NUMBER',
       selector: (row) => row.phoneNum,
       sortable: true,
     },
     {
-      name: 'Organization Name',
+      name: 'ORG. NAME',
       selector: (row) => row.orgName,
       sortable: true,
     },
     {
-      name: 'User Type',
+      name: 'USER TYPE',
       selector: (row) => row.userType,
       sortable: true,
     },
     {
-      name: 'Action',
-      cell: () => (
-        <button
-          className='bg-blue-600 hover:bg-blue-500 text-white py-2 px-2 mx-1 rounded-lg w-24'
-          onClick={() => BtnEditClick()}>
-          Edit
-        </button>
-      ),
+      name: 'ACTION',
+      cell: () => <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text='Edit' onClick={() => BtnEditClick()} />,
     },
     {
-      cell: () => (
-        <button
-          className='bg-red-600 hover:bg-red-500 text-white py-2 px-2 mx-1 rounded-lg w-24'
-          onClick={() => handleDelete()}>
-          Delete
-        </button>
-      ),
+      cell: () => <PrimaryButton bgEffect='bg-red-500 border-red-600' text='Delete' onClick={() => handleDelete()} />,
     },
   ];
 
@@ -151,36 +141,26 @@ const ManageUsers = () => {
         <Form onClose={closeForm} visible={showForm} user={selectedUser} />
       ) : (
         <div>
-          <div className='flex items-center justify-between mb-4'>
-            <div className='flex gap-2'>
-              <Button bgColor='bg-green-500' text='Add+' onClick={BtnAddClik} />
+          <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
+            <div className='flex gap-2 mb-2 md:mb-0'>
+              <VariantButton text='Add User' Icon={PlusIcon} onClick={BtnAddClik} />
               {filteredUsers.length > 0 && (
-                <Button bgColor='bg-green-500' text='Download' onClick={() => downloadCSV(filteredUsers)} />
+                <VariantButton text='Download' Icon={ArrowDownTrayIcon} onClick={() => downloadCSV(filteredUsers)} />
               )}
             </div>
-
-            <div className='relative mr-2'>
-              <input
-                type='text'
-                placeholder='Search...'
-                className='rounded-lg p-1 dark:bg-secondary-dark-bg dark:text-white border-2 border-solid border-gray-300 dark:border-gray-500 focus:outline-none focus:border-black dark:focus:border-white w-40 sm:w-48 md:w-56'
-                value={filterText}
-                onChange={(e) => setFilterText(e.target.value)}
-              />
-              <button
-                className='absolute right-0 p-1 cursor-pointer bg-red-500 rounded-r-lg text-white'
-                onClick={() => {
-                  setFilterText('');
-                }}>
-                X
-              </button>
-            </div>
+            <SearchBox
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+              onClick={() => {
+                setFilterText('');
+              }}
+            />
           </div>
-          <div className='pr-2 rounded-t-lg'>
+          <div className='flex flex-col pr-2 rounded-t-lg'>
             <DataTable
               columns={columns}
               data={filteredUsers}
-              customStyles={customTableStyles}
+              customStyles={currentMode === 'Dark' ? {} : customTableStyles}
               theme={currentMode === 'Dark' ? 'dark' : ''}
               pagination
               fixedHeader

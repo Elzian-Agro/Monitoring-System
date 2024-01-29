@@ -49,8 +49,8 @@ const Dashboard = ({ page }) => {
         <div className={`${mainContentMargin} dark:bg-main-dark-bg bg-main-bg min-h-screen w-full`}>
           <div className='z-10 bg-main-bg dark:bg-main-dark-bg w-full'>
             <Navbar />
+            {page}
           </div>
-          {page}
         </div>
       </div>
     </div>
