@@ -36,9 +36,8 @@ const Notification = () => {
       }));
       dispatch(setAllNotifications(updatedNotifications));
 
-      // Set Notification Count based on updatedNotifications
-      const readNotificationsCount = updatedNotifications.filter((data) => !data.read).length;
-      dispatch(setNotificationsCount(readNotificationsCount));
+      // Set Notification Count
+      dispatch(setNotificationsCount(null));
     } catch (error) {
       console.error('Error marking all notifications as read', error);
     }
