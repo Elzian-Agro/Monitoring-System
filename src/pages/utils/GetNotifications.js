@@ -51,7 +51,7 @@ export const GetNotifications = async () => {
         date: dateOnly,
         time: timeOnly,
         read: data.readFlag,
-        notificationId: data.notificationId,
+        notificationId: data.notificationId, // Later Change it to = _id and remove this notificationId
       };
     });
 

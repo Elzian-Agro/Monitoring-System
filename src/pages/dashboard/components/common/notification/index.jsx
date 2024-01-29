@@ -1,6 +1,5 @@
 import { XCircleIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
-
 import { setNotificationOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import {
   selectAllNotifications,
@@ -12,20 +11,17 @@ import { useDispatch, useSelector } from 'react-redux';
 const Notification = () => {
   const dispatch = useDispatch();
   const allNotifications = useSelector(selectAllNotifications);
+  const token = localStorage.getItem('jwtAccessToken');
 
   const closeNotification = () => {
     dispatch(setNotificationOpen(false));
   };
 
-  const allNotificationsRead = async () => {
-    //Need to complete this function
-    const token = localStorage.getItem('jwtAccessToken');
-
+  const readAllNotifications = async () => {
     try {
-      // Delete from the database
       await axios.post(
         `${process.env.REACT_APP_BASE_URL}/notification/view-all-notification`,
-        {}, // Fix: Removed unnecessary curly braces here
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -33,7 +29,7 @@ const Notification = () => {
         }
       );
 
-      // Update the local list to mark all notifications as read
+      // Update the local list to mark all notifications as read.
       const updatedNotifications = allNotifications.map((notification) => ({
         ...notification,
         read: true,
@@ -49,10 +45,8 @@ const Notification = () => {
   };
 
   const deleteNotification = async (index) => {
-    const token = localStorage.getItem('jwtAccessToken');
-
+    // Delete from the database
     try {
-      // Delete from the database
       await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/delete-notification`, {
         data: {
           notificationId: allNotifications[index].notificationId, // Later Change it to = _id and remove this notificationId
@@ -62,7 +56,7 @@ const Notification = () => {
         },
       });
 
-      // Remove from the local list
+      // Remove from the local list.
       const updatedNotifications = allNotifications.filter((_, i) => i !== index);
       dispatch(setAllNotifications(updatedNotifications));
 
@@ -77,13 +71,11 @@ const Notification = () => {
   const readNotification = async (index) => {
     const notificationId = allNotifications[index].notificationId; // Later Change it to = _id and remove this notificationId
 
-    // Change the flage to true on local copy
+    // Change the flage to true on local list.
     // Deep cloning because the spread operator's shallow copy may not work as expected with nested objects.
     const updatedNotifications = JSON.parse(JSON.stringify(allNotifications));
     updatedNotifications[index].read = true;
     dispatch(setAllNotifications(updatedNotifications));
-
-    const token = localStorage.getItem('jwtAccessToken');
 
     //Change the flage to true on database
     try {
@@ -114,7 +106,7 @@ const Notification = () => {
           <p className='font-semibold md:text-lg dark:text-white'>Notifications</p>
         </div>
         <div>
-          <button className='mr-10' onClick={allNotificationsRead}>
+          <button className='mr-10' onClick={readAllNotifications}>
             <BellSlashIcon className='h-6 w-6 dark:text-white' />
           </button>
           <button onClick={closeNotification}>
@@ -128,7 +120,6 @@ const Notification = () => {
           <div className='Each-Notifications mb-4' key={index}>
             <div
               className={`${eachNotification.read ? 'line-through' : ''} flex justify-between dark:decoration-white`}>
-              {/* truncate Or line-clamp-2  - Choose later For now i have choosen truncate*/}
               <p className='dark:text-white max-w-60 line-clamp-2'>{eachNotification.desc}</p>
               <div className='flex items-center'>
                 <button className='mr-3'>
