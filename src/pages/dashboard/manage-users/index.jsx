@@ -91,7 +91,7 @@ const ManageUsers = () => {
     const accessToken = localStorage.getItem('jwtAccessToken');
 
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/user/users`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/user`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
