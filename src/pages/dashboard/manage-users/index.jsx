@@ -11,6 +11,7 @@ import { refreshTokenMiddleware } from '../utils/refreshTokenMiddleware';
 import Form from '../components/common/form';
 import { ArrowDownTrayIcon, PlusIcon } from '@heroicons/react/24/outline';
 import SearchBox from '../components/base/SearchBox';
+import ConformBox from '../components/common/confirm-box';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -19,6 +20,7 @@ const ManageUsers = () => {
   const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const currentMode = useSelector(selectTheme);
   const navigate = useNavigate();
@@ -61,19 +63,19 @@ const ManageUsers = () => {
     },
     {
       name: 'ACTION',
-      cell: () => <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text='Edit' onClick={() => BtnEditClick()} />,
+      cell: () => <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text='Edit' onClick={() => handleEdit()} />,
     },
     {
       cell: () => <PrimaryButton bgEffect='bg-red-500 border-red-600' text='Delete' onClick={() => handleDelete()} />,
     },
   ];
 
-  const BtnAddClik = () => {
+  const handleCreate = () => {
     setShowForm(true);
     setSelectedUser(null); // Clear selectedUser for add mode
   };
 
-  const BtnEditClick = (user) => {
+  const handleEdit = (user) => {
     setShowForm(true);
     setSelectedUser(user); // Set selectedUser for edit mode
   };
@@ -84,14 +86,14 @@ const ManageUsers = () => {
   };
 
   const handleDelete = () => {
-    // TO DO: handle delete
+    setShowConfirm(true);
   };
 
   useEffect(() => {
     const accessToken = localStorage.getItem('jwtAccessToken');
 
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/user/users`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/user`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -140,10 +142,10 @@ const ManageUsers = () => {
       {showForm ? (
         <Form onClose={closeForm} visible={showForm} user={selectedUser} />
       ) : (
-        <div>
+        <div className='flex flex-col shadow-lg shadow-gray-500/50 dark:shadow-sm dark:shadow-gray-600 p-4 rounded-lg'>
           <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
             <div className='flex gap-2 mb-2 md:mb-0'>
-              <VariantButton text='Add User' Icon={PlusIcon} onClick={BtnAddClik} />
+              <VariantButton text='Add User' Icon={PlusIcon} onClick={handleCreate} />
               {filteredUsers.length > 0 && (
                 <VariantButton text='Download' Icon={ArrowDownTrayIcon} onClick={() => downloadCSV(filteredUsers)} />
               )}
@@ -156,7 +158,7 @@ const ManageUsers = () => {
               }}
             />
           </div>
-          <div className='flex flex-col pr-2 rounded-t-lg'>
+          <div className='flex flex-col rounded-t-lg'>
             <DataTable
               columns={columns}
               data={filteredUsers}
@@ -164,12 +166,19 @@ const ManageUsers = () => {
               theme={currentMode === 'Dark' ? 'dark' : ''}
               pagination
               fixedHeader
-              fixedHeaderScrollHeight='70vh'
+              fixedHeaderScrollHeight='65vh'
               progressPending={pending}
             />
           </div>
         </div>
       )}
+      <ConformBox
+        visible={showConfirm}
+        message='Are you sure want to delete?'
+        onClose={() => {
+          setShowConfirm(false);
+        }}
+      />
     </div>
   );
 };
