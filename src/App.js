@@ -5,6 +5,7 @@ import Dashboard from 'pages/dashboard';
 import NotFoundPage from 'pages/404';
 import ManageUsers from 'pages/dashboard/manage-users';
 import PrivateRoutes from 'pages/utils/PrivateRoutes';
+import UserProfilePage from 'pages/dashboard/user-profile-page';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path='/orders' element={<Dashboard />} />
           <Route path='/analytics' element={<Dashboard />} />
           <Route path='/settings' element={<Dashboard />} />
-          <Route path='/addProducts' element={<Dashboard />} />
+          <Route path='/profile' element={<Dashboard page={<UserProfilePage />} />} />
 
           {/* Charts */}
           <Route path='/pie' element={<Dashboard />} />

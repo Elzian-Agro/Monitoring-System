@@ -22,7 +22,6 @@ const UserProfile = () => {
       console.error('Error during logout:', error);
     }
   };
-  
 
   return (
     <div className='nav-item absolute right-1 top-16 shadow-lg dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96'>
@@ -32,7 +31,8 @@ const UserProfile = () => {
           <XCircleIcon className='h-6 w-6 dark:text-white' />
         </button>
       </div>
-      <div className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
+      {/* I need to add link to this below div */}
+      <NavLink to='/profile' className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
         <img className='rounded-full h-20 md:h-24 md:w-24' src={avatar} alt='user-profile' />
         <div>
           {/* TODO: Replace hard coded data with API data  */}
@@ -40,7 +40,7 @@ const UserProfile = () => {
           <p className='text-gray-500 text-sm'> Administrator </p>
           <p className='text-gray-500 text-sm font-semibold'> ElzianAgro.com </p>
         </div>
-      </div>
+      </NavLink>
       <div>
         {userProfileData.map((item, index) => (
           <div

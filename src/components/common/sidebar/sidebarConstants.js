@@ -28,8 +28,8 @@ const sidebarLinks = [
     icon: Cog6ToothIcon,
   },
   {
-    to: '/addProducts',
-    text: 'Add Products',
+    to: '/profile',
+    text: 'Manage Profile',
     icon: PlusIcon,
   },
 ];
