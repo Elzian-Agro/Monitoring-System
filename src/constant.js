@@ -61,6 +61,16 @@ export const errorType = {
     code: 13011,
     message: 'Email address not verified',
   },
+
+  authenticationFailed: {
+    code: 13002,
+    message: 'Authentication failed! Please log in again',
+  },
+
+  accessDenied: {
+    code: 13017,
+    message: 'Access denied',
+  },
 };
 
 export const customTableStyles = {
