@@ -7,11 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import axios from 'axios';
 import { downloadCSV } from '../utils/download';
-import { refreshTokenMiddleware } from '../utils/refreshTokenMiddleware';
+import { getNewAccessToken } from '../utils/getNewAccessToken';
 import Form from '../components/common/form';
 import { ArrowDownTrayIcon, PlusIcon } from '@heroicons/react/24/outline';
 import SearchBox from '../components/base/SearchBox';
 import ConformBox from '../components/common/confirm-box';
+import AlertBox from '../components/common/alert-box';
+import { identifyError } from 'pages/auth/utils';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -21,6 +23,7 @@ const ManageUsers = () => {
   const [showForm, setShowForm] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   const currentMode = useSelector(selectTheme);
   const navigate = useNavigate();
@@ -89,31 +92,45 @@ const ManageUsers = () => {
     setShowConfirm(true);
   };
 
-  useEffect(() => {
-    const accessToken = localStorage.getItem('jwtAccessToken');
-
-    axios
-      .get(`${process.env.REACT_APP_BASE_URL}/user`, {
+  const getUser = async () => {
+    try {
+      const accessToken = localStorage.getItem('jwtAccessToken');
+      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
-      })
-      .then((response) => {
-        setPending(false);
-        setUsers(response.data);
-      })
-      .catch(async (error) => {
-        if (error.response?.data?.code === 13004) {
-          const refreshTokenSuccess = await refreshTokenMiddleware();
-          if (!refreshTokenSuccess) {
-            navigate('/');
-          }
-          window.location.reload();
-        } else {
-          setPending(false);
-          setError('Access denied');
-        }
       });
+      return response.data;
+    } catch (error) {
+      if (
+        error.response?.data?.code === 13004 ||
+        error.response?.data?.code === 13013 ||
+        error.response?.data?.code === 13014
+      ) {
+        await getNewAccessToken();
+
+        return await getUser();
+      }
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const usersData = await getUser();
+        setUsers(usersData);
+      } catch (error) {
+        setError(identifyError(error.response?.data?.code));
+        setAlert(true);
+        if (error.response?.data?.code === 13002) {
+          setTimeout(() => {
+            navigate('/');
+          }, 3000);
+        }
+      }
+      setPending(false);
+    })();
   }, [navigate]);
 
   // Function to filter the user based on the search text
@@ -131,8 +148,17 @@ const ManageUsers = () => {
 
   if (error) {
     return (
-      <div className='flex bg-red-500 text-white text-xs md:text-sm lg:text-base p-2 md:p-4 mx-6 rounded-md justify-center items-center'>
-        {error}
+      <div>
+        <div className='flex bg-red-500 text-white text-xs md:text-sm lg:text-base p-2 md:p-4 mx-6 rounded-md justify-center items-center'>
+          {error}
+        </div>
+        <AlertBox
+          visible={alert}
+          message={`${error}!!!`}
+          onClose={() => {
+            setAlert(false);
+          }}
+        />
       </div>
     );
   }
