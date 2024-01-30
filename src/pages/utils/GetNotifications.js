@@ -18,7 +18,6 @@ export const GetNotifications = async () => {
     );
 
     const datas = response.data.result;
-    console.log(datas);
 
     // Count the number of objects where readFlag is true
     const readNotificationsCount = datas.filter((data) => !data.readFlag).length;

@@ -7,6 +7,7 @@ import Sidebar from 'components/common/sidebar';
 import { useSelector } from 'react-redux';
 import { selectActiveMenu, selectTheme } from './slice/dashboardLayoutSlice';
 import { GetNotifications } from 'pages/utils/GetNotifications';
+import GetUserData from 'pages/utils/GetUserData';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -37,6 +38,7 @@ const Dashboard = ({ page }) => {
   const currentMode = useSelector(selectTheme);
 
   // Get Notifications for the user and save it inside the reduxtoolkit (allNotifications)
+  GetUserData();
   GetNotifications();
 
   return (
