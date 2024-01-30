@@ -1,6 +1,7 @@
 import React from 'react';
 import { PrimaryButton } from '../../base/Button';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
 
 const ConformBox = ({ visible, message, onClose }) => {
   if (!visible) {
@@ -24,6 +25,12 @@ const ConformBox = ({ visible, message, onClose }) => {
       </div>
     </div>
   );
+};
+
+ConformBox.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  message: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default ConformBox;
