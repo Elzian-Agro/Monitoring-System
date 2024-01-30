@@ -1,4 +1,4 @@
-import { XCircleIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { XCircleIcon, EyeIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
 import { setNotificationOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import {
@@ -118,18 +118,24 @@ const Notification = () => {
         {allNotifications.map((eachNotification, index) => (
           <div className='Each-Notifications mb-4' key={index}>
             <div
-              className={`${eachNotification.read ? 'line-through' : ''} flex justify-between dark:decoration-white`}>
-              <p className='dark:text-white max-w-60 line-clamp-2'>{eachNotification.desc}</p>
+              className={`${
+                eachNotification.read ? 'text-gray-400 dark:text-gray-500' : 'dark:text-white'
+              } flex justify-between`}>
+              <p className='max-w-60 line-clamp-2'>{eachNotification.desc}</p>
               <div className='flex items-center'>
                 <button className='mr-3'>
-                  <EyeSlashIcon onClick={() => readNotification(index)} className='h-5 w-5 dark:text-white' />
+                  {eachNotification.read ? (
+                    <EyeSlashIcon className='h-5 w-5' />
+                  ) : (
+                    <EyeIcon onClick={() => readNotification(index)} className='h-5 w-5' />
+                  )}
                 </button>
                 <button onClick={() => deleteNotification(index)}>
-                  <TrashIcon className='h-5 w-5 dark:text-white' />
+                  <TrashIcon className='h-5 w-5' />
                 </button>
               </div>
             </div>
-            <div className='Date and Time pt-1 flex justify-between text-gray-500 text-xs'>
+            <div className='Date and Time pt-1 flex justify-between text-gray-400 dark:text-gray-500 text-xs '>
               <p>{eachNotification.date}</p>
               <p>{eachNotification.time}</p>
             </div>
