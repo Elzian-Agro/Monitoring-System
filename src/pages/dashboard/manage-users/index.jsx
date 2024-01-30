@@ -22,7 +22,7 @@ const ManageUsers = () => {
   const [error, setError] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [showConfirm, setShowConfirm] = useState(false);
+  const [confirm, setConfirm] = useState(false);
   const [alert, setAlert] = useState(false);
 
   const currentMode = useSelector(selectTheme);
@@ -89,7 +89,7 @@ const ManageUsers = () => {
   };
 
   const handleDelete = () => {
-    setShowConfirm(true);
+    setConfirm(true);
   };
 
   const getUser = async () => {
@@ -135,6 +135,10 @@ const ManageUsers = () => {
 
   // Function to filter the user based on the search text
   const filteredUsers = useMemo(() => {
+    if (!users) {
+      return [];
+    }
+
     return users.filter(
       (user) =>
         user.firstName.toLowerCase().includes(filterText.toLowerCase()) ||
@@ -199,10 +203,10 @@ const ManageUsers = () => {
         </div>
       )}
       <ConformBox
-        visible={showConfirm}
+        visible={confirm}
         message='Are you sure want to delete?'
         onClose={() => {
-          setShowConfirm(false);
+          setConfirm(false);
         }}
       />
     </div>
