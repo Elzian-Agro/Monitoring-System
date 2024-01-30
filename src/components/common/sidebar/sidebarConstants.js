@@ -29,7 +29,7 @@ const sidebarLinks = [
   },
   {
     to: '/profile',
-    text: 'Manage Profile',
+    text: 'My Profile',
     icon: PlusIcon,
   },
 ];
