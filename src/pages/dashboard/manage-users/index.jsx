@@ -119,6 +119,7 @@ const ManageUsers = () => {
     (async () => {
       try {
         const usersData = await getUser();
+        setPending(false);
         setUsers(usersData);
       } catch (error) {
         setError(identifyError(error.response?.data?.code));
@@ -129,9 +130,8 @@ const ManageUsers = () => {
           }, 3000);
         }
       }
-      setPending(false);
     })();
-  }, [navigate]);
+  }, []);
 
   // Function to filter the user based on the search text
   const filteredUsers = useMemo(() => {
