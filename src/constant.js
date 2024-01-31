@@ -22,14 +22,39 @@ export const userProfileData = [
 ];
 
 export const errorType = {
-  invalidCredentials: {
-    code: 13005,
-    message: 'Invalid email or password',
+  userBlocked: {
+    code: 13001,
+    message: 'User is blocked! Contact admin',
+  },
+
+  authenticationFailed: {
+    code: 13002,
+    message: 'Authentication failed! Please log in again',
+  },
+
+  incorrectTempPassword: {
+    code: 13003,
+    message: 'Incorrect Temporary Password',
   },
 
   timeOut: {
     code: 13004,
     message: 'Time Out',
+  },
+
+  invalidCredentials: {
+    code: 13005,
+    message: 'Invalid email or password',
+  },
+
+  userNotFound: {
+    code: 13007,
+    message: 'User Not Found!',
+  },
+
+  userAlreadyExist: {
+    code: 13008,
+    message: 'NIC or Email Address already exists',
   },
 
   serverError: {
@@ -42,29 +67,9 @@ export const errorType = {
     message: 'Oops! an error occured. Please try again later',
   },
 
-  userNotFound: {
-    code: 13007,
-    message: 'User Not Found!',
-  },
-
-  userBlocked: {
-    code: 13001,
-    message: 'User is blocked! Contact admin',
-  },
-
-  incorrectTempPassword: {
-    code: 13003,
-    message: 'Incorrect Temporary Password',
-  },
-
   emailNotVerified: {
     code: 13011,
     message: 'Email address not verified',
-  },
-
-  authenticationFailed: {
-    code: 13002,
-    message: 'Authentication failed! Please log in again',
   },
 
   accessDenied: {
