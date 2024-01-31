@@ -72,8 +72,13 @@ export const errorType = {
     message: 'Email address not verified',
   },
 
+  noRecords: {
+    code: 13015,
+    message: 'No records found',
+  },
+
   accessDenied: {
-    code: 13017,
+    code: 13019,
     message: 'Access denied',
   },
 };
