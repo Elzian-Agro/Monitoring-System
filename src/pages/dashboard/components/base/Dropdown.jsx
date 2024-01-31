@@ -21,7 +21,7 @@ function Dropdown({ label = null, Icon = null, value, setValue, options }) {
         <select
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className='appearance-none bg-transparent border-none w-full text-gray-400 dark:text-white p-2 leading-tight focus:outline-none'>
+          className='appearance-none bg-transparent border-none w-full text-gray-700 dark:text-white p-2 leading-tight focus:outline-none'>
           {options.map((option) => (
             <option key={option} value={option}>
               {option}
