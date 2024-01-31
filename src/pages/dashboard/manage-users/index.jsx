@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../slice/dashboardLayoutSlice';
 import { PrimaryButton, VariantButton } from '../components/base/Button';
@@ -94,7 +94,7 @@ const ManageUsers = () => {
     setConfirm(true);
   };
 
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     try {
       const accessToken = localStorage.getItem('jwtAccessToken');
       const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user`, {
@@ -110,12 +110,11 @@ const ManageUsers = () => {
         error.response?.data?.code === 13014
       ) {
         await getNewAccessToken();
-
         return await getUser();
       }
       throw error;
     }
-  };
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -133,7 +132,7 @@ const ManageUsers = () => {
         }
       }
     })();
-  }, []);
+  }, [getUser, navigate]);
 
   // Function to filter the user based on the search text
   const filteredUsers = useMemo(() => {
