@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { PrimaryButton } from '../../base/Button';
+import { ToggleButton } from '../../base/Button';
 import TextBox from '../../base/TextBox';
 import Dropdown from '../../base/Dropdown';
+import AlertBox from '../alert-box';
 import {
   EnvelopeIcon,
   HomeIcon,
@@ -12,7 +14,7 @@ import {
   UserIcon,
 } from '@heroicons/react/24/outline';
 import { identifyError } from 'pages/auth/utils';
-import AlertBox from '../alert-box';
+
 import axios from 'axios';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
 
@@ -20,11 +22,12 @@ const Form = ({ visible, onClose, user }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [nic, setNic] = useState('');
-  const [email, setEmail] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [orgName, setOrgName] = useState('');
   const [userType, setUserType] = useState('farmer');
+  const [orgName, setOrgName] = useState('');
+  const [isDeleted, setIsDeleted] = useState(false);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
@@ -36,9 +39,11 @@ const Form = ({ visible, onClose, user }) => {
       setLastName(user.lastName || '');
       setNic(user.NIC || '');
       setEmail(user.email || '');
+      setPassword(user.password || '');
       setPhoneNum(user.phoneNum || '');
       setOrgName(user.orgName || '');
       setUserType(user.userType || '');
+      setIsDeleted(user.isDeleted || false);
     }
 
     // Generate random password for register mode
@@ -116,6 +121,7 @@ const Form = ({ visible, onClose, user }) => {
           password,
           orgName,
           userType,
+          isDeleted,
         },
         {
           headers: {
@@ -208,7 +214,7 @@ const Form = ({ visible, onClose, user }) => {
           <Dropdown
             label='Eg. User Type'
             Icon={UserGroupIcon}
-            options={['farmer', 'admin']}
+            options={['farmer', 'admin', 'superAdmin']}
             value={userType}
             setValue={setUserType}
           />
@@ -226,6 +232,20 @@ const Form = ({ visible, onClose, user }) => {
           />
           {errors.orgName && <div className='text-red-500 text-sm'>{errors.orgName}</div>}
         </div>
+
+        {user ? (
+          <div className='flex flex-row gap-4'>
+            <p>ENABLE THE USER :</p>
+            <ToggleButton
+              value={isDeleted}
+              onChange={() => {
+                setIsDeleted(!isDeleted);
+              }}
+            />
+          </div>
+        ) : (
+          ''
+        )}
       </form>
       <div className='flex justify-end item-center gap-2 md:gap-5 mt-3 lg:mt-10'>
         <PrimaryButton
