@@ -14,9 +14,9 @@ import {
   UserIcon,
 } from '@heroicons/react/24/outline';
 import { identifyError } from 'pages/auth/utils';
-
 import axios from 'axios';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
+import { authRegex } from 'constant';
 
 const Form = ({ visible, onClose, user }) => {
   const [firstName, setFirstName] = useState('');
@@ -69,6 +69,10 @@ const Form = ({ visible, onClose, user }) => {
 
     if (!email.trim()) {
       newErrors.email = '*Email is required';
+    }
+
+    if (!authRegex.email.test(email)) {
+      newErrors.email = '*Email is not valid';
     }
 
     if (!password.trim()) {
