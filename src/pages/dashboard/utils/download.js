@@ -1,4 +1,4 @@
-// Download CSV
+// Download CSV file
 function convertArrayOfObjectsToCSV(data) {
   let result;
 

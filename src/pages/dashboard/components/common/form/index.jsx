@@ -131,7 +131,7 @@ const Form = ({ visible, onClose, user }) => {
       )
         .then(() => {
           resetForm();
-          setMessage(user ? 'User updated successfully!' : 'User created successfully!');
+          setMessage(user ? 'User updated successfully!' : 'User registered successfully!');
           setIsAlertVisible(true);
         })
         .catch((error) => {
@@ -232,42 +232,45 @@ const Form = ({ visible, onClose, user }) => {
           />
           {errors.orgName && <div className='text-red-500 text-sm'>{errors.orgName}</div>}
         </div>
-
-        {user ? (
-          <div className='flex flex-row gap-4'>
-            <p>ENABLE THE USER :</p>
-            <ToggleButton
-              value={isDeleted}
-              onChange={() => {
-                setIsDeleted(!isDeleted);
-              }}
-            />
-          </div>
-        ) : (
-          ''
-        )}
       </form>
-      <div className='flex justify-end item-center gap-2 md:gap-5 mt-3 lg:mt-10'>
-        <PrimaryButton
-          bgEffect='bg-red-500 border-red-600'
-          size='md:py-2 md:px-4 md:text-lg'
-          text='Cancel'
-          onClick={onClose}
-        />
-        <PrimaryButton
-          bgEffect='bg-blue-500 border-blue-600'
-          size='md:py-2 md:px-4 md:text-base'
-          text='Submit'
-          onClick={handleSubmit}
+      <div className='flex flex-row justify-between item-center pt-4'>
+        <div>
+          {user ? (
+            <div className='flex flex-row items-center gap-4'>
+              <div className='text-gray-500'>Enable user :</div>
+              <ToggleButton
+                value={isDeleted}
+                onChange={() => {
+                  setIsDeleted(!isDeleted);
+                }}
+              />
+            </div>
+          ) : (
+            ''
+          )}
+        </div>
+        <div className='flex justify-end item-center gap-2 md:gap-5 mt-3 lg:mt-10'>
+          <PrimaryButton
+            bgEffect='bg-red-500 border-red-600'
+            size='md:py-2 md:px-4 md:text-lg'
+            text='Cancel'
+            onClick={onClose}
+          />
+          <PrimaryButton
+            bgEffect='bg-blue-500 border-blue-600'
+            size='md:py-2 md:px-4 md:text-base'
+            text='Submit'
+            onClick={handleSubmit}
+          />
+        </div>
+        <AlertBox
+          visible={isAlertVisible}
+          message={`${message}!`}
+          onClose={() => {
+            setIsAlertVisible(false);
+          }}
         />
       </div>
-      <AlertBox
-        visible={isAlertVisible}
-        message={`${message}!`}
-        onClose={() => {
-          setIsAlertVisible(false);
-        }}
-      />
     </div>
   );
 };

@@ -1,4 +1,3 @@
-// Generate random password
 export const generateRandomPassword = (length = 12) => {
   const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
   const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -12,7 +11,7 @@ export const generateRandomPassword = (length = 12) => {
 
   let password = '';
 
-  // Ensure at least one lowercase letter, one uppercase letter, one number, and one symbol
+  // Adding at least one lowercase letter, one uppercase letter, one number, and one symbol
   password += getRandomChar(lowercaseLetters);
   password += getRandomChar(uppercaseLetters);
   password += getRandomChar(numbers);

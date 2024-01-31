@@ -20,10 +20,10 @@ const ManageUsers = () => {
   const [pending, setPending] = useState(true);
   const [filterText, setFilterText] = useState('');
   const [error, setError] = useState(null);
-  const [showForm, setShowForm] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [confirm, setConfirm] = useState(false);
-  const [alert, setAlert] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   const currentMode = useSelector(selectTheme);
   const navigate = useNavigate();
@@ -67,34 +67,29 @@ const ManageUsers = () => {
     {
       name: 'ACTION',
       cell: (row) => (
-        <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text='Edit' onClick={() => handleEdit(row)} />
+        <PrimaryButton
+          bgEffect='bg-blue-500 border-blue-600'
+          text='Edit'
+          onClick={() => {
+            setIsFormVisible(true);
+            setSelectedUser(row);
+          }}
+        />
       ),
     },
     {
-      cell: () => <PrimaryButton bgEffect='bg-red-500 border-red-600' text='Delete' onClick={() => handleDelete()} />,
+      cell: (row) => (
+        <PrimaryButton bgEffect='bg-red-500 border-red-600' text='Delete' onClick={() => handleDelete(row)} />
+      ),
     },
   ];
 
-  const handleCreate = () => {
-    setShowForm(true);
-    setSelectedUser(null); // Clear selectedUser for add mode
-  };
-
-  const handleEdit = (user) => {
-    setShowForm(true);
-    setSelectedUser(user); // Set selectedUser for edit mode
-  };
-
-  const closeForm = () => {
-    setShowForm(false);
-    setSelectedUser(null); // Clear selectedUser when form is closed
-  };
-
   const handleDelete = () => {
-    setConfirm(true);
+    setIsConfirmVisible(true);
+    //TO DO: remain part
   };
 
-  const getUser = useCallback(async () => {
+  const fetchUsersData = useCallback(async () => {
     try {
       const accessToken = localStorage.getItem('jwtAccessToken');
       const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user`, {
@@ -110,7 +105,7 @@ const ManageUsers = () => {
         error.response?.data?.code === 13014
       ) {
         await getNewAccessToken();
-        return await getUser();
+        return await fetchUsersData();
       }
       throw error;
     }
@@ -119,12 +114,12 @@ const ManageUsers = () => {
   useEffect(() => {
     (async () => {
       try {
-        const usersData = await getUser();
+        const usersData = await fetchUsersData();
         setPending(false);
         setUsers(usersData);
       } catch (error) {
         setError(identifyError(error.response?.data?.code));
-        setAlert(true);
+        setIsAlertVisible(true);
         if (error.response?.data?.code === 13002) {
           setTimeout(() => {
             navigate('/');
@@ -132,7 +127,7 @@ const ManageUsers = () => {
         }
       }
     })();
-  }, [getUser, navigate]);
+  }, [fetchUsersData, navigate]);
 
   // Function to filter the user based on the search text
   const filteredUsers = useMemo(() => {
@@ -158,10 +153,10 @@ const ManageUsers = () => {
           {error}
         </div>
         <AlertBox
-          visible={alert}
-          message={`${error}!!!`}
+          visible={isAlertVisible}
+          message={`${error}!`}
           onClose={() => {
-            setAlert(false);
+            setIsAlertVisible(false);
           }}
         />
       </div>
@@ -170,13 +165,27 @@ const ManageUsers = () => {
 
   return (
     <div className='mx-5 mt-2'>
-      {showForm ? (
-        <Form onClose={closeForm} visible={showForm} user={selectedUser} />
+      {isFormVisible ? (
+        <Form
+          onClose={() => {
+            setIsFormVisible(false);
+            setSelectedUser(null);
+          }}
+          visible={isFormVisible}
+          user={selectedUser}
+        />
       ) : (
         <div className='flex flex-col shadow-lg shadow-gray-500/50 dark:shadow-sm dark:shadow-gray-600 p-4 rounded-lg'>
           <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
             <div className='flex gap-2 mb-2 md:mb-0'>
-              <VariantButton text='Add User' Icon={PlusIcon} onClick={handleCreate} />
+              <VariantButton
+                text='Add User'
+                Icon={PlusIcon}
+                onClick={() => {
+                  setIsFormVisible(true);
+                  setSelectedUser(null);
+                }}
+              />
               {filteredUsers.length > 0 && (
                 <VariantButton text='Download' Icon={ArrowDownTrayIcon} onClick={() => downloadCSV(filteredUsers)} />
               )}
@@ -204,10 +213,10 @@ const ManageUsers = () => {
         </div>
       )}
       <ConformBox
-        visible={confirm}
+        visible={isConfirmVisible}
         message='Are you sure want to delete?'
         onClose={() => {
-          setConfirm(false);
+          setIsConfirmVisible(false);
         }}
       />
     </div>
