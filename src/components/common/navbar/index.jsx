@@ -23,7 +23,8 @@ const Navbar = () => {
   const NotificationsCount = useSelector(selectNotificationsCount);
 
   //TODO: Get username through the API
-  const userName = 'Michael';
+  const userName = useSelector((state) => state.user.firstName);
+  console.log(userName);
 
   // Function to handle the click on the profile button
   const handleProfileClick = () => {
