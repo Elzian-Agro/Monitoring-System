@@ -14,6 +14,7 @@ import {
 import { identifyError } from 'pages/auth/utils';
 import AlertBox from '../alert-box';
 import axios from 'axios';
+import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
 
 const Form = ({ visible, onClose, user }) => {
   const [firstName, setFirstName] = useState('');
@@ -38,6 +39,11 @@ const Form = ({ visible, onClose, user }) => {
       setPhoneNum(user.phoneNum || '');
       setOrgName(user.orgName || '');
       setUserType(user.userType || '');
+    }
+
+    // Generate random password for register mode
+    if (!user) {
+      setPassword(generateRandomPassword());
     }
   }, [user]);
 
