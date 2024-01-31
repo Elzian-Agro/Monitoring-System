@@ -1,14 +1,19 @@
 import React from 'react';
 import { XCircleIcon, ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
-import avatar from 'assets/images/avatar.png';
 import { setProfileOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ThemeSettings from '../theme-settings';
 import { userProfileData } from 'constant';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
+
+  const firstName = useSelector((state) => state.user.firstName);
+  const lastName = useSelector((state) => state.user.lastName);
+  // const userType = useSelector((state) => state.user.usertype);
+  const organizationName = useSelector((state) => state.user.orgName);
+  const profileImage = useSelector((state) => state.user.profileImage);
 
   const closeProfile = () => {
     dispatch(setProfileOpen(false));
@@ -33,12 +38,13 @@ const UserProfile = () => {
       </div>
       {/* I need to add link to this below div */}
       <NavLink to='/profile' className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
-        <img className='rounded-full h-20 md:h-24 md:w-24' src={avatar} alt='user-profile' />
+        <img className='rounded-full h-20 md:h-24 md:w-24' src={profileImage} alt='user-profile' />
         <div>
-          {/* TODO: Replace hard coded data with API data  */}
-          <p className='font-semibold md:text-xl dark:text-white'> Michael Roberts </p>
+          <p className='font-semibold md:text-xl dark:text-white'>
+            {firstName} {lastName}{' '}
+          </p>
           <p className='text-gray-500 text-sm'> Administrator </p>
-          <p className='text-gray-500 text-sm font-semibold'> ElzianAgro.com </p>
+          <p className='text-gray-500 text-sm font-semibold'> {organizationName} </p>
         </div>
       </NavLink>
       <div>

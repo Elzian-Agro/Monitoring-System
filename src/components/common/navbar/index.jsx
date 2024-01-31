@@ -1,5 +1,4 @@
 import { Bars3Icon, ChevronDownIcon, BellIcon } from '@heroicons/react/24/outline';
-import avatar from 'assets/images/avatar.png';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setActiveMenu,
@@ -22,8 +21,9 @@ const Navbar = () => {
   const isNotificationOpen = useSelector(selectNotificationOpen);
   const NotificationsCount = useSelector(selectNotificationsCount);
 
-  //TODO: Get username through the API
-  const userName = 'Michael';
+  //Get username through redux toolkit
+  const userName = useSelector((state) => state.user.firstName);
+  const profileImage = useSelector((state) => state.user.profileImage);
 
   // Function to handle the click on the profile button
   const handleProfileClick = () => {
@@ -80,7 +80,7 @@ const Navbar = () => {
         <div
           className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
           onClick={handleProfileClick}>
-          <img className='rounded-full w-8 h-8' src={avatar} alt='user-profile' />
+          <img className='rounded-full w-8 h-8' src={profileImage} alt='user-profile' />
           <p className='xxs:hidden sm:block'>
             <span className='text-gray-400 text-14 hidden md:inline-block'>Hi,</span>
             <span className='text-gray-400 font-bold ml-1 text-14'>
