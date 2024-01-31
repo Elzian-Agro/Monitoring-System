@@ -1,12 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  nic: '',
+  NIC: '',
   email: '',
   firstName: '',
   lastName: '',
   orgName: '',
   profileImage: '',
+  phoneNum: '',
+  userType: '',
+  userBio: '',
+  address: '',
   _id: '',
 };
 
@@ -25,6 +29,10 @@ const userSlice = createSlice({
         lastName: '',
         orgName: '',
         profileImage: '',
+        phoneNum: '',
+        userType: '',
+        userBio: '',
+        address: '',
         _id: '',
       };
     },

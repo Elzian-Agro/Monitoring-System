@@ -9,9 +9,14 @@ import { userProfileData } from 'constant';
 const UserProfile = () => {
   const dispatch = useDispatch();
 
+  //Capitalize the text
+  const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  };
+
   const firstName = useSelector((state) => state.user.firstName);
   const lastName = useSelector((state) => state.user.lastName);
-  // const userType = useSelector((state) => state.user.usertype);
+  const userType = useSelector((state) => capitalize(state.user.userType));
   const organizationName = useSelector((state) => state.user.orgName);
   const profileImage = useSelector((state) => state.user.profileImage);
 
@@ -43,7 +48,7 @@ const UserProfile = () => {
           <p className='font-semibold md:text-xl dark:text-white'>
             {firstName} {lastName}{' '}
           </p>
-          <p className='text-gray-500 text-sm'> Administrator </p>
+          <p className='text-gray-500 text-sm'> {userType} </p>
           <p className='text-gray-500 text-sm font-semibold'> {organizationName} </p>
         </div>
       </NavLink>
