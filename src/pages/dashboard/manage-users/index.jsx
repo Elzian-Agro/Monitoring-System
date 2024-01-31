@@ -66,7 +66,9 @@ const ManageUsers = () => {
     },
     {
       name: 'ACTION',
-      cell: () => <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text='Edit' onClick={() => handleEdit()} />,
+      cell: (row) => (
+        <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text='Edit' onClick={() => handleEdit(row)} />
+      ),
     },
     {
       cell: () => <PrimaryButton bgEffect='bg-red-500 border-red-600' text='Delete' onClick={() => handleDelete()} />,

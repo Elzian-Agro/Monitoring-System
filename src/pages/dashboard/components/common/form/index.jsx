@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { PrimaryButton } from '../../base/Button';
 import TextBox from '../../base/TextBox';
@@ -15,49 +15,56 @@ import { identifyError } from 'pages/auth/utils';
 import AlertBox from '../alert-box';
 import axios from 'axios';
 
-const Form = ({ visible, onClose }) => {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    NIC: '',
-    email: '',
-    phoneNum: '',
-    password: '',
-    userType: 'farmer',
-    orgName: '',
-  });
+const Form = ({ visible, onClose, user }) => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [nic, setNic] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNum, setPhoneNum] = useState('');
+  const [password, setPassword] = useState('');
+  const [orgName, setOrgName] = useState('');
+  const [userType, setUserType] = useState('farmer');
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
 
+  useEffect(() => {
+    // Set form fields for edit mode
+    if (user) {
+      setFirstName(user.firstName || '');
+      setLastName(user.lastName || '');
+      setNic(user.NIC || '');
+      setEmail(user.email || '');
+      setPhoneNum(user.phoneNum || '');
+      setOrgName(user.orgName || '');
+      setUserType(user.userType || '');
+    }
+  }, [user]);
+
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.firstName.trim()) {
+    if (!firstName.trim()) {
       newErrors.firstName = '*First name is required';
     }
 
-    if (!formData.lastName.trim()) {
+    if (!lastName.trim()) {
       newErrors.lastName = '*Last name is required';
     }
 
-    if (!formData.NIC.trim()) {
+    if (!nic.trim()) {
       newErrors.nic = '*NIC is required';
     }
 
-    if (!formData.email.trim()) {
+    if (!email.trim()) {
       newErrors.email = '*Email is required';
     }
 
-    if (!formData.phoneNum.trim()) {
-      newErrors.phoneNum = '*Phone Number is required';
-    }
-
-    if (!formData.password.trim()) {
+    if (!password.trim()) {
       newErrors.password = '*Password is required';
     }
 
-    if (!formData.orgName.trim()) {
+    if (!orgName.trim()) {
       newErrors.orgName = '*Organization name is required';
     }
 
@@ -66,20 +73,53 @@ const Form = ({ visible, onClose }) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const resetForm = () => {
+    setFirstName('');
+    setLastName('');
+    setNic('');
+    setEmail('');
+    setPhoneNum('');
+    setPassword('');
+    setOrgName('');
+    setUserType('farmer');
+    setErrors({});
+    setMessage(null);
+    setIsAlertVisible(false);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const accessToken = localStorage.getItem('jwtAccessToken');
 
     if (validateForm()) {
-      axios
-        .post(`${process.env.REACT_APP_BASE_URL}/user`, formData, {
+      const apiEndpoint = user
+        ? `${process.env.REACT_APP_BASE_URL}/user/${user._id}`
+        : `${process.env.REACT_APP_BASE_URL}/user`;
+
+      const method = user ? 'put' : 'post';
+
+      axios[method](
+        apiEndpoint,
+        {
+          firstName,
+          lastName,
+          NIC: nic,
+          email,
+          phoneNum,
+          password,
+          orgName,
+          userType,
+        },
+        {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
-        })
+        }
+      )
         .then(() => {
-          setMessage('User created successfully!');
+          resetForm();
+          setMessage(user ? 'User updated successfully!' : 'User created successfully!');
           setIsAlertVisible(true);
         })
         .catch((error) => {
@@ -100,8 +140,8 @@ const Form = ({ visible, onClose }) => {
             label='First Name'
             type='text'
             Icon={UserIcon}
-            value={formData.firstName}
-            setValue={(e) => setFormData({ ...formData, firstName: e })}
+            value={firstName}
+            setValue={setFirstName}
           />
           {errors.firstName && <div className='text-red-500 text-sm'>{errors.firstName}</div>}
         </div>
@@ -112,33 +152,15 @@ const Form = ({ visible, onClose }) => {
             label='Last Name'
             type='text'
             Icon={UserIcon}
-            value={formData.lastName}
-            setValue={(value) => setFormData({ ...formData, lastName: value })}
+            value={lastName}
+            setValue={setLastName}
           />
           {errors.lastName && <div className='text-red-500 text-sm'>{errors.lastName}</div>}
         </div>
 
         <div>
-          <TextBox
-            placeholder='Eg. 945214789V'
-            label='NIC'
-            Icon={UserIcon}
-            value={formData.NIC}
-            setValue={(value) => setFormData({ ...formData, NIC: value })}
-          />
+          <TextBox placeholder='Eg. 945214789V' label='NIC' Icon={UserIcon} value={nic} setValue={setNic} />
           {errors.nic && <div className='text-red-500 text-sm'>{errors.nic}</div>}
-        </div>
-
-        <div>
-          <TextBox
-            placeholder='Eg. saman@gmail.com'
-            label='Email Address'
-            type='text'
-            Icon={EnvelopeIcon}
-            value={formData.email}
-            setValue={(value) => setFormData({ ...formData, email: value })}
-          />
-          {errors.email && <div className='text-red-500 text-sm'>{errors.email}</div>}
         </div>
 
         <div>
@@ -147,20 +169,31 @@ const Form = ({ visible, onClose }) => {
             label='Phone Number'
             type='text'
             Icon={PhoneIcon}
-            value={formData.phoneNum}
-            setValue={(value) => setFormData({ ...formData, phoneNum: value })}
+            value={phoneNum}
+            setValue={setPhoneNum}
           />
-          {errors.phoneNum && <div className='text-red-500 text-sm'>{errors.phoneNum}</div>}
         </div>
 
         <div>
           <TextBox
-            placeholder='Eg. Saman@123'
+            placeholder='Eg. saman@gmail.com'
+            label='Email Address'
+            type='text'
+            Icon={EnvelopeIcon}
+            value={email}
+            setValue={setEmail}
+          />
+          {errors.email && <div className='text-red-500 text-sm'>{errors.email}</div>}
+        </div>
+
+        <div>
+          <TextBox
+            placeholder=''
             label='Password'
             type='password'
             Icon={LockClosedIcon}
-            value={formData.password}
-            setValue={(value) => setFormData({ ...formData, password: value })}
+            value={password}
+            setValue={setPassword}
           />
           {errors.password && <div className='text-red-500 text-sm'>{errors.password}</div>}
         </div>
@@ -170,8 +203,8 @@ const Form = ({ visible, onClose }) => {
             label='Eg. User Type'
             Icon={UserGroupIcon}
             options={['farmer', 'admin']}
-            value={formData.userType}
-            setValue={(value) => setFormData({ ...formData, userType: value })}
+            value={userType}
+            setValue={setUserType}
           />
           {errors.userType && <div className='text-red-500 text-sm'>{errors.userType}</div>}
         </div>
@@ -182,8 +215,8 @@ const Form = ({ visible, onClose }) => {
             label='Organization Name'
             type='text'
             Icon={HomeIcon}
-            value={formData.orgName}
-            setValue={(value) => setFormData({ ...formData, orgName: value })}
+            value={orgName}
+            setValue={setOrgName}
           />
           {errors.orgName && <div className='text-red-500 text-sm'>{errors.orgName}</div>}
         </div>
