@@ -14,17 +14,17 @@ import SearchBox from '../components/base/SearchBox';
 import ConformBox from '../components/common/confirm-box';
 import AlertBox from '../components/common/alert-box';
 import { identifyError } from 'pages/auth/utils';
+import Loader from '../components/common/loader';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
-  const [pending, setPending] = useState(true);
   const [filterText, setFilterText] = useState('');
   const [error, setError] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
-
+  const [loaderVisible, setLoaderVisible] = useState(true);
   const currentMode = useSelector(selectTheme);
   const navigate = useNavigate();
 
@@ -115,8 +115,10 @@ const ManageUsers = () => {
     (async () => {
       try {
         const usersData = await fetchUsersData();
-        setPending(false);
-        setUsers(usersData);
+        setTimeout(() => {
+          setLoaderVisible(false);
+          setUsers(usersData);
+        }, 5000);
       } catch (error) {
         setError(identifyError(error.response?.data?.code));
         setIsAlertVisible(true);
@@ -165,6 +167,7 @@ const ManageUsers = () => {
 
   return (
     <div className='mx-5 mt-2'>
+      {loaderVisible && <Loader />}
       {isFormVisible ? (
         <Form
           onClose={() => {
@@ -175,42 +178,49 @@ const ManageUsers = () => {
           user={selectedUser}
         />
       ) : (
-        <div className='flex flex-col shadow-lg shadow-gray-500/50 dark:shadow-sm dark:shadow-gray-600 p-4 rounded-lg'>
-          <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
-            <div className='flex gap-2 mb-2 md:mb-0'>
-              <VariantButton
-                text='Add User'
-                Icon={PlusIcon}
-                onClick={() => {
-                  setIsFormVisible(true);
-                  setSelectedUser(null);
-                }}
-              />
-              {filteredUsers.length > 0 && (
-                <VariantButton text='Download' Icon={ArrowDownTrayIcon} onClick={() => downloadCSV(filteredUsers)} />
-              )}
+        <>
+          {loaderVisible ? null : (
+            <div className='flex flex-col shadow-lg shadow-gray-500/50 dark:shadow-sm dark:shadow-gray-600 p-4 rounded-lg'>
+              <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
+                <div className='flex gap-2 mb-2 md:mb-0'>
+                  <VariantButton
+                    text='Add User'
+                    Icon={PlusIcon}
+                    onClick={() => {
+                      setIsFormVisible(true);
+                      setSelectedUser(null);
+                    }}
+                  />
+                  {filteredUsers.length > 0 && (
+                    <VariantButton
+                      text='Download'
+                      Icon={ArrowDownTrayIcon}
+                      onClick={() => downloadCSV(filteredUsers)}
+                    />
+                  )}
+                </div>
+                <SearchBox
+                  value={filterText}
+                  onChange={(e) => setFilterText(e.target.value)}
+                  onClick={() => {
+                    setFilterText('');
+                  }}
+                />
+              </div>
+              <div className='flex flex-col rounded-t-lg'>
+                <DataTable
+                  columns={columns}
+                  data={filteredUsers}
+                  customStyles={currentMode === 'Dark' ? {} : customTableStyles}
+                  theme={currentMode === 'Dark' ? 'dark' : ''}
+                  pagination
+                  fixedHeader
+                  fixedHeaderScrollHeight='65vh'
+                />
+              </div>
             </div>
-            <SearchBox
-              value={filterText}
-              onChange={(e) => setFilterText(e.target.value)}
-              onClick={() => {
-                setFilterText('');
-              }}
-            />
-          </div>
-          <div className='flex flex-col rounded-t-lg'>
-            <DataTable
-              columns={columns}
-              data={filteredUsers}
-              customStyles={currentMode === 'Dark' ? {} : customTableStyles}
-              theme={currentMode === 'Dark' ? 'dark' : ''}
-              pagination
-              fixedHeader
-              fixedHeaderScrollHeight='65vh'
-              progressPending={pending}
-            />
-          </div>
-        </div>
+          )}
+        </>
       )}
       <ConformBox
         visible={isConfirmVisible}
