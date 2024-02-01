@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import { PrimaryButton } from '../../base/Button';
 import { ToggleButton } from '../../base/Button';
 import TextBox from '../../base/TextBox';
-import Dropdown from '../../base/Dropdown';
 import AlertBox from '../alert-box';
 import {
   EnvelopeIcon,
   HomeIcon,
-  LockClosedIcon,
   PhoneIcon,
-  UserGroupIcon,
   UserIcon,
+  LockClosedIcon,
+  ArrowLeftIcon,
 } from '@heroicons/react/24/outline';
 import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
@@ -24,10 +23,10 @@ const Form = ({ visible, onClose, user }) => {
   const [nic, setNic] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState('farmer');
+  const [password, setPassword] = useState(''); //check
   const [orgName, setOrgName] = useState('');
-  const [isDeleted, setIsDeleted] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isToggleClicked, setIsToggleClicked] = useState(false);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
@@ -35,15 +34,14 @@ const Form = ({ visible, onClose, user }) => {
   useEffect(() => {
     // Set form fields for edit mode
     if (user) {
-      setFirstName(user.firstName || '');
-      setLastName(user.lastName || '');
-      setNic(user.NIC || '');
-      setEmail(user.email || '');
-      setPassword(user.password || '');
-      setPhoneNum(user.phoneNum || '');
-      setOrgName(user.orgName || '');
-      setUserType(user.userType || '');
-      setIsDeleted(user.isDeleted || false);
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setNic(user.NIC);
+      setEmail(user.email);
+      setPhoneNum(user.phoneNum);
+      setOrgName(user.orgName);
+      setIsDisabled(user.isDisabled);
+      setIsToggleClicked(false);
     }
 
     // Generate random password for register mode
@@ -69,14 +67,14 @@ const Form = ({ visible, onClose, user }) => {
 
     if (!email.trim()) {
       newErrors.email = '*Email is required';
-    }
-
-    if (!authRegex.email.test(email)) {
+    } else if (!authRegex.email.test(email)) {
       newErrors.email = '*Email is not valid';
     }
 
-    if (!password.trim()) {
-      newErrors.password = '*Password is required';
+    if (!user) {
+      if (!password.trim()) {
+        newErrors.password = '*Password is required';
+      }
     }
 
     if (!orgName.trim()) {
@@ -94,18 +92,30 @@ const Form = ({ visible, onClose, user }) => {
     setNic('');
     setEmail('');
     setPhoneNum('');
-    setPassword('');
+    setPassword(generateRandomPassword());
     setOrgName('');
-    setUserType('farmer');
     setErrors({});
     setMessage(null);
-    setIsAlertVisible(false);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const accessToken = localStorage.getItem('jwtAccessToken');
+
+    const requestData = {
+      firstName,
+      lastName,
+      NIC: nic,
+      email,
+      phoneNum,
+      orgName,
+      isDisabled,
+    };
+
+    if (!user) {
+      requestData.password = password;
+    }
 
     if (validateForm()) {
       const apiEndpoint = user
@@ -114,25 +124,11 @@ const Form = ({ visible, onClose, user }) => {
 
       const method = user ? 'put' : 'post';
 
-      axios[method](
-        apiEndpoint,
-        {
-          firstName,
-          lastName,
-          NIC: nic,
-          email,
-          phoneNum,
-          password,
-          orgName,
-          userType,
-          isDeleted,
+      axios[method](apiEndpoint, requestData, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      )
+      })
         .then(() => {
           resetForm();
           setMessage(user ? 'User updated successfully!' : 'User registered successfully!');
@@ -148,7 +144,15 @@ const Form = ({ visible, onClose, user }) => {
   if (!visible) return null;
 
   return (
-    <div className='flex flex-col px-10 py-4 lg:py-8 bg-white dark:bg-secondary-dark-bg shadow-lg shadow-gray-500/50 dark:shadow-sm dark:shadow-gray-600 rounded-lg max-h-screen'>
+    <div className='relative flex flex-col px-10 py-4 lg:py-8 bg-white dark:bg-secondary-dark-bg shadow-lg shadow-gray-500/50 dark:shadow-sm dark:shadow-gray-600 rounded-lg max-h-screen'>
+      <button
+        className='absolute left-0 top-0 bg-red-500 hover:bg-red-600 self-end rounded-br rounded-tl'
+        onClick={onClose}>
+        <ArrowLeftIcon className='text-white w-8 h-8' />
+      </button>
+      <h1 className='font-serif font-medium text-lg mb-10 text-center text-black dark:text-white tracking-widest'>
+        {user ? 'UPDATE FARMER DETAILS' : 'NEW FARMER REGISTARTION'}
+      </h1>
       <form className='grid grid-colos-1 lg:grid-cols-2 gap-4 lg:gap-6 w-full'>
         <div>
           <TextBox
@@ -202,28 +206,21 @@ const Form = ({ visible, onClose, user }) => {
           {errors.email && <div className='text-red-500 text-sm'>{errors.email}</div>}
         </div>
 
-        <div>
-          <TextBox
-            placeholder=''
-            label='Password'
-            type='password'
-            Icon={LockClosedIcon}
-            value={password}
-            setValue={setPassword}
-          />
-          {errors.password && <div className='text-red-500 text-sm'>{errors.password}</div>}
-        </div>
-
-        <div>
-          <Dropdown
-            label='Eg. User Type'
-            Icon={UserGroupIcon}
-            options={['farmer', 'admin', 'superAdmin']}
-            value={userType}
-            setValue={setUserType}
-          />
-          {errors.userType && <div className='text-red-500 text-sm'>{errors.userType}</div>}
-        </div>
+        {!user ? (
+          <div>
+            <TextBox
+              placeholder='************'
+              label='Password'
+              type='password'
+              Icon={LockClosedIcon}
+              value={password}
+              setValue={setPassword}
+            />
+            {errors.password && <div className='text-red-500 text-sm'>{errors.password}</div>}
+          </div>
+        ) : (
+          ''
+        )}
 
         <div>
           <TextBox
@@ -241,11 +238,12 @@ const Form = ({ visible, onClose, user }) => {
         <div>
           {user ? (
             <div className='flex flex-row items-center gap-4'>
-              <div className='text-gray-500'>Enable user :</div>
+              <div className='text-gray-400'>{user.isDisabled ? 'Enabled' : 'Disabled'} :</div>
               <ToggleButton
-                value={isDeleted}
+                value={isToggleClicked}
                 onChange={() => {
-                  setIsDeleted(!isDeleted);
+                  setIsToggleClicked(!isToggleClicked);
+                  setIsDisabled(!isDisabled);
                 }}
               />
             </div>
@@ -257,13 +255,13 @@ const Form = ({ visible, onClose, user }) => {
           <PrimaryButton
             bgEffect='bg-red-500 border-red-600'
             size='md:py-2 md:px-4 md:text-lg'
-            text='Cancel'
-            onClick={onClose}
+            text='Clear'
+            onClick={resetForm}
           />
           <PrimaryButton
             bgEffect='bg-blue-500 border-blue-600'
             size='md:py-2 md:px-4 md:text-base'
-            text='Submit'
+            text={user ? 'Update' : 'Submit'}
             onClick={handleSubmit}
           />
         </div>
