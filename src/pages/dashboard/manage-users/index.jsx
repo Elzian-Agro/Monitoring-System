@@ -20,25 +20,25 @@ const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
-  const [loaderVisible, setLoaderVisible] = useState(true);
+  const [isLoaderVisible, setIsLoaderVisible] = useState(true);
   const currentMode = useSelector(selectTheme);
   const navigate = useNavigate();
 
   const columns = [
     {
       name: 'FIRST NAME',
-      selector: (row) => row.firstName,
-      sortable: true,
-      cell: (row) => (
+      selector: ({ firstName, isDisabled }) => (
         <div className='flex flex-row gap-2'>
-          <div className=''> {row.firstName}</div>
-          <div className={row.isDisabled ? 'bg-red-500 rounded-full h-3 w-3' : ''}> </div>
+          <div className=''>{firstName}</div>
+          <div className={isDisabled ? 'bg-red-500 rounded-full h-3 w-3' : ''}></div>
         </div>
       ),
+      sortable: true,
     },
     {
       name: 'LAST NAME',
@@ -72,27 +72,29 @@ const ManageUsers = () => {
           bgEffect='bg-blue-500 border-blue-600'
           text='Edit'
           onClick={() => {
-            setIsFormVisible(true);
             setSelectedUser(row);
+            setIsFormVisible(true);
           }}
         />
       ),
     },
     {
       cell: (row) => (
-        <PrimaryButton bgEffect='bg-red-500 border-red-600' text='Delete' onClick={() => handleDelete(row)} />
+        <PrimaryButton
+          bgEffect='bg-red-500 border-red-600'
+          text='Delete'
+          onClick={() => {
+            setSelectedUser(row);
+            setIsConfirmVisible(true);
+          }}
+        />
       ),
     },
   ];
 
-  const handleDelete = () => {
-    setIsConfirmVisible(true);
-    //TO DO: remain part
-  };
-
-  const fetchUsersData = useCallback(async () => {
+  const getUsers = useCallback(async () => {
     try {
-      const accessToken = localStorage.getItem('jwtAccessToken');
+      const { jwtAccessToken: accessToken } = localStorage;
       const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -106,7 +108,7 @@ const ManageUsers = () => {
         error.response?.data?.code === 13014
       ) {
         await getNewAccessToken();
-        return await fetchUsersData();
+        return await getUsers();
       }
       throw error;
     }
@@ -115,9 +117,9 @@ const ManageUsers = () => {
   useEffect(() => {
     (async () => {
       try {
-        const usersData = await fetchUsersData();
+        const usersData = await getUsers();
         setTimeout(() => {
-          setLoaderVisible(false);
+          setIsLoaderVisible(false);
           setUsers(usersData);
         }, 5000);
       } catch (error) {
@@ -130,14 +132,41 @@ const ManageUsers = () => {
         }
       }
     })();
-  }, [fetchUsersData, navigate, isFormVisible]);
+  }, [getUsers, navigate, isFormVisible, isAlertVisible]);
+
+  // Confirm for delete
+  const confirmDialogClose = (result) => {
+    if (result) {
+      handleDelete();
+    }
+    setIsConfirmVisible(false);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const { jwtAccessToken: accessToken } = localStorage;
+      await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/user/delete/${selectedUser._id}`,
+        { isDeleted: true },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      setMessage('Farmer deleted successfully!');
+      setIsAlertVisible(true);
+    } catch (error) {
+      setMessage(identifyError(error.response?.data?.code));
+      setIsAlertVisible(true);
+    }
+  };
 
   // Function to filter the user based on the search text
   const filteredUsers = useMemo(() => {
     if (!users) {
       return [];
     }
-
     return users.filter(
       (user) =>
         user.userType.toLowerCase() === 'farmer' &&
@@ -149,6 +178,7 @@ const ManageUsers = () => {
     );
   }, [users, filterText]);
 
+  // Display the error If happen error when loading table data
   if (error) {
     return (
       <div>
@@ -168,7 +198,7 @@ const ManageUsers = () => {
 
   return (
     <div className='mx-5 mt-2'>
-      {loaderVisible && <Loader />}
+      {isLoaderVisible && <Loader />}
       {isFormVisible ? (
         <Form
           onClose={() => {
@@ -180,12 +210,12 @@ const ManageUsers = () => {
         />
       ) : (
         <>
-          {loaderVisible ? null : (
+          {isLoaderVisible ? null : (
             <div className='flex flex-col shadow-lg shadow-gray-500/50 dark:shadow-sm dark:shadow-gray-600 p-4 rounded-lg'>
               <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
                 <div className='flex gap-2 mb-2 md:mb-0'>
                   <VariantButton
-                    text='Add User'
+                    text='Add Farmer'
                     Icon={PlusIcon}
                     onClick={() => {
                       setIsFormVisible(true);
@@ -226,8 +256,13 @@ const ManageUsers = () => {
       <ConformBox
         visible={isConfirmVisible}
         message='Are you sure want to delete?'
+        onClose={(result) => confirmDialogClose(result)}
+      />
+      <AlertBox
+        visible={isAlertVisible}
+        message={`${error || message}!`}
         onClose={() => {
-          setIsConfirmVisible(false);
+          setIsAlertVisible(false);
         }}
       />
     </div>
