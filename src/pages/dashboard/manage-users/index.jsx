@@ -33,6 +33,12 @@ const ManageUsers = () => {
       name: 'FIRST NAME',
       selector: (row) => row.firstName,
       sortable: true,
+      cell: (row) => (
+        <div className='flex flex-row gap-2'>
+          <div className=''> {row.firstName}</div>
+          <div className={row.isDisabled ? 'bg-red-500 rounded-full h-3 w-3' : ''}> </div>
+        </div>
+      ),
     },
     {
       name: 'LAST NAME',
@@ -57,11 +63,6 @@ const ManageUsers = () => {
     {
       name: 'ORG. NAME',
       selector: (row) => row.orgName,
-      sortable: true,
-    },
-    {
-      name: 'USER TYPE',
-      selector: (row) => row.userType,
       sortable: true,
     },
     {
@@ -129,7 +130,7 @@ const ManageUsers = () => {
         }
       }
     })();
-  }, [fetchUsersData, navigate]);
+  }, [fetchUsersData, navigate, isFormVisible]);
 
   // Function to filter the user based on the search text
   const filteredUsers = useMemo(() => {
@@ -139,12 +140,12 @@ const ManageUsers = () => {
 
     return users.filter(
       (user) =>
-        user.firstName.toLowerCase().includes(filterText.toLowerCase()) ||
-        user.lastName.toLowerCase().includes(filterText.toLowerCase()) ||
-        user.email.toLowerCase().includes(filterText.toLowerCase()) ||
-        user.NIC.includes(filterText) ||
-        user.orgName.toLowerCase().includes(filterText.toLowerCase()) ||
-        user.userType.toLowerCase().includes(filterText.toLowerCase())
+        user.userType.toLowerCase() === 'farmer' &&
+        (user.firstName.toLowerCase().includes(filterText.toLowerCase()) ||
+          user.lastName.toLowerCase().includes(filterText.toLowerCase()) ||
+          user.email.toLowerCase().includes(filterText.toLowerCase()) ||
+          user.NIC.includes(filterText) ||
+          user.orgName.toLowerCase().includes(filterText.toLowerCase()))
     );
   }, [users, filterText]);
 
