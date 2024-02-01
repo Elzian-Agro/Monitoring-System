@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../slice/userSlice';
 import { PencilSquareIcon, CheckIcon } from '@heroicons/react/24/outline';
+import axios from 'axios';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
+  const token = localStorage.getItem('jwtAccessToken');
 
   //Capitalize the text
   const capitalize = (str) => {
@@ -28,16 +30,33 @@ const UserProfilePage = () => {
 
   const handleProfilePictureChange = (event) => {
     // Handle updating the profile picture when a new image is selected
-    const newProfilePicture = URL.createObjectURL(event.target.files[0]);
+    const newProfilePicture = (event.target.files[0]);
     setLocalProfilePicture(newProfilePicture);
   };
 
-  const handleSaveButtonClick = () => {
+  const handleSaveButtonClick = async () => {
     if (localProfilePicture) {
-      dispatch(setUserData({ profileImage: localProfilePicture }));
+      try {
+        // Dispatch the updated profile image URL to Redux store
+        dispatch(setUserData({ profileImage: URL.createObjectURL(localProfilePicture) }));
+
+        // Use FormData to append the file and other data
+        const formData = new FormData();
+        formData.append('profile-image', localProfilePicture);
+
+        // Make Axios PUT request to the specified endpoint
+        await axios.put(`${process.env.REACT_APP_BASE_URL}/user/profile/image`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      } catch (error) {
+        console.error('Error uploading profile picture:', error);
+      }
+      // Toggle back to view mode
+      setEditMode(false);
     }
-    // Toggle back to view mode
-    setEditMode(false);
   };
 
   const handleEditButtonClick = () => {
@@ -63,8 +82,8 @@ const UserProfilePage = () => {
                 <CheckIcon className='h-6 w-6 text-black dark:text-white' />
               </button>
             ) : (
-              <button className='bg-blue-500 text-white rounded px-4 py-2' onClick={handleEditButtonClick}>
-                <PencilSquareIcon className='h-6 w-6 text-black dark:text-white' />
+              <button className='bg-blue-500 text-white rounded p-1' onClick={handleEditButtonClick}>
+                <PencilSquareIcon className='h-5 w-5 text-black dark:text-white' />
               </button>
             )}
           </div>
