@@ -1,10 +1,11 @@
-import avatar from 'assets/images/avatar.png';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserData } from '../slice/userSlice';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
 
 const UserProfilePage = () => {
+  const dispatch = useDispatch();
   const [editMode, setEditMode] = useState(false);
-  const [profilePicture, setProfilePicture] = useState(avatar);
 
   //Capitalize the text
   const capitalize = (str) => {
@@ -20,18 +21,27 @@ const UserProfilePage = () => {
   const organizationName = useSelector((state) => state.user.orgName);
   // const userId = useSelector((state) => state.user._id);
   // const userBio = useSelector((state) => state.user.userBio);
-  // const profileImage = useSelector((state) => state.user.profileImage);
+  const profileImage = useSelector((state) => state.user.profileImage);
   const address = useSelector((state) => state.user.address);
+
+  const [localProfilePicture, setLocalProfilePicture] = useState(profileImage);
 
   const handleProfilePictureChange = (event) => {
     // Handle updating the profile picture when a new image is selected
     const newProfilePicture = URL.createObjectURL(event.target.files[0]);
-    setProfilePicture(newProfilePicture);
+    setLocalProfilePicture(newProfilePicture);
+  };
+
+  const handleSaveButtonClick = () => {
+    // Dispatch the updated profile picture to the Redux store
+    dispatch(setUserData({ profileImage: localProfilePicture }));
+    // Toggle back to view mode
+    setEditMode(false);
   };
 
   const handleEditButtonClick = () => {
     // Toggle between edit mode and view mode
-    setEditMode(!editMode);
+    setEditMode(true);
   };
 
   return (
@@ -42,18 +52,18 @@ const UserProfilePage = () => {
           {editMode ? (
             <input type='file' accept='image/*' onChange={handleProfilePictureChange} className='mb-2' />
           ) : (
-            <img src={profilePicture} alt='Profile' className='w-24 h-24 rounded-full object-cover' />
+            <img src={profileImage} alt='Profile' className='w-24 h-24 rounded-full object-cover' />
           )}
         </div>
 
         <div className='flex items-center justify-center mb-4'>
           {editMode ? (
-            <button className='bg-blue-500 text-white rounded px-4 py-2' onClick={handleEditButtonClick}>
+            <button className='bg-blue-500 text-white rounded px-4 py-2' onClick={handleSaveButtonClick}>
               Save
             </button>
           ) : (
             <button className='bg-blue-500 text-white rounded px-4 py-2' onClick={handleEditButtonClick}>
-              Edit Profile Picture
+              <PencilSquareIcon className='h-6 w-6 text-black dark:text-white' />
             </button>
           )}
         </div>
