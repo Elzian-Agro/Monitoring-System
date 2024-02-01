@@ -1,5 +1,11 @@
 // sidebarConstants.js
-import { Squares2X2Icon, UserIcon, ArrowTrendingUpIcon, Cog6ToothIcon, PlusIcon } from '@heroicons/react/24/outline';
+import {
+  Squares2X2Icon,
+  UsersIcon,
+  ArrowTrendingUpIcon,
+  Cog6ToothIcon,
+  UserCircleIcon,
+} from '@heroicons/react/24/outline';
 
 const sidebarLinks = [
   {
@@ -10,7 +16,7 @@ const sidebarLinks = [
   {
     to: '/users',
     text: 'Manage Users',
-    icon: UserIcon,
+    icon: UsersIcon,
   },
   {
     to: '/orders',
@@ -30,7 +36,7 @@ const sidebarLinks = [
   {
     to: '/profile',
     text: 'My Profile',
-    icon: PlusIcon,
+    icon: UserCircleIcon,
   },
 ];
 

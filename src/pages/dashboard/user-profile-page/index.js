@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../slice/userSlice';
-import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import { PencilSquareIcon, CheckIcon } from '@heroicons/react/24/outline';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
@@ -33,14 +33,14 @@ const UserProfilePage = () => {
   };
 
   const handleSaveButtonClick = () => {
-    // Dispatch the updated profile picture to the Redux store
-    dispatch(setUserData({ profileImage: localProfilePicture }));
+    if (localProfilePicture) {
+      dispatch(setUserData({ profileImage: localProfilePicture }));
+    }
     // Toggle back to view mode
     setEditMode(false);
   };
 
   const handleEditButtonClick = () => {
-    // Toggle between edit mode and view mode
     setEditMode(true);
   };
 
@@ -48,24 +48,32 @@ const UserProfilePage = () => {
     <div className='mt-8 mx-4'>
       <div className='bg-white p-8 rounded shadow-md'>
         <h2 className='text-2xl font-bold mb-4 text-center'>My Profile</h2>
-        <div className='flex justify-center '>
+        <div className='flex justify-center mb-4'>
           {editMode ? (
-            <input type='file' accept='image/*' onChange={handleProfilePictureChange} className='mb-2' />
+            <div className='flex items-center justify-center'>
+              <input type='file' accept='image/*' onChange={handleProfilePictureChange} />
+            </div>
           ) : (
             <img src={profileImage} alt='Profile' className='w-24 h-24 rounded-full object-cover' />
           )}
+
+          <div className='flex items-end'>
+            {editMode ? (
+              <button className='bg-blue-500 text-white rounded px-4 py-2' onClick={handleSaveButtonClick}>
+                <CheckIcon className='h-6 w-6 text-black dark:text-white' />
+              </button>
+            ) : (
+              <button className='bg-blue-500 text-white rounded px-4 py-2' onClick={handleEditButtonClick}>
+                <PencilSquareIcon className='h-6 w-6 text-black dark:text-white' />
+              </button>
+            )}
+          </div>
         </div>
 
-        <div className='flex items-center justify-center mb-4'>
-          {editMode ? (
-            <button className='bg-blue-500 text-white rounded px-4 py-2' onClick={handleSaveButtonClick}>
-              Save
-            </button>
-          ) : (
-            <button className='bg-blue-500 text-white rounded px-4 py-2' onClick={handleEditButtonClick}>
-              <PencilSquareIcon className='h-6 w-6 text-black dark:text-white' />
-            </button>
-          )}
+        <div className='bio max-w-[50rem] mx-auto text-center mb-6'>
+          This is user Bio section, Vestibulum erat lorem, finibus in cursus sed, aliquet at metus. Curabitur faucibus
+          id ex ac gravida. Aenean commodo mi nulla, et tincidunt elit tempus ac. Curabitur porta malesuada urna, ac
+          sollicitudin nunc pellentesque lobortis. Donec molestie elit vel malesuada porttitor.
         </div>
 
         <div className='grid grid-cols-2 gap-4'>
@@ -108,6 +116,11 @@ const UserProfilePage = () => {
             <label className='block text-gray-600'>User Type:</label>
             <p className='text-gray-800'>{userType}</p>
           </div>
+        </div>
+
+        <div className='flex flex-row justify-between'>
+          <button className='bg-blue-500 text-black dark:text-white rounded px-4 py-2 mr-2'>Edit</button>
+          <button className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'>Disable</button>
         </div>
       </div>
     </div>
