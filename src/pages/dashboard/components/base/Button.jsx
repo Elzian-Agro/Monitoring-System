@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const PrimaryButton = ({ size = null, bgEffect, text, onClick }) => {
   return (
     <button
-      className={`${size} cursor-pointer transition-all ${bgEffect} text-white text-base px-4 py-2 rounded-lg border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] ative:border-b-[2px] active:brightness-90 active:translate-y-[2px]`}
+      className={`${size} cursor-pointer transition-all ${bgEffect} text-white text-base px-4 py-1 rounded-lg border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] ative:border-b-[2px] active:brightness-90 active:translate-y-[2px]`}
       onClick={onClick}>
       {text}
     </button>
@@ -31,7 +31,7 @@ const ToggleButton = ({ value, onChange }) => {
     <div>
       <label className='relative inline-flex items-center cursor-pointer'>
         <input className='sr-only peer' type='checkbox' value={value} onChange={onChange} checked={value} />
-        <div className='peer rounded-full outline-none duration-100 after:duration-500 w-12 h-6 bg-blue-300 peer-focus:outline-none ring-2 ring-blue-500  after:absolute after:outline-none after:rounded-full after:h-6 after:w-6 after:bg-white after:top-0.4 after:left-0.4 after:flex after:justify-center after:items-center after:text-sky-800 after:font-bold peer-checked:after:translate-x-6 peer-checked:after:border-white'></div>
+        <div className='peer rounded-full outline-none duration-100 after:duration-500 w-12 h-6 bg-blue-400 dark:bg-secondary-dark-bg peer-focus:outline-none ring-2 ring-blue-500  after:absolute after:outline-none after:rounded-full after:h-6 after:w-6 after:bg-white after:top-0.4 after:left-0.4 after:flex after:justify-center after:items-center after:text-sky-800 after:font-bold peer-checked:after:translate-x-6 peer-checked:after:border-white'></div>
       </label>
     </div>
   );

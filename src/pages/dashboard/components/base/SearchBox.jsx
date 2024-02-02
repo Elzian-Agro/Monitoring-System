@@ -11,7 +11,7 @@ function SearchBox({ value, onChange, onClick }) {
         </div>
         <input
           type='text'
-          className='w-48 sm:w-56 bg-white pl-2 h-8 md:h-10 text-sm lg:text-base outline-0 dark:bg-secondary-dark-bg dark:text-white'
+          className='w-56 bg-white pl-2 h-10 text-sm lg:text-base outline-0 dark:bg-secondary-dark-bg dark:text-white'
           placeholder=''
           id='searchInput'
           value={value}
