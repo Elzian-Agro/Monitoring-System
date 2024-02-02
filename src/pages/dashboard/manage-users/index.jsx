@@ -8,7 +8,7 @@ import DataTable from 'react-data-table-component';
 import axios from 'axios';
 import { downloadCSV } from '../utils/download';
 import { getNewAccessToken } from '../utils/getNewAccessToken';
-import Form from '../components/common/form';
+import Form from '../components/common/user-form';
 import { ArrowDownTrayIcon, PlusIcon } from '@heroicons/react/24/outline';
 import SearchBox from '../components/base/SearchBox';
 import ConformBox from '../components/common/confirm-box';
@@ -70,6 +70,7 @@ const ManageUsers = () => {
       cell: (row) => (
         <PrimaryButton
           bgEffect='bg-blue-500 border-blue-600'
+          size='w-20'
           text='Edit'
           onClick={() => {
             setSelectedUser(row);
@@ -82,6 +83,7 @@ const ManageUsers = () => {
       cell: (row) => (
         <PrimaryButton
           bgEffect='bg-red-500 border-red-600'
+          size='w-20'
           text='Delete'
           onClick={() => {
             setSelectedUser(row);
@@ -121,7 +123,7 @@ const ManageUsers = () => {
         setTimeout(() => {
           setIsLoaderVisible(false);
           setUsers(usersData);
-        }, 5000);
+        }, 3000);
       } catch (error) {
         setError(identifyError(error.response?.data?.code));
         setIsAlertVisible(true);
@@ -215,7 +217,7 @@ const ManageUsers = () => {
               <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
                 <div className='flex gap-2 mb-2 md:mb-0'>
                   <VariantButton
-                    text='Add Farmer'
+                    text='Add New'
                     Icon={PlusIcon}
                     onClick={() => {
                       setIsFormVisible(true);
