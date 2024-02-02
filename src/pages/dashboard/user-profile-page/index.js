@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../slice/userSlice';
-import { PencilSquareIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { PencilSquareIcon, PencilIcon, CheckIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
-  const [editMode, setEditMode] = useState(false);
+  const [photoEditMode, setPhotoEditMode] = useState(false);
+  const [addressEditMode, setAddressEditMode] = useState(false);
+  const [phoneEditMode, setPhoneEditMode] = useState(false);
+  const [newAddress, setNewAddress] = useState('');
+  const [newPhoneNumber, SetNewPhoneNUmber] = useState('');
   const token = localStorage.getItem('jwtAccessToken');
 
   //Capitalize the text
@@ -22,7 +26,7 @@ const UserProfilePage = () => {
   const userType = useSelector((state) => capitalize(state.user.userType));
   const organizationName = useSelector((state) => state.user.orgName);
   // const userId = useSelector((state) => state.user._id);
-  // const userBio = useSelector((state) => state.user.userBio);
+  const userBio = useSelector((state) => state.user.userBio);
   const profileImage = useSelector((state) => state.user.profileImage);
   const address = useSelector((state) => state.user.address);
 
@@ -30,7 +34,7 @@ const UserProfilePage = () => {
 
   const handleProfilePictureChange = (event) => {
     // Handle updating the profile picture when a new image is selected
-    const newProfilePicture = (event.target.files[0]);
+    const newProfilePicture = event.target.files[0];
     setLocalProfilePicture(newProfilePicture);
   };
 
@@ -55,12 +59,70 @@ const UserProfilePage = () => {
         console.error('Error uploading profile picture:', error);
       }
       // Toggle back to view mode
-      setEditMode(false);
+      setPhotoEditMode(false);
     }
   };
 
-  const handleEditButtonClick = () => {
-    setEditMode(true);
+  //Adress
+  const handleAddressClick = () => {
+    setAddressEditMode(true);
+  };
+
+  const handleAddressSave = async () => {
+    try {
+      // Update user data in Redux store
+      dispatch(setUserData({ address: newAddress }));
+
+      // Make Axios PUT request to update the address
+      await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/user/profile`,
+        { address: newAddress },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Close the address edit mode and reset the local state for newAddress
+      setAddressEditMode(false);
+      setNewAddress('');
+    } catch (error) {
+      console.error('Error updating address:', error);
+    }
+  };
+
+  //Phone Numebr
+  const handlePhoneClick = () => {
+    setPhoneEditMode(true);
+  };
+
+  const handlePhoneSave = async () => {
+    try {
+      // Update user data in Redux store
+      dispatch(setUserData({ phoneNum: newPhoneNumber }));
+
+      // Make Axios PUT request to update the address
+      await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/user/profile`,
+        { phoneNum: newPhoneNumber },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Close the phone edit mode and reset the local state for newphonenumber
+      setPhoneEditMode(false);
+      SetNewPhoneNUmber('');
+    } catch (error) {
+      console.error('Error updating address:', error);
+    }
+  };
+
+  const handlePhotoEditButtonClick = () => {
+    setPhotoEditMode(true);
   };
 
   return (
@@ -68,7 +130,7 @@ const UserProfilePage = () => {
       <div className='bg-white p-8 rounded shadow-md'>
         <h2 className='text-2xl font-bold mb-4 text-center'>My Profile</h2>
         <div className='flex justify-center mb-4'>
-          {editMode ? (
+          {photoEditMode ? (
             <div className='flex items-center justify-center'>
               <input type='file' accept='image/*' onChange={handleProfilePictureChange} />
             </div>
@@ -77,23 +139,19 @@ const UserProfilePage = () => {
           )}
 
           <div className='flex items-end'>
-            {editMode ? (
+            {photoEditMode ? (
               <button className='bg-blue-500 text-white rounded px-4 py-2' onClick={handleSaveButtonClick}>
                 <CheckIcon className='h-6 w-6 text-black dark:text-white' />
               </button>
             ) : (
-              <button className='bg-blue-500 text-white rounded p-1' onClick={handleEditButtonClick}>
+              <button className='bg-blue-500 text-white rounded p-1' onClick={handlePhotoEditButtonClick}>
                 <PencilSquareIcon className='h-5 w-5 text-black dark:text-white' />
               </button>
             )}
           </div>
         </div>
 
-        <div className='bio max-w-[50rem] mx-auto text-center mb-6'>
-          This is user Bio section, Vestibulum erat lorem, finibus in cursus sed, aliquet at metus. Curabitur faucibus
-          id ex ac gravida. Aenean commodo mi nulla, et tincidunt elit tempus ac. Curabitur porta malesuada urna, ac
-          sollicitudin nunc pellentesque lobortis. Donec molestie elit vel malesuada porttitor.
-        </div>
+        <div className='bio max-w-[50rem] mx-auto text-center mb-6'>{userBio}</div>
 
         <div className='grid grid-cols-2 gap-4'>
           <div>
@@ -122,13 +180,51 @@ const UserProfilePage = () => {
           </div>
 
           <div>
-            <label className='block text-gray-600'>Phone Number:</label>
-            <p className='text-gray-800'>{phoneNumber}</p>
+            <label className='block text-gray-600'>
+              Phone Number:
+              {phoneEditMode ? (
+                <>
+                  <input
+                    type='text'
+                    className='border border-gray-300 p-1'
+                    value={newPhoneNumber}
+                    onChange={(e) => SetNewPhoneNUmber(e.target.value)}
+                  />
+                  <button className='bg-blue-500 text-white rounded p-1 ml-2' onClick={handlePhoneSave}>
+                    <CheckIcon className='h-4 w-4 text-black dark:text-white' />
+                  </button>
+                </>
+              ) : (
+                <button className='bg-blue-500 text-white rounded p-1 ml-2' onClick={handlePhoneClick}>
+                  <PencilIcon className='h-4 w-4 text-black dark:text-white' />
+                </button>
+              )}
+            </label>
+            {phoneEditMode ? null : <p className='text-gray-800'>{phoneNumber}</p>}
           </div>
 
           <div>
-            <label className='block text-gray-600'>Address:</label>
-            <p className='text-gray-800'>{address}</p>
+            <label className='block text-gray-600'>
+              Address:
+              {addressEditMode ? (
+                <>
+                  <input
+                    type='text'
+                    className='border border-gray-300 p-1'
+                    value={newAddress}
+                    onChange={(e) => setNewAddress(e.target.value)}
+                  />
+                  <button className='bg-blue-500 text-white rounded p-1 ml-2' onClick={handleAddressSave}>
+                    <CheckIcon className='h-4 w-4 text-black dark:text-white' />
+                  </button>
+                </>
+              ) : (
+                <button className='bg-blue-500 text-white rounded p-1 ml-2' onClick={handleAddressClick}>
+                  <PencilIcon className='h-4 w-4 text-black dark:text-white' />
+                </button>
+              )}
+            </label>
+            {addressEditMode ? null : <p className='text-gray-800'>{address}</p>}
           </div>
 
           <div>
@@ -137,8 +233,7 @@ const UserProfilePage = () => {
           </div>
         </div>
 
-        <div className='flex flex-row justify-between'>
-          <button className='bg-blue-500 text-black dark:text-white rounded px-4 py-2 mr-2'>Edit</button>
+        <div className='flex flex-row justify-end'>
           <button className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'>Disable</button>
         </div>
       </div>
