@@ -27,10 +27,12 @@ const ManageUsers = () => {
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isLoaderVisible, setIsLoaderVisible] = useState(true);
+
   const currentMode = useSelector(selectTheme);
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  // User table columns define
   const columns = [
     {
       name: t('FIRST NAME'),
@@ -96,7 +98,7 @@ const ManageUsers = () => {
 
   const getUsers = useCallback(async () => {
     try {
-      const { jwtAccessToken: accessToken } = localStorage;
+      const accessToken = localStorage.getItem('jwtAccessToken');
       const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -104,6 +106,7 @@ const ManageUsers = () => {
       });
       return response.data;
     } catch (error) {
+      // Check access token invalid or expired
       if (
         error.response?.data?.code === 13004 ||
         error.response?.data?.code === 13013 ||
@@ -120,6 +123,7 @@ const ManageUsers = () => {
     (async () => {
       try {
         const usersData = await getUsers();
+
         setTimeout(() => {
           setIsLoaderVisible(false);
           setUsers(usersData);
@@ -127,6 +131,8 @@ const ManageUsers = () => {
       } catch (error) {
         setError(identifyError(error.response?.data?.code));
         setIsAlertVisible(true);
+
+        // Check refresh token is invalid or expired
         if (error.response?.data?.code === 13002) {
           setTimeout(() => {
             navigate('/');
@@ -136,7 +142,7 @@ const ManageUsers = () => {
     })();
   }, [getUsers, navigate, isFormVisible, isAlertVisible]);
 
-  // Confirm for delete
+  // Grt confirmation for delete
   const confirmDialogClose = (result) => {
     if (result) {
       handleDelete();

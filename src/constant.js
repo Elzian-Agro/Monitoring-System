@@ -109,3 +109,20 @@ export const customTableStyles = {
     },
   },
 };
+
+// user formValidation
+export const validateForm = (fields) => {
+  const newErrors = {};
+
+  fields.forEach((field) => {
+    const { key, label, value, condition = true } = field;
+
+    if (!condition || (condition && !value.trim())) {
+      newErrors[key] = `*${label} is required`;
+    } else if (key === 'email' && !authRegex.email.test(value)) {
+      newErrors.email = '*Email is not valid';
+    }
+  });
+
+  return newErrors;
+};

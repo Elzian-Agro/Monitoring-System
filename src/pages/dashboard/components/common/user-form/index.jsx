@@ -15,8 +15,8 @@ import {
 import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
-import { authRegex } from 'constant';
 import { useTranslation } from 'react-i18next';
+import { validateForm } from 'constant';
 
 const Form = ({ visible, onClose, user }) => {
   const [firstName, setFirstName] = useState('');
@@ -53,42 +53,6 @@ const Form = ({ visible, onClose, user }) => {
     }
   }, [user]);
 
-  const validateForm = () => {
-    const newErrors = {};
-
-    if (!firstName.trim()) {
-      newErrors.firstName = '*First name is required';
-    }
-
-    if (!lastName.trim()) {
-      newErrors.lastName = '*Last name is required';
-    }
-
-    if (!nic.trim()) {
-      newErrors.nic = '*NIC is required';
-    }
-
-    if (!email.trim()) {
-      newErrors.email = '*Email is required';
-    } else if (!authRegex.email.test(email)) {
-      newErrors.email = '*Email is not valid';
-    }
-
-    if (!user) {
-      if (!password.trim()) {
-        newErrors.password = '*Password is required';
-      }
-    }
-
-    if (!orgName.trim()) {
-      newErrors.orgName = '*Organization name is required';
-    }
-
-    setErrors(newErrors);
-
-    return Object.keys(newErrors).length === 0;
-  };
-
   const resetForm = () => {
     setFirstName('');
     setLastName('');
@@ -103,6 +67,19 @@ const Form = ({ visible, onClose, user }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const fields = [
+      { key: 'firstName', label: 'First name', value: firstName },
+      { key: 'lastName', label: 'Last name', value: lastName },
+      { key: 'nic', label: 'NIC', value: nic },
+      { key: 'email', label: 'Email', value: email },
+      { key: 'password', label: 'Password', value: password, condition: !user },
+      { key: 'orgName', label: 'Organization name', value: orgName },
+    ];
+
+    const errors = validateForm(fields);
+
+    setErrors(errors);
 
     const accessToken = localStorage.getItem('jwtAccessToken');
 
@@ -120,7 +97,7 @@ const Form = ({ visible, onClose, user }) => {
       requestData.password = password;
     }
 
-    if (validateForm()) {
+    if (Object.keys(errors).length === 0) {
       const apiEndpoint = user
         ? `${process.env.REACT_APP_BASE_URL}/user/${user._id}`
         : `${process.env.REACT_APP_BASE_URL}/user`;
@@ -133,11 +110,11 @@ const Form = ({ visible, onClose, user }) => {
         },
       })
         .then(() => {
+          setMessage(user ? t('User details updated successfully') : t('User registered successfully'));
+          setIsAlertVisible(true);
           if (!user) {
             resetForm();
           }
-          setMessage(user ? t('User details updated successfully') : t('User registered successfully'));
-          setIsAlertVisible(true);
         })
         .catch((error) => {
           setMessage(identifyError(error.response?.data?.code));
@@ -160,7 +137,7 @@ const Form = ({ visible, onClose, user }) => {
           {user ? t('UPDATE USER DETAILS') : t('NEW USER REGISTARTION')}
         </h1>
       </div>
-      <form className='grid lg:grid-cols-2 gap-10 lg:gap-16 w-full px-5'>
+      <form className='grid lg:grid-cols-2 sm:gap-5 md:gap-10 lg:gap-12 w-full px-5'>
         <TextBox
           placeholder='Eg. Saman'
           label='First Name'
@@ -247,7 +224,7 @@ const Form = ({ visible, onClose, user }) => {
           )}
         </div>
       </form>
-      <div className='flex flex-row justify-end item-center pt-4 px-6'>
+      <div className='flex flex-row justify-end item-center px-6'>
         <div className='flex justify-end item-center gap-2 md:gap-5 mt-3'>
           <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />
           <PrimaryButton
