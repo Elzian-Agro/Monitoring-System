@@ -1,6 +1,7 @@
 import React from 'react';
 import { PrimaryButton } from '../../base/Button';
 import PropTypes from 'prop-types';
+import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 
 const AlertBox = ({ visible, message, onClose }) => {
   if (!visible) {
@@ -8,16 +9,14 @@ const AlertBox = ({ visible, message, onClose }) => {
   }
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-25 backdrop-blur-sm'>
-      <div className='bg-secondary-dark-bg dark:bg-white pt-4 lg:pt-8 rounded-lg shadow-2xl border-gray-600 dark:border-gray-300 border-b-[4px]'>
-        <div className='flex flex-col px-12 gap-4'>
-          <p className='text-sm md:text-base lg:text-lg text-white dark:text-black'>{message}</p>
+      <div className='w-72 bg-white dark:bg-black p-4 rounded-lg shadow-2xl border-gray-300 dark:border-gray-600 border-b-[4px]'>
+        <div className='flex flex-col gap-2'>
+          <div className='flex justify-center'>
+            <ExclamationCircleIcon className='w-16 h-16 text-green-500' />
+          </div>
+          <p className='text-base text-center text-black dark:text-white'>{message}</p>
           <div className='flex p-2 justify-center'>
-            <PrimaryButton
-              bgEffect='bg-red-500 border-red-600'
-              size='md:py-2 md:px-4 md:text-lg'
-              text='OK'
-              onClick={onClose}
-            />
+            <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text='OK' onClick={onClose} />
           </div>
         </div>
       </div>
