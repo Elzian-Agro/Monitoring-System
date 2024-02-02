@@ -41,7 +41,7 @@ function TextBox({ label = null, placeholder = '', type = 'text', Icon = null, v
           )}
         </div>
       </div>
-      <p className='text-sm text-red-500'>{error}</p>
+      <p className='text-sm text-red-500'>{t(error)}</p>
     </div>
   );
 }

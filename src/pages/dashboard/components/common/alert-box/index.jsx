@@ -2,8 +2,11 @@ import React from 'react';
 import { PrimaryButton } from '../../base/Button';
 import PropTypes from 'prop-types';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import { useTranslation } from 'react-i18next';
 
 const AlertBox = ({ visible, message, onClose }) => {
+  const { t } = useTranslation();
+
   if (!visible) {
     return null;
   }
@@ -14,9 +17,9 @@ const AlertBox = ({ visible, message, onClose }) => {
           <div className='flex justify-center'>
             <ExclamationCircleIcon className='w-16 h-16 text-green-500' />
           </div>
-          <p className='text-base text-center text-black dark:text-white'>{message}</p>
+          <p className='text-base text-center text-black dark:text-white'>{t(message)}</p>
           <div className='flex p-2 justify-center'>
-            <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text='OK' onClick={onClose} />
+            <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text={t('OK')} onClick={onClose} />
           </div>
         </div>
       </div>

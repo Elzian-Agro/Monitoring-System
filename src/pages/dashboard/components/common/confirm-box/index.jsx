@@ -2,8 +2,11 @@ import React from 'react';
 import { PrimaryButton } from '../../base/Button';
 import PropTypes from 'prop-types';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import { useTranslation } from 'react-i18next';
 
 const ConformBox = ({ visible, message, onClose }) => {
+  const { t } = useTranslation();
+
   if (!visible) {
     return null;
   }
@@ -14,10 +17,10 @@ const ConformBox = ({ visible, message, onClose }) => {
           <div className='flex justify-center'>
             <ExclamationCircleIcon className='w-16 h-16 text-green-500' />
           </div>
-          <p className='text-center text-base'>{message}</p>
+          <p className='text-center text-base'>{t(message)}</p>
           <div className='flex gap-4 justify-center'>
-            <PrimaryButton bgEffect='bg-red-500 border-red-600' text='No' onClick={() => onClose(false)} />
-            <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text='Yes' onClick={() => onClose(true)} />
+            <PrimaryButton bgEffect='bg-red-500 border-red-600' text={t('NO')} onClick={() => onClose(false)} />
+            <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text={t('YES')} onClick={() => onClose(true)} />
           </div>
         </div>
       </div>

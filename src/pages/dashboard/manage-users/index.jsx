@@ -15,6 +15,7 @@ import ConformBox from '../components/common/confirm-box';
 import AlertBox from '../components/common/alert-box';
 import { identifyError } from 'pages/auth/utils';
 import Loader from '../components/common/loader';
+import { useTranslation } from 'react-i18next';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -28,10 +29,11 @@ const ManageUsers = () => {
   const [isLoaderVisible, setIsLoaderVisible] = useState(true);
   const currentMode = useSelector(selectTheme);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const columns = [
     {
-      name: 'FIRST NAME',
+      name: t('FIRST NAME'),
       selector: ({ firstName, isDisabled }) => (
         <div className='flex flex-row gap-2'>
           <div className=''>{firstName}</div>
@@ -41,36 +43,35 @@ const ManageUsers = () => {
       sortable: true,
     },
     {
-      name: 'LAST NAME',
+      name: t('LAST NAME'),
       selector: (row) => row.lastName,
       sortable: true,
     },
     {
-      name: 'EMAIL',
+      name: t('EMAIL'),
       selector: (row) => row.email,
       sortable: true,
     },
     {
-      name: 'NIC',
+      name: t('NIC'),
       selector: (row) => row.NIC,
       sortable: true,
     },
     {
-      name: 'TEL. NUMBER',
+      name: t('TEL. NUMBER'),
       selector: (row) => row.phoneNum,
       sortable: true,
     },
     {
-      name: 'ORG. NAME',
+      name: t('ORG. NAME'),
       selector: (row) => row.orgName,
       sortable: true,
     },
     {
-      name: 'ACTION',
+      name: t('ACTION'),
       cell: (row) => (
         <PrimaryButton
           bgEffect='bg-blue-500 border-blue-600'
-          size='w-20'
           text='Edit'
           onClick={() => {
             setSelectedUser(row);
@@ -83,7 +84,6 @@ const ManageUsers = () => {
       cell: (row) => (
         <PrimaryButton
           bgEffect='bg-red-500 border-red-600'
-          size='w-20'
           text='Delete'
           onClick={() => {
             setSelectedUser(row);
@@ -217,7 +217,7 @@ const ManageUsers = () => {
               <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
                 <div className='flex gap-2 mb-2 md:mb-0'>
                   <VariantButton
-                    text='Add New'
+                    text='Add User'
                     Icon={PlusIcon}
                     onClick={() => {
                       setIsFormVisible(true);

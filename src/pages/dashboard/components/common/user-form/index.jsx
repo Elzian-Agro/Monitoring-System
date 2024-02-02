@@ -16,6 +16,7 @@ import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
 import { authRegex } from 'constant';
+import { useTranslation } from 'react-i18next';
 
 const Form = ({ visible, onClose, user }) => {
   const [firstName, setFirstName] = useState('');
@@ -30,6 +31,8 @@ const Form = ({ visible, onClose, user }) => {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     // Set form fields for edit mode
@@ -133,7 +136,7 @@ const Form = ({ visible, onClose, user }) => {
           if (!user) {
             resetForm();
           }
-          setMessage(user ? 'Farmer details updated successfully' : 'Farmer registered successfully');
+          setMessage(user ? t('User details updated successfully') : t('User registered successfully'));
           setIsAlertVisible(true);
         })
         .catch((error) => {
@@ -154,7 +157,7 @@ const Form = ({ visible, onClose, user }) => {
           <ArrowLeftIcon className='text-white w-6 h-6 mx-4 my-2 transform hover:-translate-x-2 duration-300' />
         </button>
         <h1 className='text-lg text-center text-black dark:text-white tracking-widest'>
-          {user ? 'UPDATE FARMER DETAILS' : 'NEW FARMER REGISTARTION'}
+          {user ? t('UPDATE USER DETAILS') : t('NEW USER REGISTARTION')}
         </h1>
       </div>
       <form className='grid lg:grid-cols-2 gap-10 lg:gap-16 w-full px-5'>
@@ -232,7 +235,7 @@ const Form = ({ visible, onClose, user }) => {
         <div>
           {user && (
             <div className='flex flex-row items-center gap-4'>
-              <div className='text-gray-400'>{user.isDisabled ? 'Enabled' : 'Disabled'} :</div>
+              <div className='text-gray-400'>{user.isDisabled ? t('Enabled') : t('Disabled')} :</div>
               <ToggleButton
                 value={isToggleClicked}
                 onChange={() => {
@@ -246,11 +249,10 @@ const Form = ({ visible, onClose, user }) => {
       </form>
       <div className='flex flex-row justify-end item-center pt-4 px-6'>
         <div className='flex justify-end item-center gap-2 md:gap-5 mt-3'>
-          <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-20' text='Clear' onClick={resetForm} />
+          <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />
           <PrimaryButton
             bgEffect='bg-blue-500 border-blue-600'
-            size='w-20'
-            text={user ? 'Update' : 'Submit'}
+            text={user ? t('Update') : t('Submit')}
             onClick={handleSubmit}
           />
         </div>
