@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { PrimaryButton } from '../../base/Button';
-import { ToggleButton } from '../../base/Button';
+import { PrimaryButton, ToggleButton } from '../../base/Button';
 import TextBox from '../../base/TextBox';
 import AlertBox from '../alert-box';
 import {
@@ -16,15 +15,15 @@ import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
 import { useTranslation } from 'react-i18next';
-import { validateForm } from 'constant';
+import { validateForm } from 'pages/dashboard/utils/userFormValidation';
 
-const Form = ({ visible, onClose, user }) => {
+const Form = ({ visible, onClose, user = null }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [nic, setNic] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState(''); //check
+  const [password, setPassword] = useState('');
   const [orgName, setOrgName] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
   const [isToggleClicked, setIsToggleClicked] = useState(false);
@@ -62,7 +61,6 @@ const Form = ({ visible, onClose, user }) => {
     setPassword(generateRandomPassword());
     setOrgName('');
     setErrors({});
-    setMessage(null);
   };
 
   const handleSubmit = async (e) => {
@@ -73,6 +71,7 @@ const Form = ({ visible, onClose, user }) => {
       { key: 'lastName', label: 'Last name', value: lastName },
       { key: 'nic', label: 'NIC', value: nic },
       { key: 'email', label: 'Email', value: email },
+      { key: 'phoneNum', label: 'Phone Number', value: phoneNum, optional: false },
       { key: 'password', label: 'Password', value: password, condition: !user },
       { key: 'orgName', label: 'Organization name', value: orgName },
     ];
@@ -110,11 +109,11 @@ const Form = ({ visible, onClose, user }) => {
         },
       })
         .then(() => {
-          setMessage(user ? t('User details updated successfully') : t('User registered successfully'));
+          setMessage(user ? 'User details updated successfully' : 'User registered successfully');
           setIsAlertVisible(true);
-          if (!user) {
-            resetForm();
-          }
+          // if (!user) {
+          //   resetForm();
+          // }
         })
         .catch((error) => {
           setMessage(identifyError(error.response?.data?.code));
@@ -159,7 +158,7 @@ const Form = ({ visible, onClose, user }) => {
         />
 
         <TextBox
-          placeholder='Eg. 945214789V'
+          placeholder='Eg. 9452XXXXXV'
           label='NIC'
           error={errors.nic}
           Icon={UserIcon}
@@ -168,7 +167,7 @@ const Form = ({ visible, onClose, user }) => {
         />
 
         <TextBox
-          placeholder='Eg. 076-9011456'
+          placeholder='Eg. 076XXXXXXX'
           label='Phone Number'
           type='text'
           error={errors.phoneNum}
@@ -178,7 +177,7 @@ const Form = ({ visible, onClose, user }) => {
         />
 
         <TextBox
-          placeholder='Eg. saman@gmail.com'
+          placeholder='Eg. sample@gmail.com'
           label='Email Address'
           type='text'
           error={errors.email}
@@ -192,7 +191,7 @@ const Form = ({ visible, onClose, user }) => {
             placeholder='************'
             label='Password'
             type='password'
-            error={errors.email}
+            error={errors.password}
             Icon={LockClosedIcon}
             value={password}
             setValue={setPassword}
@@ -212,7 +211,7 @@ const Form = ({ visible, onClose, user }) => {
         <div>
           {user && (
             <div className='flex flex-row items-center gap-4'>
-              <div className='text-gray-400'>{user.isDisabled ? t('Enabled') : t('Disabled')} :</div>
+              <div className='text-gray-400'>{user.isDisabled ? t('Enabled user') : t('Disabled user')} :</div>
               <ToggleButton
                 value={isToggleClicked}
                 onChange={() => {
@@ -229,13 +228,13 @@ const Form = ({ visible, onClose, user }) => {
           <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />
           <PrimaryButton
             bgEffect='bg-blue-500 border-blue-600'
-            text={user ? t('Update') : t('Submit')}
+            text={user ? 'Update' : 'Submit'}
             onClick={handleSubmit}
           />
         </div>
         <AlertBox
           visible={isAlertVisible}
-          message={`${message}!`}
+          message={`${message}`}
           onClose={() => {
             setIsAlertVisible(false);
           }}
@@ -248,6 +247,7 @@ const Form = ({ visible, onClose, user }) => {
 Form.propTypes = {
   visible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  user: PropTypes.object,
 };
 
 export default Form;

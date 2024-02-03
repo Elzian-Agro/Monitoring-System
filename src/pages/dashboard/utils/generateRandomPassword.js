@@ -1,8 +1,10 @@
+import { characterSets } from 'constant';
+
 export const generateRandomPassword = (length = 12) => {
-  const lowercaseLetters = 'abcdefghijklmnopqrstuvwxyz';
-  const uppercaseLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const numbers = '0123456789';
-  const symbols = '!@#$%^&*_+-=<>?';
+  const lowercaseLetters = characterSets.lowercaseLetters;
+  const uppercaseLetters = characterSets.uppercaseLetters;
+  const numbers = characterSets.numbers;
+  const symbols = characterSets.symbols;
 
   const getRandomChar = (charset) => {
     const randomIndex = Math.floor(Math.random() * charset.length);

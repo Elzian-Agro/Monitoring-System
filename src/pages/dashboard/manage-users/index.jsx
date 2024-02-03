@@ -36,12 +36,7 @@ const ManageUsers = () => {
   const columns = [
     {
       name: t('FIRST NAME'),
-      selector: ({ firstName, isDisabled }) => (
-        <div className='flex flex-row gap-2'>
-          <div className=''>{firstName}</div>
-          <div className={isDisabled ? 'bg-red-500 rounded-full h-3 w-3' : ''}></div>
-        </div>
-      ),
+      selector: (row) => row.firstName,
       sortable: true,
     },
     {
@@ -84,14 +79,17 @@ const ManageUsers = () => {
     },
     {
       cell: (row) => (
-        <PrimaryButton
-          bgEffect='bg-red-500 border-red-600'
-          text='Delete'
-          onClick={() => {
-            setSelectedUser(row);
-            setIsConfirmVisible(true);
-          }}
-        />
+        <div className='flex flex-row gap-2 items-center'>
+          <PrimaryButton
+            bgEffect='bg-red-500 border-red-600'
+            text='Delete'
+            onClick={() => {
+              setSelectedUser(row);
+              setIsConfirmVisible(true);
+            }}
+          />
+          {row.isDisabled && <div className='bg-green-500 rounded-full h-3 w-3'></div>}
+        </div>
       ),
     },
   ];
@@ -127,7 +125,7 @@ const ManageUsers = () => {
         setTimeout(() => {
           setIsLoaderVisible(false);
           setUsers(usersData);
-        }, 3000);
+        }, 2000);
       } catch (error) {
         setError(identifyError(error.response?.data?.code));
         setIsAlertVisible(true);
@@ -140,9 +138,9 @@ const ManageUsers = () => {
         }
       }
     })();
-  }, [getUsers, navigate, isFormVisible, isAlertVisible]);
+  }, [getUsers, navigate, isFormVisible, isConfirmVisible]);
 
-  // Grt confirmation for delete
+  // Get confirmation for delete
   const confirmDialogClose = (result) => {
     if (result) {
       handleDelete();
@@ -162,7 +160,7 @@ const ManageUsers = () => {
           },
         }
       );
-      setMessage('Farmer deleted successfully!');
+      setMessage('User deleted successfully');
       setIsAlertVisible(true);
     } catch (error) {
       setMessage(identifyError(error.response?.data?.code));
@@ -175,15 +173,25 @@ const ManageUsers = () => {
     if (!users) {
       return [];
     }
-    return users.filter(
-      (user) =>
-        user.userType.toLowerCase() === 'farmer' &&
-        (user.firstName.toLowerCase().includes(filterText.toLowerCase()) ||
-          user.lastName.toLowerCase().includes(filterText.toLowerCase()) ||
-          user.email.toLowerCase().includes(filterText.toLowerCase()) ||
-          user.NIC.includes(filterText) ||
-          user.orgName.toLowerCase().includes(filterText.toLowerCase()))
-    );
+    return users.filter((user) => {
+      const userType = user.userType?.toLowerCase() || '';
+      const firstName = user.firstName?.toLowerCase() || '';
+      const lastName = user.lastName?.toLowerCase() || '';
+      const email = user.email?.toLowerCase() || '';
+      const NIC = user.NIC || '';
+      const phoneNum = String(user.phoneNum) || '';
+      const orgName = user.orgName?.toLowerCase() || '';
+
+      return (
+        userType === 'farmer' &&
+        (firstName.includes(filterText.toLowerCase()) ||
+          lastName.includes(filterText.toLowerCase()) ||
+          email.includes(filterText.toLowerCase()) ||
+          NIC.includes(filterText) ||
+          phoneNum.includes(filterText) ||
+          orgName.includes(filterText.toLowerCase()))
+      );
+    });
   }, [users, filterText]);
 
   // Display the error If happen error when loading table data
@@ -191,11 +199,11 @@ const ManageUsers = () => {
     return (
       <div>
         <div className='flex bg-red-500 text-white text-xs md:text-sm lg:text-base p-2 md:p-4 mx-6 rounded-md justify-center items-center'>
-          {error}
+          {t(error)}
         </div>
         <AlertBox
           visible={isAlertVisible}
-          message={`${error}!`}
+          message={`${error}`}
           onClose={() => {
             setIsAlertVisible(false);
           }}

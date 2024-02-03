@@ -19,7 +19,7 @@ const VariantButton = ({ text, Icon = null, onClick }) => {
     <button
       className='rounded-lg relative w-36 h-10 cursor-pointer flex items-center border-b-[4px] border-green-600 bg-green-500 hover:brightness-110 group'
       onClick={onClick}>
-      <span className='text-white text-sm ml-8 transform group-hover:translate-x-20 dark:group-hover:text-black transition-all duration-300'>
+      <span className='text-white text-sm ml-6 transform group-hover:translate-x-20 dark:group-hover:text-black transition-all duration-300'>
         {t(text)}
       </span>
       <span className='absolute right-0 h-full w-12 rounded-lg bg-green-500 flex items-center justify-center transform group-hover:translate-x-0 group-hover:w-full transition-all duration-300'>

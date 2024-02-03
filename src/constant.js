@@ -3,6 +3,15 @@ import { ChatBubbleBottomCenterIcon } from '@heroicons/react/24/outline';
 export const authRegex = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+  nicNumber: /^(\d{9}[vV]|\d{12})$/,
+  phoneNumber: /^0?\d{9}$/,
+};
+
+export const characterSets = {
+  lowercaseLetters: 'abcdefghijklmnopqrstuvwxyz',
+  uppercaseLetters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  numbers: '0123456789',
+  symbols: '!@#$%&*+-=<>?',
 };
 
 export const menuMode = {
@@ -108,21 +117,4 @@ export const customTableStyles = {
       },
     },
   },
-};
-
-// user formValidation
-export const validateForm = (fields) => {
-  const newErrors = {};
-
-  fields.forEach((field) => {
-    const { key, label, value, condition = true } = field;
-
-    if (!condition || (condition && !value.trim())) {
-      newErrors[key] = `*${label} is required`;
-    } else if (key === 'email' && !authRegex.email.test(value)) {
-      newErrors.email = '*Email is not valid';
-    }
-  });
-
-  return newErrors;
 };
