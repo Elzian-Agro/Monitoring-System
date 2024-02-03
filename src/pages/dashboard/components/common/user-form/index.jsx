@@ -111,9 +111,9 @@ const Form = ({ visible, onClose, user = null }) => {
         .then(() => {
           setMessage(user ? 'User details updated successfully' : 'User registered successfully');
           setIsAlertVisible(true);
-          // if (!user) {
-          //   resetForm();
-          // }
+          if (!user) {
+            resetForm();
+          }
         })
         .catch((error) => {
           setMessage(identifyError(error.response?.data?.code));
