@@ -9,8 +9,10 @@ const UserProfilePage = () => {
   const [photoEditMode, setPhotoEditMode] = useState(false);
   const [addressEditMode, setAddressEditMode] = useState(false);
   const [phoneEditMode, setPhoneEditMode] = useState(false);
+  const [bioEditMode, setBioEditMode] = useState(false);
   const [newAddress, setNewAddress] = useState('');
   const [newPhoneNumber, SetNewPhoneNUmber] = useState('');
+  const [bio, setbio] = useState('');
   const token = localStorage.getItem('jwtAccessToken');
 
   //Capitalize the text
@@ -60,6 +62,35 @@ const UserProfilePage = () => {
       }
       // Toggle back to view mode
       setPhotoEditMode(false);
+    }
+  };
+
+  //Bio
+  const handleBioClick = () => {
+    setBioEditMode(true);
+  };
+
+  const handleBioSave = async () => {
+    try {
+      // Update user data in Redux store
+      dispatch(setUserData({ userBio: bio }));
+
+      // Make Axios PUT request to update the bio
+      await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/user/profile`,
+        { userBio: bio },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Close the bio edit mode and reset the local state for bio
+      setBioEditMode(false);
+      setbio('');
+    } catch (error) {
+      console.error('Error updating bio:', error);
     }
   };
 
@@ -151,7 +182,23 @@ const UserProfilePage = () => {
           </div>
         </div>
 
-        <div className='bio max-w-[50rem] mx-auto text-center mb-6'>{userBio}</div>
+        <div className='bio max-w-[50rem] mx-auto text-center mb-6'>
+          {bioEditMode ? (
+            <>
+              <textarea className='border border-gray-300 p-1' value={bio} onChange={(e) => setbio(e.target.value)} />
+              <button className='bg-blue-500 text-white rounded p-1 ml-2' onClick={handleBioSave}>
+                <CheckIcon className='h-4 w-4 text-black dark:text-white' />
+              </button>
+            </>
+          ) : (
+            <>
+              <p className='text-gray-800'>{userBio}</p>
+              <button className='bg-blue-500 text-white rounded p-1 ml-2' onClick={handleBioClick}>
+                <PencilIcon className='h-4 w-4 text-black dark:text-white' />
+              </button>
+            </>
+          )}
+        </div>
 
         <div className='grid grid-cols-2 gap-4'>
           <div>
