@@ -2,15 +2,26 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../slice/userSlice';
 import { PencilSquareIcon, PencilIcon, CheckIcon } from '@heroicons/react/24/outline';
+import ConformBox from '../components/common/confirm-box';
+import AlertBox from '../components/common/alert-box';
+import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [photoEditMode, setPhotoEditMode] = useState(false);
   const [addressEditMode, setAddressEditMode] = useState(false);
   const [phoneEditMode, setPhoneEditMode] = useState(false);
+  const [bioEditMode, setBioEditMode] = useState(false);
   const [newAddress, setNewAddress] = useState('');
   const [newPhoneNumber, SetNewPhoneNUmber] = useState('');
+  const [bio, setbio] = useState('');
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [message, setMessage] = useState(null);
+
   const token = localStorage.getItem('jwtAccessToken');
 
   //Capitalize the text
@@ -25,7 +36,7 @@ const UserProfilePage = () => {
   const phoneNumber = useSelector((state) => state.user.phoneNum);
   const userType = useSelector((state) => capitalize(state.user.userType));
   const organizationName = useSelector((state) => state.user.orgName);
-  // const userId = useSelector((state) => state.user._id);
+  const userId = useSelector((state) => state.user._id);
   const userBio = useSelector((state) => state.user.userBio);
   const profileImage = useSelector((state) => state.user.profileImage);
   const address = useSelector((state) => state.user.address);
@@ -60,6 +71,35 @@ const UserProfilePage = () => {
       }
       // Toggle back to view mode
       setPhotoEditMode(false);
+    }
+  };
+
+  //Bio
+  const handleBioClick = () => {
+    setBioEditMode(true);
+  };
+
+  const handleBioSave = async () => {
+    try {
+      // Update user data in Redux store
+      dispatch(setUserData({ userBio: bio }));
+
+      // Make Axios PUT request to update the bio
+      await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/user/profile`,
+        { userBio: bio },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Close the bio edit mode and reset the local state for bio
+      setBioEditMode(false);
+      setbio('');
+    } catch (error) {
+      console.error('Error updating bio:', error);
     }
   };
 
@@ -101,7 +141,6 @@ const UserProfilePage = () => {
     try {
       // Update user data in Redux store
       dispatch(setUserData({ phoneNum: newPhoneNumber }));
-
       // Make Axios PUT request to update the address
       await axios.put(
         `${process.env.REACT_APP_BASE_URL}/user/profile`,
@@ -123,6 +162,35 @@ const UserProfilePage = () => {
 
   const handlePhotoEditButtonClick = () => {
     setPhotoEditMode(true);
+  };
+
+  //Disable
+  const confirmDialogClose = (result) => {
+    if (result) {
+      handleDisable();
+    }
+    setIsConfirmVisible(false);
+  };
+
+  const handleDisable = async () => {
+    setIsAlertVisible(true);
+    try {
+      const { jwtAccessToken: accessToken } = localStorage;
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/user/disable/${userId}`,
+        { isDisabled: true },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      setMessage('Disabled successfully!');
+      setIsAlertVisible(true);
+    } catch (error) {
+      setMessage(identifyError(error.response?.data?.code));
+      setIsAlertVisible(true);
+    }
   };
 
   return (
@@ -151,7 +219,23 @@ const UserProfilePage = () => {
           </div>
         </div>
 
-        <div className='bio max-w-[50rem] mx-auto text-center mb-6'>{userBio}</div>
+        <div className='bio max-w-[50rem] mx-auto text-center mb-6'>
+          {bioEditMode ? (
+            <>
+              <textarea className='border border-gray-300 p-1' value={bio} onChange={(e) => setbio(e.target.value)} />
+              <button className='bg-blue-500 text-white rounded p-1 ml-2' onClick={handleBioSave}>
+                <CheckIcon className='h-4 w-4 text-black dark:text-white' />
+              </button>
+            </>
+          ) : (
+            <>
+              <p className='text-gray-800'>{userBio}</p>
+              <button className='bg-blue-500 text-white rounded p-1 ml-2' onClick={handleBioClick}>
+                <PencilIcon className='h-4 w-4 text-black dark:text-white' />
+              </button>
+            </>
+          )}
+        </div>
 
         <div className='grid grid-cols-2 gap-4'>
           <div>
@@ -234,9 +318,30 @@ const UserProfilePage = () => {
         </div>
 
         <div className='flex flex-row justify-end'>
-          <button className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'>Disable</button>
+          <button
+            className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
+            onClick={() => {
+              setIsConfirmVisible(true);
+            }}>
+            Disable
+          </button>
         </div>
       </div>
+      <ConformBox
+        visible={isConfirmVisible}
+        message='Are you sure want to disable this account?'
+        onClose={confirmDialogClose}
+      />
+      <AlertBox
+        visible={isAlertVisible}
+        message={`${message}!`}
+        onClose={() => {
+          setIsAlertVisible(false);
+          navigate('/');
+          localStorage.removeItem('jwtAccessToken');
+          localStorage.removeItem('jwtRefreshToken');
+        }}
+      />
     </div>
   );
 };
