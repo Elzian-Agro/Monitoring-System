@@ -2,10 +2,15 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../slice/userSlice';
 import { PencilSquareIcon, PencilIcon, CheckIcon } from '@heroicons/react/24/outline';
+import ConformBox from '../components/common/confirm-box';
+import AlertBox from '../components/common/alert-box';
+import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [photoEditMode, setPhotoEditMode] = useState(false);
   const [addressEditMode, setAddressEditMode] = useState(false);
   const [phoneEditMode, setPhoneEditMode] = useState(false);
@@ -13,6 +18,10 @@ const UserProfilePage = () => {
   const [newAddress, setNewAddress] = useState('');
   const [newPhoneNumber, SetNewPhoneNUmber] = useState('');
   const [bio, setbio] = useState('');
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [message, setMessage] = useState(null);
+
   const token = localStorage.getItem('jwtAccessToken');
 
   //Capitalize the text
@@ -27,7 +36,7 @@ const UserProfilePage = () => {
   const phoneNumber = useSelector((state) => state.user.phoneNum);
   const userType = useSelector((state) => capitalize(state.user.userType));
   const organizationName = useSelector((state) => state.user.orgName);
-  // const userId = useSelector((state) => state.user._id);
+  const userId = useSelector((state) => state.user._id);
   const userBio = useSelector((state) => state.user.userBio);
   const profileImage = useSelector((state) => state.user.profileImage);
   const address = useSelector((state) => state.user.address);
@@ -132,7 +141,6 @@ const UserProfilePage = () => {
     try {
       // Update user data in Redux store
       dispatch(setUserData({ phoneNum: newPhoneNumber }));
-
       // Make Axios PUT request to update the address
       await axios.put(
         `${process.env.REACT_APP_BASE_URL}/user/profile`,
@@ -154,6 +162,35 @@ const UserProfilePage = () => {
 
   const handlePhotoEditButtonClick = () => {
     setPhotoEditMode(true);
+  };
+
+  //Disable
+  const confirmDialogClose = (result) => {
+    if (result) {
+      handleDisable();
+    }
+    setIsConfirmVisible(false);
+  };
+
+  const handleDisable = async () => {
+    setIsAlertVisible(true);
+    try {
+      const { jwtAccessToken: accessToken } = localStorage;
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URL}/user/disable/${userId}`,
+        { isDisabled: true },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      setMessage('Disabled successfully!');
+      setIsAlertVisible(true);
+    } catch (error) {
+      setMessage(identifyError(error.response?.data?.code));
+      setIsAlertVisible(true);
+    }
   };
 
   return (
@@ -281,9 +318,30 @@ const UserProfilePage = () => {
         </div>
 
         <div className='flex flex-row justify-end'>
-          <button className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'>Disable</button>
+          <button
+            className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
+            onClick={() => {
+              setIsConfirmVisible(true);
+            }}>
+            Disable
+          </button>
         </div>
       </div>
+      <ConformBox
+        visible={isConfirmVisible}
+        message='Are you sure want to disable this account?'
+        onClose={confirmDialogClose}
+      />
+      <AlertBox
+        visible={isAlertVisible}
+        message={`${message}!`}
+        onClose={() => {
+          setIsAlertVisible(false);
+          navigate('/');
+          localStorage.removeItem('jwtAccessToken');
+          localStorage.removeItem('jwtRefreshToken');
+        }}
+      />
     </div>
   );
 };
