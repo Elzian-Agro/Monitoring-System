@@ -1,14 +1,25 @@
 import React from 'react';
-import { XCircleIcon, ArrowUpTrayIcon } from '@heroicons/react/24/outline';
+import { XCircleIcon, ArrowUpTrayIcon, ChatBubbleBottomCenterIcon } from '@heroicons/react/24/outline';
 import { NavLink } from 'react-router-dom';
 import { setProfileOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ThemeSettings from '../theme-settings';
 import LanguageSelector from 'components/common/language-selector';
-import { userProfileData } from 'constant';
+import { useTranslation } from 'react-i18next';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
+  const userProfileData = [
+    {
+      icon: <ChatBubbleBottomCenterIcon className='h-6 w-6' />,
+      title: t('My Profile'),
+      desc: t('Account Settings'),
+      iconColor: '#03C9D7',
+      iconBg: '#E5FAFB',
+    },
+  ];
 
   //Capitalize the text
   const capitalize = (str) => {
@@ -37,7 +48,7 @@ const UserProfile = () => {
   return (
     <div className='nav-item absolute right-1 top-16 shadow-lg dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96'>
       <div className='flex justify-between items-center'>
-        <p className='font-semibold md:text-lg dark:text-white'>My Profile</p>
+        <p className='font-semibold md:text-lg dark:text-white'>{t('My Profile')}</p>
         <button onClick={closeProfile}>
           <XCircleIcon className='h-6 w-6 dark:text-white' />
         </button>
@@ -82,7 +93,7 @@ const UserProfile = () => {
           className='flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm md:text-base text-black dark:text-white dark:hover:text-black hover:bg-red-500 m-2 duration-300'
           onClick={logout}>
           <ArrowUpTrayIcon className='h-6 w-6 rotate-90' />
-          Logout
+          {t('Logout')}
         </NavLink>
       </div>
     </div>

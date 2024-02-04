@@ -99,5 +99,16 @@
   "Manage Users":"පරිශීලකයන් කළමනාකරණය කරන්න",
   "Device Management":"උපාංග කළමනාකරණය",
   "My Profile":"මගේ පැතිකඩ",
-  "Logout":"පිටවීම"
+  "Logout":"පිටවීම",
+  "First Name:":"මුල් නම:",
+  "Last Name:":"අවසන් නම:",
+  "Organization Name:":"සංවිධානයේ නම:",
+  "Email":"විද්යුත් තැපෑල",
+  "National Identity Card Number (NIC):":"ජාතික හැඳුනුම්පත් අංකය (NIC):",
+  "Phone Number:":"දුරකථන අංකය:",
+  "Address":"ලිපිනය",
+  "User Type:":"පරිශීලක වර්ගය:",
+  "Disable":"අක්රිය කරන්න",
+  "Notifications":"දැනුම්දීම්",
+  "Account Settings":"ගිණුම් සැකසුම්"
 }

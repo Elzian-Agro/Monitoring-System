@@ -99,5 +99,17 @@
   "Manage Users":"Manage Users",
   "Device Management":"Device Management",
   "My Profile":"My Profile",
-  "Logout":"Logout"
+  "Logout":"Logout",
+  "First Name:":"First Name:",
+  "Last Name:":"Last Name:",
+  "Organization Name:":"Organization Name:",
+  "Email":"Email",
+  "National Identity Card Number (NIC):":"National Identity Card Number (NIC):",
+  "Phone Number:":"Phone Number:",
+  "Address":"Address",
+  "User Type:":"User Type:",
+  "Disable":"Disable",
+  "Notifications":"Notifications",
+  "Account Settings":"Account Settings"
+
 }
