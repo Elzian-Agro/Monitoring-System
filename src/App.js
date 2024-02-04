@@ -15,10 +15,9 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />} />
 
           {/* Pages */}
+          <Route path='/weather' element={<Dashboard />} />
+          <Route path='/devicemanagement' element={<Dashboard />} />
           <Route path='/users' element={<Dashboard page={<ManageUsers />} />} />
-          <Route path='/orders' element={<Dashboard />} />
-          <Route path='/analytics' element={<Dashboard />} />
-          <Route path='/settings' element={<Dashboard />} />
           <Route path='/profile' element={<Dashboard page={<UserProfilePage />} />} />
 
           {/* Charts */}

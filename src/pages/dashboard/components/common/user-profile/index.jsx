@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { setProfileOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import ThemeSettings from '../theme-settings';
+import LanguageSelector from 'components/common/language-selector';
 import { userProfileData } from 'constant';
 
 const UserProfile = () => {
@@ -74,6 +75,7 @@ const UserProfile = () => {
       <div className='flex md:hidden p-4 h-20 mt-6'>
         <ThemeSettings />
       </div>
+      <LanguageSelector />
       <div className='mt-5'>
         <NavLink
           to='/'
