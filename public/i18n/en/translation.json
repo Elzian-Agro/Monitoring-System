@@ -93,5 +93,11 @@
   "EMAIL": "EMAIL",
   "TEL. NUMBER": "TEL. NUMBER",
   "ORG. NAME": "ORG. NAME",
-  "ACTION": "ACTION"
+  "ACTION": "ACTION",
+  "Dashboard":"Dashboard",
+  "Weather":"Weather",
+  "Manage Users":"Manage Users",
+  "Device Management":"Device Management",
+  "My Profile":"My Profile",
+  "Logout":"Logout"
 }

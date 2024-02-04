@@ -93,5 +93,11 @@
   "EMAIL": "மின்னஞ்சல்",
   "TEL. NUMBER": "தொலைபேசி எண்",
   "ORG. NAME": "நிறுவன பெயர்",
-  "ACTION": "நிறுவன பெயர்"
+  "ACTION": "நிறுவன பெயர்",
+  "Dashboard":"டாஷ்போர்டு",
+  "Weather":"வானிலை",
+  "Manage Users":"பயனர்களை நிர்வகி",
+  "Device Management":"சாதன நிர்வாகம்",
+  "My Profile":"சுயவிவரம்",
+  "Logout":"வெளியேறு"
 }
