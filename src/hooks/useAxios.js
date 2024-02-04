@@ -20,10 +20,10 @@ const useAxios = ({ endpoint, method, body = null, requestHeaders = null }) => {
       try {
         const res = await axios({ url: `${process.env.REACT_APP_BASE_URL}/${endpoint}`, method, data: body, headers });
         setResponse(res.data);
-        setError(null); 
-        setAttemptCount(0); 
+        setError(null);
+        setAttemptCount(0);
       } catch (error) {
-        if ((error.response?.data?.code == 13004) && attemptCount < 1) {
+        if (error.response?.data?.code === 13004 && attemptCount < 1) {
           // Try to refresh the token once
           try {
             await getNewAccessToken();
