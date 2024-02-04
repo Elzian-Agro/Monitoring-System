@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { identifyError } from 'pages/auth/utils';
 
-const useAxios = ({ url, method, body = null, headers = null }) => {
+const useAxios = ({ endpoint, method, body = null, headers = null }) => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,8 +10,7 @@ const useAxios = ({ url, method, body = null, headers = null }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios({ url, method, data: body, headers });
-        console.log(res);
+        const res = await axios({ url: `${process.env.REACT_APP_BASE_URL}/${endpoint}`, method, data: body, headers });
         setResponse(res.data);
       } catch (error) {
         setError({
