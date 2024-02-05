@@ -38,7 +38,7 @@ const Form = ({ visible, onClose, user = null }) => {
     if (user) {
       setFirstName(user.firstName);
       setLastName(user.lastName);
-      setNic(user.NIC);
+      setNic(user.nic);
       setEmail(user.email);
       setPhoneNum(user.phoneNum);
       setOrgName(user.orgName);
@@ -85,7 +85,7 @@ const Form = ({ visible, onClose, user = null }) => {
     const requestData = {
       firstName,
       lastName,
-      NIC: nic,
+      nic,
       email,
       phoneNum,
       orgName,
