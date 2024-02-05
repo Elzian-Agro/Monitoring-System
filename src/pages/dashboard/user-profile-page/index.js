@@ -8,6 +8,7 @@ import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import avatar from 'assets/images/avatar.png';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
@@ -204,7 +205,11 @@ const UserProfilePage = () => {
               <input type='file' accept='image/*' onChange={handleProfilePictureChange} />
             </div>
           ) : (
-            <img src={profileImage} alt='Profile' className='w-24 h-24 rounded-full object-cover' />
+            <img
+              src={profileImage ? profileImage : avatar}
+              alt='Profile'
+              className='w-24 h-24 rounded-full object-cover'
+            />
           )}
 
           <div className='flex items-end'>

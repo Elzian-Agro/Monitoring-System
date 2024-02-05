@@ -13,6 +13,7 @@ import Notification from 'pages/dashboard/components/common/notification';
 import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
 import { menuMode } from 'constant';
 import { selectNotificationsCount } from 'pages/dashboard/slice/notificationSlice';
+import avatar from 'assets/images/avatar.png';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -80,7 +81,7 @@ const Navbar = () => {
         <div
           className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
           onClick={handleProfileClick}>
-          <img className='rounded-full w-8 h-8' src={profileImage} alt='user-profile' />
+          <img className='rounded-full w-8 h-8' src={profileImage ? profileImage : avatar} alt='user-profile' />
           <p className='xxs:hidden sm:block'>
             <span className='text-gray-400 text-14 hidden md:inline-block'>Hi,</span>
             <span className='text-gray-400 font-bold ml-1 text-14'>
