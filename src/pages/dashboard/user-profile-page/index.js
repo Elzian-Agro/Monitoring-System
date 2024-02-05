@@ -35,7 +35,7 @@ const UserProfilePage = () => {
   const firstName = useSelector((state) => state.user.firstName);
   const lastName = useSelector((state) => state.user.lastName);
   const email = useSelector((state) => state.user.email);
-  const nic = useSelector((state) => state.user.NIC);
+  const nic = useSelector((state) => state.user.nic);
   const phoneNumber = useSelector((state) => state.user.phoneNum);
   const userType = useSelector((state) => capitalize(state.user.userType));
   const organizationName = useSelector((state) => state.user.orgName);
