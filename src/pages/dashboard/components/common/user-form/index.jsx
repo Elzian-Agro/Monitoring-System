@@ -166,6 +166,7 @@ const Form = ({ visible, onClose, user = null }) => {
           placeholder='Eg. 9452XXXXXV'
           label='NIC'
           error={errors.nic}
+          disabled={user ? true : false}
           Icon={UserIcon}
           value={nic}
           setValue={setNic}

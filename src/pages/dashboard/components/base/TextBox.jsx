@@ -3,7 +3,16 @@ import PropTypes from 'prop-types';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 
-function TextBox({ label = null, placeholder = '', type = 'text', Icon = null, value, setValue, error = null }) {
+function TextBox({
+  label = null,
+  placeholder = '',
+  type = 'text',
+  Icon = null,
+  value,
+  setValue,
+  error = null,
+  disabled = false,
+}) {
   const isPassword = type === 'password';
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -28,6 +37,7 @@ function TextBox({ label = null, placeholder = '', type = 'text', Icon = null, v
             placeholder={t(placeholder)}
             value={value}
             onChange={(e) => setValue(e.target.value)}
+            disabled={disabled}
             className='appearance-none bg-transparent border-none w-full h-full text-gray-700 dark:text-white p-2 leading-tight focus:outline-none'
           />
           {isPassword && (
@@ -62,6 +72,7 @@ TextBox.defaultProps = {
   type: 'text',
   Icon: null,
   error: null,
+  disabled: false,
 };
 
 export default TextBox;
