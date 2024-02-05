@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from '../slice/userSlice';
 import { PencilSquareIcon, PencilIcon, CheckIcon } from '@heroicons/react/24/outline';
-import ConformBox from '../components/common/confirm-box';
-import AlertBox from '../components/common/alert-box';
 import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
+import Modal from 'components/common/modal';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
@@ -333,13 +332,16 @@ const UserProfilePage = () => {
           </button>
         </div>
       </div>
-      <ConformBox
-        visible={isConfirmVisible}
+      {/* confirm Popup */}
+      <Modal
+        isOpen={isConfirmVisible}
         message='Are you sure want to disable this account?'
         onClose={confirmDialogClose}
+        type='confirmation'
       />
-      <AlertBox
-        visible={isAlertVisible}
+      {/* Alert message Popup */}
+      <Modal
+        isOpen={isAlertVisible}
         message={`${message}!`}
         onClose={() => {
           setIsAlertVisible(false);
@@ -347,6 +349,7 @@ const UserProfilePage = () => {
           localStorage.removeItem('jwtAccessToken');
           localStorage.removeItem('jwtRefreshToken');
         }}
+        type='alert'
       />
     </div>
   );
