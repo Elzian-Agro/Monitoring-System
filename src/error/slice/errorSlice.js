@@ -4,7 +4,7 @@ export const errorSlice = createSlice({
   name: 'error',
   initialState: {
     showModal: false,
-    errorMessage: '',
+    errorMessage: null,
   },
   reducers: {
     showErrorModal: (state, action) => {
