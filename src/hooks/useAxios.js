@@ -6,6 +6,7 @@ import { showErrorModal } from 'error/slice/errorSlice';
 
 const useAxios = () => {
   const [response, setResponse] = useState(null);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
@@ -36,6 +37,7 @@ const useAxios = () => {
       });
 
       setResponse(res.data);
+      setError(null);
     } catch (err) {
       setResponse(null);
       if (err.response?.data?.code === 13004) {
@@ -48,9 +50,17 @@ const useAxios = () => {
             requestHeaders,
           });
         } catch (refreshError) {
+          setError({
+            code: refreshError.response?.data?.code,
+            message: identifyError(refreshError.response?.data?.code),
+          });
           dispatch(showErrorModal(identifyError(refreshError.response?.data?.code)));
         }
       } else {
+        setError({
+          code: err.response?.data?.code,
+          message: identifyError(err.response?.data?.code),
+        });
         dispatch(showErrorModal(identifyError(err.response?.data?.code)));
       }
     } finally {
@@ -58,7 +68,7 @@ const useAxios = () => {
     }
   };
 
-  return { response, loading, send };
+  return { response, error, loading, send };
 };
 
 export default useAxios;
