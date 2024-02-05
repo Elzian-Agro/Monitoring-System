@@ -11,16 +11,6 @@ const UserProfile = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const userProfileData = [
-    {
-      icon: <ChatBubbleBottomCenterIcon className='h-6 w-6' />,
-      title: t('My Profile'),
-      desc: t('Account Settings'),
-      iconColor: '#03C9D7',
-      iconBg: '#E5FAFB',
-    },
-  ];
-
   //Capitalize the text
   const capitalize = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -54,7 +44,7 @@ const UserProfile = () => {
         </button>
       </div>
       {/* I need to add link to this below div */}
-      <NavLink to='/profile' className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
+      <div className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
         <img className='rounded-full h-20 md:h-24 md:w-24' src={profileImage} alt='user-profile' />
         <div>
           <p className='font-semibold md:text-xl dark:text-white'>
@@ -63,26 +53,22 @@ const UserProfile = () => {
           <p className='text-gray-500 text-sm'> {userType} </p>
           <p className='text-gray-500 text-sm font-semibold'> {organizationName} </p>
         </div>
-      </NavLink>
-      <div>
-        {userProfileData.map((item, index) => (
-          <div
-            key={index}
-            className='flex gap-5 border-b-1 border-color p-4 rounded-lg hover:bg-[#F7F7F7] dark:hover:bg-green-500 cursor-pointer'>
-            <button
-              type='button'
-              style={{ color: item.iconColor, backgroundColor: item.iconBg }}
-              className=' text-xl rounded-lg p-3 hover:bg-light-gray'>
-              {item.icon}
-            </button>
-
-            <div>
-              <p className='font-semibold dark:text-white'>{item.title}</p>
-              <p className='text-gray-500 text-sm '> {item.desc} </p>
-            </div>
-          </div>
-        ))}
       </div>
+      <NavLink to='/profile'>
+        <div className='flex gap-5 border-b-1 border-color p-4 rounded-lg hover:bg-[#F7F7F7] dark:hover:bg-green-500 cursor-pointer'>
+          <button
+            type='button'
+            style={{ color: '#03C9D7', backgroundColor: '#E5FAFB' }}
+            className=' text-xl rounded-lg p-3 hover:bg-light-gray'>
+            <ChatBubbleBottomCenterIcon className='h-6 w-6' />
+          </button>
+
+          <div>
+            <p className='font-semibold dark:text-white'>{t('My Profile')}</p>
+            <p className='text-gray-500 text-sm '> {t('Account Settings')} </p>
+          </div>
+        </div>
+      </NavLink>
       <div className='flex md:hidden p-4 h-20 mt-6'>
         <ThemeSettings />
       </div>
