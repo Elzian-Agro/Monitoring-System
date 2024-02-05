@@ -14,6 +14,7 @@ import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
 import { menuMode } from 'constant';
 import { selectNotificationsCount } from 'pages/dashboard/slice/notificationSlice';
 import avatar from 'assets/images/avatar.png';
+import LanguageSelector from '../language-selector';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -62,7 +63,8 @@ const Navbar = () => {
       </button>
 
       <div className='flex'>
-        <div className='hidden md:flex  '>
+        <div className='hidden md:flex gap-2'>
+          <LanguageSelector />
           <ThemeSettings />
         </div>
         <button
