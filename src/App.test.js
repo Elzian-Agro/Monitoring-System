@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import { store } from 'store/store';
+import { Provider} from 'react-redux';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -13,7 +15,11 @@ jest.mock('react-i18next', () => ({
 }));
 
 test('renders auth page by default', () => {
-  render(<App />);
-  const linkElement = screen.getByText("LOG IN");
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+  const linkElement = screen.getByText('LOG IN');
   expect(linkElement).toBeInTheDocument();
 });
