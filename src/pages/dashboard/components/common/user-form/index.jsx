@@ -197,6 +197,7 @@ const Form = ({ visible, onClose, user = null }) => {
             placeholder='************'
             label='Password'
             type='password'
+            disabled={true}
             error={errors.password}
             Icon={LockClosedIcon}
             value={password}
@@ -231,7 +232,7 @@ const Form = ({ visible, onClose, user = null }) => {
       </form>
       <div className='flex flex-row justify-end item-center px-6'>
         <div className='flex justify-end item-center gap-2 md:gap-5 mt-3'>
-          <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />
+          {!user && <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />}
           <PrimaryButton
             bgEffect='bg-blue-500 border-blue-600'
             text={user ? 'Update' : 'Submit'}
