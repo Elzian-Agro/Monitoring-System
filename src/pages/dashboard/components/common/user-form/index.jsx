@@ -11,7 +11,7 @@ import {
   LockClosedIcon,
   ArrowLeftIcon,
 } from '@heroicons/react/24/outline';
-import { identifyError } from 'pages/auth/utils';
+import { identifyError, encryptData } from 'pages/auth/utils';
 import axios from 'axios';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
 import { useTranslation } from 'react-i18next';
@@ -38,7 +38,7 @@ const Form = ({ visible, onClose, user = null }) => {
     if (user) {
       setFirstName(user.firstName);
       setLastName(user.lastName);
-      setNic(user.NIC);
+      setNic(user.nic);
       setEmail(user.email);
       setPhoneNum(user.phoneNum);
       setOrgName(user.orgName);
@@ -85,7 +85,7 @@ const Form = ({ visible, onClose, user = null }) => {
     const requestData = {
       firstName,
       lastName,
-      NIC: nic,
+      nic,
       email,
       phoneNum,
       orgName,
@@ -93,7 +93,12 @@ const Form = ({ visible, onClose, user = null }) => {
     };
 
     if (!user) {
-      requestData.password = password;
+      try {
+        const encryptedPassword = await encryptData(password);
+        requestData.password = encryptedPassword;
+      } catch (err) {
+        throw err;
+      }
     }
 
     if (Object.keys(errors).length === 0) {
@@ -161,6 +166,7 @@ const Form = ({ visible, onClose, user = null }) => {
           placeholder='Eg. 9452XXXXXV'
           label='NIC'
           error={errors.nic}
+          disabled={user ? true : false}
           Icon={UserIcon}
           value={nic}
           setValue={setNic}
@@ -191,6 +197,7 @@ const Form = ({ visible, onClose, user = null }) => {
             placeholder='************'
             label='Password'
             type='password'
+            disabled={true}
             error={errors.password}
             Icon={LockClosedIcon}
             value={password}
@@ -225,7 +232,7 @@ const Form = ({ visible, onClose, user = null }) => {
       </form>
       <div className='flex flex-row justify-end item-center px-6'>
         <div className='flex justify-end item-center gap-2 md:gap-5 mt-3'>
-          <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />
+          {!user && <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />}
           <PrimaryButton
             bgEffect='bg-blue-500 border-blue-600'
             text={user ? 'Update' : 'Submit'}

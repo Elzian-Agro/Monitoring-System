@@ -51,7 +51,7 @@ const ManageUsers = () => {
     },
     {
       name: t('NIC'),
-      selector: (row) => row.NIC,
+      selector: (row) => row.nic,
       sortable: true,
     },
     {
