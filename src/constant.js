@@ -1,5 +1,3 @@
-import { ChatBubbleBottomCenterIcon } from '@heroicons/react/24/outline';
-
 export const authRegex = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
@@ -19,16 +17,6 @@ export const menuMode = {
   partiallyOpen: 'onlyIcon',
   close: 'close',
 };
-
-export const userProfileData = [
-  {
-    icon: <ChatBubbleBottomCenterIcon className='h-6 w-6' />,
-    title: 'My Profile',
-    desc: 'Account Settings',
-    iconColor: '#03C9D7',
-    iconBg: '#E5FAFB',
-  },
-];
 
 export const errorType = {
   userBlocked: {

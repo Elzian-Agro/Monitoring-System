@@ -93,5 +93,22 @@
   "EMAIL": "மின்னஞ்சல்",
   "TEL. NUMBER": "தொலைபேசி எண்",
   "ORG. NAME": "நிறுவன பெயர்",
-  "ACTION": "நிறுவன பெயர்"
+  "ACTION": "நிறுவன பெயர்",
+  "Dashboard":"டாஷ்போர்டு",
+  "Weather":"வானிலை",
+  "Manage Users":"பயனர்களை நிர்வகி",
+  "Device Management":"சாதன நிர்வாகம்",
+  "My Profile":"சுயவிவரம்",
+  "Logout":"வெளியேறு",
+  "First Name:":"முதல் பெயர்:",
+  "Last Name:":"கடைசி பெயர்:",
+  "Organization Name:":"நிறுவன பெயர்:",
+  "Email":"மின்னஞ்சல்",
+  "National Identity Card Number (NIC):":"தேசிய அடையாள அட்டை எண் (NIC):",
+  "Phone Number:":"தொலைபேசி எண்:",
+  "Address":"முகவரி",
+  "User Type:":"பயனர் வகை:",
+  "Disable":"முடக்கவும்",
+  "Notifications":"அறிவிப்புகள்",
+  "Account Settings":"கணக்கு அமைப்புகள்"
 }

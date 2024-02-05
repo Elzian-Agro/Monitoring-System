@@ -93,5 +93,23 @@
   "EMAIL": "EMAIL",
   "TEL. NUMBER": "TEL. NUMBER",
   "ORG. NAME": "ORG. NAME",
-  "ACTION": "ACTION"
+  "ACTION": "ACTION",
+  "Dashboard":"Dashboard",
+  "Weather":"Weather",
+  "Manage Users":"Manage Users",
+  "Device Management":"Device Management",
+  "My Profile":"My Profile",
+  "Logout":"Logout",
+  "First Name:":"First Name:",
+  "Last Name:":"Last Name:",
+  "Organization Name:":"Organization Name:",
+  "Email":"Email",
+  "National Identity Card Number (NIC):":"National Identity Card Number (NIC):",
+  "Phone Number:":"Phone Number:",
+  "Address":"Address",
+  "User Type:":"User Type:",
+  "Disable":"Disable",
+  "Notifications":"Notifications",
+  "Account Settings":"Account Settings"
+
 }

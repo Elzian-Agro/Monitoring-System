@@ -1,43 +1,31 @@
-// sidebarConstants.js
-import {
-  Squares2X2Icon,
-  UsersIcon,
-  ArrowTrendingUpIcon,
-  Cog6ToothIcon,
-  UserCircleIcon,
-} from '@heroicons/react/24/outline';
+import { Squares2X2Icon, UsersIcon, ArrowTrendingUpIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
-const sidebarLinks = [
+const getSidebarLinks = (t) => [
   {
     to: '/dashboard',
-    text: 'Dashboard',
+    text: t('Dashboard'),
     icon: Squares2X2Icon,
   },
   {
+    to: '/weather',
+    text: t('Weather'),
+    icon: ArrowTrendingUpIcon,
+  },
+  {
+    to: '/devicemanagement',
+    text: t('Device Management'),
+    icon: ArrowTrendingUpIcon,
+  },
+  {
     to: '/users',
-    text: 'Manage Users',
+    text: t('Manage Users'),
     icon: UsersIcon,
   },
   {
-    to: '/orders',
-    text: 'Orders',
-    icon: ArrowTrendingUpIcon,
-  },
-  {
-    to: '/analytics',
-    text: 'Analytics',
-    icon: ArrowTrendingUpIcon,
-  },
-  {
-    to: '/settings',
-    text: 'Settings',
-    icon: Cog6ToothIcon,
-  },
-  {
     to: '/profile',
-    text: 'My Profile',
+    text: t('My Profile'),
     icon: UserCircleIcon,
   },
 ];
 
-export { sidebarLinks };
+export { getSidebarLinks };

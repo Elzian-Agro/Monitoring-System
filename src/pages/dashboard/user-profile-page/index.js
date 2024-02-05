@@ -7,10 +7,12 @@ import AlertBox from '../components/common/alert-box';
 import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [photoEditMode, setPhotoEditMode] = useState(false);
   const [addressEditMode, setAddressEditMode] = useState(false);
   const [phoneEditMode, setPhoneEditMode] = useState(false);
@@ -196,7 +198,6 @@ const UserProfilePage = () => {
   return (
     <div className='mt-8 mx-4'>
       <div className='bg-white p-8 rounded shadow-md'>
-        <h2 className='text-2xl font-bold mb-4 text-center'>My Profile</h2>
         <div className='flex justify-center mb-4'>
           {photoEditMode ? (
             <div className='flex items-center justify-center'>
@@ -237,35 +238,35 @@ const UserProfilePage = () => {
           )}
         </div>
 
-        <div className='grid grid-cols-2 gap-4'>
+        <div className='grid md:grid-cols-2 gap-4'>
           <div>
-            <label className='block text-gray-600 w-24'>First Name:</label>
+            <label className='block text-gray-600 w-24'>{t('First Name:')}</label>
             <p className='text-gray-800'>{firstName}</p>
           </div>
 
           <div>
-            <label className='block text-gray-600'>Last Name:</label>
+            <label className='block text-gray-600'>{t('Last Name:')}</label>
             <p className='text-gray-800'>{lastName}</p>
           </div>
 
           <div>
-            <label className='block text-gray-600'>Organization Name:</label>
+            <label className='block text-gray-600'>{t('Organization Name:')}</label>
             <p className='text-gray-800'>{organizationName}</p>
           </div>
 
           <div>
-            <label className='block text-gray-600'>Email:</label>
+            <label className='block text-gray-600'>{t('Email')}:</label>
             <p className='text-gray-800'>{email}</p>
           </div>
 
           <div>
-            <label className='block text-gray-600'>NIC:</label>
+            <label className='block text-gray-600'>{t('National Identity Card Number (NIC):')}</label>
             <p className='text-gray-800'>{nic}</p>
           </div>
 
           <div>
             <label className='block text-gray-600'>
-              Phone Number:
+              {t('Phone Number:')}
               {phoneEditMode ? (
                 <>
                   <input
@@ -289,7 +290,7 @@ const UserProfilePage = () => {
 
           <div>
             <label className='block text-gray-600'>
-              Address:
+              {t('Address')}
               {addressEditMode ? (
                 <>
                   <input
@@ -312,7 +313,7 @@ const UserProfilePage = () => {
           </div>
 
           <div>
-            <label className='block text-gray-600'>User Type:</label>
+            <label className='block text-gray-600'>{t('User Type:')}</label>
             <p className='text-gray-800'>{userType}</p>
           </div>
         </div>
@@ -323,7 +324,7 @@ const UserProfilePage = () => {
             onClick={() => {
               setIsConfirmVisible(true);
             }}>
-            Disable
+            {t('Disable')}
           </button>
         </div>
       </div>
