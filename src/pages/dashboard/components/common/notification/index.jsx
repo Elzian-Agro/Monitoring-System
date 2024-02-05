@@ -8,12 +8,14 @@ import {
 } from 'pages/dashboard/slice/notificationSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import useAxios from 'hooks/useAxios';
 
 const Notification = () => {
   const dispatch = useDispatch();
   const allNotifications = useSelector(selectAllNotifications);
   const { t } = useTranslation();
   const token = localStorage.getItem('jwtAccessToken');
+  const { send } = useAxios();
 
   const closeNotification = () => {
     dispatch(setNotificationOpen(false));
@@ -79,21 +81,13 @@ const Notification = () => {
     dispatch(setAllNotifications(updatedNotifications));
 
     //Change the flage to true on database
-    try {
-      await axios.put(
-        `${process.env.REACT_APP_BASE_URL}/notification/readByNotificationId`,
-        {
-          notificationId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-    } catch (error) {
-      console.error('Error marking notification as read:', error);
-    }
+    await send({
+      endpoint: 'notification/readByNotificationId',
+      method: 'PUT',
+      body: {
+        notificationId,
+      },
+    });
 
     // Count the number of objects where readFlag is true from the updatedNotifications
     const readNotificationsCount = updatedNotifications.filter((data) => !data.read).length;
@@ -104,7 +98,7 @@ const Notification = () => {
     <div className='nav-item absolute right-5 md:right-40 top-16 shadow-lg dark:bg-secondary-dark-bg p-8 rounded-lg w-72 md:w-96'>
       <div className='flex justify-between items-center'>
         <div className='flex gap-3'>
-          <p className='font-semibold md:text-lg dark:text-white'>{t("Notifications")}</p>
+          <p className='font-semibold md:text-lg dark:text-white'>{t('Notifications')}</p>
         </div>
         <div>
           <button className='mr-10' onClick={readAllNotifications}>

@@ -38,8 +38,10 @@ const Dashboard = ({ page }) => {
 
   // Get UserData and  Notifications for the user and save it inside the reduxtoolkit.
   // Use the custom hook to get notifications and userData
-  GetNotifications();
-  GetUserData();
+
+    GetUserData();
+    GetNotifications();
+
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>

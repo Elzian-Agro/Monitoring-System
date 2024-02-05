@@ -1,30 +1,26 @@
-import axios from 'axios';
 import { setUserData } from 'pages/dashboard/slice/userSlice';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import useAxios from 'hooks/useAxios';
 
 const GetUserData = () => {
   const dispatch = useDispatch();
+  const { response, send } = useAxios();
 
   useEffect(() => {
     const getUserData = async () => {
-      try {
-        const token = localStorage.getItem('jwtAccessToken');
-
-        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user/profile`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        dispatch(setUserData(response.data));
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
+      await send({ endpoint: 'user/profile', method: 'GET' });
     };
 
     getUserData();
-  }, [dispatch]);
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (response) {
+      dispatch(setUserData(response));
+    }
+  }, [dispatch, response]);
 };
 
 export default GetUserData;
