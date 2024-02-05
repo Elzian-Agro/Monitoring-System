@@ -11,11 +11,10 @@ import { getNewAccessToken } from '../utils/getNewAccessToken';
 import Form from '../components/common/user-form';
 import { ArrowDownTrayIcon, PlusIcon } from '@heroicons/react/24/outline';
 import SearchBox from '../components/base/SearchBox';
-import ConformBox from '../components/common/confirm-box';
-import AlertBox from '../components/common/alert-box';
 import { identifyError } from 'pages/auth/utils';
 import Loader from '../components/common/loader';
 import { useTranslation } from 'react-i18next';
+import Modal from 'components/common/modal';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
@@ -201,12 +200,13 @@ const ManageUsers = () => {
         <div className='flex bg-red-500 text-white text-xs md:text-sm lg:text-base p-2 md:p-4 mx-6 rounded-md justify-center items-center'>
           {t(error)}
         </div>
-        <AlertBox
-          visible={isAlertVisible}
+        <Modal
+          isOpen={isAlertVisible}
           message={`${error}`}
           onClose={() => {
             setIsAlertVisible(false);
           }}
+          type='alert'
         />
       </div>
     );
@@ -269,17 +269,19 @@ const ManageUsers = () => {
           )}
         </>
       )}
-      <ConformBox
-        visible={isConfirmVisible}
+      <Modal
+        isOpen={isConfirmVisible}
         message='Are you sure want to delete?'
         onClose={(result) => confirmDialogClose(result)}
+        type='confirmation'
       />
-      <AlertBox
-        visible={isAlertVisible}
+      <Modal
+        isOpen={isAlertVisible}
         message={`${error || message}!`}
         onClose={() => {
           setIsAlertVisible(false);
         }}
+        type='alert'
       />
     </div>
   );

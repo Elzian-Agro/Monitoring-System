@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { PrimaryButton, ToggleButton } from '../../base/Button';
 import TextBox from '../../base/TextBox';
-import AlertBox from '../alert-box';
 import {
   EnvelopeIcon,
   HomeIcon,
@@ -16,6 +15,7 @@ import axios from 'axios';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
 import { useTranslation } from 'react-i18next';
 import { validateForm } from 'pages/dashboard/utils/userFormValidation';
+import Modal from 'components/common/modal';
 
 const Form = ({ visible, onClose, user = null }) => {
   const [firstName, setFirstName] = useState('');
@@ -239,12 +239,13 @@ const Form = ({ visible, onClose, user = null }) => {
             onClick={handleSubmit}
           />
         </div>
-        <AlertBox
-          visible={isAlertVisible}
+        <Modal
+          isOpen={isAlertVisible}
           message={`${message}`}
           onClose={() => {
             setIsAlertVisible(false);
           }}
+          type='alert'
         />
       </div>
     </div>
