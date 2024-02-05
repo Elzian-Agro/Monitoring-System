@@ -11,7 +11,7 @@ import {
   LockClosedIcon,
   ArrowLeftIcon,
 } from '@heroicons/react/24/outline';
-import { identifyError } from 'pages/auth/utils';
+import { identifyError, encryptData } from 'pages/auth/utils';
 import axios from 'axios';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
 import { useTranslation } from 'react-i18next';
@@ -93,7 +93,12 @@ const Form = ({ visible, onClose, user = null }) => {
     };
 
     if (!user) {
-      requestData.password = password;
+      try {
+        const encryptedPassword = await encryptData(password);
+        requestData.password = encryptedPassword;
+      } catch (err) {
+        throw err;
+      }
     }
 
     if (Object.keys(errors).length === 0) {
