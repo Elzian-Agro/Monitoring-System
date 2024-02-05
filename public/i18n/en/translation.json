@@ -85,7 +85,7 @@
   "*Email is required": "*Email is required",
   "*Email is not valid": "*Email is not valid",
   "*Password is required": "*Password is required",
-  "*NIC is not valid": "*Phone number is not valid",
+  "*NIC is not valid": "*NIC is not valid",
   "*Phone number is not valid": "*Phone number is not valid",
   "*Organization name is required": "*Organization name is required",
   "FIRST NAME": "FIRST NAME",
