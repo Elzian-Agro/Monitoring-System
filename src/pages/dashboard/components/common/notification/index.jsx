@@ -49,26 +49,21 @@ const Notification = () => {
 
   const deleteNotification = async (index) => {
     // Delete from the database
-    try {
-      await axios.delete(`${process.env.REACT_APP_BASE_URL}/notification/`, {
-        data: {
-          notificationId: allNotifications[index].notificationId,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    await send({
+      endpoint: 'notification', // Adjust the endpoint as needed
+      method: 'DELETE',
+      body: {
+        notificationId: allNotifications[index].notificationId,
+      },
+    });
 
-      // Remove from the local list.
-      const updatedNotifications = allNotifications.filter((_, i) => i !== index);
-      dispatch(setAllNotifications(updatedNotifications));
+    // Remove from the local list.
+    const updatedNotifications = allNotifications.filter((_, i) => i !== index);
+    dispatch(setAllNotifications(updatedNotifications));
 
-      // Set Notification Count based on updatedNotifications
-      const readNotificationsCount = updatedNotifications.filter((data) => !data.read).length;
-      dispatch(setNotificationsCount(readNotificationsCount));
-    } catch (error) {
-      console.error('Error deleting notification:', error);
-    }
+    // Set Notification Count based on updatedNotifications
+    const readNotificationsCount = updatedNotifications.filter((data) => !data.read).length;
+    dispatch(setNotificationsCount(readNotificationsCount));
   };
 
   const readNotification = async (index) => {
