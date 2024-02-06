@@ -4,14 +4,14 @@ import logo from 'assets/images/logo.png';
 import { Link, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectActiveMenu, setActiveMenu } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import { getSidebarLinks } from './sidebarConstants';
+import SidebarLinks from './SidebarConstants';
 import { useTranslation } from 'react-i18next';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const activeMenu = useSelector(selectActiveMenu);
   const { t } = useTranslation();
-  const translatedSidebarLinks = getSidebarLinks(t);
+  const translatedSidebarLinks = SidebarLinks({ t });
 
   // This function for check if the active menu is 'open' if so will return true
   const isOpenMenu = () => activeMenu === 'open';
