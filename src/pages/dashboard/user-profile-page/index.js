@@ -202,11 +202,15 @@ const UserProfilePage = () => {
 
   return (
     <div className='mt-8 mx-4'>
-      <div className='bg-gray-200 dark:bg-gray-800 p-8 rounded shadow-md'>
+      <div className='bg-white dark:bg-gray-800 p-8 rounded shadow-md'>
         <div className='flex justify-center mb-4'>
           {photoEditMode ? (
             <div className='flex items-center justify-center'>
               <input type='file' accept='image/*' onChange={handleProfilePictureChange} />
+              <p className='text-xs text-gray-500 pr-4'>
+                Images should be JPG or PNG,
+                <br /> size should be below 5MB.
+              </p>
             </div>
           ) : (
             <img
@@ -239,7 +243,7 @@ const UserProfilePage = () => {
             </>
           ) : (
             <>
-              <p className='text-gray-800 dark:text-white'>{userBio}</p>
+              <p className='text-gray-800 dark:text-white mb-2'>{userBio}</p>
               <button className='bg-blue-500 text-white rounded p-1 ml-2' onClick={handleBioClick}>
                 <PencilIcon className='h-4 w-4 text-black dark:text-white' />
               </button>
@@ -248,34 +252,34 @@ const UserProfilePage = () => {
         </div>
 
         <div className='grid md:grid-cols-2 gap-4'>
-          <div>
+          <div className='flex mb-8 gap-4'>
             <label className='block text-gray-600 dark:text-gray-400 w-24'>{t('First Name:')}</label>
             <p className='text-gray-800 dark:text-white'>{firstName}</p>
           </div>
 
-          <div>
+          <div className='flex mb-8 gap-4'>
             <label className='block text-gray-600 dark:text-gray-400'>{t('Last Name:')}</label>
             <p className='text-gray-800 dark:text-white'>{lastName}</p>
           </div>
 
-          <div>
+          <div className='flex mb-8 gap-4'>
             <label className='block text-gray-600 dark:text-gray-400'>{t('Organization Name:')}</label>
             <p className='text-gray-800 dark:text-white'>{organizationName}</p>
           </div>
 
-          <div>
+          <div className='flex mb-8 gap-4'>
             <label className='block text-gray-600 dark:text-gray-400'>{t('Email')}:</label>
             <p className='text-gray-800 dark:text-white'>{email}</p>
           </div>
 
-          <div>
+          <div className='flex mb-8 gap-4'>
             <label className='block text-gray-600 dark:text-gray-400'>
               {t('National Identity Card Number (NIC):')}
             </label>
             <p className='text-gray-800 dark:text-white'>{nic}</p>
           </div>
 
-          <div>
+          <div className='flex mb-8 gap-4'>
             <label className='block text-gray-600 dark:text-gray-400'>
               {t('Phone Number:')}
               {phoneEditMode ? (
@@ -299,7 +303,7 @@ const UserProfilePage = () => {
             {phoneEditMode ? null : <p className='text-gray-800 dark:text-white'>{phoneNumber}</p>}
           </div>
 
-          <div>
+          <div className='flex mb-8 gap-4'>
             <label className='block text-gray-600 dark:text-gray-400'>
               {t('Address')}
               {addressEditMode ? (
@@ -323,7 +327,7 @@ const UserProfilePage = () => {
             {addressEditMode ? null : <p className='text-gray-800 dark:text-white'>{address}</p>}
           </div>
 
-          <div>
+          <div className='flex mb-8 gap-4'>
             <label className='block text-gray-600 dark:text-gray-400'>{t('User Type:')}</label>
             <p className='text-gray-800 dark:text-white'>{userType}</p>
           </div>
