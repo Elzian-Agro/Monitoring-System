@@ -38,6 +38,7 @@ const useAxios = () => {
 
       setResponse(res.data);
       setError(null);
+      return res.data;
     } catch (err) {
       setResponse(null);
       if (err.response?.data?.code === 13004) {
@@ -63,6 +64,8 @@ const useAxios = () => {
         });
         dispatch(showErrorModal(identifyError(err.response?.data?.code)));
       }
+
+      return;
     } finally {
       setLoading(false);
     }
