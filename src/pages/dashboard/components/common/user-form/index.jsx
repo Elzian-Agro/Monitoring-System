@@ -130,18 +130,24 @@ const Form = ({ visible, onClose, user = null }) => {
   if (!visible) return null;
 
   return (
-    <div className='flex flex-col px-16 sm:px-28 md:px-36 py-10 md:py-10 bg-white dark:bg-secondary-dark-bg shadow-lg shadow-gray-500/50 dark:shadow-sm dark:shadow-gray-600 rounded-lg'>
-      <div className='mb-5 lg:mb-10'>
+    <div className='flex flex-col px-4 py-4 gap-4 min-h-full w-full shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg'>
+      <div>
         <button
           className='flex justify-start bg-red-500 hover:brightness-110 self-end rounded-lg transition-transform'
           onClick={onClose}>
           <ArrowLeftIcon className='text-white w-6 h-6 mx-4 my-2 transform hover:-translate-x-2 duration-300' />
         </button>
-        <h1 className='text-lg text-center text-black dark:text-white tracking-widest'>
+      </div>
+      <div>
+        <h1 className='text-base text-center text-gray-700 dark:text-white'>
           {user ? t('UPDATE USER DETAILS') : t('NEW USER REGISTARTION')}
         </h1>
       </div>
-      <form className='grid lg:grid-cols-2 sm:gap-5 md:gap-10 lg:gap-12 w-full px-5'>
+
+      <form
+        className={`grid space-y-4 w-full px-12 sm:px-24 md:px-44 lg:px-40 lg:grid-cols-2 lg:space-y-0 lg:gap-x-24 ${
+          user ? 'lg:gap-y-12' : 'lg:gap-y-6'
+        }`}>
         <TextBox
           placeholder='Eg. Saman'
           label='First Name'
@@ -215,39 +221,36 @@ const Form = ({ visible, onClose, user = null }) => {
           setValue={setOrgName}
         />
 
-        <div>
-          {user && (
-            <div className='flex flex-row items-center gap-4'>
-              <div className='text-gray-400'>{user.isDisabled ? t('Enabled user') : t('Disabled user')} :</div>
-              <ToggleButton
-                value={isToggleClicked}
-                onChange={() => {
-                  setIsToggleClicked(!isToggleClicked);
-                  setIsDisabled(!isDisabled);
-                }}
-              />
-            </div>
-          )}
-        </div>
+        {user && (
+          <div className='flex flex-row items-center gap-4'>
+            <div className='text-gray-400'>{user.isDisabled ? t('Enabled user') : t('Disabled user')} :</div>
+            <ToggleButton
+              value={isToggleClicked}
+              onChange={() => {
+                setIsToggleClicked(!isToggleClicked);
+                setIsDisabled(!isDisabled);
+              }}
+            />
+          </div>
+        )}
       </form>
-      <div className='flex flex-row justify-end item-center px-6'>
-        <div className='flex justify-end item-center gap-2 md:gap-5 mt-3'>
-          {!user && <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />}
-          <PrimaryButton
-            bgEffect='bg-blue-500 border-blue-600'
-            text={user ? 'Update' : 'Submit'}
-            onClick={handleSubmit}
-          />
-        </div>
-        <Modal
-          isOpen={isAlertVisible}
-          message={`${message}`}
-          onClose={() => {
-            setIsAlertVisible(false);
-          }}
-          type='alert'
+
+      <div className='flex justify-end gap-2 px-12 sm:px-24 md:px-44 lg:px-40'>
+        {!user && <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />}
+        <PrimaryButton
+          bgEffect='bg-blue-500 border-blue-600'
+          text={user ? 'Update' : 'Submit'}
+          onClick={handleSubmit}
         />
       </div>
+      <Modal
+        isOpen={isAlertVisible}
+        message={`${message}`}
+        onClose={() => {
+          setIsAlertVisible(false);
+        }}
+        type='alert'
+      />
     </div>
   );
 };

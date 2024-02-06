@@ -23,13 +23,11 @@ function TextBox({
   };
 
   return (
-    <div>
-      <div className='relative border-2 border-gray-300 rounded'>
-        {label && (
-          <label className='absolute top-[-12px] left-2 bg-white dark:bg-secondary-dark-bg px-1 text-gray-400 text-sm font-regular font-zenkaku'>
-            {t(label)}
-          </label>
-        )}
+    <div className='min-w-52'>
+      <div className='mb-2'>
+        <label className='bg-white dark:bg-secondary-dark-bg text-gray-400 text-sm'>{t(label)} :</label>
+      </div>
+      <div className='border-2 border-gray-300 rounded border-b-4 border-r-2'>
         <div className='flex items-center p-2'>
           {Icon && <Icon className='h-6 w-6 text-gray-300 mr-2' />}
           <input
@@ -38,7 +36,7 @@ function TextBox({
             value={value}
             onChange={(e) => setValue(e.target.value)}
             disabled={disabled}
-            className='appearance-none bg-transparent border-none w-full h-full text-gray-700 dark:text-white p-2 leading-tight focus:outline-none'
+            className='appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white p-2 leading-tight focus:outline-none'
           />
           {isPassword && (
             <div className='ml-2 cursor-pointer' onClick={handleTogglePassword}>
