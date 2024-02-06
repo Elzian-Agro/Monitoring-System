@@ -68,6 +68,7 @@ const ManageUsers = () => {
       cell: (row) => (
         <PrimaryButton
           bgEffect='bg-blue-500 border-blue-600'
+          size='min-w-20'
           text='Edit'
           onClick={() => {
             setSelectedUser(row);
@@ -81,6 +82,7 @@ const ManageUsers = () => {
         <div className='flex flex-row gap-2 items-center'>
           <PrimaryButton
             bgEffect='bg-red-500 border-red-600'
+            size='min-w-20'
             text='Delete'
             onClick={() => {
               setSelectedUser(row);
@@ -227,7 +229,7 @@ const ManageUsers = () => {
       ) : (
         <>
           {isLoaderVisible ? null : (
-            <div className='flex flex-col shadow-lg shadow-gray-500/50 dark:shadow-sm dark:shadow-gray-600 p-4 rounded-lg'>
+            <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
               <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
                 <div className='flex gap-2 mb-2 md:mb-0'>
                   <VariantButton
