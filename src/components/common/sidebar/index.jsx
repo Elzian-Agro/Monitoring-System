@@ -4,7 +4,7 @@ import logo from 'assets/images/logo.png';
 import { Link, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectActiveMenu, setActiveMenu } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import SidebarLinks from './SidebarConstants';
+import SidebarLinks from './sidebarConstants';
 import { useTranslation } from 'react-i18next';
 
 const Sidebar = () => {
