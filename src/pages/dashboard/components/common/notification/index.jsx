@@ -50,7 +50,7 @@ const Notification = () => {
   const deleteNotification = async (index) => {
     // Delete from the database
     await send({
-      endpoint: 'notification', // Adjust the endpoint as needed
+      endpoint: 'notification',
       method: 'DELETE',
       body: {
         notificationId: allNotifications[index].notificationId,
