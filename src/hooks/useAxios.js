@@ -17,18 +17,8 @@ const useAxios = () => {
       const refreshToken = localStorage.getItem('jwtRefreshToken');
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/refresh`, { refreshToken });
       localStorage.setItem('jwtAccessToken', response.data.accessToken);
-      return true;
     } catch (error) {
-      setError({
-        code: error.response?.data?.code,
-        message: identifyError(error.response?.data?.code),
-      });
-      dispatch(showErrorModal(identifyError(error.response?.data?.code)));
-
-      localStorage.removeItem('jwtAccessToken');
-      localStorage.removeItem('jwtRefreshToken');
-      navigate('/', { replace: true });
-      return false;
+      throw error;
     }
   };
 
@@ -54,21 +44,29 @@ const useAxios = () => {
     } catch (err) {
       setResponse(null);
       if (err.response?.data?.code === 13004) {
-        if (await getNewAccessToken()) {
+        try {
+          await getNewAccessToken();
           return send({
             endpoint,
             method,
             body,
             requestHeaders,
           });
+        } catch (refreshError) {
+          err = refreshError;
+
+          localStorage.removeItem('jwtAccessToken');
+          localStorage.removeItem('jwtRefreshToken');
+          navigate('/', { replace: true });
         }
-      } else {
-        setError({
-          code: err.response?.data?.code,
-          message: identifyError(err.response?.data?.code),
-        });
-        dispatch(showErrorModal(identifyError(err.response?.data?.code)));
       }
+
+      setError({
+        code: err.response?.data?.code,
+        message: identifyError(err.response?.data?.code),
+      });
+
+      dispatch(showErrorModal(identifyError(err.response?.data?.code)));
 
       return null;
     } finally {
