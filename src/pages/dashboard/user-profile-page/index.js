@@ -197,7 +197,7 @@ const UserProfilePage = () => {
 
   return (
     <div className='mt-8 mx-4'>
-      <div className='bg-white dark:bg-gray-800  p-8 rounded shadow-md '>
+      <div className='bg-gray-200 dark:bg-gray-800 p-8 rounded shadow-md'>
         <div className='flex justify-center mb-4'>
           {photoEditMode ? (
             <div className='flex items-center justify-center'>
@@ -286,8 +286,8 @@ const UserProfilePage = () => {
                   </button>
                 </>
               ) : (
-                <button className='bg-blue-500 text-white rounded p-1 ml-2' onClick={handlePhoneClick}>
-                  <PencilIcon className='h-4 w-4 text-black dark:text-white' />
+                <button className='bg-blue-500 text-white rounded p-1 ml-2'>
+                  <PencilIcon className='h-4 w-4 text-black dark:text-white' onClick={handlePhoneClick} />
                 </button>
               )}
             </label>
@@ -310,8 +310,8 @@ const UserProfilePage = () => {
                   </button>
                 </>
               ) : (
-                <button className='bg-blue-500 text-white rounded p-1 ml-2' onClick={handleAddressClick}>
-                  <PencilIcon className='h-4 w-4 text-black dark:text-white' />
+                <button className='bg-blue-500 text-white rounded p-1 ml-2'>
+                  <PencilIcon className='h-4 w-4 text-black dark:text-white' onClick={handleAddressClick} />
                 </button>
               )}
             </label>
