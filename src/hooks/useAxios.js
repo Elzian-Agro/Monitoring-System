@@ -3,12 +3,14 @@ import axios from 'axios';
 import { identifyError } from 'pages/auth/utils';
 import { useDispatch } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
+import { useNavigate } from 'react-router-dom';
 
 const useAxios = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getNewAccessToken = async () => {
     try {
@@ -51,21 +53,22 @@ const useAxios = () => {
             requestHeaders,
           });
         } catch (refreshError) {
-          setError({
-            code: refreshError.response?.data?.code,
-            message: identifyError(refreshError.response?.data?.code),
-          });
-          dispatch(showErrorModal(identifyError(refreshError.response?.data?.code)));
+          err = refreshError;
+
+          localStorage.removeItem('jwtAccessToken');
+          localStorage.removeItem('jwtRefreshToken');
+          navigate('/', { replace: true });
         }
-      } else {
-        setError({
-          code: err.response?.data?.code,
-          message: identifyError(err.response?.data?.code),
-        });
-        dispatch(showErrorModal(identifyError(err.response?.data?.code)));
       }
 
-      return;
+      setError({
+        code: err.response?.data?.code,
+        message: identifyError(err.response?.data?.code),
+      });
+
+      dispatch(showErrorModal(identifyError(err.response?.data?.code)));
+
+      return null;
     } finally {
       setLoading(false);
     }
