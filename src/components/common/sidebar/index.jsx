@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpTrayIcon, ArrowLeftCircleIcon, ChartPieIcon } from '@heroicons/react/24/outline';
+import { ArrowUpTrayIcon, ArrowLeftCircleIcon } from '@heroicons/react/24/outline';
 import logo from 'assets/images/logo.png';
 import { Link, NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -63,19 +63,14 @@ const Sidebar = () => {
         ))}
 
         {/* Title Charts */}
-        <div className='Title'>
+        <div className='Title mt-14'>
           <p className=' text-gray-400 m-3 mt-4 uppercase'>Charts</p>
         </div>
-
-        <NavLink to='/pie' className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-          <ChartPieIcon className='h-6 w-6' />
-          {isOpenMenu() && 'Pie'}
-        </NavLink>
 
         {/* Logout */}
         <NavLink
           to='/'
-          className='flex mt-8 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm text-black dark:text-white hover:bg-red-500 m-2 duration-300'
+          className='flex mt-10 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm text-black dark:text-white hover:bg-red-500 m-2 duration-300'
           onClick={logout}>
           <ArrowUpTrayIcon className='h-6 w-6 rotate-90' />
           {isOpenMenu() && t('Logout')}

@@ -1,4 +1,10 @@
-import { Squares2X2Icon, UsersIcon, ArrowTrendingUpIcon, UserCircleIcon } from '@heroicons/react/24/outline';
+import {
+  Squares2X2Icon,
+  UsersIcon,
+  UserCircleIcon,
+  CloudIcon,
+  DevicePhoneMobileIcon,
+} from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
 
 const SidebarLinks = ({ t }) => {
@@ -13,12 +19,12 @@ const SidebarLinks = ({ t }) => {
     {
       to: '/weather',
       text: t('Weather'),
-      icon: ArrowTrendingUpIcon,
+      icon: CloudIcon,
     },
     {
       to: '/devicemanagement',
       text: t('Device Management'),
-      icon: ArrowTrendingUpIcon,
+      icon: DevicePhoneMobileIcon,
     },
   ];
 

@@ -6,6 +6,8 @@ import NotFoundPage from 'pages/404';
 import ManageUsers from 'pages/dashboard/manage-users';
 import PrivateRoutes from 'pages/utils/PrivateRoutes';
 import UserProfilePage from 'pages/dashboard/user-profile-page';
+import Weather from 'pages/dashboard/weather';
+import DeviceManagement from 'pages/dashboard/device-management';
 import GlobalErrorModal from 'error';
 
 function App() {
@@ -17,13 +19,12 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />} />
 
             {/* Pages */}
-            <Route path='/weather' element={<Dashboard />} />
-            <Route path='/devicemanagement' element={<Dashboard />} />
+            <Route path='/weather' element={<Dashboard page={<Weather />} />} />
+            <Route path='/devicemanagement' element={<Dashboard page={<DeviceManagement />} />} />
             <Route path='/users' element={<Dashboard page={<ManageUsers />} />} />
             <Route path='/profile' element={<Dashboard page={<UserProfilePage />} />} />
 
             {/* Charts */}
-            <Route path='/pie' element={<Dashboard />} />
 
             <Route path='*' element={<NotFoundPage />} />
           </Route>
