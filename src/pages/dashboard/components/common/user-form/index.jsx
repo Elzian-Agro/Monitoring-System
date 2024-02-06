@@ -31,8 +31,8 @@ const Form = ({ visible, onClose, user = null }) => {
   const [message, setMessage] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
 
-  const { response, send } = useAxios();
   const { t } = useTranslation();
+  const { send } = useAxios();
 
   useEffect(() => {
     // Set form fields for edit mode
@@ -51,16 +51,7 @@ const Form = ({ visible, onClose, user = null }) => {
     if (!user) {
       setPassword(generateRandomPassword());
     }
-
-    // Set the response message for success
-    if (response) {
-      setMessage(user ? 'User details updated successfully' : 'User registered successfully');
-      setIsAlertVisible(true);
-      if (!user) {
-        resetForm();
-      }
-    }
-  }, [user, response]);
+  }, [user]);
 
   const resetForm = () => {
     setFirstName('');
@@ -109,11 +100,19 @@ const Form = ({ visible, onClose, user = null }) => {
     }
 
     if (Object.keys(errors).length === 0) {
-      send({
+      const response = await send({
         endpoint: user ? `user/${user._id}` : `user`,
-        method: user ? 'put' : 'post',
+        method: user ? 'PUT' : 'POST',
         body: requestData,
       });
+
+      if (response) {
+        setMessage(user ? 'User details updated successfully' : 'User registered successfully');
+        setIsAlertVisible(true);
+        if (!user) {
+          resetForm();
+        }
+      }
     }
   };
 

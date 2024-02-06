@@ -1,25 +1,21 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../slice/dashboardLayoutSlice';
 import { PrimaryButton, VariantButton } from '../components/base/Button';
 import { customTableStyles } from 'constant';
-import { useNavigate } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
-import axios from 'axios';
 import { downloadCSV } from '../utils/download';
-import { getNewAccessToken } from '../utils/getNewAccessToken';
 import Form from '../components/common/user-form';
 import { ArrowDownTrayIcon, PlusIcon } from '@heroicons/react/24/outline';
 import SearchBox from '../components/base/SearchBox';
-import { identifyError } from 'pages/auth/utils';
 import Loader from '../components/common/loader';
 import { useTranslation } from 'react-i18next';
 import Modal from 'components/common/modal';
+import useAxios from 'hooks/useAxios';
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [filterText, setFilterText] = useState('');
-  const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -28,8 +24,8 @@ const ManageUsers = () => {
   const [isLoaderVisible, setIsLoaderVisible] = useState(true);
 
   const currentMode = useSelector(selectTheme);
-  const navigate = useNavigate();
   const { t } = useTranslation();
+  const { send } = useAxios();
 
   // User table columns define
   const columns = [
@@ -95,78 +91,28 @@ const ManageUsers = () => {
     },
   ];
 
-  const getUsers = useCallback(async () => {
-    try {
-      const accessToken = localStorage.getItem('jwtAccessToken');
-      const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/user`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      // Check access token invalid or expired
-      if (
-        error.response?.data?.code === 13004 ||
-        error.response?.data?.code === 13013 ||
-        error.response?.data?.code === 13014
-      ) {
-        await getNewAccessToken();
-        return await getUsers();
-      }
-      throw error;
-    }
-  }, []);
-
   useEffect(() => {
     (async () => {
-      try {
-        const usersData = await getUsers();
-
-        setTimeout(() => {
-          setIsLoaderVisible(false);
-          setUsers(usersData);
-        }, 2000);
-      } catch (error) {
-        setError(identifyError(error.response?.data?.code));
-        setIsAlertVisible(true);
-
-        // Check refresh token is invalid or expired
-        if (error.response?.data?.code === 13002) {
-          setTimeout(() => {
-            navigate('/');
-          }, 3000);
-        }
-      }
+      const response = await send({ endpoint: 'user', method: 'GET' });
+      setUsers(response);
+      setIsLoaderVisible(false);
     })();
-  }, [getUsers, navigate, isFormVisible, isConfirmVisible]);
+  }, [send, isConfirmVisible, isFormVisible]);
 
-  // Get confirmation for delete
-  const confirmDialogClose = (result) => {
+  const handleConfirmationAndDelete = async (result) => {
     if (result) {
-      handleDelete();
+      const response = await send({
+        endpoint: `user/delete/${selectedUser._id}`,
+        method: 'PUT',
+        body: { isDeleted: true },
+      });
+      setIsConfirmVisible(false);
+      if (response) {
+        setMessage('User deleted successfully');
+        setIsAlertVisible(true);
+      }
     }
     setIsConfirmVisible(false);
-  };
-
-  const handleDelete = async () => {
-    try {
-      const { jwtAccessToken: accessToken } = localStorage;
-      await axios.put(
-        `${process.env.REACT_APP_BASE_URL}/user/delete/${selectedUser._id}`,
-        { isDeleted: true },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      setMessage('User deleted successfully');
-      setIsAlertVisible(true);
-    } catch (error) {
-      setMessage(identifyError(error.response?.data?.code));
-      setIsAlertVisible(true);
-    }
   };
 
   // Function to filter the user based on the search text
@@ -179,7 +125,7 @@ const ManageUsers = () => {
       const firstName = user.firstName?.toLowerCase() || '';
       const lastName = user.lastName?.toLowerCase() || '';
       const email = user.email?.toLowerCase() || '';
-      const NIC = user.NIC || '';
+      const nic = user.nic || '';
       const phoneNum = String(user.phoneNum) || '';
       const orgName = user.orgName?.toLowerCase() || '';
 
@@ -188,31 +134,12 @@ const ManageUsers = () => {
         (firstName.includes(filterText.toLowerCase()) ||
           lastName.includes(filterText.toLowerCase()) ||
           email.includes(filterText.toLowerCase()) ||
-          NIC.includes(filterText) ||
+          nic.includes(filterText) ||
           phoneNum.includes(filterText) ||
           orgName.includes(filterText.toLowerCase()))
       );
     });
   }, [users, filterText]);
-
-  // Display the error If happen error when loading table data
-  if (error) {
-    return (
-      <div>
-        <div className='flex bg-red-500 text-white text-xs md:text-sm lg:text-base p-2 md:p-4 mx-6 rounded-md justify-center items-center'>
-          {t(error)}
-        </div>
-        <Modal
-          isOpen={isAlertVisible}
-          message={`${error}`}
-          onClose={() => {
-            setIsAlertVisible(false);
-          }}
-          type='alert'
-        />
-      </div>
-    );
-  }
 
   return (
     <div className='mx-5 mt-2'>
@@ -274,12 +201,12 @@ const ManageUsers = () => {
       <Modal
         isOpen={isConfirmVisible}
         message='Are you sure want to delete?'
-        onClose={(result) => confirmDialogClose(result)}
+        onClose={(result) => handleConfirmationAndDelete(result)}
         type='confirmation'
       />
       <Modal
         isOpen={isAlertVisible}
-        message={`${error || message}!`}
+        message={`${message}!`}
         onClose={() => {
           setIsAlertVisible(false);
         }}
