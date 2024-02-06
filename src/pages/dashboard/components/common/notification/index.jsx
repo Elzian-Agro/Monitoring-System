@@ -1,5 +1,4 @@
 import { XCircleIcon, EyeIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
-import axios from 'axios';
 import { setNotificationOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import {
   selectAllNotifications,
@@ -22,29 +21,23 @@ const Notification = () => {
   };
 
   const readAllNotifications = async () => {
-    try {
-      await axios.put(
-        `${process.env.REACT_APP_BASE_URL}/notification/readByUserId`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    await send({
+      endpoint: 'notification/readByUserId',
+      method: 'PUT',
+      requestHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-      // Update the local list to mark all notifications as read.
-      const updatedNotifications = allNotifications.map((notification) => ({
-        ...notification,
-        read: true,
-      }));
-      dispatch(setAllNotifications(updatedNotifications));
+    // Update the local list to mark all notifications as read.
+    const updatedNotifications = allNotifications.map((notification) => ({
+      ...notification,
+      read: true,
+    }));
+    dispatch(setAllNotifications(updatedNotifications));
 
-      // Set Notification Count
-      dispatch(setNotificationsCount(null));
-    } catch (error) {
-      console.error('Error marking all notifications as read', error);
-    }
+    // Set Notification Count
+    dispatch(setNotificationsCount(null));
   };
 
   const deleteNotification = async (index) => {
