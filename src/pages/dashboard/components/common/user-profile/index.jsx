@@ -7,6 +7,7 @@ import ThemeSettings from '../theme-settings';
 import LanguageSelector from 'components/common/language-selector';
 import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
+import { clearUserData } from 'pages/dashboard/slice/userSlice';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const UserProfile = () => {
     try {
       localStorage.removeItem('jwtAccessToken');
       localStorage.removeItem('jwtRefreshToken');
+      dispatch(clearUserData());
     } catch (error) {
       console.error('Error during logout:', error);
     }

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectActiveMenu, setActiveMenu } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import SidebarLinks from './sidebarConstants';
 import { useTranslation } from 'react-i18next';
+import { clearUserData } from 'pages/dashboard/slice/userSlice';
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const Sidebar = () => {
     try {
       localStorage.removeItem('jwtAccessToken');
       localStorage.removeItem('jwtRefreshToken');
+      dispatch(clearUserData());
     } catch (error) {
       console.error('Error during logout:', error);
     }

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserData } from '../slice/userSlice';
+import { clearUserData, setUserData } from '../slice/userSlice';
 import { PencilSquareIcon, PencilIcon, CheckIcon } from '@heroicons/react/24/outline';
 import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
@@ -189,6 +189,11 @@ const UserProfilePage = () => {
       );
       setMessage('Disabled successfully!');
       setIsAlertVisible(true);
+
+      //Removed locally sotored user data
+      localStorage.removeItem('jwtAccessToken');
+      localStorage.removeItem('jwtRefreshToken');
+      dispatch(clearUserData());
     } catch (error) {
       setMessage(identifyError(error.response?.data?.code));
       setIsAlertVisible(true);
