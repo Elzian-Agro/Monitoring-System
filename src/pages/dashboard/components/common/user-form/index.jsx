@@ -10,12 +10,12 @@ import {
   LockClosedIcon,
   ArrowLeftIcon,
 } from '@heroicons/react/24/outline';
-import { identifyError, encryptData } from 'pages/auth/utils';
-import axios from 'axios';
+import { encryptData } from 'pages/auth/utils';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
 import { useTranslation } from 'react-i18next';
 import { validateForm } from 'pages/dashboard/utils/userFormValidation';
 import Modal from 'components/common/modal';
+import useAxios from 'hooks/useAxios';
 
 const Form = ({ visible, onClose, user = null }) => {
   const [firstName, setFirstName] = useState('');
@@ -31,6 +31,7 @@ const Form = ({ visible, onClose, user = null }) => {
   const [message, setMessage] = useState(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
 
+  const { response, send } = useAxios();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -50,7 +51,16 @@ const Form = ({ visible, onClose, user = null }) => {
     if (!user) {
       setPassword(generateRandomPassword());
     }
-  }, [user]);
+
+    // Set the response message for success
+    if (response) {
+      setMessage(user ? 'User details updated successfully' : 'User registered successfully');
+      setIsAlertVisible(true);
+      if (!user) {
+        resetForm();
+      }
+    }
+  }, [user, response]);
 
   const resetForm = () => {
     setFirstName('');
@@ -77,10 +87,7 @@ const Form = ({ visible, onClose, user = null }) => {
     ];
 
     const errors = validateForm(fields);
-
     setErrors(errors);
-
-    const accessToken = localStorage.getItem('jwtAccessToken');
 
     const requestData = {
       firstName,
@@ -102,28 +109,11 @@ const Form = ({ visible, onClose, user = null }) => {
     }
 
     if (Object.keys(errors).length === 0) {
-      const apiEndpoint = user
-        ? `${process.env.REACT_APP_BASE_URL}/user/${user._id}`
-        : `${process.env.REACT_APP_BASE_URL}/user`;
-
-      const method = user ? 'put' : 'post';
-
-      axios[method](apiEndpoint, requestData, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then(() => {
-          setMessage(user ? 'User details updated successfully' : 'User registered successfully');
-          setIsAlertVisible(true);
-          if (!user) {
-            resetForm();
-          }
-        })
-        .catch((error) => {
-          setMessage(identifyError(error.response?.data?.code));
-          setIsAlertVisible(true);
-        });
+      send({
+        endpoint: user ? `user/${user._id}` : `user`,
+        method: user ? 'put' : 'post',
+        body: requestData,
+      });
     }
   };
 
@@ -143,7 +133,6 @@ const Form = ({ visible, onClose, user = null }) => {
           {user ? t('UPDATE USER DETAILS') : t('NEW USER REGISTARTION')}
         </h1>
       </div>
-
       <form
         className={`grid space-y-4 w-full px-12 sm:px-24 md:px-44 lg:px-40 lg:grid-cols-2 lg:space-y-0 lg:gap-x-24 ${
           user ? 'lg:gap-y-12' : 'lg:gap-y-6'
@@ -234,7 +223,6 @@ const Form = ({ visible, onClose, user = null }) => {
           </div>
         )}
       </form>
-
       <div className='flex justify-end gap-2 px-12 sm:px-24 md:px-44 lg:px-40'>
         {!user && <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />}
         <PrimaryButton
