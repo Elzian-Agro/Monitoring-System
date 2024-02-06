@@ -3,20 +3,32 @@ import axios from 'axios';
 import { identifyError } from 'pages/auth/utils';
 import { useDispatch } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
+import { useNavigate } from 'react-router-dom';
 
 const useAxios = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const getNewAccessToken = async () => {
     try {
       const refreshToken = localStorage.getItem('jwtRefreshToken');
       const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/refresh`, { refreshToken });
       localStorage.setItem('jwtAccessToken', response.data.accessToken);
+      return true;
     } catch (error) {
-      throw error;
+      setError({
+        code: error.response?.data?.code,
+        message: identifyError(error.response?.data?.code),
+      });
+      dispatch(showErrorModal(identifyError(error.response?.data?.code)));
+
+      localStorage.removeItem('jwtAccessToken');
+      localStorage.removeItem('jwtRefreshToken');
+      navigate('/', { replace: true });
+      return false;
     }
   };
 
@@ -42,20 +54,13 @@ const useAxios = () => {
     } catch (err) {
       setResponse(null);
       if (err.response?.data?.code === 13004) {
-        try {
-          await getNewAccessToken();
+        if (await getNewAccessToken()) {
           return send({
             endpoint,
             method,
             body,
             requestHeaders,
           });
-        } catch (refreshError) {
-          setError({
-            code: refreshError.response?.data?.code,
-            message: identifyError(refreshError.response?.data?.code),
-          });
-          dispatch(showErrorModal(identifyError(refreshError.response?.data?.code)));
         }
       } else {
         setError({
@@ -65,7 +70,7 @@ const useAxios = () => {
         dispatch(showErrorModal(identifyError(err.response?.data?.code)));
       }
 
-      return;
+      return null;
     } finally {
       setLoading(false);
     }
