@@ -9,6 +9,8 @@ import UserProfilePage from 'pages/dashboard/user-profile-page';
 import Weather from 'pages/dashboard/weather';
 import DeviceManagement from 'pages/dashboard/device-management';
 import GlobalErrorModal from 'error';
+import UserResetPassword from 'pages/dashboard/user-reset-password';
+
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
             <Route path='/devicemanagement' element={<Dashboard page={<DeviceManagement />} />} />
             <Route path='/users' element={<Dashboard page={<ManageUsers />} />} />
             <Route path='/profile' element={<Dashboard page={<UserProfilePage />} />} />
+            <Route path='/reset' element={<Dashboard page={<UserResetPassword />} />} />
 
             {/* Charts */}
 
