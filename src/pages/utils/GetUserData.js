@@ -9,7 +9,7 @@ const GetUserData = () => {
 
   useEffect(() => {
     const getUserData = async () => {
-      await send({ endpoint: 'user/profile', method: 'GET' });
+       await send({ endpoint: 'user/profile', method: 'GET' });
     };
 
     getUserData();

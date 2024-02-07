@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
 import Modal from 'components/common/modal';
 import useAxios from 'hooks/useAxios';
+import { updateEmail } from 'pages/auth/slice/emailSlice';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
@@ -190,7 +191,8 @@ const UserProfilePage = () => {
   };
 
   const handleResetPassword = () => {
-    console.log('Reset Password');
+    dispatch(updateEmail(email));
+    navigate('/reset');
   };
 
   return (
