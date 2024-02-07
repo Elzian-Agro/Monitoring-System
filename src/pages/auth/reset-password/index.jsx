@@ -10,13 +10,14 @@ import Button from 'pages/auth/components/base/Button';
 import TextBox from 'pages/auth/components/base/TextBox';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
 import PropTypes from 'prop-types';
-import { identifyError, isValidPassword, tokenise } from 'pages/auth/utils';
+import { identifyError, isValidPassword } from 'pages/auth/utils';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateEmail } from '../slice/emailSlice';
 import Redirect from 'pages/auth/components/base/Redirect';
 import { useTranslation } from 'react-i18next';
 import { errorType } from 'constant';
+import { tokenise } from 'utils/rsa.encrypt';
 
 function ResetPassword({ setPage }) {
   const [tempPass, setTempPass] = useState('');

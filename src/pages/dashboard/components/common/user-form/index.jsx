@@ -10,7 +10,7 @@ import {
   LockClosedIcon,
   ArrowLeftIcon,
 } from '@heroicons/react/24/outline';
-import { encryptData } from 'pages/auth/utils';
+import { encryptData } from 'utils/rsa.encrypt';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
 import { useTranslation } from 'react-i18next';
 import { validateForm } from 'pages/dashboard/utils/userFormValidation';
