@@ -3,11 +3,12 @@ import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import Button from 'pages/auth/components/base/Button';
 import TextBox from 'pages/auth/components/base/TextBox';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
-import { isValidEmail, tokenise, identifyError } from 'pages/auth/utils';
+import { isValidEmail, identifyError } from 'pages/auth/utils';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { tokenise } from 'utils/rsa.encrypt';
 
 function Login({ setPage }) {
   const [email, setEmail] = useState('');
