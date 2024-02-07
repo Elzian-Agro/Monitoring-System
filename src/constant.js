@@ -89,19 +89,13 @@ export const customTableStyles = {
   },
   rows: {
     style: {
-      backgroundColor: 'blue',
-      '&:nth-child(even)': {
-        backgroundColor: '#ffffff',
-      },
-      '&:nth-child(odd)': {
-        backgroundColor: '#dcf3f7',
-      },
+      borderBottom: '1px solid #e3e5e8',
     },
   },
   cells: {
     style: {
-      '&:last-child': {
-        width: '50px',
+      '&:first-child': {
+        borderLeft: '1px solid #e3e5e8',
       },
     },
   },
