@@ -14,10 +14,9 @@ import { encryptData } from 'pages/auth/utils';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
 import { useTranslation } from 'react-i18next';
 import { validateForm } from 'pages/dashboard/utils/userFormValidation';
-import Modal from 'components/common/modal';
 import useAxios from 'hooks/useAxios';
 
-const Form = ({ visible, onClose, user = null }) => {
+const Form = ({ visible, onClose, user = null, formSubmission }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [nic, setNic] = useState('');
@@ -28,8 +27,6 @@ const Form = ({ visible, onClose, user = null }) => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [isToggleClicked, setIsToggleClicked] = useState(false);
   const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState(null);
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
 
   const { t } = useTranslation();
   const { send } = useAxios();
@@ -64,9 +61,7 @@ const Form = ({ visible, onClose, user = null }) => {
     setErrors({});
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleFormErrors = () => {
     const fields = [
       { key: 'firstName', label: 'First name', value: firstName },
       { key: 'lastName', label: 'Last name', value: lastName },
@@ -77,29 +72,27 @@ const Form = ({ visible, onClose, user = null }) => {
       { key: 'orgName', label: 'Organization name', value: orgName },
     ];
 
-    const errors = validateForm(fields);
-    setErrors(errors);
+    const formErrors = validateForm(fields);
+    setErrors(formErrors);
+    return formErrors;
+  };
 
-    const requestData = {
-      firstName,
-      lastName,
-      nic,
-      email,
-      phoneNum,
-      orgName,
-      isDisabled,
-    };
+  const handleSubmit = async (e) => {
+    if (Object.keys(handleFormErrors()).length === 0) {
+      const requestData = {
+        firstName,
+        lastName,
+        nic,
+        email,
+        phoneNum,
+        orgName,
+        isDisabled,
+      };
 
-    if (!user) {
-      try {
-        const encryptedPassword = await encryptData(password);
-        requestData.password = encryptedPassword;
-      } catch (err) {
-        throw err;
+      if (!user) {
+        requestData.password = await encryptData(password);
       }
-    }
 
-    if (Object.keys(errors).length === 0) {
       const response = await send({
         endpoint: user ? `user/${user._id}` : `user`,
         method: user ? 'PUT' : 'POST',
@@ -107,11 +100,8 @@ const Form = ({ visible, onClose, user = null }) => {
       });
 
       if (response) {
-        setMessage(user ? 'User details updated successfully' : 'User registered successfully');
-        setIsAlertVisible(true);
-        if (!user) {
-          resetForm();
-        }
+        formSubmission(user ? 'User details updated successfully' : 'User registered successfully');
+        onClose();
       }
     }
   };
@@ -160,7 +150,7 @@ const Form = ({ visible, onClose, user = null }) => {
           placeholder='Eg. 9452XXXXXV'
           label='NIC'
           error={errors.nic}
-          disabled={user ? true : false}
+          disabled={!!user}
           Icon={UserIcon}
           value={nic}
           setValue={setNic}
@@ -230,14 +220,6 @@ const Form = ({ visible, onClose, user = null }) => {
           onClick={handleSubmit}
         />
       </div>
-      <Modal
-        isOpen={isAlertVisible}
-        message={`${message}`}
-        onClose={() => {
-          setIsAlertVisible(false);
-        }}
-        type='alert'
-      />
     </div>
   );
 };
@@ -246,6 +228,7 @@ Form.propTypes = {
   visible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   user: PropTypes.object,
+  formSubmission: PropTypes.func.isRequired,
 };
 
 export default Form;
