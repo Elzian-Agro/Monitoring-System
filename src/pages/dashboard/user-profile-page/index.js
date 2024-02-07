@@ -21,6 +21,7 @@ const UserProfilePage = () => {
   const [newPhoneNumber, SetNewPhoneNUmber] = useState('');
   const [bio, setbio] = useState('');
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [isResetConfirmVisible, setIsResetConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [message, setMessage] = useState(null);
 
@@ -167,11 +168,18 @@ const UserProfilePage = () => {
   };
 
   //Disable
-  const confirmDialogClose = (result) => {
+  const confirmDialogCloseDisable = (result) => {
     if (result) {
       handleDisable();
     }
     setIsConfirmVisible(false);
+  };
+
+  const confirmDialogCloseReset = (result) => {
+    if (result) {
+      handleResetPassword();
+    }
+    setIsResetConfirmVisible(false);
   };
 
   const handleDisable = async () => {
@@ -199,6 +207,8 @@ const UserProfilePage = () => {
       setIsAlertVisible(true);
     }
   };
+
+  const handleResetPassword = () => {console.log("Reset Password")};
 
   return (
     <div className='mt-8 mx-4'>
@@ -337,17 +347,34 @@ const UserProfilePage = () => {
           <button
             className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
             onClick={() => {
+              setIsResetConfirmVisible(true);
+            }}>
+            {t('Reset Password')}
+          </button>
+
+          <button
+            className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
+            onClick={() => {
               setIsConfirmVisible(true);
             }}>
             {t('Disable')}
           </button>
         </div>
       </div>
-      {/* confirm Popup */}
+      {/* confirm Popups */}
+      {/* Disable confirmation */}
       <Modal
         isOpen={isConfirmVisible}
         message='Are you sure want to disable this account?'
-        onClose={confirmDialogClose}
+        onClose={(result) => confirmDialogCloseDisable(result)}
+        type='confirmation'
+      />
+
+      {/* Reset Password confirmation */}
+      <Modal
+        isOpen={isResetConfirmVisible}
+        message='Do you want to reset the password?'
+        onClose={confirmDialogCloseReset}
         type='confirmation'
       />
       {/* Alert message Popup */}
@@ -357,8 +384,6 @@ const UserProfilePage = () => {
         onClose={() => {
           setIsAlertVisible(false);
           navigate('/');
-          localStorage.removeItem('jwtAccessToken');
-          localStorage.removeItem('jwtRefreshToken');
         }}
         type='alert'
       />
