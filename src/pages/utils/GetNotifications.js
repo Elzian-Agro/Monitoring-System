@@ -1,23 +1,23 @@
 import { setAllNotifications, setNotificationsCount } from 'pages/dashboard/slice/notificationSlice';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useAxios from 'hooks/useAxios';
 
 const GetNotifications = () => {
   const dispatch = useDispatch();
   const { send } = useAxios();
+  const userId = useSelector((state) => state.user._id);
 
   useEffect(() => {
     const getNotifications = async () => {
-      const res = await send({ endpoint: 'notification/', method: 'GET' });
-
-      const datas = res.result;
+      const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
+      const datas = res?.result;
 
       // Count the number of objects where readFlag is true
-      const readNotificationsCount = datas.filter((data) => !data.readFlag).length;
+      const readNotificationsCount = datas?.filter((data) => !data.readFlag).length;
       dispatch(setNotificationsCount(readNotificationsCount));
 
-      const notifications = datas.map((data) => {
+      const notifications = datas?.map((data) => {
         // get the Date from the timestampString
         const timestampString = data.dateTime;
         const timestamp = new Date(timestampString);
@@ -51,9 +51,11 @@ const GetNotifications = () => {
       dispatch(setAllNotifications(notifications));
     };
 
-    getNotifications();
+    if (userId) {
+      getNotifications();
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [userId]);
 };
 
 export default GetNotifications;
