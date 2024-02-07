@@ -5,7 +5,7 @@ import '@testing-library/jest-dom';
 import LoginPage from '../components/common/container';
 import axios from 'axios';
 import { store } from 'store/store';
-import { tokenise } from 'pages/auth/utils';
+import { tokenise } from 'utils/rsa.encrypt';
 import { errorType } from 'constant';
 
 jest.mock('axios');
@@ -23,8 +23,8 @@ jest.mock('react-i18next', () => ({
   },
 }));
 
-jest.mock('pages/auth/utils', () => ({
-  ...jest.requireActual('pages/auth/utils'),
+jest.mock('utils/rsa.encrypt', () => ({
+  ...jest.requireActual('utils/rsa.encrypt'),
   tokenise: jest.fn().mockResolvedValue('mocked-token'),
 }));
 
