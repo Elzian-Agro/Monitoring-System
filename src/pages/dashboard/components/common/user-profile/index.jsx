@@ -79,7 +79,9 @@ const UserProfile = () => {
       <div className='flex md:hidden p-4 h-20 mt-6'>
         <ThemeSettings />
       </div>
-      <LanguageSelector />
+      <div className='md:hidden'>
+        <LanguageSelector />
+      </div>
       <div className='mt-5'>
         <NavLink
           to='/'
