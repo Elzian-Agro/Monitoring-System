@@ -42,8 +42,9 @@ const useAxios = () => {
       setError(null);
       return res.data;
     } catch (err) {
+      let error = err;
       setResponse(null);
-      if (err.response?.data?.code === 13004) {
+      if (error.response?.data?.code === 13004) {
         try {
           await getNewAccessToken();
           return send({
@@ -53,7 +54,7 @@ const useAxios = () => {
             requestHeaders,
           });
         } catch (refreshError) {
-          err = refreshError;
+          error = refreshError;
 
           localStorage.removeItem('jwtAccessToken');
           localStorage.removeItem('jwtRefreshToken');
@@ -62,11 +63,11 @@ const useAxios = () => {
       }
 
       setError({
-        code: err.response?.data?.code,
-        message: identifyError(err.response?.data?.code),
+        code: error.response?.data?.code,
+        message: identifyError(error.response?.data?.code),
       });
 
-      dispatch(showErrorModal(identifyError(err.response?.data?.code)));
+      dispatch(showErrorModal(identifyError(error.response?.data?.code)));
 
       return null;
     } finally {
