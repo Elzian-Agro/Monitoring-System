@@ -192,7 +192,21 @@ const UserProfilePage = () => {
 
   const handleResetPassword = () => {
     dispatch(updateEmail(email));
-    navigate('/reset');
+
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/forget-password`, {
+        email: email,
+      })
+      .then(() => {
+        dispatch(updateEmail(email));
+        navigate('/reset');
+      })
+      .catch((error) => {
+        // setError(identifyError(error.response?.data?.code));
+        console.log(error);
+      });
+
+    navigate('/reset'); //Remove Later
   };
 
   return (
