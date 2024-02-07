@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
 import Modal from 'components/common/modal';
+import useAxios from 'hooks/useAxios';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
@@ -24,8 +25,7 @@ const UserProfilePage = () => {
   const [isResetConfirmVisible, setIsResetConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [message, setMessage] = useState(null);
-
-  const token = localStorage.getItem('jwtAccessToken');
+  const { send } = useAxios();
 
   //Capitalize the text
   const capitalize = (str) => {
@@ -54,24 +54,23 @@ const UserProfilePage = () => {
 
   const handleSaveButtonClick = async () => {
     if (localProfilePicture) {
-      try {
-        // Dispatch the updated profile image URL to Redux store
-        dispatch(setUserData({ profileImage: URL.createObjectURL(localProfilePicture) }));
+      // Use FormData to append the file and other data
+      const formData = new FormData();
+      formData.append('profile-image', localProfilePicture);
 
-        // Use FormData to append the file and other data
-        const formData = new FormData();
-        formData.append('profile-image', localProfilePicture);
+      // Make Axios PUT request to the specified endpoint
+      await send({
+        endpoint: 'user/profile/image',
+        method: 'PUT',
+        body: formData,
+        requestHeaders: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-        // Make Axios PUT request to the specified endpoint
-        await axios.put(`${process.env.REACT_APP_BASE_URL}/user/profile/image`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-          },
-        });
-      } catch (error) {
-        console.error('Error uploading profile picture:', error);
-      }
+      // Dispatch the updated profile image URL to Redux store
+      dispatch(setUserData({ profileImage: URL.createObjectURL(localProfilePicture) }));
+
       // Toggle back to view mode
       setPhotoEditMode(false);
     }
@@ -83,27 +82,21 @@ const UserProfilePage = () => {
   };
 
   const handleBioSave = async () => {
-    try {
-      // Update user data in Redux store
-      dispatch(setUserData({ userBio: bio }));
+    // Update user data in Redux store
+    dispatch(setUserData({ userBio: bio }));
 
-      // Make Axios PUT request to update the bio
-      await axios.put(
-        `${process.env.REACT_APP_BASE_URL}/user/profile`,
-        { userBio: bio },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    // Make Axios PUT request to update the bio
+    await send({
+      endpoint: 'user/profile',
+      method: 'PUT',
+      body: {
+        userBio: bio,
+      },
+    });
 
-      // Close the bio edit mode and reset the local state for bio
-      setBioEditMode(false);
-      setbio('');
-    } catch (error) {
-      console.error('Error updating bio:', error);
-    }
+    // Close the bio edit mode and reset the local state for bio
+    setBioEditMode(false);
+    setbio('');
   };
 
   //Adress
@@ -112,27 +105,21 @@ const UserProfilePage = () => {
   };
 
   const handleAddressSave = async () => {
-    try {
-      // Update user data in Redux store
-      dispatch(setUserData({ address: newAddress }));
+    // Update user data in Redux store
+    dispatch(setUserData({ address: newAddress }));
 
-      // Make Axios PUT request to update the address
-      await axios.put(
-        `${process.env.REACT_APP_BASE_URL}/user/profile`,
-        { address: newAddress },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    // Make Axios PUT request to update the address
+    await send({
+      endpoint: 'user/profile',
+      method: 'PUT',
+      body: {
+        address: newAddress,
+      },
+    });
 
-      // Close the address edit mode and reset the local state for newAddress
-      setAddressEditMode(false);
-      setNewAddress('');
-    } catch (error) {
-      console.error('Error updating address:', error);
-    }
+    // Close the address edit mode and reset the local state for newAddress
+    setAddressEditMode(false);
+    setNewAddress('');
   };
 
   //Phone Numebr
@@ -141,26 +128,20 @@ const UserProfilePage = () => {
   };
 
   const handlePhoneSave = async () => {
-    try {
-      // Update user data in Redux store
-      dispatch(setUserData({ phoneNum: newPhoneNumber }));
-      // Make Axios PUT request to update the address
-      await axios.put(
-        `${process.env.REACT_APP_BASE_URL}/user/profile`,
-        { phoneNum: newPhoneNumber },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    // Update user data in Redux store
+    dispatch(setUserData({ phoneNum: newPhoneNumber }));
+    // Make Axios PUT request to update the address
+    await send({
+      endpoint: 'user/profile',
+      method: 'PUT',
+      body: {
+        phoneNum: newPhoneNumber,
+      },
+    });
 
-      // Close the phone edit mode and reset the local state for newphonenumber
-      setPhoneEditMode(false);
-      SetNewPhoneNUmber('');
-    } catch (error) {
-      console.error('Error updating address:', error);
-    }
+    // Close the phone edit mode and reset the local state for newphonenumber
+    setPhoneEditMode(false);
+    SetNewPhoneNUmber('');
   };
 
   const handlePhotoEditButtonClick = () => {
@@ -208,7 +189,9 @@ const UserProfilePage = () => {
     }
   };
 
-  const handleResetPassword = () => {console.log("Reset Password")};
+  const handleResetPassword = () => {
+    console.log('Reset Password');
+  };
 
   return (
     <div className='mt-8 mx-4'>
