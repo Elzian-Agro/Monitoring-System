@@ -64,13 +64,4 @@ TextBox.propTypes = {
   error: PropTypes.string,
 };
 
-TextBox.defaultProps = {
-  label: null,
-  placeholder: '',
-  type: 'text',
-  Icon: null,
-  error: null,
-  disabled: false,
-};
-
 export default TextBox;

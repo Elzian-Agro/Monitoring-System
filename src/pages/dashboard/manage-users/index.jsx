@@ -91,13 +91,16 @@ const ManageUsers = () => {
     },
   ];
 
+  const getUsers = async () => {
+    const response = await send({ endpoint: 'user', method: 'GET' });
+    setUsers(response);
+    setIsLoaderVisible(false);
+  };
+
   useEffect(() => {
-    (async () => {
-      const response = await send({ endpoint: 'user', method: 'GET' });
-      setUsers(response);
-      setIsLoaderVisible(false);
-    })();
-  }, [send, isConfirmVisible, isFormVisible]);
+    getUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleConfirmationAndDelete = async (result) => {
     if (result) {
@@ -110,9 +113,16 @@ const ManageUsers = () => {
       if (response) {
         setMessage('User deleted successfully');
         setIsAlertVisible(true);
+        getUsers();
       }
     }
     setIsConfirmVisible(false);
+  };
+
+  const formSubmission = async (message) => {
+    setMessage(message);
+    setIsAlertVisible(true);
+    getUsers();
   };
 
   // Function to filter the user based on the search text
@@ -152,6 +162,7 @@ const ManageUsers = () => {
           }}
           visible={isFormVisible}
           user={selectedUser}
+          formSubmission={formSubmission}
         />
       ) : (
         <>
@@ -188,7 +199,7 @@ const ManageUsers = () => {
                   columns={columns}
                   data={filteredUsers}
                   customStyles={currentMode === 'Dark' ? {} : customTableStyles}
-                  theme={currentMode === 'Dark' ? 'dark' : ''}
+                  theme={currentMode === 'Dark' ? 'dark' : 'defalt'}
                   pagination
                   fixedHeader
                   fixedHeaderScrollHeight='65vh'
@@ -206,7 +217,7 @@ const ManageUsers = () => {
       />
       <Modal
         isOpen={isAlertVisible}
-        message={`${message}!`}
+        message={`${message}`}
         onClose={() => {
           setIsAlertVisible(false);
         }}
