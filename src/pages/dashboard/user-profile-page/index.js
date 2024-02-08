@@ -190,22 +190,18 @@ const UserProfilePage = () => {
     }
   };
 
-  const handleResetPassword = () => {
+  const handleResetPassword = async () => {
     dispatch(updateEmail(email));
 
-    axios
-      .post(`${process.env.REACT_APP_BASE_URL}/auth/forget-password`, {
+    await send({
+      endpoint: 'auth/forget-password',
+      method: 'POST',
+      body: {
         email: email,
-      })
-      .then(() => {
-        dispatch(updateEmail(email));
-        navigate('/reset');
-      })
-      .catch((error) => {
-        // Need to use the custom hook so error can be handled there
-      });
+      },
+    });
 
-    navigate('/reset'); //Remove after if there is no issue in request Later
+    navigate('/reset');
   };
 
   return (
