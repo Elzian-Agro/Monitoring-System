@@ -100,7 +100,7 @@ const Notification = () => {
 
       <div className='Notifications mt-4'>
         {allNotifications.map((eachNotification, index) => (
-          <div className='Each-Notifications mb-4' key={index}>
+          <div className='Each-Notifications mb-4' key={eachNotification.id}>
             <div
               className={`${
                 eachNotification.read ? 'text-gray-400 dark:text-gray-500' : 'dark:text-white'

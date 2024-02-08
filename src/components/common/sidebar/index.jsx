@@ -60,10 +60,10 @@ const Sidebar = () => {
           </NavLink>
         ))}
 
-        {/* Title Charts */}
+        {/* Title Charts
         <div className='Title mt-14'>
           <p className=' text-gray-400 m-3 mt-4 uppercase'>Charts</p>
-        </div>
+        </div> */}
 
         {/* Logout */}
         <NavLink
