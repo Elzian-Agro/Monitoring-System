@@ -34,14 +34,11 @@ function Login({ setPage }) {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    if (!email) {
-      setError('Please enter the email');
+    if (!email || !password) {
+      setError('Please enter the credentials');
       return;
     } else if (!isValidEmail(email)) {
       setError('Please Enter a Valid Email Address!');
-      return;
-    } else if (!password) {
-      setError('Please enter the password');
       return;
     }
 

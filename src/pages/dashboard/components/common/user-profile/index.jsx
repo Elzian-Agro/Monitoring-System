@@ -35,14 +35,14 @@ const UserProfile = () => {
   };
 
   return (
-    <div className='nav-item z-[999] absolute right-1 top-16 shadow-lg bg-white dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96'>
+    <div className='nav-item absolute right-1 top-16 shadow-lg bg-white dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96 z-[999]'>
       <div className='flex justify-between items-center'>
         <p className='font-semibold md:text-lg dark:text-white'>{t('My Profile')}</p>
         <button onClick={closeProfile}>
           <XCircleIcon className='h-6 w-6 dark:text-white' />
         </button>
       </div>
-      {/* I need to add link to this below div */}
+
       <div className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
         <img
           className='rounded-full h-20 md:h-24 md:w-24'

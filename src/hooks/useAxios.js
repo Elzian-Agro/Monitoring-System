@@ -14,8 +14,9 @@ const useAxios = () => {
 
   const getNewAccessToken = async () => {
     try {
-      const refreshToken = localStorage.getItem('jwtRefreshToken');
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/refresh`, { refreshToken });
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/refresh`, {
+        refreshToken: localStorage.getItem('jwtRefreshToken'),
+      });
       localStorage.setItem('jwtAccessToken', response.data.accessToken);
     } catch (error) {
       throw error;
