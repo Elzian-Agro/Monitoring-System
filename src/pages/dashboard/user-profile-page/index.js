@@ -202,11 +202,10 @@ const UserProfilePage = () => {
         navigate('/reset');
       })
       .catch((error) => {
-        // setError(identifyError(error.response?.data?.code));
-        console.log(error);
+        // Need to use the custom hook so error can be handled there
       });
 
-    navigate('/reset'); //Remove Later
+    // navigate('/reset'); //Remove after if there is no issue in request Later
   };
 
   return (

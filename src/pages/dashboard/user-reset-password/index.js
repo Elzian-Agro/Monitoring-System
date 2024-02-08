@@ -1,7 +1,5 @@
-import ResetPassword from 'pages/auth/reset-password';
 import React from 'react';
 import ResetForm from '../components/common/reset-form';
-
 
 const UserResetPassword = () => {
   return (
