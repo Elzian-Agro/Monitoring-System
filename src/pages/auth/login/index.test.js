@@ -79,10 +79,11 @@ describe('LoginPage Component', () => {
     // Simulate blank email
     fireEvent.change(emailInput, { target: { value: '' } });
     fireEvent.click(loginButton);
-    expect(screen.getByText('Please enter the email')).toBeInTheDocument();
+    expect(screen.getByText('Please enter the credentials')).toBeInTheDocument();
 
     // Simulate invalid email
     fireEvent.change(emailInput, { target: { value: 'invalidemail.com' } });
+    fireEvent.change(passwordInput, { target: { value: '123456789' } });
     fireEvent.click(loginButton);
     expect(screen.getByText('Please Enter a Valid Email Address!')).toBeInTheDocument();
 
@@ -90,7 +91,7 @@ describe('LoginPage Component', () => {
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
     fireEvent.change(passwordInput, { target: { value: '' } });
     fireEvent.click(loginButton);
-    expect(screen.getByText('Please enter the password')).toBeInTheDocument();
+    expect(screen.getByText('Please enter the credentials')).toBeInTheDocument();
   });
 
   it('toggles the "Remember me" checkbox', () => {
