@@ -20,13 +20,9 @@ const Sidebar = () => {
   const currentYear = new Date().getFullYear();
 
   const logout = () => {
-    try {
-      localStorage.removeItem('jwtAccessToken');
-      localStorage.removeItem('jwtRefreshToken');
-      dispatch(clearUserData());
-    } catch (error) {
-      console.error('Error during logout:', error);
-    }
+    localStorage.removeItem('jwtAccessToken');
+    localStorage.removeItem('jwtRefreshToken');
+    dispatch(clearUserData());
   };
 
   const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white bg-green-500 text-sm m-2';

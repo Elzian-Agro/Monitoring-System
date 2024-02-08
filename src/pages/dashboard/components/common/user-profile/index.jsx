@@ -29,13 +29,9 @@ const UserProfile = () => {
   };
 
   const logout = () => {
-    try {
-      localStorage.removeItem('jwtAccessToken');
-      localStorage.removeItem('jwtRefreshToken');
-      dispatch(clearUserData());
-    } catch (error) {
-      console.error('Error during logout:', error);
-    }
+    localStorage.removeItem('jwtAccessToken');
+    localStorage.removeItem('jwtRefreshToken');
+    dispatch(clearUserData());
   };
 
   return (

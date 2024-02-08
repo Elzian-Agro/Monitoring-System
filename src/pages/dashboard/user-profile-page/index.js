@@ -205,7 +205,7 @@ const UserProfilePage = () => {
         // Need to use the custom hook so error can be handled there
       });
 
-    // navigate('/reset'); //Remove after if there is no issue in request Later
+    navigate('/reset'); //Remove after if there is no issue in request Later
   };
 
   return (
