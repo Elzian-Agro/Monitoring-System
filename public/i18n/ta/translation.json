@@ -111,5 +111,8 @@
   "Disable":"முடக்கவும்",
   "Notifications":"அறிவிப்புகள்",
   "Account Settings":"கணக்கு அமைப்புகள்",
-  "Reset Password":"கடவுச்சொல்லை மீட்டமை"
+  "Reset Password":"கடவுச்சொல்லை மீட்டமை",
+  "Are you sure you want to disable this account?":"இந்தக் கணக்கை நிச்சயமாக முடக்க விரும்புகிறீர்களா?",
+  "Disabled successfully":"வெற்றிகரமாக முடக்கப்பட்டது",
+  "Do you want to reset the password?":"கடவுச்சொல்லை மீட்டமைக்க வேண்டுமா?"
 }

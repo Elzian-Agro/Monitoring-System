@@ -177,7 +177,7 @@ const UserProfilePage = () => {
           },
         }
       );
-      setMessage('Disabled successfully!');
+      setMessage(t('Disabled successfully'));
       setIsAlertVisible(true);
 
       //Removed locally sotored user data
@@ -355,7 +355,7 @@ const UserProfilePage = () => {
       {/* Disable confirmation */}
       <Modal
         isOpen={isConfirmVisible}
-        message='Are you sure want to disable this account?'
+        message={t('Are you sure you want to disable this account?')}
         onClose={(result) => confirmDialogCloseDisable(result)}
         type='confirmation'
       />
@@ -363,7 +363,7 @@ const UserProfilePage = () => {
       {/* Reset Password confirmation */}
       <Modal
         isOpen={isResetConfirmVisible}
-        message='Do you want to reset the password?'
+        message={t('Do you want to reset the password?')}
         onClose={confirmDialogCloseReset}
         type='confirmation'
       />

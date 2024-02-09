@@ -111,6 +111,9 @@
   "Disable":"Disable",
   "Notifications":"Notifications",
   "Account Settings":"Account Settings",
-  "Reset Password":"Reset Password"
+  "Reset Password":"Reset Password",
+  "Are you sure you want to disable this account?":"Are you sure you want to disable this account?",
+  "Disabled successfully":"Disabled successfully",
+  "Do you want to reset the password?":"Do you want to reset the password?"
 
 }
