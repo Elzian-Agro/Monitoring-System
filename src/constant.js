@@ -1,6 +1,6 @@
 export const authRegex = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+  password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])(?!.*\s)[A-Za-z\d\W_]{8,}$/,
   nicNumber: /^(\d{9}[vV]|\d{12})$/,
   phoneNumber: /^0?\d{9}$/,
 };
