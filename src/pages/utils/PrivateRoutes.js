@@ -4,17 +4,23 @@ import useAxios from 'hooks/useAxios';
 
 const PrivateRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { send } = useAxios();
 
   useEffect(() => {
     const verifyUser = async () => {
       const response = await send({ endpoint: 'user/verify', method: 'POST' });
-      setIsAuthenticated(response);
+      setIsAuthenticated(!!response);
+      setLoading(false);
     };
 
     verifyUser();
     // eslint-disable-next-line
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return isAuthenticated ? <Outlet /> : <Navigate to='/' />;
 };
