@@ -111,5 +111,8 @@
   "Disable":"අක්රිය කරන්න",
   "Notifications":"දැනුම්දීම්",
   "Account Settings":"ගිණුම් සැකසුම්",
-  "Reset Password":"මුරපදය නැවත සකසන්න"
+  "Reset Password":"මුරපදය නැවත සකසන්න",
+  "Are you sure you want to disable this account?":"ඔබට මෙම ගිණුම අබල කිරීමට අවශ්‍ය බව විශ්වාසද?",
+  "Disabled successfully":"සාර්ථකව ආබාධිතයි",
+  "Do you want to reset the password?":"ඔබට මුරපදය යළි පිහිටුවීමට අවශ්‍යද?"
 }
