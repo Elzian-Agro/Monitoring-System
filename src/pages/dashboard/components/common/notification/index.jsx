@@ -13,7 +13,6 @@ const Notification = () => {
   const dispatch = useDispatch();
   const allNotifications = useSelector(selectAllNotifications);
   const { t } = useTranslation();
-  const token = localStorage.getItem('jwtAccessToken');
   const { send } = useAxios();
 
   const closeNotification = () => {
@@ -24,9 +23,6 @@ const Notification = () => {
     await send({
       endpoint: 'notification/readByUserId',
       method: 'PUT',
-      requestHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
     });
 
     // Update the local list to mark all notifications as read.
