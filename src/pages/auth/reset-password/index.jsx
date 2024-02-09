@@ -76,8 +76,11 @@ function ResetPassword({ setPage }) {
       .catch((error) => {
         setIsLoading(false);
 
-        if (error.response?.data?.code === errorType.userBlocked.code) setBlocked(true);
-        else setError(identifyError(error.response?.data?.code));
+        if (error.response?.data?.code === errorType.userBlocked.code) {
+          setBlocked(true);
+        } else {
+          setError(identifyError(error.response?.data?.code));
+        }
       });
   };
 
@@ -107,8 +110,11 @@ function ResetPassword({ setPage }) {
         setTimer(60);
       })
       .catch((error) => {
-        if (error.response?.data?.code === errorType.userBlocked.code) setBlocked(true);
-        else setError(identifyError(error.response?.data?.code));
+        if (error.response?.data?.code === errorType.userBlocked.code) {
+          setBlocked(true);
+        } else {
+          setError(identifyError(error.response?.data?.code));
+        }
       });
   };
 

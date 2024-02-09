@@ -31,13 +31,13 @@ function TextBox({ label = null, placeholder = '', type = 'text', Icon = null, v
           className='appearance-none bg-transparent border-none w-full h-full text-gray-700 p-2 leading-tight focus:outline-none'
         />
         {isPassword && (
-          <button className='ml-2 cursor-pointer' onClick={handleTogglePassword}>
+          <div className='ml-2 cursor-pointer' onClick={handleTogglePassword}>
             {showPassword ? (
               <EyeSlashIcon className='h-6 w-6 text-gray-300' />
             ) : (
               <EyeIcon className='h-6 w-6 text-gray-300' />
             )}
-          </button>
+          </div>
         )}
       </div>
     </div>
