@@ -111,3 +111,5 @@ https://documenter.getpostman.com/view/32012154/2s9Ykt6KYB
 The application is deployed successfully in Dev and Prod
 Dev: http://monitoring-dev.elzian.com/
 Prod: http://monitoring.elzian.com/
+
+ngRok - n6ABQf$nDZ3S
