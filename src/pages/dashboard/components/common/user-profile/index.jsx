@@ -35,7 +35,7 @@ const UserProfile = () => {
   };
 
   return (
-    <div className='nav-item absolute right-1 top-16 shadow-lg bg-white dark:bg-secondary-dark-bg p-6 md:p-8 rounded-lg w-72 md:w-96 z-[999]'>
+    <div className='nav-item absolute right-1 top-16 shadow-lg bg-white dark:bg-secondary-dark-bg p-6 md:p-6 rounded-lg w-72 md:w-[22rem] z-[999]'>
       <div className='flex justify-between items-center'>
         <p className='font-semibold md:text-lg dark:text-white'>{t('My Profile')}</p>
         <button onClick={closeProfile}>
@@ -46,8 +46,8 @@ const UserProfile = () => {
       <div className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
         <img className='rounded-full h-20 md:h-24 md:w-24' src={profileImage || avatar} alt='user-profile' />
         <div>
-          <p className='font-semibold md:text-xl dark:text-white'>
-            {firstName} {lastName}{' '}
+          <p className='font-semibold md:text-lg dark:text-white'>
+            {firstName} {lastName}
           </p>
           <p className='text-gray-500 text-sm'> {userType} </p>
           <p className='text-gray-500 text-sm font-semibold'> {organizationName} </p>
@@ -77,7 +77,7 @@ const UserProfile = () => {
       <div className='mt-5'>
         <NavLink
           to='/'
-          className='flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm md:text-base text-black dark:text-white dark:hover:text-black hover:bg-red-500 m-2 duration-300'
+          className='flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm md:text-base text-black dark:text-white  hover:bg-red-500 m-2 duration-300'
           onClick={logout}>
           <ArrowUpTrayIcon className='h-6 w-6 rotate-90' />
           {t('Logout')}
