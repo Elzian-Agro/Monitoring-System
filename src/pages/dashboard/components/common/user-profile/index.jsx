@@ -44,11 +44,7 @@ const UserProfile = () => {
       </div>
 
       <div className='flex gap-5 items-center mt-6 border-color border-b-1 pb-6'>
-        <img
-          className='rounded-full h-20 md:h-24 md:w-24'
-          src={profileImage ? profileImage : avatar}
-          alt='user-profile'
-        />
+        <img className='rounded-full h-20 md:h-24 md:w-24' src={profileImage || avatar} alt='user-profile' />
         <div>
           <p className='font-semibold md:text-xl dark:text-white'>
             {firstName} {lastName}{' '}

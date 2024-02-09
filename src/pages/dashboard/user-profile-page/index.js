@@ -217,11 +217,7 @@ const UserProfilePage = () => {
               </p>
             </div>
           ) : (
-            <img
-              src={profileImage ? profileImage : avatar}
-              alt='Profile'
-              className='w-24 h-24 rounded-full object-cover'
-            />
+            <img src={profileImage || avatar} alt='Profile' className='w-24 h-24 rounded-full object-cover' />
           )}
 
           <div className='flex items-end'>
