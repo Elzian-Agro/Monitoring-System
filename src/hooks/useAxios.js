@@ -11,6 +11,7 @@ const useAxios = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [attempt, setAttempt] = useState(0);
 
   const getNewAccessToken = async () => {
     try {
@@ -24,6 +25,7 @@ const useAxios = () => {
   };
 
   const send = async ({ endpoint, method, body = null, requestHeaders = null }) => {
+    setAttempt((prev) => prev + 1);
     setLoading(true);
     try {
       const accessToken = localStorage.getItem('jwtAccessToken');
@@ -41,11 +43,12 @@ const useAxios = () => {
 
       setResponse(res.data);
       setError(null);
+      setAttempt(0);
       return res.data;
     } catch (err) {
       let error = err;
       setResponse(null);
-      if (error.response?.data?.code === 13004) {
+      if (error.response?.data?.code === 13004 && attempt <= 1) {
         try {
           await getNewAccessToken();
           return send({
