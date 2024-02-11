@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearUserData, setUserData } from '../slice/userSlice';
-import { PencilSquareIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { clearUserData } from '../slice/userSlice';
 import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
 import Modal from 'components/common/modal';
-import useAxios from 'hooks/useAxios';
+// import useAxios from 'hooks/useAxios';
 import UpdateProfileForm from '../components/common/update-profile-form';
 
 const UserProfilePage = () => {
@@ -15,12 +14,12 @@ const UserProfilePage = () => {
 
   const { t } = useTranslation();
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [photoEditMode, setPhotoEditMode] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [message, setMessage] = useState(null);
-  const { send } = useAxios();
+  // TODO: Fix this issue uncomment and use this custom hook for disable user
+  // const { send } = useAxios();
 
   //Capitalize the text
   const capitalize = (str) => {
@@ -38,7 +37,6 @@ const UserProfilePage = () => {
   const userBio = useSelector((state) => state.user.userBio);
   const profileImage = useSelector((state) => state.user.profileImage);
   const address = useSelector((state) => state.user.address);
-  const [localProfilePicture, setLocalProfilePicture] = useState(profileImage);
 
   const user = {
     firstName: firstName,
@@ -49,43 +47,9 @@ const UserProfilePage = () => {
     email: email,
   };
 
-  const handleProfilePictureChange = (event) => {
-    // Handle updating the profile picture when a new image is selected
-    const newProfilePicture = event.target.files[0];
-    setLocalProfilePicture(newProfilePicture);
-  };
-
-  const handleSaveButtonClick = async () => {
-    if (localProfilePicture) {
-      // Use FormData to append the file and other data
-      const formData = new FormData();
-      formData.append('profile-image', localProfilePicture);
-
-      // Make Axios PUT request to the specified endpoint
-      await send({
-        endpoint: 'user/profile/image',
-        method: 'PUT',
-        body: formData,
-        requestHeaders: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      // Dispatch the updated profile image URL to Redux store
-      dispatch(setUserData({ profileImage: URL.createObjectURL(localProfilePicture) }));
-
-      // Toggle back to view mode
-      setPhotoEditMode(false);
-    }
-  };
-
   const formSubmission = async (message) => {
     setMessage(message);
     setIsAlertVisible(true);
-  };
-
-  const handlePhotoEditButtonClick = () => {
-    setPhotoEditMode(true);
   };
 
   //Disable
@@ -136,29 +100,7 @@ const UserProfilePage = () => {
       ) : (
         <div className='bg-white dark:bg-gray-800 p-8 rounded shadow-md'>
           <div className='flex justify-center mb-4'>
-            {photoEditMode ? (
-              <div className='flex items-center justify-center'>
-                <input type='file' accept='image/*' onChange={handleProfilePictureChange} />
-                <p className='text-xs text-gray-500 pr-4'>
-                  Images should be JPG or PNG,
-                  <br /> size should be below 5MB.
-                </p>
-              </div>
-            ) : (
-              <img src={profileImage || avatar} alt='Profile' className='w-24 h-24 rounded-full object-cover' />
-            )}
-
-            <div className='flex items-end'>
-              {photoEditMode ? (
-                <button className='bg-blue-500 text-white rounded px-4 py-2' onClick={handleSaveButtonClick}>
-                  <CheckIcon className='h-6 w-6 text-black dark:text-white' />
-                </button>
-              ) : (
-                <button className='bg-blue-500 text-white rounded p-1' onClick={handlePhotoEditButtonClick}>
-                  <PencilSquareIcon className='h-5 w-5 text-black dark:text-white' />
-                </button>
-              )}
-            </div>
+            <img src={profileImage || avatar} alt='Profile' className='w-24 h-24 rounded-full object-cover' />
           </div>
 
           <div className='bio max-w-[50rem] mx-auto text-center mb-6'>
