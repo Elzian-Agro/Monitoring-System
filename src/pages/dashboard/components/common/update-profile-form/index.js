@@ -8,12 +8,17 @@ import { validateForm } from 'pages/dashboard/utils/userFormValidation';
 import useAxios from 'hooks/useAxios';
 import { useDispatch } from 'react-redux';
 import { setUserData } from 'pages/dashboard/slice/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { updateEmail } from 'pages/auth/slice/emailSlice';
+import Modal from 'components/common/modal';
 
 const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) => {
   const dispatch = useDispatch();
   const [userBio, setUserBio] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [address, setAddress] = useState('');
+  const [isResetConfirmVisible, setIsResetConfirmVisible] = useState(false);
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
 
   const { t } = useTranslation();
@@ -62,6 +67,27 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
     }
   };
 
+  const confirmDialogCloseReset = (result) => {
+    if (result) {
+      handleResetPassword();
+    }
+    setIsResetConfirmVisible(false);
+  };
+
+  const handleResetPassword = async () => {
+    dispatch(updateEmail(user.email));
+
+    await send({
+      endpoint: 'auth/forget-password',
+      method: 'POST',
+      body: {
+        email: user.email,
+      },
+    });
+
+    navigate('/reset');
+  };
+
   if (!visible) return null;
 
   return (
@@ -108,9 +134,24 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
           setValue={setAddress}
         />
       </form>
-      <div className='flex justify-end gap-2 px-12 sm:px-24 md:px-44 lg:px-40'>
+      <div className='flex justify-between mt-20 px-12 sm:px-24 md:px-44 lg:px-40'>
+        <button
+          className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
+          onClick={() => {
+            setIsResetConfirmVisible(true);
+          }}>
+          {t('Reset Password')}
+        </button>
         <PrimaryButton color='bg-blue-500 border-blue-600' text={'Update'} onClick={handleSubmit} />
       </div>
+
+      {/* Reset Password confirmation */}
+      <Modal
+        isOpen={isResetConfirmVisible}
+        message={t('Do you want to reset the password?')}
+        onClose={confirmDialogCloseReset}
+        type='confirmation'
+      />
     </div>
   );
 };

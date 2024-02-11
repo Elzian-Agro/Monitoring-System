@@ -4,22 +4,20 @@ import { clearUserData, setUserData } from '../slice/userSlice';
 import { PencilSquareIcon, CheckIcon } from '@heroicons/react/24/outline';
 import { identifyError } from 'pages/auth/utils';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
 import Modal from 'components/common/modal';
 import useAxios from 'hooks/useAxios';
-import { updateEmail } from 'pages/auth/slice/emailSlice';
 import UpdateProfileForm from '../components/common/update-profile-form';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const { t } = useTranslation();
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [photoEditMode, setPhotoEditMode] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
-  const [isResetConfirmVisible, setIsResetConfirmVisible] = useState(false);
+
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [message, setMessage] = useState(null);
   const { send } = useAxios();
@@ -48,6 +46,7 @@ const UserProfilePage = () => {
     phoneNumber: phoneNumber,
     bio: userBio,
     address: address,
+    email: email,
   };
 
   const handleProfilePictureChange = (event) => {
@@ -97,13 +96,6 @@ const UserProfilePage = () => {
     setIsConfirmVisible(false);
   };
 
-  const confirmDialogCloseReset = (result) => {
-    if (result) {
-      handleResetPassword();
-    }
-    setIsResetConfirmVisible(false);
-  };
-
   const handleDisable = async () => {
     setIsAlertVisible(true);
     try {
@@ -128,20 +120,6 @@ const UserProfilePage = () => {
       setMessage(identifyError(error.response?.data?.code));
       setIsAlertVisible(true);
     }
-  };
-
-  const handleResetPassword = async () => {
-    dispatch(updateEmail(email));
-
-    await send({
-      endpoint: 'auth/forget-password',
-      method: 'POST',
-      body: {
-        email: email,
-      },
-    });
-
-    navigate('/reset');
   };
 
   return (
@@ -244,14 +222,6 @@ const UserProfilePage = () => {
               <button
                 className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
                 onClick={() => {
-                  setIsResetConfirmVisible(true);
-                }}>
-                {t('Reset Password')}
-              </button>
-
-              <button
-                className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
-                onClick={() => {
                   setIsConfirmVisible(true);
                 }}>
                 {t('Disable')}
@@ -269,13 +239,6 @@ const UserProfilePage = () => {
         type='confirmation'
       />
 
-      {/* Reset Password confirmation */}
-      <Modal
-        isOpen={isResetConfirmVisible}
-        message={t('Do you want to reset the password?')}
-        onClose={confirmDialogCloseReset}
-        type='confirmation'
-      />
       {/* Alert message Popup */}
       <Modal
         isOpen={isAlertVisible}
