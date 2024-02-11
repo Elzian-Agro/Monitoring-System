@@ -165,8 +165,8 @@ const ResetForm = ({ onClose, user = null, formSubmission }) => {
             )}
           </div>
           <div className='flex justify-end gap-2 px-12 sm:px-24 md:px-44 lg:px-40'>
-            <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />
-            <PrimaryButton bgEffect='bg-blue-500 border-blue-600' text='Submit' onClick={handleSubmit} />
+            <PrimaryButton color='bg-red-500 border-red-600' text='Clear' onClick={resetForm} />
+            <PrimaryButton color='bg-blue-500 border-blue-600' text='Submit' onClick={handleSubmit} />
           </div>
         </div>
       )}

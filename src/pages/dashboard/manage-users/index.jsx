@@ -21,11 +21,10 @@ const ManageUsers = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
-  const [isLoaderVisible, setIsLoaderVisible] = useState(true);
 
   const currentMode = useSelector(selectTheme);
   const { t } = useTranslation();
-  const { send } = useAxios();
+  const { loading, send } = useAxios();
 
   // User table columns define
   const columns = [
@@ -63,8 +62,7 @@ const ManageUsers = () => {
       name: t('ACTION'),
       cell: (row) => (
         <PrimaryButton
-          bgEffect='bg-blue-500 border-blue-600'
-          size='min-w-20'
+          color='bg-blue-500 border-blue-600'
           text='Edit'
           onClick={() => {
             setSelectedUser(row);
@@ -77,8 +75,7 @@ const ManageUsers = () => {
       cell: (row) => (
         <div className='flex flex-row gap-2 items-center'>
           <PrimaryButton
-            bgEffect='bg-red-500 border-red-600'
-            size='min-w-20'
+            color='bg-red-500 border-red-600'
             text='Delete'
             onClick={() => {
               setSelectedUser(row);
@@ -94,36 +91,12 @@ const ManageUsers = () => {
   const getUsers = async () => {
     const response = await send({ endpoint: 'user', method: 'GET' });
     setUsers(response);
-    setIsLoaderVisible(false);
   };
 
   useEffect(() => {
     getUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleConfirmationAndDelete = async (result) => {
-    if (result) {
-      const response = await send({
-        endpoint: `user/delete/${selectedUser._id}`,
-        method: 'PUT',
-        body: { isDeleted: true },
-      });
-      setIsConfirmVisible(false);
-      if (response) {
-        setMessage('User deleted successfully');
-        setIsAlertVisible(true);
-        getUsers();
-      }
-    }
-    setIsConfirmVisible(false);
-  };
-
-  const formSubmission = async (message) => {
-    setMessage(message);
-    setIsAlertVisible(true);
-    getUsers();
-  };
 
   // Function to filter the user based on the search text
   const filteredUsers = useMemo(() => {
@@ -151,9 +124,33 @@ const ManageUsers = () => {
     });
   }, [users, filterText]);
 
+  // Delete user
+  const handleConfirmationAndDelete = async (result) => {
+    if (result) {
+      const response = await send({
+        endpoint: `user/delete/${selectedUser._id}`,
+        method: 'PUT',
+        body: { isDeleted: true },
+      });
+      setIsConfirmVisible(false);
+      if (response) {
+        setMessage('User deleted successfully');
+        setIsAlertVisible(true);
+        getUsers();
+      }
+    }
+    setIsConfirmVisible(false);
+  };
+
+  // Form submission for register and edit
+  const formSubmission = async (message) => {
+    setMessage(message);
+    setIsAlertVisible(true);
+    getUsers();
+  };
+
   return (
     <div className='mx-5 mt-2'>
-      {isLoaderVisible && <Loader />}
       {isFormVisible ? (
         <Form
           onClose={() => {
@@ -166,7 +163,9 @@ const ManageUsers = () => {
         />
       ) : (
         <>
-          {isLoaderVisible ? null : (
+          {loading ? (
+            <Loader />
+          ) : (
             <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
               <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
                 <div className='flex gap-2 mb-2 md:mb-0'>
@@ -194,12 +193,12 @@ const ManageUsers = () => {
                   }}
                 />
               </div>
-              <div className='flex flex-col rounded-t-lg'>
+              <div className='rounded-t-lg'>
                 <DataTable
                   columns={columns}
                   data={filteredUsers}
                   customStyles={currentMode === 'Dark' ? {} : customTableStyles}
-                  theme={currentMode === 'Dark' ? 'dark' : 'defalt'}
+                  theme={currentMode === 'Dark' ? 'dark' : 'default'}
                   pagination
                   fixedHeader
                   fixedHeaderScrollHeight='65vh'

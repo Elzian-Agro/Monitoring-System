@@ -23,20 +23,23 @@ function TextBox({
   };
 
   return (
-    <div className='min-w-52'>
+    <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full'>
       <div className='mb-2'>
-        <label className='bg-white dark:bg-secondary-dark-bg text-gray-400 text-sm'>{t(label)} :</label>
+        <label htmlFor={label} className='bg-white dark:bg-secondary-dark-bg text-gray-400 text-sm'>
+          {t(label)}:
+        </label>
       </div>
-      <div className='border-2 border-gray-300 rounded border-b-4 border-r-2'>
+      <div className='border-2 border-b-[3px] border-gray-300 rounded'>
         <div className='flex items-center p-2'>
           {Icon && <Icon className='h-6 w-6 text-gray-300 mr-2' />}
           <input
+            id={label}
             type={isPassword && showPassword ? 'text' : type}
             placeholder={t(placeholder)}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             disabled={disabled}
-            className='appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white p-2 leading-tight focus:outline-none'
+            className='text-sm appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white p-2 leading-tight focus:outline-none'
           />
           {isPassword && (
             <div className='ml-2 cursor-pointer' onClick={handleTogglePassword}>
@@ -55,13 +58,14 @@ function TextBox({
 }
 
 TextBox.propTypes = {
-  label: PropTypes.string,
+  label: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   type: PropTypes.string,
   Icon: PropTypes.elementType,
   value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   error: PropTypes.string,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default TextBox;

@@ -81,6 +81,13 @@ export const errorType = {
 };
 
 export const customTableStyles = {
+  table: {
+    style: {
+      width: '100%',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
   headRow: {
     style: {
       backgroundColor: '#494d4a',

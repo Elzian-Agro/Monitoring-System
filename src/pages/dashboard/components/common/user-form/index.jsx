@@ -41,7 +41,6 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
       setPhoneNum(user.phoneNum);
       setOrgName(user.orgName);
       setIsDisabled(user.isDisabled);
-      setIsToggleClicked(false);
     }
 
     // Generate random password for register mode
@@ -122,103 +121,107 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
           {user ? t('UPDATE USER DETAILS') : t('NEW USER REGISTARTION')}
         </h1>
       </div>
-      <form
-        className={`grid space-y-4 w-full px-12 sm:px-24 md:px-44 lg:px-40 lg:grid-cols-2 lg:space-y-0 lg:gap-x-24 ${
-          user ? 'lg:gap-y-12' : 'lg:gap-y-6'
-        }`}>
-        <TextBox
-          placeholder='Eg. Saman'
-          label='First Name'
-          type='text'
-          error={errors.firstName}
-          Icon={UserIcon}
-          value={firstName}
-          setValue={setFirstName}
-        />
-
-        <TextBox
-          placeholder='Eg. Kumra'
-          label='Last Name'
-          type='text'
-          error={errors.lastName}
-          Icon={UserIcon}
-          value={lastName}
-          setValue={setLastName}
-        />
-
-        <TextBox
-          placeholder='Eg. 9452XXXXXV'
-          label='NIC'
-          error={errors.nic}
-          disabled={!!user}
-          Icon={UserIcon}
-          value={nic}
-          setValue={setNic}
-        />
-
-        <TextBox
-          placeholder='Eg. 076XXXXXXX'
-          label='Phone Number'
-          type='text'
-          error={errors.phoneNum}
-          Icon={PhoneIcon}
-          value={phoneNum}
-          setValue={setPhoneNum}
-        />
-
-        <TextBox
-          placeholder='Eg. sample@gmail.com'
-          label='Email Address'
-          type='text'
-          error={errors.email}
-          Icon={EnvelopeIcon}
-          value={email}
-          setValue={setEmail}
-        />
-
-        {!user && (
+      <div className='flex flex-col justify-center'>
+        <form
+          className={`grid lg:grid-cols-2 space-y-4 lg:space-y-0 w-full justify-center lg:gap-x-20 lg:px-28 xl:px-48 ${
+            user ? 'lg:gap-y-12' : 'lg:gap-y-6'
+          }`}>
           <TextBox
-            placeholder='************'
-            label='Password'
-            type='password'
-            disabled={true}
-            error={errors.password}
-            Icon={LockClosedIcon}
-            value={password}
-            setValue={setPassword}
+            placeholder='Eg. Saman'
+            label='First Name'
+            type='text'
+            error={errors.firstName}
+            Icon={UserIcon}
+            value={firstName}
+            setValue={setFirstName}
           />
-        )}
 
-        <TextBox
-          placeholder='Eg. ABC Org.'
-          label='Organization Name'
-          type='text'
-          error={errors.orgName}
-          Icon={HomeIcon}
-          value={orgName}
-          setValue={setOrgName}
-        />
+          <TextBox
+            placeholder='Eg. Kumra'
+            label='Last Name'
+            type='text'
+            error={errors.lastName}
+            Icon={UserIcon}
+            value={lastName}
+            setValue={setLastName}
+          />
 
-        {user && (
-          <div className='flex flex-row items-center gap-4'>
-            <div className='text-gray-400'>{user.isDisabled ? t('Enabled user') : t('Disabled user')} :</div>
-            <ToggleButton
-              value={isToggleClicked}
-              onChange={() => {
-                setIsToggleClicked(!isToggleClicked);
-                setIsDisabled(!isDisabled);
-              }}
+          <TextBox
+            placeholder='Eg. 9452XXXXXV'
+            label='NIC'
+            error={errors.nic}
+            disabled={!!user}
+            Icon={UserIcon}
+            value={nic}
+            setValue={setNic}
+          />
+
+          <TextBox
+            placeholder='Eg. 076XXXXXXX'
+            label='Phone Number'
+            type='text'
+            error={errors.phoneNum}
+            Icon={PhoneIcon}
+            value={phoneNum}
+            setValue={setPhoneNum}
+          />
+
+          <TextBox
+            placeholder='Eg. sample@gmail.com'
+            label='Email Address'
+            type='text'
+            error={errors.email}
+            Icon={EnvelopeIcon}
+            value={email}
+            setValue={setEmail}
+          />
+
+          {!user && (
+            <TextBox
+              placeholder='Password'
+              label='Password'
+              type='password'
+              disabled={true}
+              error={errors.password}
+              Icon={LockClosedIcon}
+              value={password}
+              setValue={setPassword}
+            />
+          )}
+
+          <TextBox
+            placeholder='Eg. ABC Org.'
+            label='Organization Name'
+            type='text'
+            error={errors.orgName}
+            Icon={HomeIcon}
+            value={orgName}
+            setValue={setOrgName}
+          />
+
+          {user && (
+            <div className='flex flex-row items-center gap-4'>
+              <div className='text-gray-400'>{user.isDisabled ? t('Enabled user') : t('Disabled user')} :</div>
+              <ToggleButton
+                value={isToggleClicked}
+                onChange={() => {
+                  setIsToggleClicked(!isToggleClicked);
+                  setIsDisabled(!isDisabled);
+                }}
+              />
+            </div>
+          )}
+        </form>
+        <div className='flex justify-center mt-4'>
+          <div className='flex justify-end gap-2 w-60 sm:w-64 md:w-80 lg:w-full lg:px-28 xl:px-48'>
+            {!user && <PrimaryButton color='bg-red-500 border-red-600' text='Clear' onClick={resetForm} />}
+            <PrimaryButton
+              color='bg-blue-500 border-blue-600'
+              text={user ? 'Update' : 'Submit'}
+              onClick={handleSubmit}
             />
           </div>
-        )}
-      </form>
-      <div className='flex justify-end gap-2 px-12 sm:px-24 md:px-44 lg:px-40'>
-        {!user && <PrimaryButton bgEffect='bg-red-500 border-red-600' size='w-24' text='Clear' onClick={resetForm} />}
-        <PrimaryButton
-          bgEffect='bg-blue-500 border-blue-600'
-          text={user ? 'Update' : 'Submit'}
-          onClick={handleSubmit}
-        />
+        </div>
       </div>
     </div>
   );
