@@ -90,11 +90,13 @@ const UserProfilePage = () => {
         />
       ) : (
         <div className='bg-white dark:bg-gray-800 p-8 rounded shadow-md'>
-          <div className='flex justify-center h-36 mb-4 bg-gradient-to-r from-purple-500 to-pink-500'>
-            <img src={profileImage || avatar} alt='Profile' className='w-32 h-32 rounded-full object-cover' />
+          <div className='relative flex justify-center h-36 mb-4 bg-gradient-to-r from-purple-500 to-pink-500'>
+            <div className='absolute bottom-[-20px]'>
+              <img src={profileImage || avatar} alt='Profile' className='w-32 h-32 rounded-full object-cover' />
+            </div>
           </div>
 
-          <div className='mx-auto text-center mb-6 '>
+          <div className='mx-auto text-center mb-6 mt-6'>
             <div className='socialLinks absolute flex right-14'>
               {/* Facebook */}
               <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='30' height='30' viewBox='0 0 48 48'>
