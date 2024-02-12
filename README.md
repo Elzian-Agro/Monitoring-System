@@ -112,4 +112,6 @@ The application is deployed successfully in Dev and Prod
 Dev: http://monitoring-dev.elzian.com/
 Prod: http://monitoring.elzian.com/
 
+Backend Dev API: https://monitoring-dev-api.elzian.com
+
 ngRok - n6ABQf$nDZ3S
