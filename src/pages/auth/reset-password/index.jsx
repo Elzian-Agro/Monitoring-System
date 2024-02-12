@@ -119,15 +119,15 @@ function ResetPassword({ setPage }) {
   };
 
   return (
-    <div className='flex flex-col h-full w-full gap-5 md:gap-0 items-start'>
-      <button onClick={handleGoBack} className='group w-[100px] flex items-center'>
+    <div className='flex flex-col h-full w-full gap-5 md:gap-0 items-start dark:text-white'>
+      <button onClick={handleGoBack} className='group w-[100px] flex items-center '>
         <ArrowLeftIcon className='w-[20px] group-hover:ml-[-20px] transition-all' />
         <p className='flex-1 font-zenkaku text-[12px]'>{t('Go Back')}</p>
       </button>
 
       {email && !success && !blocked && (
         <div className='flex-1 flex items-center flex-col lg:justify-center h-full w-full'>
-          <h1 className='font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
+          <h1 className='font-zenkaku font-black text-[#212121] dark:text-white text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
             {t('RESET PASSWORD')}
           </h1>
           <p className='font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10'>
