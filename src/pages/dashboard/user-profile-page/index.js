@@ -6,11 +6,9 @@ import avatar from 'assets/images/avatar.png';
 import Modal from 'components/common/modal';
 import useAxios from 'hooks/useAxios';
 import UpdateProfileForm from '../components/common/update-profile-form';
-import { useNavigate } from 'react-router-dom';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { t } = useTranslation();
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -147,14 +145,12 @@ const UserProfilePage = () => {
             </div>
 
             <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-blue-400'>{t('Organization Name:')}</label>
+              <label className='block text-gray-600 dark:text-blue-400'>{t('Organization')}:</label>
               <p className='text-gray-800 dark:text-white'>{organizationName}</p>
             </div>
 
             <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-blue-400'>
-                {t('National Identity Card Number (NIC):')}
-              </label>
+              <label className='block text-gray-600 dark:text-blue-400'>{t('NIC')}:</label>
               <p className='text-gray-800 dark:text-white'>{nic}</p>
             </div>
 
@@ -164,29 +160,27 @@ const UserProfilePage = () => {
             </div>
 
             <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-blue-400'>{t('Phone Number:')}</label>
+              <label className='block text-gray-600 dark:text-blue-400'>{t('Phone No')}:</label>
               <p className='text-gray-800 dark:text-white'>{phoneNumber}</p>
             </div>
           </div>
 
-          <div className='flex flex-row justify-between'>
+          <div className='flex flex-row justify-end'>
             <button
               className='bg-green-500 text-black dark:text-white rounded px-4 py-2 mr-2'
               onClick={() => {
                 setIsFormVisible(true);
               }}>
-              {t('Edit')}
+              {t('Update')}
             </button>
 
-            <div className='flex flex-row'>
-              <button
-                className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
-                onClick={() => {
-                  setIsConfirmVisible(true);
-                }}>
-                {t('Disable')}
-              </button>
-            </div>
+            <button
+              className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
+              onClick={() => {
+                setIsConfirmVisible(true);
+              }}>
+              {t('Disable')}
+            </button>
           </div>
         </div>
       )}
@@ -205,7 +199,6 @@ const UserProfilePage = () => {
         message={`${message}!`}
         onClose={() => {
           setIsAlertVisible(false);
-          navigate('/');
         }}
         type='alert'
       />

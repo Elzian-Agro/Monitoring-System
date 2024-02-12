@@ -208,7 +208,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
           setValue={setAddress}
         />
       </form>
-      <div className='flex justify-between mt-20 px-12 sm:px-24 md:px-44 lg:px-40'>
+      <div className='flex justify-end mt-20 px-12 sm:px-24 md:px-44 lg:px-40'>
         <button
           className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
           onClick={() => {
