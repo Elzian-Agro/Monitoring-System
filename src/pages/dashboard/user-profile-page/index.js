@@ -99,7 +99,7 @@ const UserProfilePage = () => {
         />
       ) : (
         <div className='bg-white dark:bg-gray-800 p-8 rounded shadow-md'>
-          <div className='flex justify-center mb-4 bg-green-400'>
+          <div className='flex justify-center h-36 mb-4 bg-gradient-to-r from-purple-500 to-pink-500'>
             <img src={profileImage || avatar} alt='Profile' className='w-32 h-32 rounded-full object-cover' />
           </div>
 
@@ -149,29 +149,29 @@ const UserProfilePage = () => {
 
           <div className='grid md:grid-cols-2 gap-4 mt-10'>
             <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-gray-400'>{t('Email')}:</label>
+              <label className='block text-gray-600 dark:text-blue-400'>{t('Email')}:</label>
               <p className='text-gray-800 dark:text-white'>{email}</p>
             </div>
 
             <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-gray-400'>{t('Organization Name:')}</label>
+              <label className='block text-gray-600 dark:text-blue-400'>{t('Organization Name:')}</label>
               <p className='text-gray-800 dark:text-white'>{organizationName}</p>
             </div>
 
             <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-gray-400'>
+              <label className='block text-gray-600 dark:text-blue-400'>
                 {t('National Identity Card Number (NIC):')}
               </label>
               <p className='text-gray-800 dark:text-white'>{nic}</p>
             </div>
 
             <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-gray-400'>{t('Address')}</label>
+              <label className='block text-gray-600 dark:text-blue-400'>{t('Address')}:</label>
               <p className='text-gray-800 dark:text-white'>{address}</p>
             </div>
 
             <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-gray-400'>{t('Phone Number:')}</label>
+              <label className='block text-gray-600 dark:text-blue-400'>{t('Phone Number:')}</label>
               <p className='text-gray-800 dark:text-white'>{phoneNumber}</p>
             </div>
           </div>
