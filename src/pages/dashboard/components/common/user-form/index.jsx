@@ -162,7 +162,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
             type='text'
             error={errors.phoneNum}
             Icon={PhoneIcon}
-            value={phoneNum}
+            value={phoneNum.toString()}
             setValue={setPhoneNum}
           />
 
