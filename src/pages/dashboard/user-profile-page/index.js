@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearUserData } from '../slice/userSlice';
-import { identifyError } from 'pages/auth/utils';
-import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
 import Modal from 'components/common/modal';
-// import useAxios from 'hooks/useAxios';
+import useAxios from 'hooks/useAxios';
 import UpdateProfileForm from '../components/common/update-profile-form';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -18,8 +18,8 @@ const UserProfilePage = () => {
 
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [message, setMessage] = useState(null);
-  // TODO: Fix this issue uncomment and use this custom hook for disable user
-  // const { send } = useAxios();
+
+  const { send } = useAxios();
 
   //Capitalize the text
   const capitalize = (str) => {
@@ -61,28 +61,19 @@ const UserProfilePage = () => {
   };
 
   const handleDisable = async () => {
-    setIsAlertVisible(true);
-    try {
-      const { jwtAccessToken: accessToken } = localStorage;
-      await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/user/disable/${userId}`,
-        { isDisabled: true },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+    const response = await send({
+      endpoint: `user/disable/${userId}`,
+      method: 'POST',
+      body: { isDisabled: true },
+    });
+
+    if (response) {
       setMessage(t('Disabled successfully'));
       setIsAlertVisible(true);
-
       //Removed locally sotored user data
       localStorage.removeItem('jwtAccessToken');
       localStorage.removeItem('jwtRefreshToken');
       dispatch(clearUserData());
-    } catch (error) {
-      setMessage(identifyError(error.response?.data?.code));
-      setIsAlertVisible(true);
     }
   };
 
@@ -212,6 +203,7 @@ const UserProfilePage = () => {
         message={`${message}!`}
         onClose={() => {
           setIsAlertVisible(false);
+          navigate('/');
         }}
         type='alert'
       />
