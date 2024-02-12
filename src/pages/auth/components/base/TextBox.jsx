@@ -28,7 +28,7 @@ function TextBox({ label = null, placeholder = '', type = 'text', Icon = null, v
           placeholder={t(placeholder)}
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className='appearance-none bg-transparent border-none w-full h-full text-gray-700 p-2 leading-tight focus:outline-none'
+          className='appearance-none bg-transparent border-none w-full h-full text-gray-700 dark:text-white p-2 leading-tight focus:outline-none'
         />
         {isPassword && (
           <div className='ml-2 cursor-pointer' onClick={handleTogglePassword}>
