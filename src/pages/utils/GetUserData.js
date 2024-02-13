@@ -5,22 +5,20 @@ import useAxios from 'hooks/useAxios';
 
 const GetUserData = () => {
   const dispatch = useDispatch();
-  const { response, send } = useAxios();
+  const { send } = useAxios();
 
   useEffect(() => {
     const getUserData = async () => {
-       await send({ endpoint: 'user/profile', method: 'GET' });
-    };
+      const userData = await send({ endpoint: 'user/profile', method: 'GET' });
 
+      if (userData) {
+        dispatch(setUserData(userData));
+      }
+    };
     getUserData();
+
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    if (response) {
-      dispatch(setUserData(response));
-    }
-  }, [dispatch, response]);
 };
 
 export default GetUserData;

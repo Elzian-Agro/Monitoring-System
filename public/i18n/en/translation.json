@@ -50,13 +50,16 @@
   "Last Name": "Last Name",
   "NIC": "NIC",
   "Phone Number": "Phone Number",
-  "Organization Name": "Organization Name",
+  "Organization": "Organization",
   "Eg. Saman": "Eg. Saman",
   "Eg. Kumra": "Eg. Kumra",
   "Eg. 9452XXXXXV": "Eg. 9452XXXXXV",
   "Eg. 076XXXXXXX": "Eg. 076XXXXXXX",
   "Eg. sample@gmail.com": "Eg. sample@gmail.com",
   "Eg. ABC Org.": "Eg. ABC Org.",
+  "Eg. Your New Bio":"Eg. Your New Bio",
+  "Eg. 123 Main Road, Colombo":"Eg. 123 Main Road, Colombo",
+  "UPDATE YOUR DETAILS HERE":"UPDATE YOUR DETAILS HERE",
   "NEW USER REGISTARTION": "NEW USER REGISTARTION",
   "UPDATE USER DETAILS": "UPDATE USER DETAILS",
   "Enabled user": "Enabled user",
@@ -104,8 +107,7 @@
   "Last Name:":"Last Name:",
   "Organization Name:":"Organization Name:",
   "Email":"Email",
-  "National Identity Card Number (NIC):":"National Identity Card Number (NIC):",
-  "Phone Number:":"Phone Number:",
+  "Phone No":"Phone No",
   "Address":"Address",
   "User Type:":"User Type:",
   "Disable":"Disable",
@@ -114,6 +116,7 @@
   "Reset Password":"Reset Password",
   "Are you sure you want to disable this account?":"Are you sure you want to disable this account?",
   "Disabled successfully":"Disabled successfully",
-  "Do you want to reset the password?":"Do you want to reset the password?"
+  "Do you want to reset the password?":"Do you want to reset the password?",
+  "Bio":"Bio"
 
 }

@@ -57,6 +57,9 @@
   "Eg. 076XXXXXXX": "எ.கா. 076XXXXXXX",
   "Eg. sample@gmail.com": "எ.கா. sample@gmail.com",
   "Eg. ABC Org.": "எ.கா. ஏபிசி அமைப்பு.",
+  "Eg. Your New Bio":"எ.கா. உங்கள் புதிய பயோ",
+  "Eg. 123 Main Road, Colombo":"எ.கா. 123 பிரதான வீதி, கொழும்பு",
+  "UPDATE YOUR DETAILS HERE":"உங்கள் விவரங்களை இங்கே புதுப்பிக்கவும்",
   "NEW USER REGISTARTION": "புதிய பயனர் பதிவு",
   "UPDATE USER DETAILS": "பயனர் விவரங்களைப் புதுப்பிக்கவும்",
   "Enabled user": "இயக்கப்பட்டது",
@@ -102,10 +105,9 @@
   "Logout":"வெளியேறு",
   "First Name:":"முதல் பெயர்:",
   "Last Name:":"கடைசி பெயர்:",
-  "Organization Name:":"நிறுவன பெயர்:",
+  "Organization": "அமைப்பு",
   "Email":"மின்னஞ்சல்",
-  "National Identity Card Number (NIC):":"தேசிய அடையாள அட்டை எண் (NIC):",
-  "Phone Number:":"தொலைபேசி எண்:",
+  "Phone No":"தொலைபேசி எண்",
   "Address":"முகவரி",
   "User Type:":"பயனர் வகை:",
   "Disable":"முடக்கவும்",
@@ -114,5 +116,6 @@
   "Reset Password":"கடவுச்சொல்லை மீட்டமை",
   "Are you sure you want to disable this account?":"இந்தக் கணக்கை நிச்சயமாக முடக்க விரும்புகிறீர்களா?",
   "Disabled successfully":"வெற்றிகரமாக முடக்கப்பட்டது",
-  "Do you want to reset the password?":"கடவுச்சொல்லை மீட்டமைக்க வேண்டுமா?"
+  "Do you want to reset the password?":"கடவுச்சொல்லை மீட்டமைக்க வேண்டுமா?",
+  "Bio":"பயோ"
 }

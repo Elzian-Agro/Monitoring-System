@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearUserData } from '../slice/userSlice';
 import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
+import coverImage from 'assets/images/cover.jpg';
 import Modal from 'components/common/modal';
 import useAxios from 'hooks/useAxios';
 import UpdateProfileForm from '../components/common/update-profile-form';
@@ -17,6 +18,7 @@ const UserProfilePage = () => {
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [isDisableAlertVisible, setIsDisableAlertVisible] = useState(false);
   const [message, setMessage] = useState(null);
 
   const { send } = useAxios();
@@ -69,7 +71,7 @@ const UserProfilePage = () => {
 
     if (response) {
       setMessage(t('Disabled successfully'));
-      setIsAlertVisible(true);
+      setIsDisableAlertVisible(true);
       //Removed locally sotored user data
       localStorage.removeItem('jwtAccessToken');
       localStorage.removeItem('jwtRefreshToken');
@@ -89,15 +91,16 @@ const UserProfilePage = () => {
           formSubmission={formSubmission}
         />
       ) : (
-        <div className='bg-white dark:bg-gray-800 p-8 rounded shadow-md'>
-          <div className='relative flex justify-center h-36 mb-4 bg-gradient-to-r from-purple-500 to-pink-500'>
+        <div className='bg-white dark:bg-gray-800 rounded shadow-md'>
+          <div className='relative flex justify-center h-36 mb-4'>
+            <img src={coverImage} alt='farmLand' className='w-full h-full object-cover rounded-md' />
             <div className='absolute bottom-[-20px]'>
               <img src={profileImage || avatar} alt='Profile' className='w-32 h-32 rounded-full object-cover' />
             </div>
           </div>
 
           <div className='mx-auto text-center mb-6 mt-6'>
-            <div className='socialLinks absolute flex right-14'>
+            <div className='socialLinks absolute flex md:right-14 right-4'>
               {/* Facebook */}
               <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='30' height='30' viewBox='0 0 48 48'>
                 <path
@@ -140,53 +143,53 @@ const UserProfilePage = () => {
             <p className='text-gray-800 dark:text-white mb-2'>{userBio}</p>
           </div>
 
-          <div className='grid md:grid-cols-2 gap-4 mt-10'>
-            <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-blue-400'>{t('Email')}:</label>
-              <p className='text-gray-800 dark:text-white'>{email}</p>
+          <div className='grid md:grid-cols-2 gap-4 mt-10 p-8'>
+            <div className='1st-col ml-20'>
+              <div className='grid grid-cols-3 mb-8'>
+                <label className='block text-gray-600 dark:text-blue-400'>{t('Email')}:</label>
+                <p className='text-gray-800 dark:text-white'>{email}</p>
+              </div>
+
+              <div className='grid grid-cols-3 mb-8'>
+                <label className='block text-gray-600 dark:text-blue-400'>{t('Organization')}:</label>
+                <p className='text-gray-800 dark:text-white'>{organizationName}</p>
+              </div>
+
+              <div className='grid grid-cols-3 mb-8'>
+                <label className='block text-gray-600 dark:text-blue-400'>{t('NIC')}:</label>
+                <p className='text-gray-800 dark:text-white'>{nic}</p>
+              </div>
             </div>
 
-            <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-blue-400'>{t('Organization Name:')}</label>
-              <p className='text-gray-800 dark:text-white'>{organizationName}</p>
-            </div>
+            <div className='2nd-col ml-20'>
+              <div className='grid grid-cols-3 mb-8'>
+                <label className='block text-gray-600 dark:text-blue-400'>{t('Address')}:</label>
+                <p className='text-gray-800 dark:text-white'>{address}</p>
+              </div>
 
-            <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-blue-400'>
-                {t('National Identity Card Number (NIC):')}
-              </label>
-              <p className='text-gray-800 dark:text-white'>{nic}</p>
-            </div>
-
-            <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-blue-400'>{t('Address')}:</label>
-              <p className='text-gray-800 dark:text-white'>{address}</p>
-            </div>
-
-            <div className='flex mb-8 gap-4'>
-              <label className='block text-gray-600 dark:text-blue-400'>{t('Phone Number:')}</label>
-              <p className='text-gray-800 dark:text-white'>{phoneNumber}</p>
+              <div className='grid grid-cols-3 mb-8'>
+                <label className='block text-gray-600 dark:text-blue-400'>{t('Phone No')}:</label>
+                <p className='text-gray-800 dark:text-white'>{phoneNumber}</p>
+              </div>
             </div>
           </div>
 
-          <div className='flex flex-row justify-between'>
+          <div className='flex flex-row justify-end pb-8 pr-8'>
             <button
               className='bg-green-500 text-black dark:text-white rounded px-4 py-2 mr-2'
               onClick={() => {
                 setIsFormVisible(true);
               }}>
-              {t('Edit')}
+              {t('Update')}
             </button>
 
-            <div className='flex flex-row'>
-              <button
-                className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
-                onClick={() => {
-                  setIsConfirmVisible(true);
-                }}>
-                {t('Disable')}
-              </button>
-            </div>
+            <button
+              className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
+              onClick={() => {
+                setIsConfirmVisible(true);
+              }}>
+              {t('Disable')}
+            </button>
           </div>
         </div>
       )}
@@ -205,6 +208,16 @@ const UserProfilePage = () => {
         message={`${message}!`}
         onClose={() => {
           setIsAlertVisible(false);
+        }}
+        type='alert'
+      />
+
+      {/* Disable Success message Popup */}
+      <Modal
+        isOpen={isDisableAlertVisible}
+        message={`${message}!`}
+        onClose={() => {
+          setIsDisableAlertVisible(false);
           navigate('/');
         }}
         type='alert'
