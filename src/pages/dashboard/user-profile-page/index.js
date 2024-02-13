@@ -97,7 +97,7 @@ const UserProfilePage = () => {
           </div>
 
           <div className='mx-auto text-center mb-6 mt-6'>
-            <div className='socialLinks absolute flex right-14'>
+            <div className='socialLinks absolute flex md:right-14 right-4'>
               {/* Facebook */}
               <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='30' height='30' viewBox='0 0 48 48'>
                 <path
