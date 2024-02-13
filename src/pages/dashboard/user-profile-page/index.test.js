@@ -21,6 +21,15 @@ const mockUserData = {
   profileImage: 'https://example.com/profile.jpg',
 };
 
+// Mock react-i18next
+jest.mock('react-i18next', () => ({
+  useTranslation: () => {
+    return {
+      t: (key) => key, // Mock translation function
+    };
+  },
+}));
+
 const mockStore = createStore(userSlice, {
   user: mockUserData,
 });

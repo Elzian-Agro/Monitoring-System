@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
 
-const Notification = () => {
+const Notification = ({ notificationData }) => {
   const dispatch = useDispatch();
-  const allNotifications = useSelector(selectAllNotifications);
+  const allNotifications = notificationData;
   const { t } = useTranslation();
   const { send } = useAxios();
 
@@ -56,7 +56,7 @@ const Notification = () => {
   };
 
   const readNotification = async (index) => {
-    const notificationId = allNotifications[index].notificationId;
+    const notificationId = allNotifications[index]._id;
 
     // Change the flage to true on local list.
     // Deep cloning because the spread operator's shallow copy may not work as expected with nested objects.
@@ -101,7 +101,7 @@ const Notification = () => {
               className={`${
                 eachNotification.read ? 'text-gray-400 dark:text-gray-500' : 'dark:text-white'
               } flex justify-between`}>
-              <p className='max-w-60 line-clamp-2'>{eachNotification.desc}</p>
+              <p className='max-w-60 line-clamp-2'>{eachNotification.notification}</p>
               <div className='flex items-center'>
                 <button className='mr-3'>
                   {eachNotification.read ? (
@@ -116,8 +116,8 @@ const Notification = () => {
               </div>
             </div>
             <div className='Date and Time pt-1 flex justify-between text-gray-400 dark:text-gray-500 text-xs '>
-              <p>{eachNotification.date}</p>
-              <p>{eachNotification.time}</p>
+              <p>{eachNotification.dateTime.date}</p>
+              <p>{eachNotification.dateTime.time}</p>
             </div>
           </div>
         ))}

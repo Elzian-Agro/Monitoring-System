@@ -15,13 +15,20 @@ import { menuMode } from 'constant';
 import { selectNotificationsCount } from 'pages/dashboard/slice/notificationSlice';
 import avatar from 'assets/images/avatar.png';
 import LanguageSelector from '../language-selector';
+import { useEffect, useState } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ notificationData }) => {
   const dispatch = useDispatch();
   const activeMenu = useSelector(selectActiveMenu);
   const isProfileOpen = useSelector(selectProfileOpen);
   const isNotificationOpen = useSelector(selectNotificationOpen);
-  const NotificationsCount = useSelector(selectNotificationsCount);
+
+  const [notificationsCount, setNotificationCount] = useState(0);
+
+  useEffect(() => {
+    const readNotificationsCount = notificationData?.filter((data) => !data.readFlag).length;
+    setNotificationCount(readNotificationsCount);
+  }, [notificationData]);
 
   //Get username through redux toolkit
   const userName = useSelector((state) => state.user.firstName);
@@ -71,11 +78,11 @@ const Navbar = () => {
           type='button'
           className='relative text-xl rounded-full p-3 hover:bg-light-gray dark:text-white dark:hover:text-black'
           onClick={handleNotificationClick}>
-          {NotificationsCount > 0 && (
+          {notificationsCount > 0 && (
             <span
-              style={{ background: NotificationsCount > 0 ? 'red' : '' }}
+              style={{ background: notificationsCount > 0 ? 'red' : '' }}
               className='absolute inline-flex rounded-full right-1 top-1'>
-              <span className='text-xs font-semibold text-white px-1'>{NotificationsCount}</span>
+              <span className='text-xs font-semibold text-white px-1'>{notificationsCount}</span>
             </span>
           )}
           <BellIcon className='h-6 w-6 text-14' />
@@ -94,7 +101,7 @@ const Navbar = () => {
           <ChevronDownIcon className='h-6 w-6 text-14 text-gray-400' />
         </div>
         {isProfileOpen && <UserProfile />}
-        {isNotificationOpen && <Notification />}
+        {isNotificationOpen && <Notification notificationData={notificationData} />}
       </div>
     </div>
   );

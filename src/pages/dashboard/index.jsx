@@ -5,8 +5,9 @@ import Sidebar from 'components/common/sidebar';
 
 import { useSelector } from 'react-redux';
 import { selectActiveMenu, selectTheme } from './slice/dashboardLayoutSlice';
-import GetNotifications from 'pages/utils/GetNotifications';
 import GetUserData from 'pages/utils/GetUserData';
+import useAxios from 'hooks/useAxios';
+import { useEffect, useState } from 'react';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -35,13 +36,32 @@ const Dashboard = ({ page }) => {
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
   const currentMode = useSelector(selectTheme);
+  const { send } = useAxios();
+  const userId = useSelector((state) => state.user._id);
+  const [response, setresponse] = useState(null);
+  const [loading, setloading] = useState(true);
 
   // Get UserData and  Notifications for the user and save it inside the reduxtoolkit.
   // Use the custom hook to get notifications and userData
 
-    GetUserData();
-    GetNotifications();
+  GetUserData();
+  // GetNotifications();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
+      setresponse(res?.result);
+      setloading(false);
+    };
+    if (userId) {
+      fetchData();
+    }
+  }, [userId]);
+
+  if (loading) {
+    return <div>Loading</div>;
+  }
+  console.log(response);
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -52,7 +72,7 @@ const Dashboard = ({ page }) => {
 
         <div className={`${mainContentMargin} dark:bg-main-dark-bg bg-main-bg min-h-screen w-full`}>
           <div className='z-10 bg-main-bg dark:bg-main-dark-bg w-full'>
-            <Navbar />
+            <Navbar notificationData={response} />
             {page}
           </div>
         </div>
