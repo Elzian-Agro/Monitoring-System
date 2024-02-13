@@ -22,8 +22,8 @@ const SidebarLinks = ({ t }) => {
       icon: CloudIcon,
     },
     {
-      to: '/devicemanagement',
-      text: t('Device Management'),
+      to: '/devices',
+      text: t('Manage Devices'),
       icon: DevicePhoneMobileIcon,
     },
   ];
@@ -37,11 +37,18 @@ const SidebarLinks = ({ t }) => {
   }
 
   // Add the '/profile' link to the end of the array
-  sidebarLinks.push({
-    to: '/profile',
-    text: t('My Profile'),
-    icon: UserCircleIcon,
-  });
+  sidebarLinks.push(
+    {
+      to: '/profile',
+      text: t('My Profile'),
+      icon: UserCircleIcon,
+    },
+    {
+      to: '/about',
+      text: t('About'),
+      icon: DevicePhoneMobileIcon,
+    }
+  );
 
   return sidebarLinks;
 };

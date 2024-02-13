@@ -117,5 +117,7 @@
   "Are you sure you want to disable this account?":"ඔබට මෙම ගිණුම අබල කිරීමට අවශ්‍ය බව විශ්වාසද?",
   "Disabled successfully":"සාර්ථකව ආබාධිතයි",
   "Do you want to reset the password?":"ඔබට මුරපදය යළි පිහිටුවීමට අවශ්‍යද?",
-  "Bio":"වැඩසටහන්"
+  "Bio":"වැඩසටහන්",
+  "About": "About",
+  "Manage Devices":"Manage Devices"
 }
