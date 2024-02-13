@@ -9,6 +9,7 @@ import {
   UserIcon,
   LockClosedIcon,
   ArrowLeftIcon,
+  BuildingOffice2Icon,
 } from '@heroicons/react/24/outline';
 import { encryptData } from 'utils/rsa.encrypt';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
@@ -40,7 +41,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
       setPhoneNum(user.phoneNum);
       setOrgName(user.orgName);
       setIsDisabled(user.isDisabled);
-      setAddress(user.address);
+      setAddress(user.address || '');
     }
 
     // Generate random password for register mode
@@ -153,7 +154,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
               value={phoneNum.toString()}
               setValue={setPhoneNum}
               required={true}
-              pattern='^(0\d{9}|\d{8}[1-9])$'
+              pattern='^\d{10}$'
               title='Enter a valid phone number'
             />
 
@@ -186,7 +187,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
               placeholder='Eg. ABC Org.'
               label='Organization Name'
               type='text'
-              Icon={HomeIcon}
+              Icon={BuildingOffice2Icon}
               value={orgName}
               setValue={setOrgName}
               required={true}

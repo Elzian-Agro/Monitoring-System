@@ -9,6 +9,7 @@ const mockedResponse = [
     phoneNum: 761111111,
     userType: 'farmer',
     isDisabled: false,
+    address: 'No 1, Colombo',
   },
   {
     _id: '65c267723262b9d512f24b63',
@@ -20,6 +21,7 @@ const mockedResponse = [
     phoneNum: 789632145,
     userType: 'farmer',
     isDisabled: false,
+    address: 'No 1, Colombo',
   },
   {
     _id: '65c2717c3262b9d512f2b011',
@@ -31,6 +33,7 @@ const mockedResponse = [
     phoneNum: 789632145,
     userType: 'farmer',
     isDisabled: false,
+    address: 'No 1, Colombo',
   },
 ];
 

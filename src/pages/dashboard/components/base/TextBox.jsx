@@ -10,7 +10,6 @@ function TextBox({
   Icon = null,
   value,
   setValue,
-  error = null,
   disabled = false,
   required = false,
   pattern = null,
@@ -59,7 +58,6 @@ function TextBox({
           )}
         </div>
       </div>
-      <p className='text-sm text-red-500'>{t(error)}</p>
     </div>
   );
 }
@@ -71,7 +69,6 @@ TextBox.propTypes = {
   Icon: PropTypes.elementType,
   value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
-  error: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
   pattern: PropTypes.string,
