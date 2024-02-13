@@ -8,6 +8,7 @@ import { selectActiveMenu, selectTheme } from './slice/dashboardLayoutSlice';
 import GetUserData from 'pages/utils/GetUserData';
 import useAxios from 'hooks/useAxios';
 import { useEffect, useState } from 'react';
+import Loader from './components/common/loader';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -59,9 +60,8 @@ const Dashboard = ({ page }) => {
   }, [userId]);
 
   if (loading) {
-    return <div>Loading</div>;
+    return <Loader />;
   }
-  console.log(response);
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>

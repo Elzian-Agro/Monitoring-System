@@ -42,7 +42,7 @@ const Notification = ({ notificationData }) => {
       endpoint: 'notification',
       method: 'DELETE',
       body: {
-        notificationId: allNotifications[index].notificationId,
+        notificationId: allNotifications[index]._id,
       },
     });
 
@@ -99,12 +99,12 @@ const Notification = ({ notificationData }) => {
           <div className='Each-Notifications mb-4' key={eachNotification.id}>
             <div
               className={`${
-                eachNotification.read ? 'text-gray-400 dark:text-gray-500' : 'dark:text-white'
+                eachNotification.readFlag ? 'text-gray-400 dark:text-gray-500' : 'dark:text-white'
               } flex justify-between`}>
               <p className='max-w-60 line-clamp-2'>{eachNotification.notification}</p>
               <div className='flex items-center'>
                 <button className='mr-3'>
-                  {eachNotification.read ? (
+                  {eachNotification.readFlag ? (
                     <EyeSlashIcon className='h-5 w-5' />
                   ) : (
                     <EyeIcon onClick={() => readNotification(index)} className='h-5 w-5' />
