@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import { updateEmail } from 'pages/auth/slice/emailSlice';
 import Modal from 'components/common/modal';
 import avatar from 'assets/images/avatar.png';
+import Loader from '../loader';
 
 const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
   const [errors, setErrors] = useState({});
 
   const { t } = useTranslation();
-  const { send } = useAxios();
+  const { send, loading } = useAxios();
 
   useEffect(() => {
     // Set form fields for edit mode
@@ -133,6 +134,10 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
   };
 
   if (!visible) return null;
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className='flex flex-col px-4 py-4 gap-4 min-h-full w-full shadow-lg bg-white dark:bg-gray-800 rounded-lg'>
