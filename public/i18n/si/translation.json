@@ -57,6 +57,9 @@
   "Eg. 076XXXXXXX": "උදා. 076XXXXXXX",
   "Eg. sample@gmail.com": "උදා. sample@gmail.com",
   "Eg. ABC Org.": "උදා. කෘෂි ආයතනය",
+  "Eg. Your New Bio":"හත. ඔබගේ නව ජීව විද්‍යාව",
+  "Eg. 123 Main Road, Colombo":"හත. 123 ප්‍රධාන පාර, කොළඹ",
+  "UPDATE YOUR DETAILS HERE":"ඔබේ විස්තර මෙතැනින් යාවත්කාලීන කරන්න",
   "NEW USER REGISTARTION": "නව පරිශීලක ලියාපදිංචිය",
   "UPDATE USER DETAILS": "පරිශීලක විස්තර අලුයත් කිරීම",
   "Enabled user": "පරිශීලක සක්‍රීය කරන්න",
@@ -102,10 +105,9 @@
   "Logout":"පිටවීම",
   "First Name:":"මුල් නම:",
   "Last Name:":"අවසන් නම:",
-  "Organization Name:":"සංවිධානයේ නම:",
+  "Organization": "ආයතනය",
   "Email":"විද්යුත් තැපෑල",
-  "National Identity Card Number (NIC):":"ජාතික හැඳුනුම්පත් අංකය (NIC):",
-  "Phone Number:":"දුරකථන අංකය:",
+  "Phone No":"දුරකතන අංකය",
   "Address":"ලිපිනය",
   "User Type:":"පරිශීලක වර්ගය:",
   "Disable":"අක්රිය කරන්න",
@@ -114,5 +116,6 @@
   "Reset Password":"මුරපදය නැවත සකසන්න",
   "Are you sure you want to disable this account?":"ඔබට මෙම ගිණුම අබල කිරීමට අවශ්‍ය බව විශ්වාසද?",
   "Disabled successfully":"සාර්ථකව ආබාධිතයි",
-  "Do you want to reset the password?":"ඔබට මුරපදය යළි පිහිටුවීමට අවශ්‍යද?"
+  "Do you want to reset the password?":"ඔබට මුරපදය යළි පිහිටුවීමට අවශ්‍යද?",
+  "Bio":"වැඩසටහන්"
 }

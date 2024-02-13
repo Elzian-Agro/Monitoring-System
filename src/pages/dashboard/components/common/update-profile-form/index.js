@@ -200,7 +200,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
         />
 
         <TextBox
-          placeholder='Eg. Your Address'
+          placeholder='Eg. 123 Main Road, Colombo'
           label='Address'
           type='text'
           Icon={HomeIcon}
