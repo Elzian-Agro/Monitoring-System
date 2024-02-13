@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-const PrimaryButton = ({ color, text, onClick }) => {
+const PrimaryButton = ({ color, text, onClick = null }) => {
   const { t } = useTranslation();
   return (
     <button
@@ -34,7 +34,7 @@ const ToggleButton = ({ value, onChange }) => {
     <div>
       <label className='relative inline-flex items-center cursor-pointer'>
         <input className='sr-only peer' type='checkbox' value={value} onChange={onChange} checked={value} />
-        <div className='peer rounded-full outline-none duration-100 after:duration-500 w-12 h-6 bg-blue-400 dark:bg-secondary-dark-bg peer-focus:outline-none ring-2 ring-blue-500  after:absolute after:outline-none after:rounded-full after:h-6 after:w-6 after:bg-white after:top-0.4 after:left-0.4 after:flex after:justify-center after:items-center after:text-sky-800 after:font-bold peer-checked:after:translate-x-6 peer-checked:after:border-white'></div>
+        <div className='peer rounded-full outline-none duration-100 after:duration-500 w-12 h-6 bg-gray-400 peer-checked:bg-green-400 dark:bg-secondary-dark-bg peer-focus:outline-none ring-2 ring-gray-500 peer-checked:ring-green-500  after:absolute after:outline-none after:rounded-full after:h-6 after:w-6 after:bg-white after:top-0.4 after:left-0.4 after:flex after:justify-center after:items-center after:text-sky-800 after:font-bold peer-checked:after:translate-x-6 peer-checked:after:border-white'></div>
       </label>
     </div>
   );
@@ -43,7 +43,7 @@ const ToggleButton = ({ value, onChange }) => {
 PrimaryButton.propTypes = {
   color: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
 
 VariantButton.propTypes = {

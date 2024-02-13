@@ -104,7 +104,6 @@ const ManageUsers = () => {
       return [];
     }
     return users.filter((user) => {
-      const userType = user.userType?.toLowerCase() || '';
       const firstName = user.firstName?.toLowerCase() || '';
       const lastName = user.lastName?.toLowerCase() || '';
       const email = user.email?.toLowerCase() || '';
@@ -113,13 +112,12 @@ const ManageUsers = () => {
       const orgName = user.orgName?.toLowerCase() || '';
 
       return (
-        userType === 'farmer' &&
-        (firstName.includes(filterText.toLowerCase()) ||
-          lastName.includes(filterText.toLowerCase()) ||
-          email.includes(filterText.toLowerCase()) ||
-          nic.includes(filterText) ||
-          phoneNum.includes(filterText) ||
-          orgName.includes(filterText.toLowerCase()))
+        firstName.includes(filterText.toLowerCase()) ||
+        lastName.includes(filterText.toLowerCase()) ||
+        email.includes(filterText.toLowerCase()) ||
+        nic.includes(filterText) ||
+        phoneNum.includes(filterText) ||
+        orgName.includes(filterText.toLowerCase())
       );
     });
   }, [users, filterText]);
@@ -142,13 +140,6 @@ const ManageUsers = () => {
     setIsConfirmVisible(false);
   };
 
-  // Form submission for register and edit
-  const formSubmission = async (message) => {
-    setMessage(message);
-    setIsAlertVisible(true);
-    getUsers();
-  };
-
   return (
     <div className='mx-5 mt-2'>
       {isFormVisible ? (
@@ -159,7 +150,11 @@ const ManageUsers = () => {
           }}
           visible={isFormVisible}
           user={selectedUser}
-          formSubmission={formSubmission}
+          formSubmission={async (message) => {
+            setMessage(message);
+            setIsAlertVisible(true);
+            getUsers();
+          }}
         />
       ) : (
         <>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { modalContent } from './modal.types.content';
+import { modalContent } from './modal.types';
 
 const Modal = ({ isOpen, message, onClose, type }) => {
   const { t } = useTranslation();

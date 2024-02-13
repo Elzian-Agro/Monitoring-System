@@ -12,6 +12,9 @@ function TextBox({
   setValue,
   error = null,
   disabled = false,
+  required = false,
+  pattern = null,
+  title = null,
 }) {
   const isPassword = type === 'password';
 
@@ -40,7 +43,11 @@ function TextBox({
             onChange={(e) => setValue(e.target.value)}
             disabled={disabled}
             className='text-sm appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white p-2 leading-tight focus:outline-none'
+            pattern={pattern}
+            title={title}
+            required={required}
           />
+
           {isPassword && (
             <div className='ml-2 cursor-pointer' onClick={handleTogglePassword}>
               {showPassword ? (
@@ -66,6 +73,9 @@ TextBox.propTypes = {
   setValue: PropTypes.func.isRequired,
   error: PropTypes.string,
   disabled: PropTypes.bool,
+  required: PropTypes.bool,
+  pattern: PropTypes.string,
+  title: PropTypes.string,
 };
 
 export default TextBox;

@@ -9,7 +9,7 @@ const PrivateRoutes = () => {
 
   useEffect(() => {
     const verifyUser = async () => {
-      const response = await send({ endpoint: 'user/verify', method: 'POST' });
+      const response = await send({ endpoint: 'auth/verify', method: 'POST' });
       setIsAuthenticated(!!response);
       setLoading(false);
     };

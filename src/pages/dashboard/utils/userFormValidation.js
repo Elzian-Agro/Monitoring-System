@@ -25,3 +25,4 @@ export const validateForm = (fields) => {
 
   return newErrors;
 };
+//todo: remove

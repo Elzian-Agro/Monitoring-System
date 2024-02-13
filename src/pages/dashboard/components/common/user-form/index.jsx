@@ -13,7 +13,6 @@ import {
 import { encryptData } from 'utils/rsa.encrypt';
 import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
 import { useTranslation } from 'react-i18next';
-import { validateForm } from 'pages/dashboard/utils/userFormValidation';
 import useAxios from 'hooks/useAxios';
 
 const Form = ({ visible, onClose, user = null, formSubmission }) => {
@@ -24,9 +23,9 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [orgName, setOrgName] = useState('');
+  const [address, setAddress] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
   const [isToggleClicked, setIsToggleClicked] = useState(false);
-  const [errors, setErrors] = useState({});
 
   const { t } = useTranslation();
   const { send } = useAxios();
@@ -41,6 +40,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
       setPhoneNum(user.phoneNum);
       setOrgName(user.orgName);
       setIsDisabled(user.isDisabled);
+      setAddress(user.address);
     }
 
     // Generate random password for register mode
@@ -57,58 +57,43 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
     setPhoneNum('');
     setPassword(generateRandomPassword());
     setOrgName('');
-    setErrors({});
-  };
-
-  const handleFormErrors = () => {
-    const fields = [
-      { key: 'firstName', label: 'First name', value: firstName },
-      { key: 'lastName', label: 'Last name', value: lastName },
-      { key: 'nic', label: 'NIC', value: nic },
-      { key: 'email', label: 'Email', value: email },
-      { key: 'phoneNum', label: 'Phone Number', value: phoneNum, optional: false },
-      { key: 'password', label: 'Password', value: password, condition: !user },
-      { key: 'orgName', label: 'Organization name', value: orgName },
-    ];
-
-    const formErrors = validateForm(fields);
-    setErrors(formErrors);
-    return formErrors;
+    setAddress('');
   };
 
   const handleSubmit = async (e) => {
-    if (Object.keys(handleFormErrors()).length === 0) {
-      const requestData = {
-        firstName,
-        lastName,
-        nic,
-        email,
-        phoneNum,
-        orgName,
-        isDisabled,
-      };
+    e.preventDefault();
 
-      if (!user) {
-        requestData.password = await encryptData(password);
-      }
+    const requestData = {
+      firstName,
+      lastName,
+      nic,
+      email,
+      phoneNum,
+      orgName,
+      isDisabled,
+      address,
+    };
 
-      const response = await send({
-        endpoint: user ? `user/${user._id}` : `user`,
-        method: user ? 'PUT' : 'POST',
-        body: requestData,
-      });
+    if (!user) {
+      requestData.password = await encryptData(password);
+    }
 
-      if (response) {
-        formSubmission(user ? 'User details updated successfully' : 'User registered successfully');
-        onClose();
-      }
+    const response = await send({
+      endpoint: user ? `user/${user._id}` : `user`,
+      method: user ? 'PUT' : 'POST',
+      body: requestData,
+    });
+
+    if (response) {
+      formSubmission(user ? 'User details updated successfully' : 'User registered successfully');
+      onClose();
     }
   };
 
   if (!visible) return null;
 
   return (
-    <div className='flex flex-col px-4 py-4 gap-4 min-h-full w-full shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg'>
+    <div className='flex flex-col p-4 gap-4 min-h-full w-full shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg'>
       <div>
         <button
           className='flex justify-start bg-red-500 hover:brightness-110 self-end rounded-lg transition-transform'
@@ -121,108 +106,124 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
           {user ? t('UPDATE USER DETAILS') : t('NEW USER REGISTARTION')}
         </h1>
       </div>
-      <div className='flex flex-col justify-center'>
-        <form
-          className={`grid lg:grid-cols-2 space-y-4 lg:space-y-0 w-full justify-center lg:gap-x-20 lg:px-28 xl:px-48 ${
-            user ? 'lg:gap-y-12' : 'lg:gap-y-6'
-          }`}>
-          <TextBox
-            placeholder='Eg. Saman'
-            label='First Name'
-            type='text'
-            error={errors.firstName}
-            Icon={UserIcon}
-            value={firstName}
-            setValue={setFirstName}
-          />
 
-          <TextBox
-            placeholder='Eg. Kumra'
-            label='Last Name'
-            type='text'
-            error={errors.lastName}
-            Icon={UserIcon}
-            value={lastName}
-            setValue={setLastName}
-          />
-
-          <TextBox
-            placeholder='Eg. 9452XXXXXV'
-            label='NIC'
-            error={errors.nic}
-            disabled={!!user}
-            Icon={UserIcon}
-            value={nic}
-            setValue={setNic}
-          />
-
-          <TextBox
-            placeholder='Eg. 076XXXXXXX'
-            label='Phone Number'
-            type='text'
-            error={errors.phoneNum}
-            Icon={PhoneIcon}
-            value={phoneNum.toString()}
-            setValue={setPhoneNum}
-          />
-
-          <TextBox
-            placeholder='Eg. sample@gmail.com'
-            label='Email Address'
-            type='text'
-            error={errors.email}
-            Icon={EnvelopeIcon}
-            value={email}
-            setValue={setEmail}
-          />
-
-          {!user && (
+      <form onSubmit={handleSubmit}>
+        <div className='flex flex-col justify-center'>
+          <div
+            className={`grid lg:grid-cols-2 space-y-4 lg:space-y-0 w-full justify-center lg:gap-x-20 lg:px-28 xl:px-48 ${
+              user ? 'lg:gap-y-12' : 'lg:gap-y-6'
+            }`}>
             <TextBox
-              placeholder='Password'
-              label='Password'
-              type='password'
-              disabled={true}
-              error={errors.password}
-              Icon={LockClosedIcon}
-              value={password}
-              setValue={setPassword}
+              placeholder='Eg. Saman'
+              label='First Name'
+              type='text'
+              Icon={UserIcon}
+              value={firstName}
+              setValue={setFirstName}
+              required={true}
             />
-          )}
 
-          <TextBox
-            placeholder='Eg. ABC Org.'
-            label='Organization Name'
-            type='text'
-            error={errors.orgName}
-            Icon={HomeIcon}
-            value={orgName}
-            setValue={setOrgName}
-          />
+            <TextBox
+              placeholder='Eg. Kumra'
+              label='Last Name'
+              type='text'
+              Icon={UserIcon}
+              value={lastName}
+              setValue={setLastName}
+              required={true}
+            />
 
-          {user && (
-            <div className='flex flex-row items-center gap-4'>
-              <div className='text-gray-400'>{user.isDisabled ? t('Enabled user') : t('Disabled user')} :</div>
-              <ToggleButton
-                value={isToggleClicked}
-                onChange={() => {
-                  setIsToggleClicked(!isToggleClicked);
-                  setIsDisabled(!isDisabled);
-                }}
+            <TextBox
+              placeholder='Eg. 9452XXXXXV'
+              label='NIC'
+              disabled={!!user}
+              Icon={UserIcon}
+              value={nic}
+              setValue={setNic}
+              required={true}
+              pattern={'(\\d{9}[vV]|\\d{12})'}
+              title='Enter a valid NIC number. Eg. 9452XXXXXV or 2003XXXXXXXX'
+            />
+
+            <TextBox
+              placeholder='Eg. 076XXXXXXX'
+              label='Phone Number'
+              type='text'
+              Icon={PhoneIcon}
+              value={phoneNum.toString()}
+              setValue={setPhoneNum}
+              required={true}
+              pattern='^(0\d{9}|\d{8}[1-9])$'
+              title='Enter a valid phone number'
+            />
+
+            <TextBox
+              placeholder='Eg. sample@gmail.com'
+              label='Email Address'
+              type='text'
+              Icon={EnvelopeIcon}
+              value={email}
+              setValue={setEmail}
+              required={true}
+              pattern='[^\s@]+@[^\s@]+\.[^\s@]+'
+              title='Enter a valid email address'
+            />
+
+            {!user && (
+              <TextBox
+                placeholder='Password'
+                label='Password'
+                type='password'
+                disabled={true}
+                Icon={LockClosedIcon}
+                value={password}
+                setValue={setPassword}
+                required={true}
               />
-            </div>
-          )}
-        </form>
-        <div className='flex justify-center mt-4'>
-          <div className='flex justify-end gap-2 w-60 sm:w-64 md:w-80 lg:w-full lg:px-28 xl:px-48'>
-            {!user && <PrimaryButton color='bg-red-500 border-red-600' text='Clear' onClick={resetForm} />}
-            <PrimaryButton
-              color='bg-blue-500 border-blue-600'
-              text={user ? 'Update' : 'Submit'}
-              onClick={handleSubmit}
+            )}
+
+            <TextBox
+              placeholder='Eg. ABC Org.'
+              label='Organization Name'
+              type='text'
+              Icon={HomeIcon}
+              value={orgName}
+              setValue={setOrgName}
+              required={true}
             />
+
+            <TextBox
+              placeholder='Eg. 232, Main Street, Negombo, LK.'
+              label='Address'
+              type='text'
+              Icon={HomeIcon}
+              value={address}
+              setValue={setAddress}
+              required={true}
+            />
+
+            {user && (
+              <div className='flex flex-row items-center gap-4'>
+                <div className='text-gray-400'>{user.isDisabled ? t('Enabled user') : t('Disabled user')} :</div>
+                <ToggleButton
+                  value={isToggleClicked}
+                  onChange={() => {
+                    setIsToggleClicked(!isToggleClicked);
+                    setIsDisabled(!isDisabled);
+                  }}
+                />
+              </div>
+            )}
+          </div>
+
+          <div className='flex justify-center mt-4'>
+            <div className='flex justify-end gap-2 w-60 sm:w-64 md:w-80 lg:w-full lg:px-28 xl:px-48'>
+              {!user && <PrimaryButton color='bg-red-500 border-red-600' text='Clear' onClick={resetForm} />}
+              <PrimaryButton color='bg-blue-500 border-blue-600' text={user ? 'Update' : 'Submit'} />
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

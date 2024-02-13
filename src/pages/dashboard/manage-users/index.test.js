@@ -58,7 +58,7 @@ jest.mock('../utils/download', () => ({
   downloadCSV: jest.fn(),
 }));
 
-import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ManageUsers from './index';
 import { act } from 'react-dom/test-utils'; // Import act
