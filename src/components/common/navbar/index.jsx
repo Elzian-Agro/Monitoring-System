@@ -12,7 +12,6 @@ import UserProfile from 'pages/dashboard/components/common/user-profile';
 import Notification from 'pages/dashboard/components/common/notification';
 import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
 import { menuMode } from 'constant';
-import { selectNotificationsCount } from 'pages/dashboard/slice/notificationSlice';
 import avatar from 'assets/images/avatar.png';
 import LanguageSelector from '../language-selector';
 import { useEffect, useState } from 'react';
@@ -101,7 +100,9 @@ const Navbar = ({ notificationData }) => {
           <ChevronDownIcon className='h-6 w-6 text-14 text-gray-400' />
         </div>
         {isProfileOpen && <UserProfile />}
-        {isNotificationOpen && <Notification notificationData={notificationData} />}
+        {isNotificationOpen && (
+          <Notification notificationData={notificationData} setNotificationCount={setNotificationCount} />
+        )}
       </div>
     </div>
   );

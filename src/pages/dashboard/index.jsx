@@ -57,6 +57,7 @@ const Dashboard = ({ page }) => {
     if (userId) {
       fetchData();
     }
+    // eslint-disable-next-line
   }, [userId]);
 
   if (loading) {

@@ -1,17 +1,13 @@
 import { XCircleIcon, EyeIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { setNotificationOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import {
-  selectAllNotifications,
-  setAllNotifications,
-  setNotificationsCount,
-} from 'pages/dashboard/slice/notificationSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
+import { useState } from 'react';
 
-const Notification = ({ notificationData }) => {
+const Notification = ({ notificationData, setNotificationCount }) => {
   const dispatch = useDispatch();
-  const allNotifications = notificationData;
+  const [allNotifications, setAllNotifications] = useState(notificationData);
   const { t } = useTranslation();
   const { send } = useAxios();
 
@@ -28,12 +24,12 @@ const Notification = ({ notificationData }) => {
     // Update the local list to mark all notifications as read.
     const updatedNotifications = allNotifications.map((notification) => ({
       ...notification,
-      read: true,
+      readFlag: true,
     }));
-    dispatch(setAllNotifications(updatedNotifications));
+    setAllNotifications(updatedNotifications);
 
     // Set Notification Count
-    dispatch(setNotificationsCount(null));
+    setNotificationCount(0);
   };
 
   const deleteNotification = async (index) => {
@@ -48,11 +44,11 @@ const Notification = ({ notificationData }) => {
 
     // Remove from the local list.
     const updatedNotifications = allNotifications.filter((_, i) => i !== index);
-    dispatch(setAllNotifications(updatedNotifications));
+    setAllNotifications(updatedNotifications);
 
     // Set Notification Count based on updatedNotifications
     const readNotificationsCount = updatedNotifications.filter((data) => !data.read).length;
-    dispatch(setNotificationsCount(readNotificationsCount));
+    setNotificationCount(readNotificationsCount);
   };
 
   const readNotification = async (index) => {
@@ -61,8 +57,8 @@ const Notification = ({ notificationData }) => {
     // Change the flage to true on local list.
     // Deep cloning because the spread operator's shallow copy may not work as expected with nested objects.
     const updatedNotifications = JSON.parse(JSON.stringify(allNotifications));
-    updatedNotifications[index].read = true;
-    dispatch(setAllNotifications(updatedNotifications));
+    updatedNotifications[index].readFlag = true;
+    setAllNotifications(updatedNotifications);
 
     //Change the flage to true on database
     await send({
@@ -74,8 +70,8 @@ const Notification = ({ notificationData }) => {
     });
 
     // Count the number of objects where readFlag is true from the updatedNotifications
-    const readNotificationsCount = updatedNotifications.filter((data) => !data.read).length;
-    dispatch(setNotificationsCount(readNotificationsCount));
+    const readNotificationsCount = updatedNotifications.filter((data) => !data.readFlag).length;
+    setNotificationCount(readNotificationsCount);
   };
 
   return (
