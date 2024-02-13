@@ -7,15 +7,18 @@ import coverImage from 'assets/images/cover.jpg';
 import Modal from 'components/common/modal';
 import useAxios from 'hooks/useAxios';
 import UpdateProfileForm from '../components/common/update-profile-form';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfilePage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { t } = useTranslation();
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [isDisableAlertVisible, setIsDisableAlertVisible] = useState(false);
   const [message, setMessage] = useState(null);
 
   const { send } = useAxios();
@@ -68,7 +71,7 @@ const UserProfilePage = () => {
 
     if (response) {
       setMessage(t('Disabled successfully'));
-      setIsAlertVisible(true);
+      setIsDisableAlertVisible(true);
       //Removed locally sotored user data
       localStorage.removeItem('jwtAccessToken');
       localStorage.removeItem('jwtRefreshToken');
@@ -205,6 +208,17 @@ const UserProfilePage = () => {
         message={`${message}!`}
         onClose={() => {
           setIsAlertVisible(false);
+        }}
+        type='alert'
+      />
+
+      {/* Disable Success message Popup */}
+      <Modal
+        isOpen={isDisableAlertVisible}
+        message={`${message}!`}
+        onClose={() => {
+          setIsDisableAlertVisible(false);
+          navigate('/');
         }}
         type='alert'
       />
