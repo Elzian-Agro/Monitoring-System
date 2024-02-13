@@ -117,6 +117,8 @@
   "Are you sure you want to disable this account?":"Are you sure you want to disable this account?",
   "Disabled successfully":"Disabled successfully",
   "Do you want to reset the password?":"Do you want to reset the password?",
-  "Bio":"Bio"
+  "Bio":"Bio",
+  "About": "About",
+  "Manage Devices":"Manage Devices"
 
 }

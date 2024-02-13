@@ -25,7 +25,7 @@ function App() {
             {/* Pages */}
             <Route path='/weather' element={<Dashboard page={<Weather />} />} />
             <Route path='/about' element={<Dashboard page={<AboutPage />} />} />
-            <Route path='/devicemanagement' element={<Dashboard page={<DeviceManagement />} />} />
+            <Route path='/devices' element={<Dashboard page={<DeviceManagement />} />} />
             <Route path='/users' element={<Dashboard page={<ManageUsers />} />} />
             <Route path='/profile' element={<Dashboard page={<UserProfilePage />} />} />
             <Route path='/reset' element={<Dashboard page={<ResetForm />} />} />

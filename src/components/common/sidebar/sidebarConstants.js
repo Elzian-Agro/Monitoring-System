@@ -22,8 +22,8 @@ const SidebarLinks = ({ t }) => {
       icon: CloudIcon,
     },
     {
-      to: '/devicemanagement',
-      text: t('Device Management'),
+      to: '/devices',
+      text: t('Manage Devices'),
       icon: DevicePhoneMobileIcon,
     },
   ];
