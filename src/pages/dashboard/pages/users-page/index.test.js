@@ -1,3 +1,9 @@
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import ManageUsers from './index';
+import { act } from 'react-dom/test-utils'; // Import act
+import { downloadCSV } from '../../utils/download';
+
 const mockedResponse = [
   {
     _id: '65c09878dc850e48b6121d95',
@@ -57,15 +63,9 @@ jest.mock('react-i18next', () => ({
   },
 }));
 
-jest.mock('../utils/download', () => ({
+jest.mock('../../utils/download', () => ({
   downloadCSV: jest.fn(),
 }));
-
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import ManageUsers from './index';
-import { act } from 'react-dom/test-utils'; // Import act
-import { downloadCSV } from '../../utils/download';
 
 describe('ManageUsers Component', () => {
   it('fetches users on component mount', async () => {
