@@ -11,7 +11,7 @@ import GlobalErrorModal from 'error';
 import ResetForm from 'pages/dashboard/pages/profile-page/passowrd-reset-form';
 
 import DashboardPage from 'pages/dashboard/pages/dashboard-page';
-import AboutPage from 'pages/dashboard/about-page';
+import AboutPage from 'pages/dashboard/pages/about-page';
 import UserProfilePage from 'pages/dashboard/pages/profile-page';
 
 function App() {
