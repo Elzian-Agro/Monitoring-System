@@ -17,6 +17,7 @@ const DeviceManagement = () => {
   // Load initial data
   useState(() => {
     setDevices(initialData);
+    console.log(selectedDevice);
   }, []);
 
   // Handlers
