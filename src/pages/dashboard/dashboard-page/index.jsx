@@ -45,9 +45,7 @@ const DashboardPage = () => {
               </div>
             </div>
 
-            <a href='/gebruikers' className='text-[#f84525] font-medium text-sm hover:text-red-800'>
-              View
-            </a>
+            <p className='text-[#f84525] font-medium text-sm hover:text-red-800'>View</p>
           </div>
           <div className='bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5'>
             <div className='flex justify-between mb-4'>
@@ -66,9 +64,7 @@ const DashboardPage = () => {
                 </button>
               </div>
             </div>
-            <a href='/dierenartsen' className='text-[#f84525] font-medium text-sm hover:text-red-800'>
-              View
-            </a>
+            <p className='text-[#f84525] font-medium text-sm hover:text-red-800'>View</p>
           </div>
           <div className='bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5'>
             <div className='flex justify-between mb-6'>
@@ -82,9 +78,7 @@ const DashboardPage = () => {
                 </button>
               </div>
             </div>
-            <a href='' className='text-[#f84525] font-medium text-sm hover:text-red-800'>
-              View
-            </a>
+            <p className='text-[#f84525] font-medium text-sm hover:text-red-800'>View</p>
           </div>
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
@@ -201,9 +195,9 @@ const DashboardPage = () => {
                   <tr>
                     <td className='py-2 px-4 border-b border-b-gray-50'>
                       <div className='flex items-center'>
-                        <a href='#' className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
+                        <p className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
                           Lorem Ipsum
-                        </a>
+                        </p>
                       </div>
                     </td>
                     <td className='py-2 px-4 border-b border-b-gray-50'>
@@ -225,9 +219,9 @@ const DashboardPage = () => {
                   <tr>
                     <td className='py-2 px-4 border-b border-b-gray-50'>
                       <div className='flex items-center'>
-                        <a href='#' className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
+                        <p className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
                           Lorem Ipsum
-                        </a>
+                        </p>
                       </div>
                     </td>
                     <td className='py-2 px-4 border-b border-b-gray-50'>
@@ -326,9 +320,9 @@ const DashboardPage = () => {
                           src='https://placehold.co/32x32'
                           alt=''
                           className='w-8 h-8 rounded object-cover block'></img>
-                        <a href='#' className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
+                        <p className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
                           Create landing page
-                        </a>
+                        </p>
                       </div>
                     </td>
                     <td className='py-2 px-4 border-b border-b-gray-50'>
@@ -347,9 +341,9 @@ const DashboardPage = () => {
                           src='https://placehold.co/32x32'
                           alt=''
                           className='w-8 h-8 rounded object-cover block'></img>
-                        <a href='#' className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
+                        <p className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
                           Create landing page
-                        </a>
+                        </p>
                       </div>
                     </td>
                     <td className='py-2 px-4 border-b border-b-gray-50'>
@@ -368,9 +362,9 @@ const DashboardPage = () => {
                           src='https://placehold.co/32x32'
                           alt=''
                           className='w-8 h-8 rounded object-cover block'></img>
-                        <a href='#' className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
+                        <p className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
                           Create landing page
-                        </a>
+                        </p>
                       </div>
                     </td>
                     <td className='py-2 px-4 border-b border-b-gray-50'>
