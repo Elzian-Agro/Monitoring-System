@@ -15,6 +15,10 @@ const Notification = ({ notificationData, setNotificationCount }) => {
     dispatch(setNotificationOpen(false));
   };
 
+  const calculateUnreadNotificationsCount = (notifications) => {
+    return notifications.filter((notification) => !notification.readFlag).length;
+  };
+
   const readAllNotifications = async () => {
     await send({
       endpoint: 'notification/readByUserId',
@@ -46,9 +50,8 @@ const Notification = ({ notificationData, setNotificationCount }) => {
     const updatedNotifications = allNotifications.filter((_, i) => i !== index);
     setAllNotifications(updatedNotifications);
 
-    // Set Notification Count based on updatedNotifications
-    const readNotificationsCount = updatedNotifications.filter((data) => !data.read).length;
-    setNotificationCount(readNotificationsCount);
+    // Count the number of objects where readFlag is true from the updatedNotifications
+    setNotificationCount(calculateUnreadNotificationsCount(updatedNotifications));
   };
 
   const readNotification = async (index) => {
@@ -70,8 +73,7 @@ const Notification = ({ notificationData, setNotificationCount }) => {
     });
 
     // Count the number of objects where readFlag is true from the updatedNotifications
-    const readNotificationsCount = updatedNotifications.filter((data) => !data.readFlag).length;
-    setNotificationCount(readNotificationsCount);
+    setNotificationCount(calculateUnreadNotificationsCount(updatedNotifications));
   };
 
   return (
@@ -92,7 +94,7 @@ const Notification = ({ notificationData, setNotificationCount }) => {
 
       <div className='Notifications mt-4'>
         {allNotifications.map((eachNotification, index) => (
-          <div className='Each-Notifications mb-4' key={eachNotification.id}>
+          <div className='Each-Notifications mb-4' key={eachNotification._id}>
             <div
               className={`${
                 eachNotification.readFlag ? 'text-gray-400 dark:text-gray-500' : 'dark:text-white'

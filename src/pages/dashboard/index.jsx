@@ -42,11 +42,8 @@ const Dashboard = ({ page }) => {
   const [response, setresponse] = useState(null);
   const [loading, setloading] = useState(true);
 
-  // Get UserData and  Notifications for the user and save it inside the reduxtoolkit.
-  // Use the custom hook to get notifications and userData
-
+  // Get UserData for the user and save it inside the reduxtoolkit.
   GetUserData();
-  // GetNotifications();
 
   useEffect(() => {
     const fetchData = async () => {
