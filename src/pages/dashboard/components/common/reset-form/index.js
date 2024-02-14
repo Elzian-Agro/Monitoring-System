@@ -3,7 +3,13 @@ import { PrimaryButton } from '../../base/Button';
 import TextBox from '../../base/TextBox';
 import { identifyError, isValidPassword } from 'pages/auth/utils';
 import axios from 'axios';
-import { LockClosedIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
+import {
+  LockClosedIcon,
+  ArrowLeftIcon,
+  XCircleIcon,
+  CheckCircleIcon,
+  ExclamationTriangleIcon,
+} from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
 import { errorType } from 'constant';
@@ -168,6 +174,27 @@ const ResetForm = ({ onClose, user = null, formSubmission }) => {
             <PrimaryButton color='bg-red-500 border-red-600' text='Clear' onClick={resetForm} />
             <PrimaryButton color='bg-blue-500 border-blue-600' text='Submit' onClick={handleSubmit} />
           </div>
+        </div>
+      )}
+
+      {!email && !success && !blocked && (
+        <div className='flex items-center justify-center gap-2 dark:text-white'>
+          <ExclamationTriangleIcon className='text-yellow-500 w-6 h-6' />
+          <p>Unauthorized Access</p>
+        </div>
+      )}
+
+      {success && !blocked && (
+        <div className='flex items-center justify-center gap-2 dark:text-white'>
+          <CheckCircleIcon className='text-green-500 w-6 h-6' />
+          <p>Password Reset Successfully</p>
+        </div>
+      )}
+
+      {blocked && (
+        <div className='flex items-center justify-center gap-2 dark:text-white'>
+          <XCircleIcon className='text-red-500 w-6 h-6' />
+          <p>User is blocked! Contact admin</p>
         </div>
       )}
     </div>
