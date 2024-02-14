@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearUserData } from '../slice/userSlice';
+import { clearUserData } from '../../slice/userSlice';
 import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
 import coverImage from 'assets/images/cover.jpg';
 import Modal from 'components/common/modal';
 import useAxios from 'hooks/useAxios';
-import UpdateProfileForm from '../components/common/update-profile-form';
+import UpdateProfileForm from './update-profile-form';
 import { useNavigate } from 'react-router-dom';
 
 const UserProfilePage = () => {

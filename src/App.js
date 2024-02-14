@@ -3,16 +3,16 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from 'pages/auth/components/common/container';
 import Dashboard from 'pages/dashboard';
 import NotFoundPage from 'pages/404';
-import ManageUsers from 'pages/dashboard/manage-users';
+import ManageUsers from 'pages/dashboard/pages/users-page';
 import PrivateRoutes from 'pages/utils/PrivateRoutes';
-import Weather from 'pages/dashboard/weather';
-import DeviceManagement from 'pages/dashboard/device-management';
+import Weather from 'pages/dashboard/pages/weather-page';
+import DeviceManagement from 'pages/dashboard/pages/devices-page';
 import GlobalErrorModal from 'error';
-import ResetForm from 'pages/dashboard/components/common/reset-form';
+import ResetForm from 'pages/dashboard/pages/profile-page/passowrd-reset-form';
 
-import DashboardPage from 'pages/dashboard/dashboard-page';
-import AboutPage from 'pages/dashboard/about';
-import UserProfilePage from 'pages/dashboard/user-profile-page';
+import DashboardPage from 'pages/dashboard/pages/dashboard-page';
+import AboutPage from 'pages/dashboard/about-page';
+import UserProfilePage from 'pages/dashboard/pages/profile-page';
 
 function App() {
   return (

@@ -25,9 +25,9 @@ const AboutPage = () => {
         </div>
 
         <div className='text-center p-4 dark:text-white'>
-          <a href='https://agro.elzian.com' target='_blank' rel='noreferrer'>
+          <Link to='https://agro.elzian.com' target='_blank' rel='noreferrer'>
             Go To Elzian Agro
-          </a>
+          </Link>
         </div>
       </div>
     </div>

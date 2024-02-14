@@ -8,7 +8,7 @@ import {
   setNotificationOpen,
   selectNotificationOpen,
 } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import UserProfile from 'pages/dashboard/components/common/user-profile';
+import UserProfile from 'pages/dashboard/components/common/profile';
 import Notification from 'pages/dashboard/components/common/notification';
 import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
 import { menuMode } from 'constant';

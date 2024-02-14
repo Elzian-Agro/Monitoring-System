@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import UserProfilePage from './index';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import userSlice from '../slice/userSlice';
+import userSlice from '../../slice/userSlice';
 import { MemoryRouter } from 'react-router-dom';
 
 const mockUserData = {

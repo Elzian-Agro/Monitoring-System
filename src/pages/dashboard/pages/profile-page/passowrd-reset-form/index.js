@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { PrimaryButton } from '../../base/Button';
-import TextBox from '../../base/TextBox';
+import { PrimaryButton } from '../../../components/base/Button';
+import TextBox from '../../../components/base/TextBox';
 import { identifyError, isValidPassword } from 'pages/auth/utils';
 import axios from 'axios';
 import {

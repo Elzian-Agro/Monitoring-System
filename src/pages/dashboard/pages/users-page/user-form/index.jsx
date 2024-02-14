@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { PrimaryButton, ToggleButton } from '../../base/Button';
-import TextBox from '../../base/TextBox';
+import { PrimaryButton, ToggleButton } from '../../../components/base/Button';
+import TextBox from '../../../components/base/TextBox';
 import {
   EnvelopeIcon,
   HomeIcon,

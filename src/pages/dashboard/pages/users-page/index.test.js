@@ -65,7 +65,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ManageUsers from './index';
 import { act } from 'react-dom/test-utils'; // Import act
-import { downloadCSV } from '../utils/download';
+import { downloadCSV } from '../../utils/download';
 
 describe('ManageUsers Component', () => {
   it('fetches users on component mount', async () => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { PrimaryButton } from '../../base/Button';
-import TextBox from '../../base/TextBox';
+import { PrimaryButton } from '../../../components/base/Button';
+import TextBox from '../../../components/base/TextBox';
 import {
   HomeIcon,
   PhoneIcon,
@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import { updateEmail } from 'pages/auth/slice/emailSlice';
 import Modal from 'components/common/modal';
 import avatar from 'assets/images/avatar.png';
-import Loader from '../loader';
+import Loader from '../../../components/common/loader';
 
 const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) => {
   const dispatch = useDispatch();
