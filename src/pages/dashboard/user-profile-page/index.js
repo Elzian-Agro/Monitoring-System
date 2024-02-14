@@ -19,7 +19,7 @@ const UserProfilePage = () => {
 
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isDisableAlertVisible, setIsDisableAlertVisible] = useState(false);
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState('');
 
   const { send } = useAxios();
 
@@ -145,29 +145,29 @@ const UserProfilePage = () => {
 
           <div className='grid md:grid-cols-2 gap-4 mt-10 p-8'>
             <div className='1st-col ml-20'>
-              <div className='grid grid-cols-3 mb-8'>
+              <div className='grid grid-cols-2 md:grid-cols-3  mb-8'>
                 <label className='block text-gray-600 dark:text-blue-400'>{t('Email')}:</label>
                 <p className='text-gray-800 dark:text-white'>{email}</p>
               </div>
 
-              <div className='grid grid-cols-3 mb-8'>
+              <div className='grid grid-cols-2 md:grid-cols-3 mb-8'>
                 <label className='block text-gray-600 dark:text-blue-400'>{t('Organization')}:</label>
                 <p className='text-gray-800 dark:text-white'>{organizationName}</p>
               </div>
 
-              <div className='grid grid-cols-3 mb-8'>
+              <div className='grid grid-cols-2 md:grid-cols-3 mb-8'>
                 <label className='block text-gray-600 dark:text-blue-400'>{t('NIC')}:</label>
                 <p className='text-gray-800 dark:text-white'>{nic}</p>
               </div>
             </div>
 
             <div className='2nd-col ml-20'>
-              <div className='grid grid-cols-3 mb-8'>
+              <div className='grid grid-cols-2 md:grid-cols-3 mb-8'>
                 <label className='block text-gray-600 dark:text-blue-400'>{t('Address')}:</label>
                 <p className='text-gray-800 dark:text-white'>{address}</p>
               </div>
 
-              <div className='grid grid-cols-3 mb-8'>
+              <div className='grid grid-cols-2 md:grid-cols-3 mb-8'>
                 <label className='block text-gray-600 dark:text-blue-400'>{t('Phone No')}:</label>
                 <p className='text-gray-800 dark:text-white'>{phoneNumber}</p>
               </div>
