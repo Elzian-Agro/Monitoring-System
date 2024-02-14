@@ -17,7 +17,6 @@ const DeviceManagement = () => {
   // Load initial data
   useState(() => {
     setDevices(initialData);
-    console.log(selectedDevice);
   }, []);
 
   // Handlers
@@ -46,6 +45,7 @@ const DeviceManagement = () => {
 
   return (
     <div className='container mx-auto p-8 mx-5 mt-2'>
+      <p>{selectedDevice}</p>
       <DataTable columns={columns} data={devices} selectableRows onRowClicked={handleRowClicked} pagination />
       {/* Implement Create, Update, Delete forms/components */}
     </div>
