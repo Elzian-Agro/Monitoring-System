@@ -11,6 +11,9 @@ const initialState = {
   userType: '',
   userBio: '',
   address: '',
+  facebook: '',
+  linkedIn: '',
+  youtube: '',
   _id: '',
 };
 
@@ -33,6 +36,9 @@ const userSlice = createSlice({
         userType: '',
         userBio: '',
         address: '',
+        facebook: '',
+        linkedIn: '',
+        youtube: '',
         _id: '',
       };
     },
