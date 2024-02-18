@@ -1,37 +1,56 @@
-// sidebarConstants.js
-import { Squares2X2Icon, UserIcon, ArrowTrendingUpIcon, Cog6ToothIcon, PlusIcon } from '@heroicons/react/24/outline';
+import {
+  Squares2X2Icon,
+  UsersIcon,
+  UserCircleIcon,
+  CloudIcon,
+  DevicePhoneMobileIcon,
+} from '@heroicons/react/24/outline';
+import { useSelector } from 'react-redux';
 
-const sidebarLinks = [
-  {
-    to: '/dashboard',
-    text: 'Dashboard',
-    icon: Squares2X2Icon,
-  },
-  {
-    to: '/customer',
-    text: 'Customers',
-    icon: UserIcon,
-  },
-  {
-    to: '/orders',
-    text: 'Orders',
-    icon: ArrowTrendingUpIcon,
-  },
-  {
-    to: '/analytics',
-    text: 'Analytics',
-    icon: ArrowTrendingUpIcon,
-  },
-  {
-    to: '/settings',
-    text: 'Settings',
-    icon: Cog6ToothIcon,
-  },
-  {
-    to: '/addProducts',
-    text: 'Add Products',
-    icon: PlusIcon,
-  },
-];
+const SidebarLinks = ({ t }) => {
+  const userType = useSelector((state) => state.user.userType);
 
-export { sidebarLinks };
+  const sidebarLinks = [
+    {
+      to: '/dashboard',
+      text: t('Dashboard'),
+      icon: Squares2X2Icon,
+    },
+    {
+      to: '/weather',
+      text: t('Weather'),
+      icon: CloudIcon,
+    },
+    {
+      to: '/devices',
+      text: t('Manage Devices'),
+      icon: DevicePhoneMobileIcon,
+    },
+  ];
+
+  if (userType === 'admin') {
+    sidebarLinks.push({
+      to: '/users',
+      text: t('Manage Users'),
+      icon: UsersIcon,
+    });
+  }
+
+  // Add the '/profile' link to the end of the array
+  sidebarLinks.push(
+    {
+      to: '/profile',
+      text: t('My Profile'),
+      icon: UserCircleIcon,
+    },
+    {
+      to: '/about',
+      text: t('About'),
+      icon: DevicePhoneMobileIcon,
+    }
+  );
+
+  return sidebarLinks;
+};
+
+export default SidebarLinks;

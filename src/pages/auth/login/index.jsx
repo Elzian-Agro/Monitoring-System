@@ -3,11 +3,12 @@ import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import Button from 'pages/auth/components/base/Button';
 import TextBox from 'pages/auth/components/base/TextBox';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
-import { isValidEmail, tokenise, identifyError } from 'pages/auth/utils';
+import { isValidEmail, identifyError } from 'pages/auth/utils';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { tokenise } from 'utils/rsa.encrypt';
 
 function Login({ setPage }) {
   const [email, setEmail] = useState('');
@@ -33,14 +34,11 @@ function Login({ setPage }) {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    if (!email) {
-      setError('Please enter the email');
+    if (!email || !password) {
+      setError('Please enter the credentials');
       return;
     } else if (!isValidEmail(email)) {
       setError('Please Enter a Valid Email Address!');
-      return;
-    } else if (!password) {
-      setError('Please enter the password');
       return;
     }
 
@@ -89,7 +87,7 @@ function Login({ setPage }) {
 
   return (
     <div className='flex-1 flex items-center flex-col lg:justify-center h-full w-full gap-2 xxs:gap-0'>
-      <h1 className='font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
+      <h1 className='font-zenkaku font-black text-[#212121] dark:text-white text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
         {t('LOG IN')}
       </h1>
       <p className='font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10'>
@@ -115,7 +113,7 @@ function Login({ setPage }) {
           setValue={setPassword}
         />
 
-        <div className='w-[100%] sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] flex justify-normal font-zenkaku font-light text-[12px] sm:text-[16px]'>
+        <div className='dark:text-white w-[100%] sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] flex justify-normal font-zenkaku font-light text-[12px] sm:text-[16px]'>
           <div className='flex-1 flex gap-2 content-center'>
             <input
               type='checkbox'

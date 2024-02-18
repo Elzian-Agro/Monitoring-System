@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
@@ -6,10 +6,11 @@ import { useTranslation } from 'react-i18next';
 function TextBox({ label = null, placeholder = '', type = 'text', Icon = null, value, setValue }) {
   const isPassword = type === 'password';
 
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
 
-  const handleTogglePassword = () => {
+  const handleTogglePassword = (event) => {
+    event.preventDefault();
     setShowPassword(!showPassword);
   };
 
@@ -27,7 +28,7 @@ function TextBox({ label = null, placeholder = '', type = 'text', Icon = null, v
           placeholder={t(placeholder)}
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className='appearance-none bg-transparent border-none w-full h-full text-gray-700 p-2 leading-tight focus:outline-none'
+          className='appearance-none bg-transparent border-none w-full h-full text-gray-700 dark:text-white p-2 leading-tight focus:outline-none'
         />
         {isPassword && (
           <div className='ml-2 cursor-pointer' onClick={handleTogglePassword}>

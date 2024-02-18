@@ -1,8 +1,15 @@
-import { ChatBubbleBottomCenterIcon } from '@heroicons/react/24/outline';
-
 export const authRegex = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+  password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])(?!.*\s)[A-Za-z\d\W_]{8,}$/,
+  nicNumber: /^(\d{9}[vV]|\d{12})$/,
+  phoneNumber: /^0?\d{9}$/,
+};
+
+export const characterSets = {
+  lowercaseLetters: 'abcdefghijklmnopqrstuvwxyz',
+  uppercaseLetters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  numbers: '0123456789',
+  symbols: '!@#$%&*+-=<>?',
 };
 
 export const menuMode = {
@@ -11,21 +18,20 @@ export const menuMode = {
   close: 'close',
 };
 
-export const userProfileData = [
-  {
-    icon: <ChatBubbleBottomCenterIcon className='h-6 w-6' />,
-    title: 'My Profile',
-    desc: 'Account Settings',
-    iconColor: '#03C9D7',
-    iconBg: '#E5FAFB',
-  },
-];
-
-
 export const errorType = {
-  invalidCredentials: {
-    code: 13005,
-    message: 'Invalid email or password',
+  userBlocked: {
+    code: 13001,
+    message: 'User is blocked! Contact admin',
+  },
+
+  authenticationFailed: {
+    code: 13002,
+    message: 'Authentication failed! Please log in again',
+  },
+
+  incorrectTempPassword: {
+    code: 13003,
+    message: 'Incorrect Temporary Password',
   },
 
   timeOut: {
@@ -33,23 +39,71 @@ export const errorType = {
     message: 'Time Out',
   },
 
-  serverError: {
-    code: 17001,
-    message: 'Oops! an error occured. Please try again later',
+  invalidCredentials: {
+    code: 13005,
+    message: 'Invalid email or password',
   },
 
   userNotFound: {
-    code: 15001,
+    code: 13007,
     message: 'User Not Found!',
   },
 
-  userBlocked: {
-    code: 13001,
-    message: 'User is blocked! Contact admin',
+  userAlreadyExist: {
+    code: 13008,
+    message: 'NIC or Email Address already exists',
   },
 
-  incorrectTempPassword: {
-    code: 13003,
-    message: 'Incorrect Temporary Password',
+  serverError: {
+    code: 13009,
+    message: 'Oops! an error occured. Please try again later',
+  },
+
+  connectionError: {
+    code: 13010,
+    message: 'Oops! an error occured. Please try again later',
+  },
+
+  emailNotVerified: {
+    code: 13011,
+    message: 'Email address not verified',
+  },
+
+  noRecords: {
+    code: 13015,
+    message: 'No records found',
+  },
+
+  accessDenied: {
+    code: 13019,
+    message: 'Access denied',
+  },
+};
+
+export const customTableStyles = {
+  table: {
+    style: {
+      width: '100%',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  headRow: {
+    style: {
+      backgroundColor: '#494d4a',
+      color: '#ffffff',
+    },
+  },
+  rows: {
+    style: {
+      borderBottom: '1px solid #e3e5e8',
+    },
+  },
+  cells: {
+    style: {
+      '&:first-child': {
+        borderLeft: '1px solid #e3e5e8',
+      },
+    },
   },
 };

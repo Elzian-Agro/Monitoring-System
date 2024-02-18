@@ -1,5 +1,4 @@
 import { Bars3Icon, ChevronDownIcon, BellIcon } from '@heroicons/react/24/outline';
-import avatar from 'assets/images/avatar.png';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setActiveMenu,
@@ -9,19 +8,30 @@ import {
   setNotificationOpen,
   selectNotificationOpen,
 } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import UserProfile from 'pages/dashboard/components/common/user-profile';
+import UserProfile from 'pages/dashboard/components/common/profile';
 import Notification from 'pages/dashboard/components/common/notification';
 import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
 import { menuMode } from 'constant';
+import avatar from 'assets/images/avatar.png';
+import LanguageSelector from '../language-selector';
+import { useEffect, useState } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ notificationData }) => {
   const dispatch = useDispatch();
   const activeMenu = useSelector(selectActiveMenu);
   const isProfileOpen = useSelector(selectProfileOpen);
   const isNotificationOpen = useSelector(selectNotificationOpen);
 
-  //TODO: Get username through the API
-  const userName = 'Michael';
+  const [notificationsCount, setNotificationCount] = useState(0);
+
+  useEffect(() => {
+    const readNotificationsCount = notificationData?.filter((data) => !data.readFlag).length;
+    setNotificationCount(readNotificationsCount);
+  }, [notificationData]);
+
+  //Get username through redux toolkit
+  const userName = useSelector((state) => state.user.firstName);
+  const profileImage = useSelector((state) => state.user.profileImage);
 
   // Function to handle the click on the profile button
   const handleProfileClick = () => {
@@ -50,7 +60,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className='flex justify-between p-2 md:mr-6 relative'>
+    <div className='flex justify-between xs:pl-2 pt-2 pb-2 pr-2 md:mr-6 relative'>
       <button
         type='button'
         className='relative text-xl rounded-full p-3  dark:text-white hover:bg-light-gray dark:hover:text-black'
@@ -59,21 +69,28 @@ const Navbar = () => {
       </button>
 
       <div className='flex'>
-        <div className='hidden md:flex  '>
+        <div className='hidden md:flex gap-2'>
+          <LanguageSelector />
           <ThemeSettings />
         </div>
         <button
           type='button'
           className='relative text-xl rounded-full p-3 hover:bg-light-gray dark:text-white dark:hover:text-black'
           onClick={handleNotificationClick}>
-          <span style={{ background: 'red' }} className='absolute inline-flex rounded-full h-2 w-2 right-2 top-2' />
-          <BellIcon className='h-6 w-6 text-14 ' />
+          {notificationsCount > 0 && (
+            <span
+              style={{ background: notificationsCount > 0 ? 'red' : '' }}
+              className='absolute inline-flex rounded-full right-1 top-1'>
+              <span className='text-xs font-semibold text-white px-1'>{notificationsCount}</span>
+            </span>
+          )}
+          <BellIcon className='h-6 w-6 text-14' />
         </button>
         <div
           className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
           onClick={handleProfileClick}>
-          <img className='rounded-full w-8 h-8' src={avatar} alt='user-profile' />
-          <p>
+          <img className='rounded-full w-8 h-8' src={profileImage || avatar} alt='user-profile' />
+          <p className='xxs:hidden sm:block'>
             <span className='text-gray-400 text-14 hidden md:inline-block'>Hi,</span>
             <span className='text-gray-400 font-bold ml-1 text-14'>
               <span className='md:hidden'>{userName.charAt(0)}</span>
@@ -83,7 +100,9 @@ const Navbar = () => {
           <ChevronDownIcon className='h-6 w-6 text-14 text-gray-400' />
         </div>
         {isProfileOpen && <UserProfile />}
-        {isNotificationOpen && <Notification />}
+        {isNotificationOpen && (
+          <Notification notificationData={notificationData} setNotificationCount={setNotificationCount} />
+        )}
       </div>
     </div>
   );

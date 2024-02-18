@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import { store } from 'store/store'; // Import your store
 import { updateEmail } from '../slice/emailSlice'; // Import the action you want to dispatch
-import { tokenise } from 'pages/auth/utils';
+import { tokenise } from 'utils/rsa.encrypt';
 import { errorType } from 'constant';
 
 jest.mock('axios');
@@ -29,8 +29,8 @@ jest.mock('react-i18next', () => ({
   },
 }));
 
-jest.mock('pages/auth/utils', () => ({
-  ...jest.requireActual('pages/auth/utils'),
+jest.mock('utils/rsa.encrypt', () => ({
+  ...jest.requireActual('utils/rsa.encrypt'),
   tokenise: jest.fn().mockResolvedValue('mocked-token'),
 }));
 

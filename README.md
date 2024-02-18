@@ -30,6 +30,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - **Documentation**: [Redux Toolkit Documentation](https://redux-toolkit.js.org/)
 
+### React Data Table Component
+
+- **Documentation**: [React Data Table Component Documentation](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs)
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -107,3 +111,7 @@ https://documenter.getpostman.com/view/32012154/2s9Ykt6KYB
 The application is deployed successfully in Dev and Prod
 Dev: http://monitoring-dev.elzian.com/
 Prod: http://monitoring.elzian.com/
+
+Backend Dev API: https://monitoring-dev-api.elzian.com
+
+ngRok - n6ABQf$nDZ3S

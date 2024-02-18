@@ -17,7 +17,7 @@ const ThemeSettings = () => {
 
   return (
     <div
-      className='flex mr-6 gap-5 rounded-full hover:bg-red-500 duration-300 px-4 cursor-pointer'
+      className='flex mr-6 gap-5 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 duration-300 px-4 cursor-pointer'
       onClick={changeTheme}>
       <button>
         <SunIcon

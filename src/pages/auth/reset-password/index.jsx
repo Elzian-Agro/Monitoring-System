@@ -10,13 +10,14 @@ import Button from 'pages/auth/components/base/Button';
 import TextBox from 'pages/auth/components/base/TextBox';
 import ErrorMessage from 'pages/auth/components/base/ErrorMessage';
 import PropTypes from 'prop-types';
-import { identifyError, isValidPassword, tokenise } from 'pages/auth/utils';
+import { identifyError, isValidPassword } from 'pages/auth/utils';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateEmail } from '../slice/emailSlice';
 import Redirect from 'pages/auth/components/base/Redirect';
 import { useTranslation } from 'react-i18next';
 import { errorType } from 'constant';
+import { tokenise } from 'utils/rsa.encrypt';
 
 function ResetPassword({ setPage }) {
   const [tempPass, setTempPass] = useState('');
@@ -75,8 +76,11 @@ function ResetPassword({ setPage }) {
       .catch((error) => {
         setIsLoading(false);
 
-        if (error.response?.data?.code === errorType.userBlocked.code) setBlocked(true);
-        else setError(identifyError(error.response?.data?.code));
+        if (error.response?.data?.code === errorType.userBlocked.code) {
+          setBlocked(true);
+        } else {
+          setError(identifyError(error.response?.data?.code));
+        }
       });
   };
 
@@ -106,21 +110,24 @@ function ResetPassword({ setPage }) {
         setTimer(60);
       })
       .catch((error) => {
-        if (error.response?.data?.code === errorType.userBlocked.code) setBlocked(true);
-        else setError(identifyError(error.response?.data?.code));
+        if (error.response?.data?.code === errorType.userBlocked.code) {
+          setBlocked(true);
+        } else {
+          setError(identifyError(error.response?.data?.code));
+        }
       });
   };
 
   return (
-    <div className='flex flex-col h-full w-full gap-5 md:gap-0 items-start'>
-      <button onClick={handleGoBack} className='group w-[100px] flex items-center'>
+    <div className='flex flex-col h-full w-full gap-5 md:gap-0 items-start dark:text-white'>
+      <button onClick={handleGoBack} className='group w-[100px] flex items-center '>
         <ArrowLeftIcon className='w-[20px] group-hover:ml-[-20px] transition-all' />
         <p className='flex-1 font-zenkaku text-[12px]'>{t('Go Back')}</p>
       </button>
 
       {email && !success && !blocked && (
         <div className='flex-1 flex items-center flex-col lg:justify-center h-full w-full'>
-          <h1 className='font-zenkaku font-black text-[#212121] text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
+          <h1 className='font-zenkaku font-black text-[#212121] dark:text-white text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
             {t('RESET PASSWORD')}
           </h1>
           <p className='font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10'>

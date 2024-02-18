@@ -1,4 +1,3 @@
-import React from 'react';
 import './index.css';
 
 import Navbar from 'components/common/navbar';
@@ -6,11 +5,15 @@ import Sidebar from 'components/common/sidebar';
 
 import { useSelector } from 'react-redux';
 import { selectActiveMenu, selectTheme } from './slice/dashboardLayoutSlice';
+import GetUserData from 'pages/utils/GetUserData';
+import useAxios from 'hooks/useAxios';
+import { useEffect, useState } from 'react';
+import Loader from './components/common/loader';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
     case 'open':
-      return 'w-64 md:w-60 fixed';
+      return 'w-56 md:w-60 fixed';
     case 'onlyIcon':
       return 'w-30';
     default:
@@ -21,7 +24,7 @@ const getSidebarWidth = (activeMenu) => {
 const getMainContentMargin = (activeMenu) => {
   switch (activeMenu) {
     case 'open':
-      return 'ml-64 md:ml-60';
+      return 'ml-56 md:ml-60';
     case 'onlyIcon':
       return 'md:ml-2';
     default:
@@ -29,11 +32,34 @@ const getMainContentMargin = (activeMenu) => {
   }
 };
 
-const Dashboard = () => {
+const Dashboard = ({ page }) => {
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
   const currentMode = useSelector(selectTheme);
+  const { send } = useAxios();
+  const userId = useSelector((state) => state.user._id);
+  const [response, setresponse] = useState(null);
+  const [loading, setloading] = useState(true);
+
+  // Get UserData for the user and save it inside the reduxtoolkit.
+  GetUserData();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
+      setresponse(res?.result);
+      setloading(false);
+    };
+    if (userId) {
+      fetchData();
+    }
+    // eslint-disable-next-line
+  }, [userId]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
@@ -44,7 +70,8 @@ const Dashboard = () => {
 
         <div className={`${mainContentMargin} dark:bg-main-dark-bg bg-main-bg min-h-screen w-full`}>
           <div className='z-10 bg-main-bg dark:bg-main-dark-bg w-full'>
-            <Navbar />
+            <Navbar notificationData={response} />
+            {page}
           </div>
         </div>
       </div>
