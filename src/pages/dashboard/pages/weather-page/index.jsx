@@ -8,7 +8,7 @@ const WeatherComponent = () => {
         <div className='flex items-center justify-between'>
           <div className='flex items-center'>
             <img
-              src='https://www.flaticon.com/svg/static/icons/svg/414/414927.svg'
+              src='https://cdn-icons-png.flaticon.com/512/3104/3104612.png'
               alt='Weather Icon'
               className='h-12 w-12'
             />
