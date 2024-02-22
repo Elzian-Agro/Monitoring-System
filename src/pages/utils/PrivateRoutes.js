@@ -19,10 +19,14 @@ const PrivateRoutes = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
+  } else {
+    if (isAuthenticated) {
+      return <Outlet />;
+    } else {
+      return <Navigate to='/' />;
+    }
   }
-
-  return isAuthenticated ? <Outlet /> : <Navigate to='/' />;
 };
 
 export default PrivateRoutes;
