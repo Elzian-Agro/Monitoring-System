@@ -94,6 +94,13 @@ export const customTableStyles = {
       color: '#ffffff',
     },
   },
+  headCells: {
+    style: {
+      '&:last-child': {
+        minWidth: '220px',
+      },
+    },
+  },
   rows: {
     style: {
       borderBottom: '1px solid #e3e5e8',
@@ -103,6 +110,9 @@ export const customTableStyles = {
     style: {
       '&:first-child': {
         borderLeft: '1px solid #e3e5e8',
+      },
+      '&:last-child': {
+        minWidth: '220px',
       },
     },
   },

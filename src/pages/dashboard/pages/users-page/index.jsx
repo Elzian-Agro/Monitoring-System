@@ -30,50 +30,56 @@ const ManageUsers = () => {
   const columns = [
     {
       name: t('FIRST NAME'),
-      selector: (row) => row.firstName,
+      cell: (row) => (
+        <div className='flex flex-row gap-2 items-center'>
+          {row.firstName}
+          {row.isDisabled && <div className='hidden lg:block bg-red-500 rounded-full h-3 w-3'></div>}
+        </div>
+      ),
       sortable: true,
     },
     {
       name: t('LAST NAME'),
-      selector: (row) => row.lastName,
+      cell: (row) => row.lastName,
       sortable: true,
+      hide: 'sm',
     },
     {
       name: t('EMAIL'),
-      selector: (row) => row.email,
+      cell: (row) => row.email,
       sortable: true,
+      hide: 'md',
     },
     {
       name: t('NIC'),
-      selector: (row) => row.nic,
+      cell: (row) => row.nic,
       sortable: true,
+      hide: 'lg',
     },
     {
       name: t('TEL. NUMBER'),
-      selector: (row) => row.phoneNum,
+      cell: (row) => row.phoneNum,
       sortable: true,
+      hide: 'sm',
     },
     {
       name: t('ORG. NAME'),
-      selector: (row) => row.orgName,
+      cell: (row) => row.orgName,
       sortable: true,
+      hide: 'lg',
     },
     {
       name: t('ACTION'),
       cell: (row) => (
-        <PrimaryButton
-          color='bg-blue-500 border-blue-600'
-          text='Edit'
-          onClick={() => {
-            setSelectedUser(row);
-            setIsFormVisible(true);
-          }}
-        />
-      ),
-    },
-    {
-      cell: (row) => (
         <div className='flex flex-row gap-2 items-center'>
+          <PrimaryButton
+            color='bg-blue-500 border-blue-600'
+            text='Edit'
+            onClick={() => {
+              setSelectedUser(row);
+              setIsFormVisible(true);
+            }}
+          />
           <PrimaryButton
             color='bg-red-500 border-red-600'
             text='Delete'
@@ -82,11 +88,22 @@ const ManageUsers = () => {
               setIsConfirmVisible(true);
             }}
           />
-          {row.isDisabled && <div className='bg-green-500 rounded-full h-3 w-3'></div>}
         </div>
       ),
     },
   ];
+
+  const ExpandedUserdata = ({ data }) => {
+    return (
+      <div className='p-2 text-sm'>
+        <p className='sm:hidden'>Last Name : {data.lastName}</p>
+        <p className='lg:hidden'>Email : {data.email}</p>
+        <p className='sm:hidden'>Phone Number : {data.phoneNum}</p>
+        <p className='xl:hidden'>Organization Name : {data.orgName}</p>
+        <p className='lg:hidden'>Status: {data.isDisabled ? <span>Disabled</span> : <span>Active</span>}</p>
+      </div>
+    );
+  };
 
   const getUsers = async () => {
     const response = await send({ endpoint: 'user', method: 'GET' });
@@ -142,7 +159,7 @@ const ManageUsers = () => {
 
   return (
     <div className='mx-5 mt-2'>
-      {isFormVisible ? (
+      {isFormVisible && (
         <Form
           onClose={() => {
             setIsFormVisible(false);
@@ -156,52 +173,48 @@ const ManageUsers = () => {
             getUsers();
           }}
         />
-      ) : (
-        <>
-          {loading ? (
-            <Loader />
-          ) : (
-            <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
-              <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
-                <div className='flex gap-2 mb-2 md:mb-0'>
-                  <VariantButton
-                    text='Add User'
-                    Icon={PlusIcon}
-                    onClick={() => {
-                      setIsFormVisible(true);
-                      setSelectedUser(null);
-                    }}
-                  />
-                  {filteredUsers.length > 0 && (
-                    <VariantButton
-                      text='Download'
-                      Icon={ArrowDownTrayIcon}
-                      onClick={() => downloadCSV(filteredUsers)}
-                    />
-                  )}
-                </div>
-                <SearchBox
-                  value={filterText}
-                  onChange={(e) => setFilterText(e.target.value)}
-                  onClick={() => {
-                    setFilterText('');
-                  }}
-                />
-              </div>
-              <div className='rounded-t-lg'>
-                <DataTable
-                  columns={columns}
-                  data={filteredUsers}
-                  customStyles={currentMode === 'Dark' ? {} : customTableStyles}
-                  theme={currentMode === 'Dark' ? 'dark' : 'default'}
-                  pagination
-                  fixedHeader
-                  fixedHeaderScrollHeight='65vh'
-                />
-              </div>
+      )}
+
+      {loading && <Loader />}
+
+      {!isFormVisible && !loading && (
+        <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
+          <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
+            <div className='flex gap-2 mb-2 md:mb-0'>
+              <VariantButton
+                text='Add User'
+                Icon={PlusIcon}
+                onClick={() => {
+                  setIsFormVisible(true);
+                  setSelectedUser(null);
+                }}
+              />
+              {filteredUsers.length > 0 && (
+                <VariantButton text='Download' Icon={ArrowDownTrayIcon} onClick={() => downloadCSV(filteredUsers)} />
+              )}
             </div>
-          )}
-        </>
+            <SearchBox
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+              onClick={() => {
+                setFilterText('');
+              }}
+            />
+          </div>
+          <div className='rounded-t-lg'>
+            <DataTable
+              columns={columns}
+              data={filteredUsers}
+              customStyles={currentMode === 'Dark' ? {} : customTableStyles}
+              theme={currentMode === 'Dark' ? 'dark' : 'default'}
+              pagination
+              fixedHeader
+              fixedHeaderScrollHeight='65vh'
+              expandableRows
+              expandableRowsComponent={ExpandedUserdata}
+            />
+          </div>
+        </div>
       )}
       <Modal
         isOpen={isConfirmVisible}
