@@ -13,6 +13,7 @@ import ResetForm from 'pages/dashboard/pages/profile-page/passowrd-reset-form';
 import DashboardPage from 'pages/dashboard/pages/dashboard-page';
 import AboutPage from 'pages/dashboard/pages/about-page';
 import UserProfilePage from 'pages/dashboard/pages/profile-page';
+import AgroEye from 'pages/dashboard/pages/agro-eye-page';
 
 function App() {
   return (
@@ -21,16 +22,13 @@ function App() {
         <Routes>
           <Route element={<PrivateRoutes />}>
             <Route path='/dashboard' element={<Dashboard page={<DashboardPage />} />} />
-
-            {/* Pages */}
             <Route path='/weather' element={<Dashboard page={<Weather />} />} />
-            <Route path='/about' element={<Dashboard page={<AboutPage />} />} />
             <Route path='/devices' element={<Dashboard page={<DeviceManagement />} />} />
             <Route path='/users' element={<Dashboard page={<ManageUsers />} />} />
+            <Route path='/agro' element={<Dashboard page={<AgroEye />} />} />
             <Route path='/profile' element={<Dashboard page={<UserProfilePage />} />} />
+            <Route path='/about' element={<Dashboard page={<AboutPage />} />} />
             <Route path='/reset' element={<Dashboard page={<ResetForm />} />} />
-
-            {/* Charts */}
 
             <Route path='*' element={<NotFoundPage />} />
           </Route>

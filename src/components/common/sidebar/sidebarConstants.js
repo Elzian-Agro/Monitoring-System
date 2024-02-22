@@ -4,6 +4,7 @@ import {
   UserCircleIcon,
   CloudIcon,
   DevicePhoneMobileIcon,
+  ChartBarIcon,
 } from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
 
@@ -25,6 +26,11 @@ const SidebarLinks = ({ t }) => {
       to: '/devices',
       text: t('Manage Devices'),
       icon: DevicePhoneMobileIcon,
+    },
+    {
+      to: '/agro',
+      text: t('Agro Eye'),
+      icon: ChartBarIcon,
     },
     {
       to: '/profile',
