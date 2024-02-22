@@ -96,11 +96,17 @@ const ManageUsers = () => {
   const ExpandedUserdata = ({ data }) => {
     return (
       <div className='p-2 text-sm'>
-        <p className='sm:hidden'>Last Name : {data.lastName}</p>
-        <p className='lg:hidden'>Email : {data.email}</p>
-        <p className='sm:hidden'>Phone Number : {data.phoneNum}</p>
-        <p className='xl:hidden'>Organization Name : {data.orgName}</p>
-        <p className='lg:hidden'>Status: {data.isDisabled ? <span>Disabled</span> : <span>Active</span>}</p>
+        {[
+          ['sm:hidden', `${t('Last Name')} : ${data.lastName}`],
+          ['lg:hidden', `${t('Email')} : ${data.email}`],
+          ['sm:hidden', `${t('Phone Number')} : ${data.phoneNum}`],
+          ['xl:hidden', `${t('Organization Name')} : ${data.orgName}`],
+          ['lg:hidden', `${t('Status')} : ${data.isDisabled ? 'Disabled' : 'Active'}`],
+        ].map(([className, content], index) => (
+          <p key={index} className={className}>
+            {content}
+          </p>
+        ))}
       </div>
     );
   };
@@ -205,7 +211,7 @@ const ManageUsers = () => {
             <DataTable
               columns={columns}
               data={filteredUsers}
-              customStyles={currentMode === 'Dark' ? {} : customTableStyles}
+              customStyles={customTableStyles}
               theme={currentMode === 'Dark' ? 'dark' : 'default'}
               pagination
               fixedHeader
