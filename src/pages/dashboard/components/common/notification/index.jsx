@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const Notification = ({ notificationData, setNotificationCount }) => {
   const dispatch = useDispatch();
@@ -122,6 +123,11 @@ const Notification = ({ notificationData, setNotificationCount }) => {
       </div>
     </div>
   );
+};
+
+Notification.propTypes = {
+  notificationData: PropTypes.array.isRequired,
+  setNotificationCount: PropTypes.func.isRequired,
 };
 
 export default Notification;
