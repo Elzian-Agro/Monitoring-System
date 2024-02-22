@@ -12,7 +12,7 @@ import {
   BuildingOffice2Icon,
 } from '@heroicons/react/24/outline';
 import { encryptData } from 'utils/rsa.encrypt';
-import { generateRandomPassword } from 'pages/dashboard/utils/generateRandomPassword';
+import { generatePassword } from 'pages/dashboard/utils/generatePassword';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
 
@@ -46,7 +46,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
 
     // Generate random password for register mode
     if (!user) {
-      setPassword(generateRandomPassword());
+      resetForm();
     }
   }, [user]);
 
@@ -56,7 +56,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
     setNic('');
     setEmail('');
     setPhoneNum('');
-    setPassword(generateRandomPassword());
+    setPassword(generatePassword());
     setOrgName('');
     setAddress('');
   };
