@@ -122,7 +122,7 @@ const ManageUsers = () => {
   }, []);
 
   // Function to filter the user based on the search text
-  const filteredUsers = useMemo(() => {
+  const filterUsers = useMemo(() => {
     if (!users) {
       return [];
     }
@@ -195,8 +195,8 @@ const ManageUsers = () => {
                   setSelectedUser(null);
                 }}
               />
-              {filteredUsers.length > 0 && (
-                <VariantButton text='Download' Icon={ArrowDownTrayIcon} onClick={() => downloadCSV(filteredUsers)} />
+              {filterUsers.length > 0 && (
+                <VariantButton text='Download' Icon={ArrowDownTrayIcon} onClick={() => downloadCSV(filterUsers)} />
               )}
             </div>
             <SearchBox
@@ -210,7 +210,7 @@ const ManageUsers = () => {
           <div className='rounded-t-lg'>
             <DataTable
               columns={columns}
-              data={filteredUsers}
+              data={filterUsers}
               customStyles={customTableStyles}
               theme={currentMode === 'Dark' ? 'dark' : 'default'}
               pagination
