@@ -17,8 +17,6 @@ const Sidebar = () => {
   // This function for check if the active menu is 'open' if so will return true
   const isOpenMenu = () => activeMenu === 'open';
 
-  const currentYear = new Date().getFullYear();
-
   const logout = () => {
     localStorage.removeItem('jwtAccessToken');
     localStorage.removeItem('jwtRefreshToken');
@@ -31,16 +29,20 @@ const Sidebar = () => {
 
   return (
     <div className='flex flex-col min-h-screen ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-2 '>
-      <div className='flex justify-between items-center'>
-        <Link
-          to='/dashboard'
-          onClick={() => {
-            dispatch(setActiveMenu('close'));
-          }}
-          className='items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight text-slate-900 dark:text-green-600'>
-          <img className='md:w-14 xxs:w-10' src={logo} alt='Elzian Agro logo' />
-          {isOpenMenu() && <span className='text-base md:text-lg'>Elzian Agro</span>}
-        </Link>
+      <div className='flex justify-between'>
+        <div className='flex flex-row gap-3 items-center mt-4'>
+          <a href='https://agro.elzian.com' target='_blank' rel='noreferrer'>
+            <img className='md:w-14 xxs:w-10' src={logo} alt='Elzian Agro logo' />
+          </a>
+          <Link
+            to='/dashboard'
+            onClick={() => {
+              dispatch(setActiveMenu('close'));
+            }}
+            className='items-center gap-8 flex text-xl font-extrabold tracking-tight text-slate-900 dark:text-green-600'>
+            {isOpenMenu() && <span className='text-base md:text-lg'>Elzian Agro</span>}
+          </Link>
+        </div>
         {isOpenMenu() && (
           <button
             type='button'
@@ -76,7 +78,10 @@ const Sidebar = () => {
       </div>
       {isOpenMenu() && (
         <footer className='text-gray-400 text-xs text-center mt-12'>
-          <p>{t('Copyright Elzian Agro. All Rights Reserved', { val: currentYear })}</p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: t(`Copyright Elzian Agro. All Rights Reserved`, { val: new Date().getFullYear() }),
+            }}></p>
         </footer>
       )}
     </div>

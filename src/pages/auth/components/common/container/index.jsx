@@ -45,7 +45,10 @@ function LoginPage() {
           </div>
 
           <div className='flex justify-center items-center text-center text-[#ccc] font-zenkaku text-[12px]'>
-            {t('Copyright Elzian Agro. All Rights Reserved', { val: new Date().getFullYear() })}
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t(`Copyright Elzian Agro. All Rights Reserved`, { val: new Date().getFullYear() }),
+              }}></p>
           </div>
         </div>
       </div>
