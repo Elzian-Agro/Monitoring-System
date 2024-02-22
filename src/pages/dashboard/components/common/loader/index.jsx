@@ -1,9 +1,11 @@
 import React from 'react';
+import logo from 'assets/images/agro.png';
 
 function Loader() {
   return (
-    <div className='flex justify-center pt-64'>
-      <div className='w-16 border-t-2 rounded-full border-gray-500 dark:border-gray-100 bg-gray-50 dark:bg-gray-900 animate-spin aspect-square'></div>
+    <div className='flex justify-center items-center pt-64'>
+      <div className='w-14 border-t-2 rounded-full border-gray-500 dark:border-gray-100 bg-gray-50 dark:bg-main-dark-bg animate-spin aspect-square'></div>
+      <img src={logo} alt='Logo' className='w-8 h-8 absolute' />
     </div>
   );
 }
