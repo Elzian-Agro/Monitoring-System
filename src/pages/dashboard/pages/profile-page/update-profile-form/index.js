@@ -11,7 +11,6 @@ import {
   CheckIcon,
 } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
-import { validateForm } from 'pages/dashboard/utils/userFormValidation';
 import useAxios from 'hooks/useAxios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserData } from 'pages/dashboard/slice/userSlice';
@@ -31,7 +30,6 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
   const profileImage = useSelector((state) => state.user.profileImage);
   const [localProfilePicture, setLocalProfilePicture] = useState('');
   const navigate = useNavigate();
-  const [errors, setErrors] = useState({});
 
   const { t } = useTranslation();
   const { send, loading } = useAxios();
@@ -45,37 +43,29 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
     }
   }, [user]);
 
-  const handleFormErrors = () => {
-    const fields = [{ key: 'phoneNum', label: 'Phone Number', value: phoneNum, optional: false }];
-
-    const formErrors = validateForm(fields);
-    setErrors(formErrors);
-    return formErrors;
-  };
-
   const handleSubmit = async (e) => {
-    if (Object.keys(handleFormErrors()).length === 0) {
-      const requestData = {
-        userBio,
-        phoneNum,
-        address,
-      };
+    e.preventDefault();
 
-      const response = await send({
-        endpoint: 'user/profile',
-        method: 'PUT',
-        body: requestData,
-      });
+    const requestData = {
+      userBio,
+      phoneNum,
+      address,
+    };
 
-      if (response) {
-        //Change updated details in the redux
-        dispatch(setUserData({ userBio: userBio }));
-        dispatch(setUserData({ address: address }));
-        dispatch(setUserData({ phoneNum: phoneNum }));
+    const response = await send({
+      endpoint: 'user/profile',
+      method: 'PUT',
+      body: requestData,
+    });
 
-        formSubmission('User details updated successfully');
-        onClose();
-      }
+    if (response) {
+      //Change updated details in the redux
+      dispatch(setUserData({ userBio: userBio }));
+      dispatch(setUserData({ address: address }));
+      dispatch(setUserData({ phoneNum: phoneNum }));
+
+      formSubmission('User details updated successfully');
+      onClose();
     }
   };
 
@@ -181,48 +171,54 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
           )}
         </div>
       </div>
-      <form
-        className={
-          'grid space-y-4 w-full px-12 sm:px-24 md:px-44 lg:px-40 lg:grid-cols-2 lg:space-y-0 lg:gap-x-24 lg:gap-y-12'
-        }>
-        <TextBox
-          placeholder='Eg. 076XXXXXXX'
-          label='Phone Number'
-          type='text'
-          error={errors.phoneNum}
-          Icon={PhoneIcon}
-          value={phoneNum.toString()}
-          setValue={setPhoneNum}
-        />
 
-        <TextBox
-          placeholder='Eg. Your New Bio'
-          label='Bio'
-          type='text'
-          Icon={IdentificationIcon}
-          value={userBio}
-          setValue={setUserBio}
-        />
+      <form onSubmit={handleSubmit}>
+        <div className='flex flex-col justify-center'>
+          <div className='grid lg:grid-cols-2 space-y-4 lg:space-y-0 w-full justify-center lg:gap-x-20 lg:px-24 xl:px-48 lg:gap-y-6'>
+            <TextBox
+              placeholder='Eg. 076XXXXXXX'
+              label='Phone Number'
+              type='text'
+              Icon={PhoneIcon}
+              value={phoneNum.toString()}
+              setValue={setPhoneNum}
+              required={true}
+              pattern='^\d{10}$'
+              title='Enter a valid phone number'
+            />
 
-        <TextBox
-          placeholder='Eg. 123 Main Road, Colombo'
-          label='Address'
-          type='text'
-          Icon={HomeIcon}
-          value={address}
-          setValue={setAddress}
-        />
+            <TextBox
+              placeholder='Eg. Your New Bio'
+              label='Bio'
+              type='text'
+              Icon={IdentificationIcon}
+              value={userBio}
+              setValue={setUserBio}
+            />
+
+            <TextBox
+              placeholder='Eg. 123 Main Road, Colombo'
+              label='Address'
+              type='text'
+              Icon={HomeIcon}
+              value={address}
+              setValue={setAddress}
+              required={true}
+            />
+          </div>
+          <div className='flex justify-center mt-5'>
+            <div className='flex justify-end gap-2 w-60 sm:w-64 md:w-80 lg:w-full lg:px-24 xl:px-48'>
+              <PrimaryButton
+                type='button'
+                color='bg-red-500 border-red-600'
+                text={'Reset Password'}
+                onClick={() => setIsResetConfirmVisible(true)}
+              />
+              <PrimaryButton type='submit' color='bg-blue-500 border-blue-600' text={'Update'} />
+            </div>
+          </div>
+        </div>
       </form>
-      <div className='flex justify-end mt-20 px-12 sm:px-24 md:px-44 lg:px-40'>
-        <button
-          className='bg-red-500 text-black dark:text-white rounded px-4 py-2 mr-2'
-          onClick={() => {
-            setIsResetConfirmVisible(true);
-          }}>
-          {t('Reset Password')}
-        </button>
-        <PrimaryButton color='bg-blue-500 border-blue-600' text={'Update'} onClick={handleSubmit} />
-      </div>
 
       {/* Reset Password confirmation */}
       <Modal
