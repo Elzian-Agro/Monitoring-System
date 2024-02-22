@@ -214,8 +214,6 @@ const ManageUsers = () => {
               customStyles={customTableStyles}
               theme={currentMode === 'Dark' ? 'dark' : 'default'}
               pagination
-              fixedHeader
-              fixedHeaderScrollHeight='65vh'
               expandableRows
               expandableRowsComponent={ExpandedUserdata}
             />

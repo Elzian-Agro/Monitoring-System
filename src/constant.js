@@ -108,9 +108,6 @@ export const customTableStyles = {
   },
   cells: {
     style: {
-      '&:first-child': {
-        borderLeft: '1px solid #e3e5e8',
-      },
       '&:last-child': {
         minWidth: '220px',
       },
