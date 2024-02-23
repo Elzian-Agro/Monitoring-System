@@ -131,7 +131,7 @@ function AgroEye() {
         <div className='mb-10'>
           <Dropdown label='Chart Type' value={chartType} setValue={setChartType} options={['Line', 'Bar', 'Pie']} />
         </div>
-        <div className='bg-white bg-opacity-30 backdrop-blur-lg border border-gray-200 shadow-lg rounded-xl flex justify-center items-center p-4'>
+        <div className='bg-white rounded-md border border-gray-100 shadow-md shadow-black/5 flex justify-center items-center p-4'>
           <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
         </div>
       </div>

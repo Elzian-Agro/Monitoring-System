@@ -7,9 +7,9 @@ const AboutPage = () => {
   const { t } = useTranslation();
 
   return (
-    <div className='flex justify-center items-center bg-gradient-to-br from-green-500 to-lime-500 dark:from-gray-900 dark:to-gray-500 rounded-xl shadow-md px-8 py-20 mx-6 my-4'>
-      <div className='bg-white bg-opacity-30 backdrop-blur-lg border border-gray-300 shadow-lg rounded-xl flex justify-center items-center p-4'>
-        <div className='flex flex-col gap-6'>
+    <div className='flex justify-center bg-gradient-to-br from-green-500 to-lime-500 dark:from-gray-900 dark:to-gray-500 rounded-xl shadow-md p-8 sm:p-10 md:p-16 lg:p-24 mx-6 min-h-screen'>
+      <div className='bg-white bg-opacity-30 border border-gray-100 shadow-md rounded-md shadow-black/5 flex justify-center items-center p-4'>
+        <div className='flex flex-col gap-5 sm:gap-8 md:gap-12 lg:gap-8'>
           <h2 className='text-4xl font-bold text-black dark:text-white text-center'>ELZIAN AGRO</h2>
           <div className='flex flex-col lg:flex-row lg:gap-5 items-center'>
             <p className='text-black dark:text-white p-6 text-justify lg:w-2/3'>{t('About EA')}</p>
