@@ -78,6 +78,11 @@ export const errorType = {
     code: 13019,
     message: 'Access denied',
   },
+
+  userDisabled: {
+    code: 13021,
+    message: 'The account has been disabled',
+  },
 };
 
 export const customTableStyles = {
