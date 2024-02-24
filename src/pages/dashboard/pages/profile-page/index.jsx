@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { clearUserData } from '../../slice/userSlice';
 import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
@@ -10,56 +10,38 @@ import UpdateProfileForm from './update-profile-form';
 import { useNavigate } from 'react-router-dom';
 import { PrimaryButton } from 'pages/dashboard/components/base/Button';
 import SocialLink from './social-link';
+import Loader from 'pages/dashboard/components/common/loader';
 
 const UserProfilePage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { t } = useTranslation();
+  const [user, setUser] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
-
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isDisableAlertVisible, setIsDisableAlertVisible] = useState(false);
   const [message, setMessage] = useState('');
 
-  const { send } = useAxios();
+  const { loading, send } = useAxios();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
-  //Capitalize the text
-  const capitalize = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  const getUserData = async () => {
+    const response = await send({ endpoint: 'user/profile', method: 'GET' });
+    setUser(response);
   };
 
-  const firstName = useSelector((state) => state.user.firstName);
-  const lastName = useSelector((state) => state.user.lastName);
-  const email = useSelector((state) => state.user.email);
-  const nic = useSelector((state) => state.user.nic);
-  const phoneNumber = useSelector((state) => state.user.phoneNum);
-  const userType = useSelector((state) => capitalize(state.user.userType));
-  const organizationName = useSelector((state) => state.user.orgName);
-  const userId = useSelector((state) => state.user._id);
-  const userBio = useSelector((state) => state.user.userBio);
-  const profileImage = useSelector((state) => state.user.profileImage);
-  const address = useSelector((state) => state.user.address);
-  const facebookLink = useSelector((state) => state.user.facebook);
-  const linkedInLink = useSelector((state) => state.user.linkedIn);
-  const youtubeLink = useSelector((state) => state.user.youtube);
-
-  const user = {
-    firstName: firstName,
-    lastName: lastName,
-    phoneNumber: phoneNumber,
-    bio: userBio,
-    address: address,
-    email: email,
-  };
+  useEffect(() => {
+    getUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFormVisible]);
 
   const formSubmission = async (message) => {
     setMessage(message);
     setIsAlertVisible(true);
+    getUserData();
   };
 
-  //Disable
+  // Disable
   const confirmDialogCloseDisable = (result) => {
     if (result) {
       handleDisable();
@@ -69,13 +51,13 @@ const UserProfilePage = () => {
 
   const handleDisable = async () => {
     const response = await send({
-      endpoint: `user/disable/${userId}`,
+      endpoint: `user/disable/${user._id}`,
       method: 'POST',
       body: { isDisabled: true },
     });
 
     if (response) {
-      setMessage(t('Disabled successfully'));
+      setMessage('Disabled successfully');
       setIsDisableAlertVisible(true);
       //Removed locally sotored user data
       localStorage.removeItem('jwtAccessToken');
@@ -86,7 +68,7 @@ const UserProfilePage = () => {
 
   return (
     <div className='mt-3 mx-6'>
-      {isFormVisible ? (
+      {isFormVisible && (
         <UpdateProfileForm
           onClose={() => {
             setIsFormVisible(false);
@@ -95,19 +77,27 @@ const UserProfilePage = () => {
           user={user}
           formSubmission={formSubmission}
         />
-      ) : (
+      )}
+
+      {loading && <Loader />}
+
+      {!isFormVisible && !loading && user && (
         <div className='bg-gradient-to-br from-green-500 to-lime-500 dark:from-gray-900 dark:to-gray-500 rounded-xl shadow-md min-h-screen'>
           <div className='relative flex justify-center h-36 mb-8'>
             <img src={coverImage} alt='farmLand' className='w-full h-full object-cover rounded-md' />
             <div className='absolute bottom-[-20px]'>
-              <img src={profileImage || avatar} alt='Profile' className='w-32 h-32 rounded-full object-cover' />
+              <img
+                src={`${user.profileImage || avatar}?timestamp=${new Date().getTime()}`}
+                alt='Profile'
+                className='w-32 h-32 rounded-full object-cover'
+              />
             </div>
           </div>
 
           <div className='bg-white bg-opacity-30 border border-gray-100 shadow-md rounded-md shadow-black/5 flex flex-col gap-5 sm:gap-8 md:gap-10 lg:gap-5 px-10 py-5 m-8 sm:m-10 md:m-16 lg:m-24'>
             <div className='socialLinks absolute flex right-24 md:right-32 lg:right-40'>
               <SocialLink
-                link={facebookLink}
+                link={user.facebook}
                 icon={
                   <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='30' height='30' viewBox='0 0 48 48'>
                     <path
@@ -120,7 +110,7 @@ const UserProfilePage = () => {
                 }
               />
               <SocialLink
-                link={linkedInLink}
+                link={user.linkedIn}
                 icon={
                   <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='30' height='30' viewBox='0 0 48 48'>
                     <path
@@ -139,7 +129,7 @@ const UserProfilePage = () => {
                 }
               />
               <SocialLink
-                link={youtubeLink}
+                link={user.youtube}
                 icon={
                   <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' width='30' height='30' viewBox='0 0 48 48'>
                     <path
@@ -152,43 +142,45 @@ const UserProfilePage = () => {
             </div>
 
             <p className='text-gray-600 dark:text-white text-center text-xl mt-6 md:mt-4'>
-              {firstName} {lastName}
+              {user.firstName} {user.lastName}
             </p>
 
-            <p className='text-gray-600 dark:text-white text-center'>{userType}</p>
+            <p className='text-gray-600 dark:text-white text-center'>
+              {user.userType && user.userType.charAt(0).toUpperCase() + user.userType.slice(1)}
+            </p>
 
-            <p className='text-gray-600 dark:text-white text-center'>{userBio}</p>
+            <p className='text-gray-600 dark:text-white text-center'>{user.userBio}</p>
 
             <div className='grid lg:grid-cols-2 space-y-3 md:space-y-5 lg:space-y-0 lg:gap-y-8 md:ml-4 lg:ml-10 xl:ml-16'>
               <div className='flex flex-row gap-x-5'>
                 <label className='block text-black dark:text-blue-400'>{t('Email')} :</label>
-                <p className='text-gray-600 dark:text-white'>{email}</p>
+                <p className='text-gray-600 dark:text-white'>{user.email}</p>
               </div>
 
               <div className='flex flex-row gap-x-5'>
                 <label className='block text-black dark:text-blue-400'>{t('Organization')} :</label>
-                <p className='text-gray-600 dark:text-white'>{organizationName}</p>
+                <p className='text-gray-600 dark:text-white'>{user.orgName}</p>
               </div>
 
               <div className='flex flex-row gap-x-5'>
                 <label className='block text-black dark:text-blue-400'>{t('NIC')} :</label>
-                <p className='text-gray-600 dark:text-white'>{nic}</p>
+                <p className='text-gray-600 dark:text-white'>{user.nic}</p>
               </div>
 
               <div className='flex flex-row gap-x-5'>
                 <label className='block text-black dark:text-blue-400'>{t('Address')} :</label>
-                <p className='text-gray-600 dark:text-white'>{address}</p>
+                <p className='text-gray-600 dark:text-white'>{user.address}</p>
               </div>
 
               <div className='flex flex-row gap-x-5'>
                 <label className='block text-black dark:text-blue-400'>{t('Phone No')} :</label>
-                <p className='text-gray-600 dark:text-white'>{phoneNumber}</p>
+                <p className='text-gray-600 dark:text-white'>{user.phoneNum}</p>
               </div>
             </div>
 
             <div className='flex flex-row justify-end gap-2'>
               <PrimaryButton
-                color='bg-green-500 border-green-600'
+                color='bg-blue-500 border-blue-600'
                 text='Update'
                 onClick={() => {
                   setIsFormVisible(true);
@@ -205,29 +197,27 @@ const UserProfilePage = () => {
           </div>
         </div>
       )}
-      {/* confirm Popups */}
+
       {/* Disable confirmation */}
       <Modal
         isOpen={isConfirmVisible}
-        message={t('Are you sure you want to disable this account?')}
+        message={'Are you sure you want to disable this account?'}
         onClose={(result) => confirmDialogCloseDisable(result)}
         type='confirmation'
       />
-
       {/* Alert message Popup */}
       <Modal
         isOpen={isAlertVisible}
-        message={`${message}!`}
+        message={`${message}`}
         onClose={() => {
           setIsAlertVisible(false);
         }}
         type='alert'
       />
-
       {/* Disable Success message Popup */}
       <Modal
         isOpen={isDisableAlertVisible}
-        message={`${message}!`}
+        message={`${message}`}
         onClose={() => {
           setIsDisableAlertVisible(false);
           navigate('/');

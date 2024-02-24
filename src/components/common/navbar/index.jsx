@@ -15,21 +15,30 @@ import { menuMode } from 'constant';
 import avatar from 'assets/images/avatar.png';
 import LanguageSelector from '../language-selector';
 import { useEffect, useState } from 'react';
+import useAxios from 'hooks/useAxios';
 
-const Navbar = ({ notificationData }) => {
-  const dispatch = useDispatch();
+const Navbar = () => {
   const activeMenu = useSelector(selectActiveMenu);
   const isProfileOpen = useSelector(selectProfileOpen);
   const isNotificationOpen = useSelector(selectNotificationOpen);
+  const userId = useSelector((state) => state.user._id);
+  const [notificationsCount, setNotificationsCount] = useState(0);
 
-  const [notificationsCount, setNotificationCount] = useState(0);
+  const dispatch = useDispatch();
+  const { send } = useAxios();
 
   useEffect(() => {
-    const readNotificationsCount = notificationData?.filter((data) => !data.readFlag).length;
-    setNotificationCount(readNotificationsCount);
-  }, [notificationData]);
+    const fetchData = async () => {
+      const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
+      setNotificationsCount(res?.result?.filter((data) => !data.readFlag).length || 0);
+    };
+    if (userId) {
+      fetchData();
+    }
+    // eslint-disable-next-line
+  }, [userId]);
 
-  //Get username through redux toolkit
+  //Get user details through redux toolkit
   const userName = useSelector((state) => state.user.firstName);
   const profileImage = useSelector((state) => state.user.profileImage);
 
@@ -89,7 +98,11 @@ const Navbar = ({ notificationData }) => {
         <div
           className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
           onClick={handleProfileClick}>
-          <img className='rounded-full w-8 h-8' src={profileImage || avatar} alt='user-profile' />
+          <img
+            className='rounded-full w-8 h-8'
+            src={`${profileImage || avatar}?timestamp=${new Date().getTime()}`}
+            alt='user-profile'
+          />
           <p className='xxs:hidden sm:block'>
             <span className='text-gray-400 text-14 hidden md:inline-block'>Hi,</span>
             <span className='text-gray-400 font-bold ml-1 text-14'>
@@ -100,9 +113,7 @@ const Navbar = ({ notificationData }) => {
           <ChevronDownIcon className='h-6 w-6 text-14 text-gray-400' />
         </div>
         {isProfileOpen && <UserProfile />}
-        {isNotificationOpen && (
-          <Notification notificationData={notificationData} setNotificationCount={setNotificationCount} />
-        )}
+        {isNotificationOpen && <Notification setNotificationsCount={setNotificationsCount} />}
       </div>
     </div>
   );

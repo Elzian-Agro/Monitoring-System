@@ -12,33 +12,32 @@ import {
 } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserData } from 'pages/dashboard/slice/userSlice';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { updateEmail } from 'pages/auth/slice/emailSlice';
+import { setUserData } from 'pages/dashboard/slice/userSlice';
 import Modal from 'components/common/modal';
 import avatar from 'assets/images/avatar.png';
 import Loader from '../../../components/common/loader';
 
 const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) => {
-  const dispatch = useDispatch();
   const [userBio, setUserBio] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [address, setAddress] = useState('');
   const [photoEditMode, setPhotoEditMode] = useState(false);
   const [isResetConfirmVisible, setIsResetConfirmVisible] = useState(false);
-  const profileImage = useSelector((state) => state.user.profileImage);
   const [localProfilePicture, setLocalProfilePicture] = useState('');
-  const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { send, loading } = useAxios();
 
   useEffect(() => {
     // Set form fields for edit mode
     if (user) {
-      setUserBio(user.bio);
-      setPhoneNum(user.phoneNumber);
+      setUserBio(user.userBio);
+      setPhoneNum(user.phoneNum);
       setAddress(user.address);
     }
   }, [user]);
@@ -112,21 +111,19 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       });
 
       // Dispatch the updated profile image URL to Redux store
-      dispatch(setUserData({ profileImage: URL.createObjectURL(localProfilePicture) }));
+      dispatch(setUserData({ profileImage: `${user.profileImage}?timestamp=${new Date().getTime()}` }));
 
       // Toggle back to view mode
       setPhotoEditMode(false);
     }
   };
 
-  const handlePhotoEditButtonClick = () => {
-    setPhotoEditMode(true);
-  };
-
   return (
     <>
       {!visible && null}
+
       {loading && <Loader />}
+
       {!loading && (
         <div className='flex flex-col px-4 py-4 gap-4 min-h-full w-full shadow-lg bg-white dark:bg-gray-800 rounded-lg'>
           <div>
@@ -149,7 +146,15 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
                 </p>
               </div>
             ) : (
-              <img src={profileImage || avatar} alt='Profile' className='w-24 h-24 rounded-full object-cover' />
+              <img
+                src={
+                  localProfilePicture
+                    ? URL.createObjectURL(localProfilePicture)
+                    : `${user.profileImage || avatar}?timestamp=${new Date().getTime()}`
+                }
+                alt='Profile'
+                className='w-24 h-24 rounded-full object-cover'
+              />
             )}
 
             <div className='flex items-end'>
@@ -163,7 +168,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
                   <CheckIcon className='h-6 w-6 text-black dark:text-white' />
                 </button>
               ) : (
-                <button className='bg-blue-500 text-white rounded p-1' onClick={handlePhotoEditButtonClick}>
+                <button className='bg-blue-500 text-white rounded p-1' onClick={() => setPhotoEditMode(true)}>
                   <PencilSquareIcon className='h-5 w-5 text-black dark:text-white' />
                 </button>
               )}
