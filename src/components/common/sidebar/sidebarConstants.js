@@ -23,14 +23,14 @@ const SidebarLinks = ({ t }) => {
       icon: CloudIcon,
     },
     {
-      to: '/devices',
-      text: t('Manage Devices'),
-      icon: DevicePhoneMobileIcon,
-    },
-    {
       to: '/agro',
       text: t('Agro Eye'),
       icon: ChartBarIcon,
+    },
+    {
+      to: '/devices',
+      text: t('Manage Devices'),
+      icon: DevicePhoneMobileIcon,
     },
     {
       to: '/profile',
