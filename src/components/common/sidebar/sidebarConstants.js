@@ -18,14 +18,14 @@ const SidebarLinks = ({ t }) => {
       icon: Squares2X2Icon,
     },
     {
-      to: '/weather',
-      text: t('Weather'),
-      icon: CloudIcon,
-    },
-    {
       to: '/agro',
       text: t('Agro Eye'),
       icon: ChartBarIcon,
+    },
+    {
+      to: '/weather',
+      text: t('Weather'),
+      icon: CloudIcon,
     },
     {
       to: '/devices',
