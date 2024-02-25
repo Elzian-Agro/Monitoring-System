@@ -79,8 +79,8 @@ const Navbar = () => {
 
       <div className='flex'>
         <div className='hidden md:flex gap-2'>
-          <LanguageSelector />
           <ThemeSettings />
+          <LanguageSelector />
         </div>
         <button
           type='button'
