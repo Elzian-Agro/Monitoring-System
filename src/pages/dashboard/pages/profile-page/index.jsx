@@ -82,7 +82,7 @@ const UserProfilePage = () => {
       {loading && <Loader />}
 
       {!isFormVisible && !loading && user && (
-        <div className='bg-gradient-to-br from-green-500 to-lime-500 dark:from-gray-900 dark:to-gray-500 rounded-xl shadow-md min-h-screen'>
+        <div className='bg-gradient-to-br dark:from-gray-900 dark:to-gray-500 rounded-xl shadow-md min-h-screen'>
           <div className='relative flex justify-center h-36 mb-8'>
             <img src={coverImage} alt='farmLand' className='w-full h-full object-cover rounded-md' />
             <div className='absolute bottom-[-20px]'>
