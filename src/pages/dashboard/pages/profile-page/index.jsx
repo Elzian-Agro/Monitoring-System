@@ -94,8 +94,8 @@ const UserProfilePage = () => {
             </div>
           </div>
 
-          <div className='relative flex flex-col bg-opacity-30 border border-gray-100 dark:border-gray-600 shadow-md rounded-md shadow-black/5 gap-4 p-8 m-10'>
-            <div className='absolute flex flex-row top-4 right-12'>
+          <div className='relative flex flex-col bg-opacity-30 border border-gray-100 dark:border-gray-600 shadow-md rounded-md shadow-black/5 gap-4 px-8 pb-8 pt-3 m-10'>
+            <div className='absolute flex flex-row top-4 right-8'>
               <SocialLink
                 link={user.facebook}
                 icon={
@@ -175,6 +175,11 @@ const UserProfilePage = () => {
               <div className='flex flex-row gap-x-2'>
                 <label className='block text-black dark:text-white'>{t('Phone No')} :</label>
                 <p className='text-gray-600 dark:text-white'>{user.phoneNum}</p>
+              </div>
+
+              <div className='flex flex-row gap-x-2'>
+                <label className='block text-black dark:text-white'>{t('Status')} :</label>
+                <p className='text-gray-600 dark:text-white'>{user.isVerified ? 'Verified' : 'Pending Verify'}</p>
               </div>
             </div>
 

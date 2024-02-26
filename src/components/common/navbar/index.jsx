@@ -15,7 +15,6 @@ import { menuMode } from 'constant';
 import avatar from 'assets/images/avatar.png';
 import LanguageSelector from '../language-selector';
 import { useEffect, useState } from 'react';
-import { setUserData } from 'pages/dashboard/slice/userSlice';
 import useAxios from 'hooks/useAxios';
 
 const Navbar = () => {
@@ -29,25 +28,15 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const { send } = useAxios();
 
-  const fetchUserData = async () => {
-    const userData = await send({ endpoint: 'user/profile', method: 'GET' });
-
-    if (userData) {
-      dispatch(setUserData(userData));
-    }
-  };
-
-  const fetchNotifications = async () => {
-    const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
-    setNotificationsData(res?.result || []);
-    setNotificationsCount(res?.result?.filter((data) => !data.readFlag).length || 0);
-  };
-
   useEffect(() => {
-    fetchUserData();
+    const fetchNotificationsData = async () => {
+      const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
+      setNotificationsData(res?.result || []);
+      setNotificationsCount(res?.result?.filter((data) => !data.readFlag).length || 0);
+    };
 
     if (userId) {
-      fetchNotifications();
+      fetchNotificationsData();
     }
     // eslint-disable-next-line
   }, [userId]);
