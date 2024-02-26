@@ -15,6 +15,7 @@ import { menuMode } from 'constant';
 import avatar from 'assets/images/avatar.png';
 import LanguageSelector from '../language-selector';
 import { useEffect, useState } from 'react';
+import { setUserData } from 'pages/dashboard/slice/userSlice';
 import useAxios from 'hooks/useAxios';
 
 const Navbar = () => {
@@ -22,18 +23,31 @@ const Navbar = () => {
   const isProfileOpen = useSelector(selectProfileOpen);
   const isNotificationOpen = useSelector(selectNotificationOpen);
   const userId = useSelector((state) => state.user._id);
+  const [notificationsData, setNotificationsData] = useState(0);
   const [notificationsCount, setNotificationsCount] = useState(0);
 
   const dispatch = useDispatch();
   const { send } = useAxios();
 
+  const fetchUserData = async () => {
+    const userData = await send({ endpoint: 'user/profile', method: 'GET' });
+
+    if (userData) {
+      dispatch(setUserData(userData));
+    }
+  };
+
+  const fetchNotifications = async () => {
+    const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
+    setNotificationsData(res?.result || []);
+    setNotificationsCount(res?.result?.filter((data) => !data.readFlag).length || 0);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
-      setNotificationsCount(res?.result?.filter((data) => !data.readFlag).length || 0);
-    };
+    fetchUserData();
+
     if (userId) {
-      fetchData();
+      fetchNotifications();
     }
     // eslint-disable-next-line
   }, [userId]);
@@ -113,7 +127,9 @@ const Navbar = () => {
           <ChevronDownIcon className='h-6 w-6 text-14 text-gray-400' />
         </div>
         {isProfileOpen && <UserProfile />}
-        {isNotificationOpen && <Notification setNotificationsCount={setNotificationsCount} />}
+        {isNotificationOpen && (
+          <Notification notificationsData={notificationsData} setNotificationsCount={setNotificationsCount} />
+        )}
       </div>
     </div>
   );

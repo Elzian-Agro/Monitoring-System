@@ -1,27 +1,16 @@
 import { XCircleIcon, EyeIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { setNotificationOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const Notification = ({ setNotificationsCount }) => {
-  const [notifications, setNotifications] = useState([]);
-  const userId = useSelector((state) => state.user._id);
+const Notification = ({ notificationsData, setNotificationsCount }) => {
+  const [notifications, setNotifications] = useState(notificationsData || []);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { send } = useAxios();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
-      setNotifications(res?.result || []);
-      setNotificationsCount(res?.result?.filter((data) => !data.readFlag).length || 0);
-    };
-    fetchData();
-    // eslint-disable-next-line
-  }, [setNotificationsCount]);
 
   const calculateUnreadNotificationsCount = (notifications) => {
     return notifications.filter((notification) => !notification.readFlag).length;
@@ -137,6 +126,7 @@ const Notification = ({ setNotificationsCount }) => {
 };
 
 Notification.propTypes = {
+  notificationsData: PropTypes.array.isRequired,
   setNotificationsCount: PropTypes.func.isRequired,
 };
 
