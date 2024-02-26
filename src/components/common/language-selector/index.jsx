@@ -22,7 +22,7 @@ const LanguageSelector = () => {
   return (
     <div className='max-w-xs text-[14px] text-normal text-[#212121] dark:text-white font-zenkaku mr-3'>
       <select
-        className='block w-full px-4 py-2 mt-1 bg-[#F9F9FA] dark:bg-gray-800 border border-gray-300 rounded-md shadow-sm outline-none'
+        className='block w-full px-4 py-2 mt-1 bg-[#F9F9FA] dark:bg-secondary-dark-bg border border-gray-300 rounded-md shadow-sm outline-none'
         value={selectedLanguage}
         onChange={handleLanguageChange}>
         {languages.map((lang) => (

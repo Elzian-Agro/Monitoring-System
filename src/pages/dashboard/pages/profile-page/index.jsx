@@ -82,10 +82,10 @@ const UserProfilePage = () => {
       {loading && <Loader />}
 
       {!isFormVisible && !loading && user && (
-        <div className='bg-gradient-to-br dark:from-gray-900 dark:to-gray-500 rounded-xl shadow-md min-h-screen'>
-          <div className='relative flex justify-center h-36 mb-8'>
-            <img src={coverImage} alt='farmLand' className='w-full h-full object-cover rounded-md' />
-            <div className='absolute bottom-[-20px]'>
+        <div className='flex flex-col justify-center items-center bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-700 rounded-xl shadow-md mx-6'>
+          <div className='relative flex justify center h-48 w-full'>
+            <img src={coverImage} alt='farmLand' className='w-full h-full object-cover rounded-tr-xl rounded-tl-xl ' />
+            <div className='absolute bottom-[-30px] left-1/2 transform -translate-x-1/2'>
               <img
                 src={`${user.profileImage || avatar}?timestamp=${new Date().getTime()}`}
                 alt='Profile'
@@ -94,8 +94,8 @@ const UserProfilePage = () => {
             </div>
           </div>
 
-          <div className='bg-white bg-opacity-30 border border-gray-100 shadow-md rounded-md shadow-black/5 flex flex-col gap-5 sm:gap-8 md:gap-10 lg:gap-5 px-10 py-5 m-8 sm:m-10 md:m-16 lg:m-24'>
-            <div className='socialLinks absolute flex right-24 md:right-32 lg:right-40'>
+          <div className='relative flex flex-col bg-opacity-30 border border-gray-100 dark:border-gray-600 shadow-md rounded-md shadow-black/5 gap-4 p-8 m-10'>
+            <div className='absolute flex flex-row top-4 right-12'>
               <SocialLink
                 link={user.facebook}
                 icon={
@@ -141,7 +141,7 @@ const UserProfilePage = () => {
               />
             </div>
 
-            <p className='text-gray-600 dark:text-white text-center text-xl mt-6 md:mt-4'>
+            <p className='text-gray-600 dark:text-white text-center text-xl mt-8 md:mt-6 lg:mt-0 '>
               {user.firstName} {user.lastName}
             </p>
 
@@ -152,28 +152,28 @@ const UserProfilePage = () => {
             <p className='text-gray-600 dark:text-white text-center'>{user.userBio}</p>
 
             <div className='grid lg:grid-cols-2 space-y-3 md:space-y-5 lg:space-y-0 lg:gap-y-8 md:ml-4 lg:ml-10 xl:ml-16'>
-              <div className='flex flex-row gap-x-5'>
-                <label className='block text-black dark:text-blue-400'>{t('Email')} :</label>
+              <div className='flex flex-row gap-x-2'>
+                <label className='block text-black dark:text-white'>{t('Email')} :</label>
                 <p className='text-gray-600 dark:text-white'>{user.email}</p>
               </div>
 
-              <div className='flex flex-row gap-x-5'>
-                <label className='block text-black dark:text-blue-400'>{t('Organization')} :</label>
+              <div className='flex flex-row gap-x-2'>
+                <label className='block text-black dark:text-white'>{t('Organization')} :</label>
                 <p className='text-gray-600 dark:text-white'>{user.orgName}</p>
               </div>
 
-              <div className='flex flex-row gap-x-5'>
-                <label className='block text-black dark:text-blue-400'>{t('NIC')} :</label>
+              <div className='flex flex-row gap-x-2'>
+                <label className='block text-black dark:text-white'>{t('NIC')} :</label>
                 <p className='text-gray-600 dark:text-white'>{user.nic}</p>
               </div>
 
-              <div className='flex flex-row gap-x-5'>
-                <label className='block text-black dark:text-blue-400'>{t('Address')} :</label>
+              <div className='flex flex-row gap-x-2'>
+                <label className='block text-black dark:text-white'>{t('Address')} :</label>
                 <p className='text-gray-600 dark:text-white'>{user.address}</p>
               </div>
 
-              <div className='flex flex-row gap-x-5'>
-                <label className='block text-black dark:text-blue-400'>{t('Phone No')} :</label>
+              <div className='flex flex-row gap-x-2'>
+                <label className='block text-black dark:text-white'>{t('Phone No')} :</label>
                 <p className='text-gray-600 dark:text-white'>{user.phoneNum}</p>
               </div>
             </div>

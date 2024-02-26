@@ -95,7 +95,7 @@ export const customTableStyles = {
   },
   headRow: {
     style: {
-      backgroundColor: '#494d4a',
+      backgroundColor: '#414345',
       color: '#ffffff',
     },
   },
