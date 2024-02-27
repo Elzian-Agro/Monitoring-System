@@ -15,7 +15,6 @@ import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { updateEmail } from 'pages/auth/slice/emailSlice';
 import { setUserData } from 'pages/dashboard/slice/userSlice';
 import Modal from 'components/common/modal';
 import avatar from 'assets/images/avatar.png';
@@ -84,7 +83,9 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
   };
 
   const handleResetPassword = async () => {
-    dispatch(updateEmail(user.email));
+    if (!localStorage.getItem('Email') || localStorage.getItem('Email') === undefined) {
+      localStorage.setItem('Email', user?.email);
+    }
 
     await send({
       endpoint: 'auth/forget-password',

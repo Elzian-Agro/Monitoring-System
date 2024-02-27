@@ -8,7 +8,7 @@ import PrivateRoutes from 'pages/utils/PrivateRoutes';
 import Weather from 'pages/dashboard/pages/weather-page';
 import DeviceManagement from 'pages/dashboard/pages/devices-page';
 import GlobalErrorModal from 'error';
-import ResetForm from 'pages/dashboard/pages/profile-page/passowrd-reset-form';
+import ResetForm from 'pages/dashboard/pages/profile-page/password-reset-form';
 
 import DashboardPage from 'pages/dashboard/pages/dashboard-page';
 import AboutPage from 'pages/dashboard/pages/about-page';

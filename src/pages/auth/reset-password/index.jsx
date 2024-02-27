@@ -19,13 +19,13 @@ import { useTranslation } from 'react-i18next';
 import { errorType } from 'constant';
 import { tokenise } from 'utils/rsa.encrypt';
 
-function ResetPassword({ setPage }) {
+function ResetPassword({ setPage, showGoBackBtn = true }) {
   const [tempPass, setTempPass] = useState('');
   const [newPass, setNewPass] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const email = useSelector((state) => state.email.value);
+  const [email, setEmail] = useState(useSelector((state) => state.email.value));
   const dispatch = useDispatch();
   const [timer, setTimer] = useState(60);
   const [success, setSuccess] = useState(false);
@@ -118,12 +118,21 @@ function ResetPassword({ setPage }) {
       });
   };
 
+  useEffect(() => {
+    if (!email) {
+      setEmail(localStorage.getItem('Email'));
+    }
+    // eslint-disable-next-line
+  }, [])
+
   return (
     <div className='flex flex-col h-full w-full gap-5 md:gap-0 items-start dark:text-white'>
-      <button onClick={handleGoBack} className='group w-[100px] flex items-center '>
-        <ArrowLeftIcon className='w-[20px] group-hover:ml-[-20px] transition-all' />
-        <p className='flex-1 font-zenkaku text-[12px]'>{t('Go Back')}</p>
-      </button>
+      {showGoBackBtn && (
+        <button onClick={handleGoBack} className='group w-[100px] flex items-center '>
+          <ArrowLeftIcon className='w-[20px] group-hover:ml-[-20px] transition-all' />
+          <p className='flex-1 font-zenkaku text-[12px]'>{t('Go Back')}</p>
+        </button>
+      )}
 
       {email && !success && !blocked && (
         <div className='flex-1 flex items-center flex-col lg:justify-center h-full w-full'>
