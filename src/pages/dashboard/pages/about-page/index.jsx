@@ -14,7 +14,10 @@ const AboutPage = () => {
       </div>
 
       <div className='flex flex-col bg-opacity-30 border border-gray-100 dark:border-gray-600 shadow-md rounded-md shadow-black/5 gap-4 p-8 m-10'>
-        <h2 className='text-4xl font-bold text-black dark:text-white text-center'>ELZIAN AGRO</h2>
+        <h2 className='text-4xl font-bold text-black dark:text-white text-center'>
+          ELZIAN AGRO<sup className='text-2xl text-black dark:text-white'>TM</sup>
+        </h2>
+
         <div className='flex flex-col lg:flex-row lg:gap-5 items-center'>
           <p className='text-black dark:text-white p-6 text-justify lg:w-2/3'>{t('About EA')}</p>
           <div className='flex justify-center items-center lg:w-80'>

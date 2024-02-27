@@ -134,7 +134,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       {loading && <Loader />}
 
       {!loading && (
-        <div className='flex flex-col px-4 py-4 gap-4 min-h-full w-full shadow-lg bg-white dark:bg-gray-800 rounded-lg'>
+        <div className='flex flex-col p-8 gap-4 min-h-full w-full shadow-lg bg-white dark:bg-gray-800 rounded-lg'>
           <div>
             <button
               className='flex justify-start bg-red-500 hover:brightness-110 self-end rounded-lg transition-transform'
