@@ -1,8 +1,12 @@
 export const authRegex = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])(?!.*\s)[A-Za-z\d\W_]{8,}$/,
-  nicNumber: /^(\d{9}[vV]|\d{12})$/,
-  phoneNumber: /^0?\d{9}$/,
+};
+
+export const patterns = {
+  email: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
+  nicNum: '^(\\d{9}[vV]|\\d{12})$',
+  phoneNum: '^(0\\d{9}|[1-9]\\d{8})$',
 };
 
 export const characterSets = {
@@ -95,7 +99,7 @@ export const customTableStyles = {
   },
   headRow: {
     style: {
-      backgroundColor: '#494d4a',
+      backgroundColor: '#414345',
       color: '#ffffff',
     },
   },

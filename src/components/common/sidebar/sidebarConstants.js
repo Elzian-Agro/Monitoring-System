@@ -18,6 +18,11 @@ const SidebarLinks = ({ t }) => {
       icon: Squares2X2Icon,
     },
     {
+      to: '/agro',
+      text: t('Agro Eye'),
+      icon: ChartBarIcon,
+    },
+    {
       to: '/weather',
       text: t('Weather'),
       icon: CloudIcon,
@@ -26,11 +31,6 @@ const SidebarLinks = ({ t }) => {
       to: '/devices',
       text: t('Manage Devices'),
       icon: DevicePhoneMobileIcon,
-    },
-    {
-      to: '/agro',
-      text: t('Agro Eye'),
-      icon: ChartBarIcon,
     },
     {
       to: '/profile',

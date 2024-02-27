@@ -15,6 +15,7 @@ import { encryptData } from 'utils/rsa.encrypt';
 import { generatePassword } from 'pages/dashboard/utils/generatePassword';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
+import { patterns } from 'constant';
 
 const Form = ({ visible, onClose, user = null, formSubmission }) => {
   const [firstName, setFirstName] = useState('');
@@ -139,7 +140,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
                   value={nic}
                   setValue={setNic}
                   required={true}
-                  pattern={'(\\d{9}[vV]|\\d{12})'}
+                  pattern={patterns.nicNum}
                   title='Enter a valid NIC number. Eg. 9452XXXXXV or 2003XXXXXXXX'
                 />
 
@@ -151,7 +152,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
                   value={phoneNum.toString()}
                   setValue={setPhoneNum}
                   required={true}
-                  pattern='^\d{10}$'
+                  pattern={patterns.phoneNum}
                   title='Enter a valid phone number'
                 />
 
@@ -163,7 +164,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
                   value={email}
                   setValue={setEmail}
                   required={true}
-                  pattern='[^\s@]+@[^\s@]+\.[^\s@]+'
+                  pattern={patterns.email}
                   title='Enter a valid email address'
                 />
 

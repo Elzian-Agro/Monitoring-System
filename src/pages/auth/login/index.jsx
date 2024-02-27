@@ -9,9 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { tokenise } from 'utils/rsa.encrypt';
-import useAxios from 'hooks/useAxios';
-import { useDispatch } from 'react-redux';
-import { setUserData } from 'pages/dashboard/slice/userSlice';
 
 function Login({ setPage }) {
   const [email, setEmail] = useState('');
@@ -20,8 +17,6 @@ function Login({ setPage }) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const { send } = useAxios();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -33,14 +28,6 @@ function Login({ setPage }) {
       setRemember(true);
     }
   }, []);
-
-  const getUserData = async () => {
-    const userData = await send({ endpoint: 'user/profile', method: 'GET' });
-
-    if (userData) {
-      dispatch(setUserData(userData));
-    }
-  };
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -87,7 +74,6 @@ function Login({ setPage }) {
         }
 
         setLoading(false);
-        getUserData();
         navigate('/dashboard');
       })
       .catch((error) => {

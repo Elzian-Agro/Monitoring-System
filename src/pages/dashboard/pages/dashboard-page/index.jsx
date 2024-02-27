@@ -2,7 +2,7 @@ import React from 'react';
 
 const DashboardPage = () => {
   return (
-    <div className='bg-gradient-to-br bg-white h-screen'>
+    <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-700 rounded-xl shadow-md mx-6 mt-3'>
       <div className='container mx-auto px-4 py-8'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           {/* Card 1 */}
@@ -30,11 +30,11 @@ const DashboardPage = () => {
 
       <div className='p-6'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6'>
-          <div className='bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5'>
+          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 p-6 shadow-md shadow-black/5'>
             <div className='flex justify-between mb-6'>
               <div>
                 <div className='flex items-center mb-1'>
-                  <div className='text-2xl font-semibold'>2</div>
+                  <div className='text-2xl font-semibold dark:text-white'>2</div>
                 </div>
                 <div className='text-sm font-medium text-gray-400'>Users</div>
               </div>
@@ -47,11 +47,11 @@ const DashboardPage = () => {
 
             <p className='text-[#f84525] font-medium text-sm hover:text-red-800'>View</p>
           </div>
-          <div className='bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5'>
+          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 p-6 shadow-md shadow-black/5'>
             <div className='flex justify-between mb-4'>
               <div>
                 <div className='flex items-center mb-1'>
-                  <div className='text-2xl font-semibold'>100</div>
+                  <div className='text-2xl font-semibold dark:text-white'>100</div>
                   <div className='p-1 rounded bg-emerald-500/10 text-emerald-500 text-[12px] font-semibold leading-none ml-2'>
                     +30%
                   </div>
@@ -66,10 +66,10 @@ const DashboardPage = () => {
             </div>
             <p className='text-[#f84525] font-medium text-sm hover:text-red-800'>View</p>
           </div>
-          <div className='bg-white rounded-md border border-gray-100 p-6 shadow-md shadow-black/5'>
+          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 p-6 shadow-md shadow-black/5'>
             <div className='flex justify-between mb-6'>
               <div>
-                <div className='text-2xl font-semibold mb-1'>100</div>
+                <div className='text-2xl font-semibold dark:text-white'>100</div>
                 <div className='text-sm font-medium text-gray-400'>Blogs</div>
               </div>
               <div className='dropdown'>
@@ -82,7 +82,7 @@ const DashboardPage = () => {
           </div>
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
-          <div className='p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-gray-50 dark:bg-gray-800 w-full shadow-lg rounded'>
+          <div className='p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 w-full shadow-lg rounded'>
             <div className='rounded-t mb-0 px-0 border-0'>
               <div className='flex flex-wrap items-center px-4 py-2'>
                 <div className='relative w-full max-w-full flex-grow flex-1'>
@@ -180,9 +180,9 @@ const DashboardPage = () => {
               </div>
             </div>
           </div>
-          <div className='bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md'>
+          <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-6 rounded-md'>
             <div className='flex justify-between mb-4 items-start'>
-              <div className='font-medium'>Activities</div>
+              <div className='font-medium dark:text-white'>Activities</div>
               <div className='dropdown'>
                 <button type='button' className='dropdown-toggle text-gray-400 hover:text-gray-600'>
                   <i className='ri-more-fill'></i>
@@ -195,7 +195,7 @@ const DashboardPage = () => {
                   <tr>
                     <td className='py-2 px-4 border-b border-b-gray-50'>
                       <div className='flex items-center'>
-                        <p className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
+                        <p className='text-gray-400 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
                           Lorem Ipsum
                         </p>
                       </div>
@@ -219,7 +219,7 @@ const DashboardPage = () => {
                   <tr>
                     <td className='py-2 px-4 border-b border-b-gray-50'>
                       <div className='flex items-center'>
-                        <p className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
+                        <p className='text-gray-400 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
                           Lorem Ipsum
                         </p>
                       </div>
@@ -246,9 +246,9 @@ const DashboardPage = () => {
           </div>
         </div>
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6'>
-          <div className='bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2'>
+          <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 shadow-black/5 p-6 rounded-md lg:col-span-2'>
             <div className='flex justify-between mb-4 items-start'>
-              <div className='font-medium'>Order Statistics</div>
+              <div className='font-medium dark:text-white'>Order Statistics</div>
               <div className='dropdown'>
                 <button type='button' className='dropdown-toggle text-gray-400 hover:text-gray-600'>
                   <i className='ri-more-fill'></i>
@@ -258,7 +258,7 @@ const DashboardPage = () => {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4'>
               <div className='rounded-md border border-dashed border-gray-200 p-4'>
                 <div className='flex items-center mb-0.5'>
-                  <div className='text-xl font-semibold'>10</div>
+                  <div className='text-xl font-semibold dark:text-white'>10</div>
                   <span className='p-1 rounded text-[12px] font-semibold bg-blue-500/10 text-blue-500 leading-none ml-1'>
                     $80
                   </span>
@@ -267,7 +267,7 @@ const DashboardPage = () => {
               </div>
               <div className='rounded-md border border-dashed border-gray-200 p-4'>
                 <div className='flex items-center mb-0.5'>
-                  <div className='text-xl font-semibold'>50</div>
+                  <div className='text-xl font-semibold dark:text-white'>50</div>
                   <span className='p-1 rounded text-[12px] font-semibold bg-emerald-500/10 text-emerald-500 leading-none ml-1'>
                     +$469
                   </span>
@@ -276,7 +276,7 @@ const DashboardPage = () => {
               </div>
               <div className='rounded-md border border-dashed border-gray-200 p-4'>
                 <div className='flex items-center mb-0.5'>
-                  <div className='text-xl font-semibold'>4</div>
+                  <div className='text-xl font-semibold dark:text-white'>4</div>
                   <span className='p-1 rounded text-[12px] font-semibold bg-rose-500/10 text-rose-500 leading-none ml-1'>
                     -$130
                   </span>
@@ -288,9 +288,9 @@ const DashboardPage = () => {
               <canvas id='order-chart'></canvas>
             </div>
           </div>
-          <div className='bg-white border border-gray-100 shadow-md shadow-black/5 p-6 rounded-md'>
+          <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-6 rounded-md'>
             <div className='flex justify-between mb-4 items-start'>
-              <div className='font-medium'>Earnings</div>
+              <div className='font-medium dark:text-white'>Earnings</div>
               <div className='dropdown'>
                 <button type='button' className='dropdown-toggle text-gray-400 hover:text-gray-600'>
                   <i className='ri-more-fill'></i>
@@ -320,7 +320,7 @@ const DashboardPage = () => {
                           src='https://placehold.co/32x32'
                           alt=''
                           className='w-8 h-8 rounded object-cover block'></img>
-                        <p className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
+                        <p className='text-gray-400 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
                           Create landing page
                         </p>
                       </div>
@@ -341,7 +341,7 @@ const DashboardPage = () => {
                           src='https://placehold.co/32x32'
                           alt=''
                           className='w-8 h-8 rounded object-cover block'></img>
-                        <p className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
+                        <p className='text-gray-400 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
                           Create landing page
                         </p>
                       </div>
@@ -362,7 +362,7 @@ const DashboardPage = () => {
                           src='https://placehold.co/32x32'
                           alt=''
                           className='w-8 h-8 rounded object-cover block'></img>
-                        <p className='text-gray-600 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
+                        <p className='text-gray-400 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
                           Create landing page
                         </p>
                       </div>

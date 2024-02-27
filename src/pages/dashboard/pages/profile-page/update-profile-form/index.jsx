@@ -9,6 +9,7 @@ import {
   IdentificationIcon,
   PencilSquareIcon,
   CheckIcon,
+  LinkIcon,
 } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
@@ -19,11 +20,15 @@ import { setUserData } from 'pages/dashboard/slice/userSlice';
 import Modal from 'components/common/modal';
 import avatar from 'assets/images/avatar.png';
 import Loader from '../../../components/common/loader';
+import { patterns } from 'constant';
 
 const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) => {
   const [userBio, setUserBio] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [address, setAddress] = useState('');
+  const [facebook, setFacebook] = useState('');
+  const [youtube, setYoutube] = useState('');
+  const [linkedIn, setLinkedIn] = useState('');
   const [photoEditMode, setPhotoEditMode] = useState(false);
   const [isResetConfirmVisible, setIsResetConfirmVisible] = useState(false);
   const [localProfilePicture, setLocalProfilePicture] = useState('');
@@ -39,6 +44,9 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       setUserBio(user.userBio);
       setPhoneNum(user.phoneNum);
       setAddress(user.address);
+      setFacebook(user.socialMedia.facebook);
+      setLinkedIn(user.socialMedia.linkedIn);
+      setYoutube(user.socialMedia.youtube);
     }
   }, [user]);
 
@@ -49,6 +57,11 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       userBio,
       phoneNum,
       address,
+      socialMedia: {
+        facebook: facebook,
+        linkedIn: linkedIn,
+        youtube: youtube,
+      },
     };
 
     const response = await send({
@@ -58,11 +71,6 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
     });
 
     if (response) {
-      //Change updated details in the redux
-      dispatch(setUserData({ userBio: userBio }));
-      dispatch(setUserData({ address: address }));
-      dispatch(setUserData({ phoneNum: phoneNum }));
-
       formSubmission('User details updated successfully');
       onClose();
     }
@@ -186,12 +194,12 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
                   value={phoneNum.toString()}
                   setValue={setPhoneNum}
                   required={true}
-                  pattern='^\d{10}$'
+                  pattern={patterns.phoneNum}
                   title='Enter a valid phone number'
                 />
 
                 <TextBox
-                  placeholder='Eg. Your New Bio'
+                  placeholder='Eg. Your Bio'
                   label='Bio'
                   type='text'
                   Icon={IdentificationIcon}
@@ -200,13 +208,40 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
                 />
 
                 <TextBox
-                  placeholder='Eg. 123 Main Road, Colombo'
+                  placeholder='Eg. 232, Main Street, Negombo, LK.'
                   label='Address'
                   type='text'
                   Icon={HomeIcon}
                   value={address}
                   setValue={setAddress}
                   required={true}
+                />
+
+                <TextBox
+                  placeholder='Add your facebook link here'
+                  label='Facebook'
+                  type='text'
+                  Icon={LinkIcon}
+                  value={facebook}
+                  setValue={setFacebook}
+                />
+
+                <TextBox
+                  placeholder='Add your linkedIn link here'
+                  label='LinkedIn'
+                  type='text'
+                  Icon={LinkIcon}
+                  value={linkedIn}
+                  setValue={setLinkedIn}
+                />
+
+                <TextBox
+                  placeholder='Add your youtube link here'
+                  label='Youtube'
+                  type='text'
+                  Icon={LinkIcon}
+                  value={youtube}
+                  setValue={setYoutube}
                 />
               </div>
               <div className='flex justify-center mt-5'>
