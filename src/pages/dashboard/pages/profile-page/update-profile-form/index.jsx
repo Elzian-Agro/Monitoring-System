@@ -44,9 +44,9 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       setUserBio(user.userBio);
       setPhoneNum(user.phoneNum);
       setAddress(user.address);
-      setFacebook(user.socialMedia.facebook);
-      setLinkedIn(user.socialMedia.linkedIn);
-      setYoutube(user.socialMedia.youtube);
+      setFacebook(user.socialMedia?.facebook);
+      setLinkedIn(user.socialMedia?.linkedIn);
+      setYoutube(user.socialMedia?.youtube);
     }
   }, [user]);
 
