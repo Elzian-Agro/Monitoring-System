@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { clearUserData } from '../../slice/userSlice';
+import { setUserData, clearUserData } from '../../slice/userSlice';
 import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
 import coverImage from 'assets/images/cover.jpg';
@@ -26,14 +26,15 @@ const UserProfilePage = () => {
   const { t } = useTranslation();
 
   const getUserData = async () => {
-    const response = await send({ endpoint: 'user/profile', method: 'GET' });
-    setUser(response);
+    const userData = await send({ endpoint: 'user/profile', method: 'GET' });
+    setUser(userData);
+    dispatch(setUserData(userData));
   };
 
   useEffect(() => {
     getUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFormVisible]);
+  }, []);
 
   const formSubmission = async (message) => {
     setMessage(message);
@@ -72,6 +73,7 @@ const UserProfilePage = () => {
         <UpdateProfileForm
           onClose={() => {
             setIsFormVisible(false);
+            getUserData();
           }}
           visible={isFormVisible}
           user={user}
