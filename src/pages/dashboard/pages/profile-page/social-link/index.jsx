@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 const SocialLink = ({ link, icon }) => {
   return (
     link && (
-      <a href={link} target='_blank' rel='noopener noreferrer'>
+      <a href={link.startsWith('http://') || link.startsWith('https://') ? link : `https://${link}`} target='_blank' rel='noopener noreferrer'>
         {icon}
       </a>
     )
