@@ -84,7 +84,7 @@ const UserProfilePage = () => {
       {loading && <Loader />}
 
       {!isFormVisible && !loading && user && (
-        <div className='flex flex-col justify-center items-center bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-700 rounded-xl shadow-md mx-6'>
+        <div className='flex flex-col justify-center items-center bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-700 rounded-xl shadow-md mx-6 mb-6'>
           <div className='relative flex justify center h-48 w-full'>
             <img src={coverImage} alt='farmLand' className='w-full h-full object-cover rounded-tr-xl rounded-tl-xl ' />
             <div className='absolute bottom-[-30px] left-1/2 transform -translate-x-1/2'>
@@ -96,9 +96,9 @@ const UserProfilePage = () => {
             </div>
           </div>
 
-          <div className='relative flex flex-col bg-opacity-30 border border-gray-100 dark:border-gray-600 shadow-md rounded-md shadow-black/5 gap-4 px-8 pb-8 pt-3 m-10'>
+          <div className='relative flex flex-col gap-5 m-8'>
             {user.socialMedia && (
-              <div className='absolute flex flex-row top-4 right-8'>
+              <div className='absolute flex flex-row top-0 right-0'>
                 <SocialLink
                   link={user.socialMedia.facebook}
                   icon={
@@ -145,7 +145,7 @@ const UserProfilePage = () => {
               </div>
             )}
 
-            <p className='text-gray-600 dark:text-white text-center text-xl mt-8 md:mt-6 lg:mt-0 '>
+            <p className='text-gray-600 dark:text-white text-center text-xl mt-8 xs:mt-6 md:mt-4 '>
               {user.firstName} {user.lastName}
             </p>
 
@@ -153,37 +153,59 @@ const UserProfilePage = () => {
               {user.userType && user.userType.charAt(0).toUpperCase() + user.userType.slice(1)}
             </p>
 
-            <p className='text-gray-600 dark:text-white text-center'>{user.userBio}</p>
+            <div className='flex justify-center xs:px-4 md:px-24 lg:px-52 xl:px-72'>
+              <p className='text-gray-600 dark:text-white text-justify xs:text-center'>{user.userBio}</p>
+            </div>
 
-            <div className='grid lg:grid-cols-2 space-y-3 md:space-y-5 lg:space-y-0 lg:gap-y-8 md:ml-4 lg:ml-10 xl:ml-16'>
-              <div className='flex flex-row gap-x-2'>
-                <label className='block text-black dark:text-white'>{t('Email')} :</label>
-                <p className='text-gray-600 dark:text-white'>{user.email}</p>
-              </div>
-
-              <div className='flex flex-row gap-x-2'>
-                <label className='block text-black dark:text-white'>{t('Organization Name')} :</label>
-                <p className='text-gray-600 dark:text-white'>{user.orgName}</p>
-              </div>
-
-              <div className='flex flex-row gap-x-2'>
-                <label className='block text-black dark:text-white'>{t('NIC')} :</label>
+            <div className='grid xs:justify-center lg:grid-cols-2 space-y-3 lg:gap-y-5 lg:space-y-0 lg:px-24 xl:px-52'>
+              <div className='flex flex-col xs:flex-row'>
+                <div className='flex justify-between w-32'>
+                  <label className='text-black dark:text-white'>{t('NIC')}</label>
+                  <span className='pr-5'>:</span>
+                </div>
                 <p className='text-gray-600 dark:text-white'>{user.nic}</p>
               </div>
 
-              <div className='flex flex-row gap-x-2'>
-                <label className='block text-black dark:text-white'>{t('Address')} :</label>
-                <p className='text-gray-600 dark:text-white'>{user.address}</p>
+              <div className='flex flex-col xs:flex-row'>
+                <div className='flex justify-between w-32'>
+                  <label className='text-black dark:text-white'>{t('Email')}</label>
+                  <span className='pr-5'>:</span>
+                </div>
+                <p className='text-gray-600 dark:text-white'>{user.email}</p>
               </div>
 
-              <div className='flex flex-row gap-x-2'>
-                <label className='block text-black dark:text-white'>{t('Phone No')} :</label>
+              <div className='flex flex-col xs:flex-row'>
+                <div className='flex justify-between w-32'>
+                  <label className='text-black dark:text-white'>{t('Phone No')}</label>
+                  <span className='pr-5'>:</span>
+                </div>
                 <p className='text-gray-600 dark:text-white'>{user.phoneNum}</p>
               </div>
 
-              <div className='flex flex-row gap-x-2'>
-                <label className='block text-black dark:text-white'>{t('Status')} :</label>
-                <p className='text-gray-600 dark:text-white'>{user.isVerified ? 'Verified' : 'Pending Verify'}</p>
+              <div className='flex flex-col xs:flex-row'>
+                <div className='flex justify-between w-32'>
+                  <label className='text-black dark:text-white'>{t('Address')}</label>
+                  <span className='pr-5'>:</span>
+                </div>
+                <p className='text-gray-600 dark:text-white w-30'>{user.address}</p>
+              </div>
+
+              <div className='flex flex-col xs:flex-row'>
+                <div className='flex justify-between w-32'>
+                  <label className='text-black dark:text-white'>{t('Organization')}</label>
+                  <span className='pr-5'>:</span>
+                </div>
+                <p className='text-gray-600 dark:text-white w-30'>{user.orgName}</p>
+              </div>
+
+              <div className='flex flex-col xs:flex-row'>
+                <div className='flex justify-between w-32'>
+                  <label className='text-black dark:text-white'>{t('Status')}</label>
+                  <span className='pr-5'>:</span>
+                </div>
+                <p className={`${user.isVerified ? 'text-green-500' : 'text-red-500'}`}>
+                  {user.isVerified ? 'Verified' : 'Not Verified'}
+                </p>
               </div>
             </div>
 
