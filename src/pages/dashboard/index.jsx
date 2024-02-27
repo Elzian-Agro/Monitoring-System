@@ -35,7 +35,6 @@ const Dashboard = ({ page }) => {
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
-  const userId = useSelector((state) => state.user._id);
   const currentMode = useSelector(selectTheme);
 
   const dispatch = useDispatch();
@@ -48,7 +47,7 @@ const Dashboard = ({ page }) => {
     };
     fetchUserData();
     // eslint-disable-next-line
-  }, [userId]);
+  }, []);
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>

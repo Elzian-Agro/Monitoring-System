@@ -11,7 +11,6 @@ const Modal = ({ isOpen, message, onClose, type }) => {
   }
 
   if (!modalContent[type]) {
-    console.error('Modal: Type Error. Either type not specified or wrongly specified');
     return null;
   }
 
