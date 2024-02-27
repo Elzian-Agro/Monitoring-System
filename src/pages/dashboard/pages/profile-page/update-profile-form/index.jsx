@@ -19,6 +19,7 @@ import { setUserData } from 'pages/dashboard/slice/userSlice';
 import Modal from 'components/common/modal';
 import avatar from 'assets/images/avatar.png';
 import Loader from '../../../components/common/loader';
+import { patterns } from 'constant';
 
 const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) => {
   const [userBio, setUserBio] = useState('');
@@ -186,7 +187,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
                   value={phoneNum.toString()}
                   setValue={setPhoneNum}
                   required={true}
-                  pattern='^\d{10}$'
+                  pattern={patterns.phoneNum}
                   title='Enter a valid phone number'
                 />
 
