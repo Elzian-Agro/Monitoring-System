@@ -78,14 +78,44 @@ export const errorType = {
     message: 'No records found',
   },
 
+  notificationNotFound: {
+    code: 13016,
+    message: 'Notification is not found',
+  },
+
+  notificationDeletedFailure: {
+    code: 13017,
+    message: 'Notification is deleted failure. Please try again!',
+  },
+
   accessDenied: {
     code: 13019,
     message: 'Access denied',
   },
 
+  fileNotUploaded: {
+    code: 13020,
+    message: 'No file uploaded. Please try again!',
+  },
+
   userDisabled: {
     code: 13021,
     message: 'The account has been disabled',
+  },
+
+  deviceNotFound: {
+    code: 13023,
+    message: 'Device not found',
+  },
+
+  deviceCreatedFailure: {
+    code: 13024,
+    message: 'Device created failure. Please try again!',
+  },
+
+  userDoesNotExistOrIsDisabled: {
+    code: 13025,
+    message: 'User does not exist or is disabled',
   },
 };
 
