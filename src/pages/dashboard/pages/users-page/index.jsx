@@ -196,7 +196,11 @@ const ManageUsers = () => {
                 }}
               />
               {filterUsers.length > 0 && (
-                <VariantButton text='Download' Icon={ArrowDownTrayIcon} onClick={() => downloadCSV(filterUsers)} />
+                <VariantButton
+                  text='Download'
+                  Icon={ArrowDownTrayIcon}
+                  onClick={() => downloadCSV(filterUsers, 'users.csv')}
+                />
               )}
             </div>
             <SearchBox
