@@ -41,7 +41,7 @@ function TextBox({
             value={value}
             onChange={(e) => setValue(e.target.value)}
             disabled={disabled}
-            className='text-sm appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white p-2 leading-tight focus:outline-none'
+            className='text-sm appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white px-2 leading-tight focus:outline-none'
             pattern={pattern}
             title={title}
             required={required}

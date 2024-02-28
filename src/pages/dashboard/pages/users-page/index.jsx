@@ -30,41 +30,42 @@ const ManageUsers = () => {
   const columns = [
     {
       name: t('FIRST NAME'),
+      selector: (row) => row.firstName,
+      sortable: true,
       cell: (row) => (
         <div className='flex flex-row gap-2 items-center'>
           {row.firstName}
           {row.isDisabled && <div className='hidden lg:block bg-red-500 rounded-full h-3 w-3'></div>}
         </div>
       ),
-      sortable: true,
     },
     {
       name: t('LAST NAME'),
-      cell: (row) => row.lastName,
+      selector: (row) => row.lastName,
       sortable: true,
       hide: 'sm',
     },
     {
       name: t('EMAIL'),
-      cell: (row) => row.email,
+      selector: (row) => row.email,
       sortable: true,
       hide: 'md',
     },
     {
       name: t('NIC'),
-      cell: (row) => row.nic,
+      selector: (row) => row.nic,
       sortable: true,
       hide: 'lg',
     },
     {
       name: t('TEL. NUMBER'),
-      cell: (row) => row.phoneNum,
+      selector: (row) => row.phoneNum,
       sortable: true,
       hide: 'sm',
     },
     {
       name: t('ORG. NAME'),
-      cell: (row) => row.orgName,
+      selector: (row) => row.orgName,
       sortable: true,
       hide: 'lg',
     },
