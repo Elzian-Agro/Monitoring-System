@@ -21,6 +21,7 @@ const DeviceManagement = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [actionType, setActionType] = useState('');
   const userType = useSelector((state) => state.user.userType);
 
   const currentMode = useSelector(selectTheme);
@@ -62,18 +63,33 @@ const DeviceManagement = () => {
     },
   ];
 
-  // Conditionally add 'ACTION' column if user is admin
+  // Conditionally add 'ACTION' columns if user is admin
   if (userType === 'admin') {
     columns.push({
       name: t('ACTION'),
       cell: (row) => (
+        <PrimaryButton
+          color='bg-blue-500 border-blue-600'
+          text='Edit'
+          onClick={() => {
+            setSelectedDevice(row);
+            setIsFormVisible(true);
+          }}
+        />
+      ),
+    });
+
+    columns.push({
+      cell: (row) => (
         <div className='flex flex-row gap-2 md:gap-4 lg:gap-6 items-center'>
           <PrimaryButton
-            color='bg-blue-500 border-blue-600'
-            text='Edit'
+            color='bg-red-500 border-red-600'
+            text='Disable'
             onClick={() => {
               setSelectedDevice(row);
-              setIsFormVisible(true);
+              setActionType('Disable');
+              setMessage('Are you sure you want to disable this device?');
+              setIsConfirmVisible(true);
             }}
           />
           <PrimaryButton
@@ -81,28 +97,12 @@ const DeviceManagement = () => {
             text='Delete'
             onClick={() => {
               setSelectedDevice(row);
+              setActionType('Delete');
               setMessage('Are you sure you want to delete this device?');
               setIsConfirmVisible(true);
             }}
           />
         </div>
-      ),
-    });
-  }
-
-  if (userType === 'farmer') {
-    columns.push({
-      name: t('ACTION'),
-      cell: (row) => (
-        <PrimaryButton
-          color='bg-red-500 border-red-600'
-          text='Disable'
-          onClick={() => {
-            setSelectedDevice(row);
-            setMessage('Are you sure you want to disable this device?');
-            setIsConfirmVisible(true);
-          }}
-        />
       ),
     });
   }
@@ -127,9 +127,9 @@ const DeviceManagement = () => {
 
   // Handle confiation for desable and delete devices
   const handleConfirmation = async (result) => {
-    if (result && userType === 'admin') {
+    if (result && actionType === 'Delete') {
       handleDelete();
-    } else if (result && userType === 'farmer') {
+    } else if (result && actionType === 'Disable') {
       handleDisable();
     }
     setIsConfirmVisible(false);

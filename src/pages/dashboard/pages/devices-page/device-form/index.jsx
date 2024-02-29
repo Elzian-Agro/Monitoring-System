@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { PrimaryButton, ToggleButton } from 'pages/dashboard/components/base/Button';
 import TextBox from 'pages/dashboard/components/base/TextBox';
-import { UserIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
+import { ArrowLeftIcon, DevicePhoneMobileIcon, IdentificationIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
 import Dropdown from 'pages/dashboard/components/base/Dropdown';
 
 const Form = ({ visible, onClose, device = null, formSubmission }) => {
+  const [userIds, setUserIds] = useState([]);
+  const [userId, setUserId] = useState('');
   const [deviceId, setDeviceId] = useState('');
   const [deviceType, setDeviceType] = useState('');
   const [deviceStatus, setDeviceStatus] = useState('');
@@ -18,16 +20,28 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   const { send } = useAxios();
 
   useEffect(() => {
+    getUsers();
+
     // Set form fields for edit mode
     if (device) {
+      setUserId(device.userId);
       setDeviceId(device.deviceId);
       setDeviceType(device.deviceType);
       setDeviceStatus(device.deviceStatus);
       setIsDisabled(device.isDisabled);
     }
+    // eslint-disable-next-line
   }, [device]);
 
+  const getUsers = async () => {
+    const users = await send({ endpoint: 'user', method: 'GET' });
+    const userIds = users.map((user) => user._id);
+    userIds.unshift(''); // Add an empty string as the first element
+    setUserIds(userIds);
+  };
+
   const resetForm = () => {
+    setUserId('');
     setDeviceId('');
     setDeviceType('');
     setDeviceStatus('');
@@ -37,6 +51,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
     e.preventDefault();
 
     const requestData = {
+      userId,
       deviceId,
       deviceType,
       deviceStatus,
@@ -58,7 +73,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   return (
     <>
       {!visible ? null : (
-        <div className='flex flex-col p-8 gap-6 min-h-full w-full shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg'>
+        <div className='flex flex-col p-8 gap-8 min-h-full w-full shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg'>
           <div>
             <button
               className='flex justify-start bg-red-500 hover:brightness-110 self-end rounded-lg transition-transform'
@@ -73,32 +88,37 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className='flex flex-col'>
-              <div className='grid space-y-8 md:space-y-10 lg:space-y-12 justify-center'>
-                <div className='lg:w-80'>
-                  <TextBox
-                    placeholder='Ex: ELZ-XXXX-XX'
-                    label='Device ID'
-                    type='text'
-                    Icon={UserIcon}
-                    value={deviceId}
-                    setValue={setDeviceId}
-                    required={true}
-                  />
-                </div>
+            <div className='flex flex-col justify-center'>
+              <div className='grid lg:grid-cols-2 space-y-6 lg:space-y-0 w-full justify-center lg:gap-x-20 lg:px-28 xl:px-48 lg:gap-y-16'>
+                <Dropdown
+                  label='User Id'
+                  Icon={IdentificationIcon}
+                  value={userId}
+                  setValue={setUserId}
+                  options={userIds}
+                  required={true}
+                />
 
-                <div className='lg:w-80'>
-                  <Dropdown
-                    label='Device Type'
-                    Icon={UserIcon}
-                    value={deviceType}
-                    setValue={setDeviceType}
-                    options={['', 'monitoring-system-v1', 'monitoring-system-v2']}
-                    required={true}
-                  />
-                </div>
+                <TextBox
+                  placeholder='Ex: ELZ-XXXX-XX'
+                  label='Device Id'
+                  type='text'
+                  Icon={IdentificationIcon}
+                  value={deviceId}
+                  setValue={setDeviceId}
+                  required={true}
+                />
 
-                <div className='flex flex-col sm:flex-row gap-4 lg:w-80'>
+                <Dropdown
+                  label='Device Type'
+                  Icon={DevicePhoneMobileIcon}
+                  value={deviceType}
+                  setValue={setDeviceType}
+                  options={['', 'monitoring-system-v1', 'monitoring-system-v2']}
+                  required={true}
+                />
+
+                <div className='flex flex-col sm:flex-row lg:flex-col gap-5'>
                   <label className='text-sm text-gray-400'>{t('Device Status')} :</label>
                   <div className='flex flex-row gap-x-4'>
                     <div>
@@ -148,8 +168,8 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
                 )}
               </div>
 
-              <div className='flex justify-center pt-6 md:pt-10'>
-                <div className='flex justify-end gap-2 w-60 sm:w-64 md:w-80 lg:w-80'>
+              <div className='flex justify-center pt-6'>
+                <div className='flex justify-end gap-2 w-60 sm:w-64 md:w-80 lg:w-full lg:px-28 xl:px-48'>
                   {!device && <PrimaryButton color='bg-red-500 border-red-600' text='Clear' onClick={resetForm} />}
                   <PrimaryButton color='bg-blue-500 border-blue-600' text={device ? 'Update' : 'Submit'} />
                 </div>

@@ -110,7 +110,7 @@ export const errorType = {
 
   deviceCreatedFailure: {
     code: 13024,
-    message: 'Device created failure. Please try again!',
+    message: 'Device is already exist!',
   },
 
   userDoesNotExistOrIsDisabled: {

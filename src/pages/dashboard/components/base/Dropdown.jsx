@@ -23,7 +23,7 @@ function Dropdown({ label = null, Icon = null, required = false, value, setValue
             className='text-base appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white dark:bg-secondary-dark-bg leading-tight px-2 focus:outline-none'>
             {options.map((option, index) => (
               <option key={option || index} value={option}>
-                {option || 'Select an type'}
+                {option || t('Select one')}
               </option>
             ))}
           </select>

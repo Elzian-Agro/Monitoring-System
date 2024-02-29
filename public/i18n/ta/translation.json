@@ -143,10 +143,11 @@
   "Notification is deleted failure. Please try again!": "அறிவிப்பு நீக்கப்பட்டது தோல்வி. மீண்டும் முயற்சிக்கவும்!",
   "No file uploaded. Please try again!": "கோப்பு எதுவும் பதிவேற்றப்படவில்லை. தயவுசெய்து மீண்டும் முயற்சிக்கவும்!",
   "Device not found": "சாதனம் கிடைக்கவில்லை",
-  "Device created failure. Please try again!": "சாதனம் தோல்வியை உருவாக்கியது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்!",
+  "Device is already exist!": "சாதனம் ஏற்கனவே உள்ளது!",
   "User does not exist or is disabled": "Uபயனர் இல்லை அல்லது முடக்கப்பட்டுள்ளார்",
   "''": "''",
-  "Device ID": "சாதன ஐடி",
+  "User Id": "பயனர் ஐடி",
+  "Device Id": "சாதன ஐடி",
   "Device Type": "சாதன வகை",
   "Device Status": "சாதன நிலை",
   "Add Device": "சாதனத்தைச் சேர்",
@@ -156,5 +157,6 @@
   "Enable device": "சாதனத்தை இயக்கு",
   "Disable device": "சாதனத்தை முடக்கு",
   "Are you sure you want to delete this device?": "இந்தச் சாதனத்தை நிச்சயமாக நீக்க விரும்புகிறீர்களா?",
-  "Are you sure you want to disable this device?": "இந்தச் சாதனத்தை நிச்சயமாக முடக்க விரும்புகிறீர்களா?"
+  "Are you sure you want to disable this device?": "இந்தச் சாதனத்தை நிச்சயமாக முடக்க விரும்புகிறீர்களா?",
+  "Select one": "ஒன்றை தேர்ந்தெடு"
 }
