@@ -1,12 +1,10 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { act } from 'react-dom/test-utils';
 import UserProfilePage from './index';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import userSlice from '../../slice/userSlice';
 import { MemoryRouter } from 'react-router-dom';
 
+// Mock user data
 const mockUserData = {
   firstName: 'John',
   lastName: 'Doe',
@@ -16,10 +14,24 @@ const mockUserData = {
   userType: 'Admin',
   orgName: 'Example Organization',
   _id: '1234567890',
-  userBio: 'Lorem ipsum dolor sit amet.',
+  userBio: 'I am a farmer',
   address: '123 Example Street, Example City, Example Country',
   profileImage: 'https://example.com/profile.jpg',
+  isVerified: 'Verified',
 };
+
+// Mock useNavigate
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockNavigate,
+}));
+
+// Mock useAxios
+jest.mock('hooks/useAxios', () => () => ({
+  loading: false,
+  send: jest.fn().mockResolvedValue(mockUserData),
+}));
 
 // Mock react-i18next
 jest.mock('react-i18next', () => ({
@@ -30,57 +42,103 @@ jest.mock('react-i18next', () => ({
   },
 }));
 
-const mockStore = createStore(userSlice, {
-  user: mockUserData,
-});
+// Mock react-redux
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn(),
+  useDispatch: () => jest.fn(),
+}));
 
-describe('UserProfilePage component', () => {
-  beforeEach(() => {
-    render(
-      <MemoryRouter initialEntries={['/user-profile-page']}>
-        <Provider store={mockStore}>
+describe('Profile Page', () => {
+  it('renders user data correctly', async () => {
+    await act(async () => {
+      render(
+        <MemoryRouter>
           <UserProfilePage />
-        </Provider>
-      </MemoryRouter>
-    );
+        </MemoryRouter>
+      );
+    });
+
+    expect(screen.getByText('John Doe')).toBeInTheDocument();
+    expect(screen.getByText('Admin')).toBeInTheDocument();
+    expect(screen.getByText('I am a farmer')).toBeInTheDocument();
+    expect(screen.getByText('Email')).toBeInTheDocument();
+    expect(screen.getByText('john.doe@example.com')).toBeInTheDocument();
   });
 
-  test('renders user data correctly', () => {
-    const userFullName = screen.getByText('John Doe');
-    expect(userFullName).toBeInTheDocument();
+  it('renders buttons', async () => {
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <UserProfilePage />
+        </MemoryRouter>
+      );
+    });
 
-    const userTypeText = screen.getByText('Admin');
-    expect(userTypeText).toBeInTheDocument();
-
-    const emailText = screen.getByText('john.doe@example.com');
-    expect(emailText).toBeInTheDocument();
-
-    const orgText = screen.getByText('Example Organization');
-    expect(orgText).toBeInTheDocument();
-
-    const nicText = screen.getByText('123456789V');
-    expect(nicText).toBeInTheDocument();
-
-    const phoneText = screen.getByText('123456789');
-    expect(phoneText).toBeInTheDocument();
-
-    const userBioText = screen.getByText('Lorem ipsum dolor sit amet.');
-    expect(userBioText).toBeInTheDocument();
-
-    const addressText = screen.getByText('123 Example Street, Example City, Example Country');
-    expect(addressText).toBeInTheDocument();
-
-    const imgElement = screen.getByAltText('Profile');
-    expect(imgElement).toHaveAttribute('src', 'https://example.com/profile.jpg');
+    expect(screen.getByText('Update')).toBeInTheDocument();
+    expect(screen.getByText('Disable')).toBeInTheDocument();
   });
 
-  test('renders Update button', () => {
-    const updateButton = screen.getByText('Update');
-    expect(updateButton).toBeInTheDocument();
+  it('opens update form when update button clicked', async () => {
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <UserProfilePage />
+        </MemoryRouter>
+      );
+    });
+
+    fireEvent.click(screen.getByText('Update'));
+
+    await waitFor(() => {
+      expect(screen.getByText('UPDATE YOUR DETAILS HERE')).toBeInTheDocument();
+    });
   });
 
-  test('renders Disable button', () => {
-    const disableButton = screen.getByText('Disable');
-    expect(disableButton).toBeInTheDocument();
+  it('opens confirmation box when disable button clicked and handle confirmation YES', async () => {
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <UserProfilePage />
+        </MemoryRouter>
+      );
+    });
+
+    fireEvent.click(screen.getByText('Disable'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Are you sure you want to disable this account?')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('YES'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Disabled successfully')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('OK'));
+
+    expect(mockNavigate).toHaveBeenCalledWith('/');
+  });
+
+  it('opens confirmation box when disable button clicked and handle confirmation NO', async () => {
+    await act(async () => {
+      render(
+        <MemoryRouter>
+          <UserProfilePage />
+        </MemoryRouter>
+      );
+    });
+
+    fireEvent.click(screen.getByText('Disable'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Are you sure you want to disable this account?')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByText('NO'));
+
+    await waitFor(() => {
+      expect(screen.getByText('John Doe')).toBeInTheDocument();
+    });
   });
 });
