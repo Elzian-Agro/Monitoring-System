@@ -161,7 +161,7 @@ const UserProfilePage = () => {
               <div className='flex flex-col xs:flex-row'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('NIC')}</label>
-                  <span className='pr-5'>:</span>
+                  <span className='pr-5 dark:text-white'>:</span>
                 </div>
                 <p className='text-gray-600 dark:text-white'>{user.nic}</p>
               </div>
@@ -169,7 +169,7 @@ const UserProfilePage = () => {
               <div className='flex flex-col xs:flex-row'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('Email')}</label>
-                  <span className='pr-5'>:</span>
+                  <span className='pr-5 dark:text-white'>:</span>
                 </div>
                 <p className='text-gray-600 dark:text-white'>{user.email}</p>
               </div>
@@ -177,7 +177,7 @@ const UserProfilePage = () => {
               <div className='flex flex-col xs:flex-row'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('Phone No')}</label>
-                  <span className='pr-5'>:</span>
+                  <span className='pr-5 dark:text-white'>:</span>
                 </div>
                 <p className='text-gray-600 dark:text-white'>{user.phoneNum}</p>
               </div>
@@ -185,7 +185,7 @@ const UserProfilePage = () => {
               <div className='flex flex-col xs:flex-row'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('Address')}</label>
-                  <span className='pr-5'>:</span>
+                  <span className='pr-5 dark:text-white'>:</span>
                 </div>
                 <p className='text-gray-600 dark:text-white w-30'>{user.address}</p>
               </div>
@@ -193,7 +193,7 @@ const UserProfilePage = () => {
               <div className='flex flex-col xs:flex-row'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('Organization')}</label>
-                  <span className='pr-5'>:</span>
+                  <span className='pr-5 dark:text-white'>:</span>
                 </div>
                 <p className='text-gray-600 dark:text-white w-30'>{user.orgName}</p>
               </div>
@@ -201,7 +201,7 @@ const UserProfilePage = () => {
               <div className='flex flex-col xs:flex-row'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('Status')}</label>
-                  <span className='pr-5'>:</span>
+                  <span className='pr-5 dark:text-white'>:</span>
                 </div>
                 <p className={`${user.isVerified ? 'text-green-500' : 'text-red-500'}`}>
                   {user.isVerified ? 'Verified' : 'Not Verified'}
