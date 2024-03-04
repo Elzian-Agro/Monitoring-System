@@ -153,7 +153,7 @@ const UserProfilePage = () => {
               {user.userType && user.userType.charAt(0).toUpperCase() + user.userType.slice(1)}
             </p>
 
-            <div className='flex justify-center xs:px-4 md:px-20 lg:px-40 xl:px-60'>
+            <div className='flex justify-center xs:px-4 md:px-20 lg:px-20 xl:px-30'>
               <p className='text-gray-600 dark:text-white text-justify'>{user.userBio}</p>
             </div>
 
