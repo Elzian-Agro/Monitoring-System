@@ -183,7 +183,18 @@ const DeviceManagement = () => {
 
       {loading && <Loader />}
 
-      {!isFormVisible && !loading && (
+      {!devices && (
+        <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-lg p-8'>
+          <p className='text-sm dark:text-white justify-center'>
+            There are no devices allocated. Please contact{' '}
+            <a className='text-blue-500' href='mailto:support@elzian.com'>
+              support@elzian.com
+            </a>
+          </p>
+        </div>
+      )}
+
+      {!isFormVisible && !loading && devices && (
         <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
           <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
             <div className='flex gap-2 mb-2 md:mb-0'>
