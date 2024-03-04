@@ -153,57 +153,57 @@ const UserProfilePage = () => {
               {user.userType && user.userType.charAt(0).toUpperCase() + user.userType.slice(1)}
             </p>
 
-            <div className='flex justify-center xs:px-4 md:px-24 lg:px-52 xl:px-72'>
-              <p className='text-gray-600 dark:text-white text-justify xs:text-center'>{user.userBio}</p>
+            <div className='flex justify-center xs:px-4 md:px-20 lg:px-40 xl:px-60'>
+              <p className='text-gray-600 dark:text-white text-justify'>{user.userBio}</p>
             </div>
 
-            <div className='grid xs:justify-center lg:grid-cols-2 space-y-3 lg:gap-y-5 lg:space-y-0 lg:px-24 xl:px-52'>
-              <div className='flex flex-col xs:flex-row'>
+            <div className='grid justify-center lg:grid-cols-2 space-y-3 lg:space-y-0 lg:gap-y-5 lg:gap-x-8 lg:px-10 xl:px-20'>
+              <div className='flex flex-col xs:flex-row justify-center'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('NIC')}</label>
                   <span className='pr-5 dark:text-white'>:</span>
                 </div>
-                <p className='text-gray-600 dark:text-white'>{user.nic}</p>
+                <p className='text-gray-600 dark:text-white w-40'>{user.nic}</p>
               </div>
 
-              <div className='flex flex-col xs:flex-row'>
+              <div className='flex flex-col xs:flex-row justify-center'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('Email')}</label>
                   <span className='pr-5 dark:text-white'>:</span>
                 </div>
-                <p className='text-gray-600 dark:text-white'>{user.email}</p>
+                <p className='text-gray-600 dark:text-white w-40'>{user.email}</p>
               </div>
 
-              <div className='flex flex-col xs:flex-row'>
+              <div className='flex flex-col xs:flex-row justify-center'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('Phone No')}</label>
                   <span className='pr-5 dark:text-white'>:</span>
                 </div>
-                <p className='text-gray-600 dark:text-white'>{user.phoneNum}</p>
+                <p className='text-gray-600 dark:text-white w-40'>{user.phoneNum}</p>
               </div>
 
-              <div className='flex flex-col xs:flex-row'>
+              <div className='flex flex-col xs:flex-row justify-center'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('Address')}</label>
                   <span className='pr-5 dark:text-white'>:</span>
                 </div>
-                <p className='text-gray-600 dark:text-white w-30'>{user.address}</p>
+                <p className='text-gray-600 dark:text-white w-40'>{user.address}</p>
               </div>
 
-              <div className='flex flex-col xs:flex-row'>
+              <div className='flex flex-col xs:flex-row justify-center'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('Organization')}</label>
                   <span className='pr-5 dark:text-white'>:</span>
                 </div>
-                <p className='text-gray-600 dark:text-white w-30'>{user.orgName}</p>
+                <p className='text-gray-600 dark:text-white w-40'>{user.orgName}</p>
               </div>
 
-              <div className='flex flex-col xs:flex-row'>
+              <div className='flex flex-col xs:flex-row justify-center'>
                 <div className='flex justify-between w-32'>
                   <label className='text-black dark:text-white'>{t('Status')}</label>
                   <span className='pr-5 dark:text-white'>:</span>
                 </div>
-                <p className={`${user.isVerified ? 'text-green-500' : 'text-red-500'}`}>
+                <p className={`${user.isVerified ? 'text-green-500' : 'text-red-500'} w-40`}>
                   {user.isVerified ? 'Verified' : 'Not Verified'}
                 </p>
               </div>
