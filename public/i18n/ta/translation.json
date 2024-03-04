@@ -146,7 +146,7 @@
   "Device is already exist!": "சாதனம் ஏற்கனவே உள்ளது!",
   "User does not exist or is disabled": "Uபயனர் இல்லை அல்லது முடக்கப்பட்டுள்ளார்",
   "''": "''",
-  "User Id": "பயனர் ஐடி",
+  "User Name": "பயனர் பெயர்",
   "Device Id": "சாதன ஐடி",
   "Device Type": "சாதன வகை",
   "Device Status": "சாதன நிலை",
@@ -158,5 +158,7 @@
   "Disable device": "சாதனத்தை முடக்கு",
   "Are you sure you want to delete this device?": "இந்தச் சாதனத்தை நிச்சயமாக நீக்க விரும்புகிறீர்களா?",
   "Are you sure you want to disable this device?": "இந்தச் சாதனத்தை நிச்சயமாக முடக்க விரும்புகிறீர்களா?",
-  "Select one": "ஒன்றை தேர்ந்தெடு"
+  "Select": "தேர்ந்தெடு",
+  "Select a device type": "சாதன வகையைத் தேர்ந்தெடு",
+  "Allocate device": "சாதனத்தை ஒதுக்கவும்"
 }

@@ -8,8 +8,8 @@ import useAxios from 'hooks/useAxios';
 import Dropdown from 'pages/dashboard/components/base/Dropdown';
 
 const Form = ({ visible, onClose, device = null, formSubmission }) => {
-  const [userIds, setUserIds] = useState([]);
-  const [userId, setUserId] = useState('');
+  const [userList, setUserList] = useState([]);
+  const [userId, setUserId] = useState(null);
   const [deviceId, setDeviceId] = useState('');
   const [deviceType, setDeviceType] = useState('');
   const [deviceStatus, setDeviceStatus] = useState('');
@@ -20,6 +20,15 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   const { send } = useAxios();
 
   useEffect(() => {
+    const getUsers = async () => {
+      const users = await send({ endpoint: 'user', method: 'GET' });
+      const userNames = users.map((user) => ({
+        name: `${user.firstName} ${user.lastName}`,
+        value: user._id,
+      }));
+      setUserList(userNames);
+    };
+
     getUsers();
 
     // Set form fields for edit mode
@@ -29,16 +38,13 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
       setDeviceType(device.deviceType);
       setDeviceStatus(device.deviceStatus);
       setIsDisabled(device.isDisabled);
+
+      if (device?.userId) {
+        setUserList((prevList) => [...prevList, { name: 'Deallocate', value: 'deallocate' }]);
+      }
     }
     // eslint-disable-next-line
   }, [device]);
-
-  const getUsers = async () => {
-    const users = await send({ endpoint: 'user', method: 'GET' });
-    const userIds = users.map((user) => user._id);
-    userIds.unshift(''); // Add an empty string as the first element
-    setUserIds(userIds);
-  };
 
   const resetForm = () => {
     setUserId('');
@@ -51,7 +57,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
     e.preventDefault();
 
     const requestData = {
-      userId,
+      userId: userId === 'deallocate' ? null : userId,
       deviceId,
       deviceType,
       deviceStatus,
@@ -91,12 +97,12 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
             <div className='flex flex-col justify-center'>
               <div className='grid lg:grid-cols-2 space-y-6 lg:space-y-0 w-full justify-center lg:gap-x-20 lg:px-28 xl:px-48 lg:gap-y-16'>
                 <Dropdown
-                  label='User Id'
+                  label='User Name'
                   Icon={IdentificationIcon}
+                  defaltOptions='Allocate device'
                   value={userId}
                   setValue={setUserId}
-                  options={userIds}
-                  required={true}
+                  options={userList}
                 />
 
                 <TextBox
@@ -112,9 +118,13 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
                 <Dropdown
                   label='Device Type'
                   Icon={DevicePhoneMobileIcon}
+                  defaltOptions='Select a device type'
                   value={deviceType}
                   setValue={setDeviceType}
-                  options={['', 'monitoring-system-v1', 'monitoring-system-v2']}
+                  options={[
+                    { name: 'Monitoring System v1', value: 'monitoring-system-v1' },
+                    { name: 'Monitoring System v2', value: 'monitoring-system-v2' },
+                  ]}
                   required={true}
                 />
 

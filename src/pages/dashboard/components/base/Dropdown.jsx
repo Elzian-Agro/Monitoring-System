@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 
-function Dropdown({ label = null, Icon = null, required = false, value, setValue, options }) {
+function Dropdown({ label = null, Icon = null, required = false, defaltOptions = 'Select', value, setValue, options }) {
   const { t } = useTranslation();
 
   return (
@@ -21,9 +21,12 @@ function Dropdown({ label = null, Icon = null, required = false, value, setValue
             onChange={(e) => setValue(e.target.value)}
             required={required}
             className='text-base appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white dark:bg-secondary-dark-bg leading-tight px-2 focus:outline-none'>
-            {options.map((option, index) => (
-              <option key={option || index} value={option}>
-                {option || t('Select one')}
+            <option value='' disabled selected>
+              {t(defaltOptions)}
+            </option>
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.name}
               </option>
             ))}
           </select>
@@ -39,10 +42,16 @@ function Dropdown({ label = null, Icon = null, required = false, value, setValue
 Dropdown.propTypes = {
   label: PropTypes.string,
   Icon: PropTypes.elementType,
+  defaltOptions: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   required: PropTypes.bool,
-  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default Dropdown;

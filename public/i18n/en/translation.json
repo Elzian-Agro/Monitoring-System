@@ -146,7 +146,7 @@
   "Device is already exist!": "Device is already exist!",
   "User does not exist or is disabled": "User does not exist or is disabled",
   "''": "''",
-  "User Id": "User Id",
+  "User Name": "User Name",
   "Device Id": "Device Id",
   "Device Type": "Device Type",
   "Device Status": "Device Status",
@@ -158,5 +158,7 @@
   "Disable device": "Disable device",
   "Are you sure you want to delete this device?": "Are you sure you want to delete this device?",
   "Are you sure you want to disable this device?": "Are you sure you want to disable this device?",
-  "Select one": "Select one"
+  "Select": "Select",
+  "Select a device type": "Select a device type",
+  "Allocate device": "Allocate device"
 }
