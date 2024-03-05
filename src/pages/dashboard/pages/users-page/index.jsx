@@ -34,8 +34,8 @@ const ManageUsers = () => {
       sortable: true,
       cell: (row) => (
         <div className='flex flex-row gap-2 items-center'>
+          <div className={`${row.isDisabled ? 'bg-red-500' : 'bg-green-500'} rounded-full h-3 w-3`}></div>
           {row.firstName}
-          {row.isDisabled && <div className='hidden lg:block bg-red-500 rounded-full h-3 w-3'></div>}
         </div>
       ),
     },
@@ -72,7 +72,7 @@ const ManageUsers = () => {
     {
       name: t('ACTION'),
       cell: (row) => (
-        <div className='flex flex-row gap-2 items-center'>
+        <div className='flex flex-row justify-center gap-2 items-center w-full'>
           <PrimaryButton
             color='bg-blue-500 border-blue-600'
             text='Edit'
@@ -94,23 +94,23 @@ const ManageUsers = () => {
     },
   ];
 
-  const ExpandedUserdata = ({ data }) => {
-    return (
-      <div className='p-2 text-sm'>
-        {[
-          ['sm:hidden', `${t('Last Name')} : ${data.lastName}`],
-          ['lg:hidden', `${t('Email')} : ${data.email}`],
-          ['sm:hidden', `${t('Phone Number')} : ${data.phoneNum}`],
-          ['xl:hidden', `${t('Organization Name')} : ${data.orgName}`],
-          ['lg:hidden', `${t('Status')} : ${data.isDisabled ? 'Disabled' : 'Active'}`],
-        ].map(([className, content], index) => (
-          <p key={index} className={className}>
-            {content}
-          </p>
-        ))}
-      </div>
-    );
-  };
+  // const ExpandedUserdata = ({ data }) => {
+  //   return (
+  //     <div className='p-2 text-sm'>
+  //       {[
+  //         ['sm:hidden', `${t('Last Name')} : ${data.lastName}`],
+  //         ['lg:hidden', `${t('Email')} : ${data.email}`],
+  //         ['sm:hidden', `${t('Phone Number')} : ${data.phoneNum}`],
+  //         ['xl:hidden', `${t('Organization Name')} : ${data.orgName}`],
+  //         ['lg:hidden', `${t('Status')} : ${data.isDisabled ? 'Disabled' : 'Active'}`],
+  //       ].map(([className, content], index) => (
+  //         <p key={index} className={className}>
+  //           {content}
+  //         </p>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   const getUsers = async () => {
     const response = await send({ endpoint: 'user', method: 'GET' });
@@ -219,8 +219,8 @@ const ManageUsers = () => {
               customStyles={customTableStyles}
               theme={currentMode === 'Dark' ? 'dark' : 'default'}
               pagination
-              expandableRows
-              expandableRowsComponent={ExpandedUserdata}
+              // expandableRows
+              // expandableRowsComponent={ExpandedUserdata}
             />
           </div>
         </div>

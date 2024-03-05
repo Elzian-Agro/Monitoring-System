@@ -46,8 +46,8 @@ const DeviceManagement = () => {
       sortable: true,
       cell: (row) => (
         <div className='flex flex-row gap-2 items-center'>
+          <div className={`${row.isDisabled ? 'bg-red-500' : 'bg-green-500'} rounded-full h-3 w-3`}></div>
           {row.deviceId}
-          {row.isDisabled && <div className='hidden lg:block bg-red-500 rounded-full h-3 w-3'></div>}
         </div>
       ),
     },
@@ -68,7 +68,7 @@ const DeviceManagement = () => {
     columns.push({
       name: t('ACTION'),
       cell: (row) => (
-        <div className='flex flex-row gap-2 items-center'>
+        <div className='flex flex-row justify-center gap-2 items-center w-full'>
           <PrimaryButton
             color='bg-blue-500 border-blue-600'
             text='Edit'

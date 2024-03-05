@@ -84,7 +84,7 @@ const UserProfilePage = () => {
       {loading && <Loader />}
 
       {!isFormVisible && !loading && user && (
-        <div className='flex flex-col justify-center items-center bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-700 rounded-xl shadow-md mx-6 mb-6'>
+        <div className='flex flex-col justify-center items-center bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-700 rounded-xl shadow-md mb-6'>
           <div className='relative flex justify center h-48 w-full'>
             <img src={coverImage} alt='farmLand' className='w-full h-full object-cover rounded-tr-xl rounded-tl-xl ' />
             <div className='absolute bottom-[-30px] left-1/2 transform -translate-x-1/2'>
