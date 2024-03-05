@@ -123,7 +123,7 @@ function ResetPassword({ setPage, showGoBackBtn = true }) {
       setEmail(localStorage.getItem('Email'));
     }
     // eslint-disable-next-line
-  }, [])
+  }, []);
 
   return (
     <div className='flex flex-col h-full w-full gap-5 md:gap-0 items-start dark:text-white'>
@@ -136,10 +136,10 @@ function ResetPassword({ setPage, showGoBackBtn = true }) {
 
       {email && !success && !blocked && (
         <div className='flex-1 flex items-center flex-col lg:justify-center h-full w-full'>
-          <h1 className='font-zenkaku font-black text-[#212121] dark:text-white text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
+          <h1 className='font-zenkaku font-black text-black dark:text-white text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
             {t('RESET PASSWORD')}
           </h1>
-          <p className='font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10'>
+          <p className='font-zenkaku font-normal text-center text-gray-400 text-[10px] sm:text-[16px] leading-5 xxs:leading-10'>
             {t('TEMPORARY PASSWORD HAS BEEN SENT TO YOUR EMAIL')}
           </p>
 
@@ -207,6 +207,7 @@ function ResetPassword({ setPage, showGoBackBtn = true }) {
 
 ResetPassword.propTypes = {
   setPage: PropTypes.func.isRequired,
+  showGoBackBtn: PropTypes.bool,
 };
 
 export default ResetPassword;
