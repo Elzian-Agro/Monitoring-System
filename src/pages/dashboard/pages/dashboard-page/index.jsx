@@ -297,17 +297,17 @@ const DashboardPage = () => {
                 </button>
               </div>
             </div>
-            <div className='overflow-x-auto'>
+            <div className='overflow-x-auto' style={{ scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
               <table className='w-full min-w-[460px]'>
                 <thead>
                   <tr>
-                    <th className='text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tl-md rounded-bl-md'>
+                    <th className='text-[12px] uppercase tracking-wide font-medium text-gray-400 dark:text-white py-2 px-4 bg-gray-50 dark:bg-gray-600 text-left rounded-tl-md rounded-bl-md'>
                       Service
                     </th>
-                    <th className='text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left'>
+                    <th className='text-[12px] uppercase tracking-wide font-medium text-gray-400 dark:text-white py-2 px-4 bg-gray-50 dark:bg-gray-600 text-left'>
                       Earning
                     </th>
-                    <th className='text-[12px] uppercase tracking-wide font-medium text-gray-400 py-2 px-4 bg-gray-50 text-left rounded-tr-md rounded-br-md'>
+                    <th className='text-[12px] uppercase tracking-wide font-medium text-gray-400 dark:text-white py-2 px-4 bg-gray-50 dark:bg-gray-600 text-left rounded-tr-md rounded-br-md'>
                       Status
                     </th>
                   </tr>
