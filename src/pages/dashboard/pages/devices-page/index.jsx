@@ -125,39 +125,31 @@ const DeviceManagement = () => {
     });
   }, [devices, filterText]);
 
-  // Handle confiation for desable and delete devices
+  // Handle confiation and desable or delete device
   const handleConfirmation = async (result) => {
-    if (result && actionType === 'Delete') {
-      handleDelete();
-    } else if (result && actionType === 'Disable') {
-      handleDisable();
+    if (result) {
+      if (actionType === 'Delete') {
+        await handleAction(`device/delete/${selectedDevice?._id}`, { isDeleted: true }, 'Device deleted successfully');
+      } else if (actionType === 'Disable') {
+        await handleAction(
+          `device/disable/${selectedDevice?._id}`,
+          { isDisabled: true },
+          'Device disabled successfully'
+        );
+      }
     }
     setIsConfirmVisible(false);
   };
 
-  const handleDisable = async () => {
+  const handleAction = async (endpoint, body, successMessage) => {
     const response = await send({
-      endpoint: `device/disable/${selectedDevice?._id}`,
+      endpoint: endpoint,
       method: 'PUT',
-      body: { isDisabled: true },
+      body: body,
     });
 
     if (response) {
-      setMessage('Device disabled successfully');
-      setIsAlertVisible(true);
-      getDevices();
-    }
-  };
-
-  const handleDelete = async () => {
-    const response = await send({
-      endpoint: `device/delete/${selectedDevice._id}`,
-      method: 'PUT',
-      body: { isDeleted: true },
-    });
-
-    if (response) {
-      setMessage('Device deleted successfully');
+      setMessage(successMessage);
       setIsAlertVisible(true);
       getDevices();
     }
