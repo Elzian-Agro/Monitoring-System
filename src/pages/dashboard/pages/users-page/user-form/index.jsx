@@ -183,7 +183,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
 
                 <TextBox
                   placeholder='Eg. ABC Org.'
-                  label='Organization Name'
+                  label='Organization'
                   type='text'
                   Icon={BuildingOffice2Icon}
                   value={orgName}
