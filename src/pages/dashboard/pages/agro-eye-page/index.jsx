@@ -9,7 +9,7 @@ exportingInit(Highcharts);
 offlineExportingInit(Highcharts);
 
 function AgroEye() {
-  const [chartType, setChartType] = useState('Line');
+  const [chartType, setChartType] = useState('line');
 
   const lineChart = {
     chart: {
@@ -120,16 +120,25 @@ function AgroEye() {
   };
 
   const chartOptions = {
-    Line: lineChart,
-    Bar: barChart,
-    Pie: pieChart,
+    line: lineChart,
+    bar: barChart,
+    pie: pieChart,
   };
 
   return (
     <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-xl shadow-md p-8 mx-6 my-4'>
       <div className='flex flex-col'>
         <div className='mb-10'>
-          <Dropdown label='Chart Type' value={chartType} setValue={setChartType} options={['Line', 'Bar', 'Pie']} />
+          <Dropdown
+            label='Chart Type'
+            value={chartType}
+            setValue={setChartType}
+            options={[
+              { name: 'Line', value: 'line' },
+              { name: 'Bar', value: 'bar' },
+              { name: 'Pie', value: 'pie' },
+            ]}
+          />
         </div>
         <div className='bg-white rounded-md border border-gray-100 shadow-md shadow-black/5 flex justify-center items-center p-4'>
           <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
