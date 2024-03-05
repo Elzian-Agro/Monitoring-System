@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import coverImage from 'assets/images/smart-farms.png';
 
-const AboutPage = () => {
+const AboutUsPage = () => {
   const { t } = useTranslation();
 
   return (
@@ -36,4 +36,4 @@ const AboutPage = () => {
   );
 };
 
-export default AboutPage;
+export default AboutUsPage;

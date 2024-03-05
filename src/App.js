@@ -11,7 +11,7 @@ import GlobalErrorModal from 'error';
 import ResetForm from 'pages/dashboard/pages/profile-page/password-reset-form';
 
 import DashboardPage from 'pages/dashboard/pages/dashboard-page';
-import AboutPage from 'pages/dashboard/pages/about-page';
+import AboutUsPage from 'pages/dashboard/pages/about-page';
 import UserProfilePage from 'pages/dashboard/pages/profile-page';
 import AgroEye from 'pages/dashboard/pages/agro-eye-page';
 
@@ -27,7 +27,7 @@ function App() {
             <Route path='/users' element={<Dashboard page={<ManageUsers />} />} />
             <Route path='/agro' element={<Dashboard page={<AgroEye />} />} />
             <Route path='/profile' element={<Dashboard page={<UserProfilePage />} />} />
-            <Route path='/about' element={<Dashboard page={<AboutPage />} />} />
+            <Route path='/about' element={<Dashboard page={<AboutUsPage />} />} />
             <Route path='/reset' element={<Dashboard page={<ResetForm />} />} />
 
             <Route path='*' element={<NotFoundPage />} />

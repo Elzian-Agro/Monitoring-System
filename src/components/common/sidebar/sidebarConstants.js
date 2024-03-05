@@ -5,6 +5,7 @@ import {
   CloudIcon,
   DevicePhoneMobileIcon,
   ChartBarIcon,
+  LightBulbIcon,
 } from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
 
@@ -39,8 +40,8 @@ const SidebarLinks = ({ t }) => {
     },
     {
       to: '/about',
-      text: t('About'),
-      icon: DevicePhoneMobileIcon,
+      text: t('About Us'),
+      icon: LightBulbIcon,
     },
   ];
 
