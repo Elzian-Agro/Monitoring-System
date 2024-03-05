@@ -136,7 +136,7 @@ export const customTableStyles = {
   headCells: {
     style: {
       '&:last-child': {
-        minWidth: '220px',
+        minWidth: '280px',
       },
     },
   },
@@ -148,7 +148,7 @@ export const customTableStyles = {
   cells: {
     style: {
       '&:last-child': {
-        minWidth: '220px',
+        minWidth: '280px',
       },
     },
   },

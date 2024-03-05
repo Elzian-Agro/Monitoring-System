@@ -68,20 +68,15 @@ const DeviceManagement = () => {
     columns.push({
       name: t('ACTION'),
       cell: (row) => (
-        <PrimaryButton
-          color='bg-blue-500 border-blue-600'
-          text='Edit'
-          onClick={() => {
-            setSelectedDevice(row);
-            setIsFormVisible(true);
-          }}
-        />
-      ),
-    });
-
-    columns.push({
-      cell: (row) => (
-        <div className='flex flex-row gap-2 md:gap-4 lg:gap-6 items-center'>
+        <div className='flex flex-row gap-2 items-center'>
+          <PrimaryButton
+            color='bg-blue-500 border-blue-600'
+            text='Edit'
+            onClick={() => {
+              setSelectedDevice(row);
+              setIsFormVisible(true);
+            }}
+          />
           <PrimaryButton
             color='bg-red-500 border-red-600'
             text='Disable'
