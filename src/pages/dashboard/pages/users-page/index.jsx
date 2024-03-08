@@ -43,31 +43,26 @@ const ManageUsers = () => {
       name: t('LAST NAME'),
       selector: (row) => row.lastName,
       sortable: true,
-      // hide: 'sm',
     },
     {
       name: t('EMAIL'),
       selector: (row) => row.email,
       sortable: true,
-      // hide: 'md',
     },
     {
       name: t('NIC'),
       selector: (row) => row.nic,
       sortable: true,
-      // hide: 'lg',
     },
     {
       name: t('TEL. NUMBER'),
       selector: (row) => row.phoneNum,
       sortable: true,
-      // hide: 'sm',
     },
     {
       name: t('ORG. NAME'),
       selector: (row) => row.orgName,
       sortable: true,
-      // hide: 'lg',
     },
     {
       name: t('ACTION'),
@@ -93,24 +88,6 @@ const ManageUsers = () => {
       ),
     },
   ];
-
-  // const ExpandedUserdata = ({ data }) => {
-  //   return (
-  //     <div className='p-2 text-sm'>
-  //       {[
-  //         ['sm:hidden', `${t('Last Name')} : ${data.lastName}`],
-  //         ['lg:hidden', `${t('Email')} : ${data.email}`],
-  //         ['sm:hidden', `${t('Phone Number')} : ${data.phoneNum}`],
-  //         ['xl:hidden', `${t('Organization Name')} : ${data.orgName}`],
-  //         ['lg:hidden', `${t('Status')} : ${data.isDisabled ? 'Disabled' : 'Active'}`],
-  //       ].map(([className, content], index) => (
-  //         <p key={index} className={className}>
-  //           {content}
-  //         </p>
-  //       ))}
-  //     </div>
-  //   );
-  // };
 
   const getUsers = async () => {
     const response = await send({ endpoint: 'user', method: 'GET' });
@@ -165,7 +142,7 @@ const ManageUsers = () => {
   };
 
   return (
-    <div className='mx-5 mt-2'>
+    <div className='mx-5 mt-2 min-h-screen'>
       {isFormVisible && (
         <Form
           onClose={() => {
@@ -219,8 +196,8 @@ const ManageUsers = () => {
               customStyles={customTableStyles}
               theme={currentMode === 'Dark' ? 'dark' : 'default'}
               pagination
-              // expandableRows
-              // expandableRowsComponent={ExpandedUserdata}
+              fixedHeader
+              fixedHeaderScrollHeight='65vh'
             />
           </div>
         </div>

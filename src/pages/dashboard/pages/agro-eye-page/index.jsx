@@ -126,7 +126,7 @@ function AgroEye() {
   };
 
   return (
-    <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-xl shadow-md p-8 mx-6 my-4'>
+    <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-xl shadow-md p-8 mx-6 my-4 min-h-screen'>
       <div className='flex flex-col'>
         <div className='mb-10'>
           <Dropdown

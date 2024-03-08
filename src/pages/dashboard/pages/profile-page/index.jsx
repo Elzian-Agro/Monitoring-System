@@ -68,7 +68,7 @@ const UserProfilePage = () => {
   };
 
   return (
-    <div className='mt-3 mx-6'>
+    <div className='mt-3 mx-6 min-h-screen'>
       {isFormVisible && (
         <UpdateProfileForm
           onClose={() => {

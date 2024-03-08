@@ -2,7 +2,7 @@ import React from 'react';
 
 const WeatherComponent = () => {
   return (
-    <div className='flex items-center justify-center h-screen'>
+    <div className='flex items-center justify-center min-h-screen'>
       <div className='w-full max-w-md bg-white bg-opacity-30 p-8 rounded-lg backdrop-blur-lg border border-gray-300 shadow-lg'>
         <h1 className='text-3xl font-bold dark:text-white mb-4'>Weather Forecast</h1>
         <div className='flex items-center justify-between'>

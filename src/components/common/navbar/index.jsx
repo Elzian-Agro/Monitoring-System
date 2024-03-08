@@ -17,7 +17,7 @@ import LanguageSelector from '../language-selector';
 import { useEffect, useState } from 'react';
 import useAxios from 'hooks/useAxios';
 
-const Navbar = () => {
+const Navbar = ({ mainContentMargin }) => {
   const activeMenu = useSelector(selectActiveMenu);
   const isProfileOpen = useSelector(selectProfileOpen);
   const isNotificationOpen = useSelector(selectNotificationOpen);
@@ -26,6 +26,7 @@ const Navbar = () => {
   const [notificationsCount, setNotificationsCount] = useState(0);
 
   const dispatch = useDispatch();
+  const currentMenuMode = useSelector(selectActiveMenu);
   const { send } = useAxios();
 
   useEffect(() => {
@@ -72,53 +73,60 @@ const Navbar = () => {
   };
 
   return (
-    <div className='flex justify-between xs:pl-2 pt-2 pb-2 pr-2 md:mr-6 relative'>
-      <button
-        type='button'
-        className='relative text-xl rounded-full p-3  dark:text-white hover:bg-light-gray dark:hover:text-black'
-        onClick={toggleActiveMenu}>
-        <Bars3Icon className='h-6 w-6 cursor-pointer' />
-      </button>
-
-      <div className='flex'>
-        <div className='hidden md:flex gap-2'>
-          <ThemeSettings />
-          <LanguageSelector />
-        </div>
-        <button
-          type='button'
-          className='relative text-xl rounded-full p-3 hover:bg-light-gray dark:text-white dark:hover:text-black'
-          onClick={handleNotificationClick}>
-          {notificationsCount > 0 && (
-            <span
-              style={{ background: notificationsCount > 0 ? 'red' : '' }}
-              className='absolute inline-flex rounded-full right-1 top-1'>
-              <span className='text-xs font-semibold text-white px-1'>{notificationsCount}</span>
-            </span>
-          )}
-          <BellIcon className='h-6 w-6 text-14' />
-        </button>
-        <div
-          className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
-          onClick={handleProfileClick}>
-          <img
-            className='rounded-full w-8 h-8'
-            src={`${profileImage || avatar}?timestamp=${new Date().getTime()}`}
-            alt='user-profile'
-          />
-          <p className='xxs:hidden sm:block'>
-            <span className='text-gray-400 text-14 hidden md:inline-block'>Hi,</span>
-            <span className='text-gray-400 font-bold ml-1 text-14'>
-              <span className='md:hidden'>{userName.charAt(0)}</span>
-              <span className='hidden md:inline'>{userName}</span>
-            </span>
-          </p>
-          <ChevronDownIcon className='h-6 w-6 text-14 text-gray-400' />
-        </div>
-        {isProfileOpen && <UserProfile />}
-        {isNotificationOpen && (
-          <Notification notificationsData={notificationsData} setNotificationsCount={setNotificationsCount} />
+    <div className={`${mainContentMargin}`}>
+      <div
+        className={`${
+          currentMenuMode === 'close' ? 'justify-between' : 'justify-end'
+        } fixed top-0 left-0 right-0 z-20 flex p-2 bg-main-bg dark:bg-main-dark-bg`}>
+        {currentMenuMode === 'close' && (
+          <button
+            type='button'
+            className='relative text-xl rounded-full p-3  dark:text-white hover:bg-light-gray dark:hover:text-black'
+            onClick={toggleActiveMenu}>
+            <Bars3Icon className='h-6 w-6 cursor-pointer' />
+          </button>
         )}
+
+        <div className='flex'>
+          <div className='hidden md:flex gap-2'>
+            <ThemeSettings />
+            <LanguageSelector />
+          </div>
+          <button
+            type='button'
+            className='relative text-xl rounded-full p-3 hover:bg-light-gray dark:text-white dark:hover:text-black'
+            onClick={handleNotificationClick}>
+            {notificationsCount > 0 && (
+              <span
+                style={{ background: notificationsCount > 0 ? 'red' : '' }}
+                className='absolute inline-flex rounded-full right-1 top-1'>
+                <span className='text-xs font-semibold text-white px-1'>{notificationsCount}</span>
+              </span>
+            )}
+            <BellIcon className='h-6 w-6 text-14' />
+          </button>
+          <div
+            className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
+            onClick={handleProfileClick}>
+            <img
+              className='rounded-full w-8 h-8'
+              src={`${profileImage || avatar}?timestamp=${new Date().getTime()}`}
+              alt='user-profile'
+            />
+            <p className='xxs:hidden sm:block'>
+              <span className='text-gray-400 text-14 hidden md:inline-block'>Hi,</span>
+              <span className='text-gray-400 font-bold ml-1 text-14'>
+                <span className='md:hidden'>{userName.charAt(0)}</span>
+                <span className='hidden md:inline'>{userName}</span>
+              </span>
+            </p>
+            <ChevronDownIcon className='h-6 w-6 text-14 text-gray-400' />
+          </div>
+          {isProfileOpen && <UserProfile />}
+          {isNotificationOpen && (
+            <Notification notificationsData={notificationsData} setNotificationsCount={setNotificationsCount} />
+          )}
+        </div>
       </div>
     </div>
   );

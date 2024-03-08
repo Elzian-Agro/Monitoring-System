@@ -114,11 +114,15 @@ const DeviceManagement = () => {
     }
     return devices.filter((device) => {
       const deviceId = device.deviceId?.toLowerCase() || '';
+      const firstName = (device.userId?.firstName || '').toLowerCase();
+      const lastName = (device.userId?.lastName || '').toLowerCase();
       const deviceType = device.deviceType?.toLowerCase() || '';
       const deviceStatus = device.deviceStatus?.toLowerCase() || '';
 
       return (
         deviceId.includes(filterText.toLowerCase()) ||
+        firstName.includes(filterText.toLowerCase()) ||
+        lastName.includes(filterText.toLowerCase()) ||
         deviceType.includes(filterText.toLowerCase()) ||
         deviceStatus.includes(filterText.toLowerCase())
       );
@@ -156,7 +160,7 @@ const DeviceManagement = () => {
   };
 
   return (
-    <div className='mx-5 mt-2'>
+    <div className='mx-5 mt-2 min-h-screen'>
       {isFormVisible && (
         <Form
           onClose={() => {
@@ -225,6 +229,8 @@ const DeviceManagement = () => {
               customStyles={customTableStyles}
               theme={currentMode === 'Dark' ? 'dark' : 'default'}
               pagination
+              fixedHeader
+              fixedHeaderScrollHeight='65vh'
             />
           </div>
         </div>
