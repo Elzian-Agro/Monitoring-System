@@ -40,11 +40,12 @@ const Dashboard = ({ page }) => {
   const dispatch = useDispatch();
   const { loading, send } = useAxios();
 
+  const fetchUserData = async () => {
+    const userData = await send({ endpoint: 'user/profile', method: 'GET' });
+    dispatch(setUserData(userData));
+  };
+
   useEffect(() => {
-    const fetchUserData = async () => {
-      const userData = await send({ endpoint: 'user/profile', method: 'GET' });
-      dispatch(setUserData(userData));
-    };
     fetchUserData();
     // eslint-disable-next-line
   }, []);

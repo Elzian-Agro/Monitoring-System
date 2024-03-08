@@ -16,6 +16,7 @@ import avatar from 'assets/images/avatar.png';
 import LanguageSelector from '../language-selector';
 import { useEffect, useState } from 'react';
 import useAxios from 'hooks/useAxios';
+import PropTypes from 'prop-types';
 
 const Navbar = ({ mainContentMargin }) => {
   const activeMenu = useSelector(selectActiveMenu);
@@ -130,6 +131,10 @@ const Navbar = ({ mainContentMargin }) => {
       </div>
     </div>
   );
+};
+
+Navbar.propTypes = {
+  mainContentMargin: PropTypes.string.isRequired,
 };
 
 export default Navbar;
