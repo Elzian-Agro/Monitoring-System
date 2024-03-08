@@ -33,7 +33,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
 
     // Set form fields for edit mode
     if (device) {
-      setUserId(device.userId);
+      setUserId(device.userId?._id);
       setDeviceId(device.deviceId);
       setDeviceType(device.deviceType);
       setDeviceStatus(device.deviceStatus);

@@ -52,6 +52,11 @@ const DeviceManagement = () => {
       ),
     },
     {
+      name: t('USER NAME'),
+      selector: (row) => (row.userId ? `${row.userId.firstName || ''} ${row.userId.lastName || ''}` : 'Not Allocated'),
+      sortable: true,
+    },
+    {
       name: t('DEVICE TYPE'),
       selector: (row) => row.deviceType,
       sortable: true,
