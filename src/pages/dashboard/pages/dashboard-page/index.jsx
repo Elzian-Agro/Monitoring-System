@@ -7,23 +7,23 @@ const DashboardPage = () => {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
           {/* Card 1 */}
           <div className='bg-opacity-20 p-6 bg-gradient-to-br from-green-500 to-lime-500 rounded-xl shadow-md'>
-            <h2 className='text-xl font-semibold text-white mb-4'>Widget 1</h2>
-            <p className='text-white'>Content goes here...</p>
+            <h2 className='text-xl font-semibold text-white mb-4'>Weather Monitoring</h2>
+            <p className='text-white'>Enable</p>
           </div>
           {/* Card 2 */}
           <div className='bg-gradient-to-br from-green-500 to-lime-500 bg-opacity-20 p-6 rounded-xl shadow-md'>
-            <h2 className='text-xl font-semibold text-white mb-4'>Widget 2</h2>
-            <p className='text-white'>Content goes here...</p>
+            <h2 className='text-xl font-semibold text-white mb-4'>Weather Prediction</h2>
+            <p className='text-white'>Enable</p>
           </div>
           {/* Card 3 */}
           <div className='bg-gradient-to-br from-green-500 to-lime-500 bg-opacity-20 p-6 rounded-xl shadow-md'>
-            <h2 className='text-xl font-semibold text-white mb-4'>Widget 3</h2>
-            <p className='text-white'>Content goes here...</p>
+            <h2 className='text-xl font-semibold text-white mb-4'>Disaster Alert</h2>
+            <p className='text-white'>SMS Enable</p>
           </div>
           {/* Card 4 */}
-          <div className='bg-gradient-to-br from-green-500 to-lime-200 bg-opacity-20 p-6 rounded-xl shadow-md'>
-            <h2 className='text-xl font-semibold text-white mb-4'>Widget 4</h2>
-            <p className='text-white'>Content goes here...</p>
+          <div className='bg-gradient-to-br from-green-500 to-lime-500 bg-opacity-20 p-6 rounded-xl shadow-md'>
+            <h2 className='text-xl font-semibold text-white mb-4'>Farmers Info Hub</h2>
+            <p className='text-white'>Enable</p>
           </div>
         </div>
       </div>
@@ -36,7 +36,7 @@ const DashboardPage = () => {
                 <div className='flex items-center mb-1'>
                   <div className='text-2xl font-semibold dark:text-white'>2</div>
                 </div>
-                <div className='text-sm font-medium text-gray-400'>Users</div>
+                <div className='text-sm font-medium text-gray-400'>Devices</div>
               </div>
               <div className='dropdown'>
                 <button type='button' className='dropdown-toggle text-gray-400 hover:text-gray-600'>
@@ -56,7 +56,7 @@ const DashboardPage = () => {
                     +30%
                   </div>
                 </div>
-                <div className='text-sm font-medium text-gray-400'>Companies</div>
+                <div className='text-sm font-medium text-gray-400'>Ratings</div>
               </div>
               <div className='dropdown'>
                 <button type='button' className='dropdown-toggle text-gray-400 hover:text-gray-600'>
@@ -86,7 +86,7 @@ const DashboardPage = () => {
             <div className='rounded-t mb-0 px-0 border-0'>
               <div className='flex flex-wrap items-center px-4 py-2'>
                 <div className='relative w-full max-w-full flex-grow flex-1'>
-                  <h3 className='font-semibold text-base text-gray-900 dark:text-gray-50'>Users</h3>
+                  <h3 className='font-semibold text-base text-gray-900 dark:text-gray-50'>Payments</h3>
                 </div>
               </div>
               <div className='block w-full overflow-x-auto'>
@@ -105,10 +105,10 @@ const DashboardPage = () => {
                   <tbody>
                     <tr className='text-gray-700 dark:text-gray-100'>
                       <th className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left'>
-                        Administrator
+                        January
                       </th>
                       <td className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-                        1
+                        10$
                       </td>
                       <td className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
                         <div className='flex items-center'>
@@ -123,10 +123,10 @@ const DashboardPage = () => {
                     </tr>
                     <tr className='text-gray-700 dark:text-gray-100'>
                       <th className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left'>
-                        User
+                        February
                       </th>
                       <td className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-                        6
+                        60$
                       </td>
                       <td className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
                         <div className='flex items-center'>
@@ -134,42 +134,6 @@ const DashboardPage = () => {
                           <div className='relative w-full'>
                             <div className='overflow-hidden h-2 text-xs flex rounded bg-blue-200'>
                               <div className='shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500'></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className='text-gray-700 dark:text-gray-100'>
-                      <th className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left'>
-                        User
-                      </th>
-                      <td className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-                        5
-                      </td>
-                      <td className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-                        <div className='flex items-center'>
-                          <span className='mr-2'>45%</span>
-                          <div className='relative w-full'>
-                            <div className='overflow-hidden h-2 text-xs flex rounded bg-pink-200'>
-                              <div className='shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500'></div>
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                    <tr className='text-gray-700 dark:text-gray-100'>
-                      <th className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left'>
-                        User
-                      </th>
-                      <td className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-                        4
-                      </td>
-                      <td className='border-t-0 px-4 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4'>
-                        <div className='flex items-center'>
-                          <span className='mr-2'>60%</span>
-                          <div className='relative w-full'>
-                            <div className='overflow-hidden h-2 text-xs flex rounded bg-red-200'>
-                              <div className='shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-500'></div>
                             </div>
                           </div>
                         </div>
@@ -196,7 +160,7 @@ const DashboardPage = () => {
                     <td className='py-2 px-4 border-b border-b-gray-50'>
                       <div className='flex items-center'>
                         <p className='text-gray-400 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
-                          Lorem Ipsum
+                          User Login
                         </p>
                       </div>
                     </td>
@@ -220,7 +184,7 @@ const DashboardPage = () => {
                     <td className='py-2 px-4 border-b border-b-gray-50'>
                       <div className='flex items-center'>
                         <p className='text-gray-400 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
-                          Lorem Ipsum
+                          User Profile Update
                         </p>
                       </div>
                     </td>
@@ -245,10 +209,10 @@ const DashboardPage = () => {
             </div>
           </div>
         </div>
-        <div className='grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6'>
           <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 shadow-black/5 p-6 rounded-md lg:col-span-2'>
             <div className='flex justify-between mb-4 items-start'>
-              <div className='font-medium dark:text-white'>Order Statistics</div>
+              <div className='font-medium dark:text-white'>Device Statistics</div>
               <div className='dropdown'>
                 <button type='button' className='dropdown-toggle text-gray-400 hover:text-gray-600'>
                   <i className='ri-more-fill'></i>
@@ -272,7 +236,7 @@ const DashboardPage = () => {
                     +$469
                   </span>
                 </div>
-                <span className='text-gray-400 text-sm'>Completed</span>
+                <span className='text-gray-400 text-sm'>Inactive</span>
               </div>
               <div className='rounded-md border border-dashed border-gray-200 p-4'>
                 <div className='flex items-center mb-0.5'>
@@ -281,14 +245,14 @@ const DashboardPage = () => {
                     -$130
                   </span>
                 </div>
-                <span className='text-gray-400 text-sm'>Canceled</span>
+                <span className='text-gray-400 text-sm'>Disabled</span>
               </div>
             </div>
             <div>
               <canvas id='order-chart'></canvas>
             </div>
           </div>
-          <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-6 rounded-md'>
+          <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2'>
             <div className='flex justify-between mb-4 items-start'>
               <div className='font-medium dark:text-white'>Earnings</div>
               <div className='dropdown'>
@@ -321,7 +285,7 @@ const DashboardPage = () => {
                           alt=''
                           className='w-8 h-8 rounded object-cover block'></img>
                         <p className='text-gray-400 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
-                          Create landing page
+                          Research Contribution
                         </p>
                       </div>
                     </td>
@@ -342,7 +306,7 @@ const DashboardPage = () => {
                           alt=''
                           className='w-8 h-8 rounded object-cover block'></img>
                         <p className='text-gray-400 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
-                          Create landing page
+                          Technology Development
                         </p>
                       </div>
                     </td>
@@ -352,27 +316,6 @@ const DashboardPage = () => {
                     <td className='py-2 px-4 border-b border-b-gray-50'>
                       <span className='inline-block p-1 rounded bg-rose-500/10 text-rose-500 font-medium text-[12px] leading-none'>
                         Withdrawn
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className='py-2 px-4 border-b border-b-gray-50'>
-                      <div className='flex items-center'>
-                        <img
-                          src='https://placehold.co/32x32'
-                          alt=''
-                          className='w-8 h-8 rounded object-cover block'></img>
-                        <p className='text-gray-400 text-sm font-medium hover:text-blue-500 ml-2 truncate'>
-                          Create landing page
-                        </p>
-                      </div>
-                    </td>
-                    <td className='py-2 px-4 border-b border-b-gray-50'>
-                      <span className='text-[13px] font-medium text-emerald-500'>+$235</span>
-                    </td>
-                    <td className='py-2 px-4 border-b border-b-gray-50'>
-                      <span className='inline-block p-1 rounded bg-emerald-500/10 text-emerald-500 font-medium text-[12px] leading-none'>
-                        Pending
                       </span>
                     </td>
                   </tr>
