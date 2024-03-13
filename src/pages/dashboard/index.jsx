@@ -23,11 +23,11 @@ const getSidebarWidth = (activeMenu) => {
 const getMainContentMargin = (activeMenu) => {
   switch (activeMenu) {
     case 'open':
-      return 'lg:ml-60';
+      return 'ml-60';
     case 'onlyIcon':
-      return 'lg:ml-20';
+      return 'ml-20';
     default:
-      return 'lg:ml-0';
+      return 'ml-0';
   }
 };
 
