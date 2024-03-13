@@ -103,14 +103,14 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
               <ArrowLeftIcon className='text-white w-6 h-6 mx-4 my-2 transform hover:-translate-x-2 duration-300' />
             </button>
           </div>
-          <div>
+          <div className='mt-1'>
             <h1 className='text-base text-center text-gray-700 dark:text-white'>
               {user ? t('UPDATE USER DETAILS') : t('NEW USER REGISTARTION')}
             </h1>
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className='flex flex-col justify-center'>
+            <div className='flex flex-col justify-center mt-10 mb-10'>
               <div className='grid lg:grid-cols-2 space-y-4 lg:space-y-0 w-full justify-center lg:gap-x-20 lg:px-28 xl:px-48 lg:gap-y-6'>
                 <TextBox
                   placeholder='Eg. Saman'

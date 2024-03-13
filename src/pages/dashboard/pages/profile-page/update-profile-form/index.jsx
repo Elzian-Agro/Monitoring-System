@@ -185,7 +185,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className='flex flex-col justify-center'>
+            <div className='flex flex-col justify-center mb-10'>
               <div className='grid lg:grid-cols-2 space-y-4 lg:space-y-0 w-full justify-center lg:gap-x-20 lg:px-24 xl:px-48 lg:gap-y-6'>
                 <TextBox
                   placeholder='Eg. 076XXXXXXX'
@@ -245,7 +245,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
                   setValue={setYoutube}
                 />
               </div>
-              <div className='flex justify-center mt-5'>
+              <div className='flex justify-center mt-8'>
                 <div className='flex justify-end gap-2 w-60 sm:w-64 md:w-80 lg:w-full lg:px-24 xl:px-48'>
                   <PrimaryButton
                     type='button'
