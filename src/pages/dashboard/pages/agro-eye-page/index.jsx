@@ -3,7 +3,6 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import exportingInit from 'highcharts/modules/exporting';
 import offlineExportingInit from 'highcharts/modules/offline-exporting';
-import Dropdown from 'pages/dashboard/components/base/Dropdown';
 
 exportingInit(Highcharts);
 offlineExportingInit(Highcharts);
