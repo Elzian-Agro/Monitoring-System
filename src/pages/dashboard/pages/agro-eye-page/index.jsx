@@ -169,11 +169,11 @@ function AgroEye() {
       </div>
 
       <div className='mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8'>
-        <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-200 dark:border-gray-500 shadow-md shadow-black/5 p-4 w-full'>
+        <div className='bg-white dark:bg-gray-600 rounded-md border border-gray-200 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
           <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
         </div>
 
-        <div className='bg-white dark:bg-secondary-dark-bg  rounded-md border border-gray-200 dark:border-gray-500 shadow-md shadow-black/5 p-4 w-full'>
+        <div className='bg-white dark:bg-gray-600 rounded-md border border-gray-200 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
           <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
         </div>
       </div>
