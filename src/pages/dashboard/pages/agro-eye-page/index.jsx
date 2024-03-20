@@ -14,9 +14,13 @@ function AgroEye() {
   const lineChart = {
     chart: {
       type: 'line',
+      scrollablePlotArea: {
+        minWidth: 500,
+        scrollPositionX: 1,
+      },
     },
     title: {
-      text: 'Sensor Data Over Time',
+      text: 'ELZ-0001-01',
     },
     xAxis: {
       categories: ['7.00 A.M', '8.00 A.M', '9.00 A.M', '10.00 A.M', '11.00 A.M'],
@@ -51,7 +55,7 @@ function AgroEye() {
       type: 'bar',
     },
     title: {
-      text: 'Sensor Data Comparison',
+      text: 'ELZ-0001-01',
     },
     xAxis: {
       categories: ['Temperature', 'Humidity', 'Soil Moisture', 'Gas Detection'],
@@ -73,74 +77,48 @@ function AgroEye() {
     ],
   };
 
-  const pieChart = {
-    chart: {
-      type: 'pie',
-    },
-    title: {
-      text: 'Sensor Data Distribution',
-    },
-    tooltip: {
-      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
-    },
-    plotOptions: {
-      pie: {
-        allowPointSelect: true,
-        cursor: 'pointer',
-        dataLabels: {
-          enabled: true,
-          format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-        },
-      },
-    },
-    series: [
-      {
-        name: 'Sensor Data',
-        colorByPoint: true,
-        data: [
-          {
-            name: 'Temperature',
-            y: 25,
-          },
-          {
-            name: 'Humidity',
-            y: 60,
-          },
-          {
-            name: 'Soil Moisture',
-            y: 40,
-          },
-          {
-            name: 'Gas Detection',
-            y: 20,
-          },
-        ],
-      },
-    ],
-  };
-
   const chartOptions = {
     line: lineChart,
     bar: barChart,
-    pie: pieChart,
   };
 
   return (
-    <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-xl shadow-md p-8 mx-6 my-4 min-h-screen'>
-      <div className='flex flex-col'>
-        <div className='mb-10'>
-          <Dropdown
-            label='Chart Type'
-            value={chartType}
-            setValue={setChartType}
-            options={[
-              { name: 'Line', value: 'line' },
-              { name: 'Bar', value: 'bar' },
-              { name: 'Pie', value: 'pie' },
-            ]}
+    <div className='bg-white dark:bg-secondary-dark-bg rounded-xl shadow-md p-8 mx-6 my-4 min-h-screen'>
+      <div className='flex flex-col sm:flex-row'>
+        <label className='text-sm font-medium'>Chart Type :</label>
+        <div className='flex items-center sm:ml-2'>
+          <input
+            type='radio'
+            id='line-chart'
+            name='chart-type'
+            value='line'
+            checked={chartType === 'line'}
+            onChange={(e) => setChartType(e.target.value)}
+            className='mr-2'
           />
+          <label htmlFor='line-chart' className='mr-4'>
+            Line
+          </label>
+
+          <input
+            type='radio'
+            id='bar-chart'
+            name='chart-type'
+            value='bar'
+            checked={chartType === 'bar'}
+            onChange={(e) => setChartType(e.target.value)}
+            className='mr-2'
+          />
+          <label htmlFor='bar-chart'>Bar</label>
         </div>
-        <div className='bg-white rounded-md border border-gray-100 shadow-md shadow-black/5 flex justify-center items-center p-4'>
+      </div>
+
+      <div className='mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8'>
+        <div className='bg-white rounded-md border border-gray-200 shadow-md shadow-black/5 p-4 w-full'>
+          <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
+        </div>
+
+        <div className='bg-white rounded-md border border-gray-200 shadow-md shadow-black/5 p-4 w-full'>
           <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
         </div>
       </div>
