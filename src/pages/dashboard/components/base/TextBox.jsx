@@ -28,7 +28,7 @@ function TextBox({
     <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full'>
       <div className='mb-2'>
         <label htmlFor={label} className='bg-white dark:bg-secondary-dark-bg text-gray-400 text-sm'>
-          {t(label)}:
+          {t(label)}
         </label>
       </div>
       <div className='border-2 border-b-[3px] border-gray-300 rounded'>
