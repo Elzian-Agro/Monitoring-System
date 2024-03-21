@@ -75,14 +75,14 @@ const Navbar = ({ mainContentMargin }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 z-20 flex ${
+      className={`fixed top-0 left-0 right-0 z-20 bg-main-bg dark:bg-main-dark-bg flex p-2 ${
         currentMenuMode === 'open' ? 'justify-end sm:justify-between' : 'justify-between'
-      } p-2 bg-main-bg dark:bg-main-dark-bg`}>
+      }`}>
       <button
         type='button'
-        className={`${mainContentMargin} ${
-          currentMenuMode === 'open' ? 'hidden sm:block' : 'block'
-        } relative text-xl rounded-full p-3  dark:text-white hover:bg-light-gray dark:hover:text-black`}
+        className={`relative dark:text-white hover:bg-light-gray dark:hover:text-black text-xl rounded-full p-3 ${mainContentMargin} ${
+          currentMenuMode === 'open' && 'hidden sm:block'
+        } ${currentMenuMode === 'onlyIcon' && 'ml-20'}`}
         onClick={toggleActiveMenu}>
         <Bars3Icon className='h-6 w-6 cursor-pointer' />
       </button>

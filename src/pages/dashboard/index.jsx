@@ -23,11 +23,11 @@ const getSidebarWidth = (activeMenu) => {
 const getMainContentMargin = (activeMenu) => {
   switch (activeMenu) {
     case 'open':
-      return 'ml-60';
+      return 'sm:ml-60';
     case 'onlyIcon':
-      return 'ml-20';
+      return 'sm:ml-20';
     default:
-      return 'ml-0';
+      return 'sm:ml-0';
   }
 };
 
@@ -35,8 +35,7 @@ const Dashboard = ({ page }) => {
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
-  const currentMode = useSelector(selectTheme);
-
+  const currentTheme = useSelector(selectTheme);
   const dispatch = useDispatch();
   const { loading, send } = useAxios();
 
@@ -50,14 +49,22 @@ const Dashboard = ({ page }) => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    if (currentTheme === 'Dark') {
+      document.body.style.backgroundColor = '#20232A';
+    } else {
+      document.body.style.backgroundColor = '#FAFBFB';
+    }
+  }, [currentTheme]);
+
   return (
-    <div className={currentMode === 'Dark' ? 'dark' : ''}>
+    <div className={currentTheme === 'Dark' ? 'dark' : ''}>
       {loading ? (
         <Loader />
       ) : (
-        <div className='bg-main-bg dark:bg-main-dark-bg'>
+        <div>
           <Navbar mainContentMargin={mainContentMargin} />
-          <div className={`sm:${mainContentMargin} mt-16`}>{page}</div>
+          <div className={`${mainContentMargin} mt-16`}>{page}</div>
           <Sidebar sidebarWidth={sidebarWidth} />
         </div>
       )}
