@@ -16,8 +16,9 @@ import avatar from 'assets/images/avatar.png';
 import LanguageSelector from '../language-selector';
 import { useEffect, useState } from 'react';
 import useAxios from 'hooks/useAxios';
+import PropTypes from 'prop-types';
 
-const Navbar = () => {
+const Navbar = ({ mainContentMargin }) => {
   const activeMenu = useSelector(selectActiveMenu);
   const isProfileOpen = useSelector(selectProfileOpen);
   const isNotificationOpen = useSelector(selectNotificationOpen);
@@ -74,17 +75,17 @@ const Navbar = () => {
 
   return (
     <div
-      className={`${
-        currentMenuMode === 'close' ? 'justify-between' : 'justify-end'
-      } fixed top-0 left-0 right-0 z-20 flex p-2 bg-main-bg dark:bg-main-dark-bg`}>
-      {currentMenuMode === 'close' && (
-        <button
-          type='button'
-          className='relative text-xl rounded-full p-3  dark:text-white hover:bg-light-gray dark:hover:text-black'
-          onClick={toggleActiveMenu}>
-          <Bars3Icon className='h-6 w-6 cursor-pointer' />
-        </button>
-      )}
+      className={`fixed top-0 left-0 right-0 z-20 flex ${
+        currentMenuMode === 'open' ? 'justify-end sm:justify-between' : 'justify-between'
+      } p-2 bg-main-bg dark:bg-main-dark-bg`}>
+      <button
+        type='button'
+        className={`${mainContentMargin} ${
+          currentMenuMode === 'open' ? 'hidden sm:block' : 'block'
+        } relative text-xl rounded-full p-3  dark:text-white hover:bg-light-gray dark:hover:text-black`}
+        onClick={toggleActiveMenu}>
+        <Bars3Icon className='h-6 w-6 cursor-pointer' />
+      </button>
 
       <div className='flex'>
         <div className='hidden md:flex gap-2'>
@@ -128,6 +129,10 @@ const Navbar = () => {
       </div>
     </div>
   );
+};
+
+Navbar.propTypes = {
+  mainContentMargin: PropTypes.string.isRequired,
 };
 
 export default Navbar;

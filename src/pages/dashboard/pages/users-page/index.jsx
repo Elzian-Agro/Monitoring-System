@@ -163,8 +163,8 @@ const ManageUsers = () => {
 
       {!isFormVisible && !loading && (
         <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
-          <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
-            <div className='flex gap-2 mb-2 md:mb-0'>
+          <div className='flex flex-col lg:flex-row mb-4 lg:items-center lg:justify-between'>
+            <div className='flex gap-2 mb-2 lg:mb-0'>
               <VariantButton
                 text='Add User'
                 Icon={PlusIcon}
@@ -196,8 +196,6 @@ const ManageUsers = () => {
               customStyles={customTableStyles}
               theme={currentMode === 'Dark' ? 'dark' : 'default'}
               pagination
-              fixedHeader
-              fixedHeaderScrollHeight='65vh'
             />
           </div>
         </div>

@@ -43,18 +43,20 @@ const Sidebar = ({ sidebarWidth }) => {
             </div>
           </a>
 
-          <button
-            type='button'
-            onClick={() => {
-              if (activeMenu === 'open') {
-                dispatch(setActiveMenu('onlyIcon'));
-              } else if (activeMenu === 'onlyIcon') {
-                dispatch(setActiveMenu('close'));
-              }
-            }}
-            className='text-xl rounded-full pr-3 hover:bg-light-gray block group'>
-            <ArrowLeftCircleIcon className='h-6 w-6 dark:text-white dark:group-hover:text-black' />
-          </button>
+          {activeMenu === 'open' && (
+            <button
+              type='button'
+              onClick={() => {
+                if (activeMenu === 'open') {
+                  dispatch(setActiveMenu('onlyIcon'));
+                } else if (activeMenu === 'onlyIcon') {
+                  dispatch(setActiveMenu('close'));
+                }
+              }}
+              className='sm:hidden text-xl rounded-full pr-3 hover:bg-light-gray block group'>
+              <ArrowLeftCircleIcon className='h-6 w-6 dark:text-white dark:group-hover:text-black' />
+            </button>
+          )}
         </div>
         <div className='flex-grow sidebar-items mt-6 md:mt-8 lg:mt-10'>
           {translatedSidebarLinks.map((link) => (

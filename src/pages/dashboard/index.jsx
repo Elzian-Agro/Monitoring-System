@@ -56,9 +56,9 @@ const Dashboard = ({ page }) => {
         <Loader />
       ) : (
         <div className='bg-main-bg dark:bg-main-dark-bg'>
-          <Navbar />
+          <Navbar mainContentMargin={mainContentMargin} />
+          <div className={`sm:${mainContentMargin} mt-16`}>{page}</div>
           <Sidebar sidebarWidth={sidebarWidth} />
-          <div className={`${mainContentMargin} mt-16`}>{page}</div>
         </div>
       )}
     </div>

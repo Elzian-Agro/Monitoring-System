@@ -136,7 +136,7 @@ function AgroEye() {
   };
 
   return (
-    <div className='bg-white dark:bg-secondary-dark-bg rounded-xl shadow-md p-8 mx-6 my-4 min-h-screen'>
+    <div className='bg-white dark:bg-secondary-dark-bg rounded-xl shadow-md p-8 mx-6 mt-4 min-h-screen'>
       <div className='flex flex-col sm:flex-row'>
         <label className='text-sm dark:text-white font-medium'>Chart Type :</label>
         <div className='flex items-center sm:ml-2'>
