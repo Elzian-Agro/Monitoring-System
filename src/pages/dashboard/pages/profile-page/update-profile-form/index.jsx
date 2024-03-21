@@ -87,7 +87,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       localStorage.setItem('Email', user?.email);
     }
 
-    await send({
+    const res = await send({
       endpoint: 'auth/forget-password',
       method: 'POST',
       body: {
@@ -95,7 +95,9 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       },
     });
 
-    navigate('/reset');
+    if (res) {
+      navigate('/reset');
+    }
   };
 
   const handleProfilePictureChange = (event) => {
