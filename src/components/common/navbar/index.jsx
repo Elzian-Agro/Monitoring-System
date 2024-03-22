@@ -14,34 +14,17 @@ import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
 import { menuMode } from 'constant';
 import avatar from 'assets/images/avatar.png';
 import LanguageSelector from '../language-selector';
-import { useEffect, useState } from 'react';
-import useAxios from 'hooks/useAxios';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const Navbar = ({ mainContentMargin }) => {
   const activeMenu = useSelector(selectActiveMenu);
   const isProfileOpen = useSelector(selectProfileOpen);
   const isNotificationOpen = useSelector(selectNotificationOpen);
-  const userId = useSelector((state) => state.user._id);
-  const [notificationsData, setNotificationsData] = useState(0);
   const [notificationsCount, setNotificationsCount] = useState(0);
 
   const dispatch = useDispatch();
   const currentMenuMode = useSelector(selectActiveMenu);
-  const { send } = useAxios();
-
-  useEffect(() => {
-    const fetchNotificationsData = async () => {
-      const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
-      setNotificationsData(res?.result || []);
-      setNotificationsCount(res?.result?.filter((data) => !data.readFlag).length || 0);
-    };
-
-    if (userId) {
-      fetchNotificationsData();
-    }
-    // eslint-disable-next-line
-  }, [userId]);
 
   //Get user details through redux toolkit
   const userName = useSelector((state) => state.user.firstName);
@@ -123,9 +106,7 @@ const Navbar = ({ mainContentMargin }) => {
           <ChevronDownIcon className='h-6 w-6 text-14 text-gray-400' />
         </div>
         {isProfileOpen && <UserProfile />}
-        {isNotificationOpen && (
-          <Notification notificationsData={notificationsData} setNotificationsCount={setNotificationsCount} />
-        )}
+        {isNotificationOpen && <Notification setNotificationsCount={setNotificationsCount} />}
       </div>
     </div>
   );
