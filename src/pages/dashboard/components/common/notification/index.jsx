@@ -1,31 +1,15 @@
 import { XCircleIcon, EyeIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { selectNotificationOpen, setNotificationOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import { setNotificationOpen, setNotificationCount } from 'pages/dashboard/slice/dashboardLayoutSlice';
+import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
-import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import useNotification from 'hooks/useNotification';
 
-const Notification = ({ setNotificationsCount }) => {
-  const [notifications, setNotifications] = useState([]);
+const Notification = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const userId = useSelector((state) => state.user._id);
-  const isNotificationOpen = useSelector(selectNotificationOpen);
   const { send } = useAxios();
-
-  const fetchNotificationsData = async () => {
-    const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
-    setNotifications(res?.result || []);
-    setNotificationsCount(res?.result?.filter((data) => !data.readFlag).length || 0);
-  };
-
-  useEffect(() => {
-    if (userId || isNotificationOpen) {
-      fetchNotificationsData();
-    }
-    // eslint-disable-next-line
-  }, [userId, isNotificationOpen]);
+  const { notifications, setNotifications } = useNotification();
 
   const calculateUnreadNotificationsCount = (notifications) => {
     return notifications.filter((notification) => !notification.readFlag).length;
@@ -46,7 +30,7 @@ const Notification = ({ setNotificationsCount }) => {
     setNotifications(updatedNotifications);
 
     // Set Notification Count
-    setNotificationsCount(0);
+    dispatch(setNotificationCount(0));
   };
 
   const deleteNotification = async (index) => {
@@ -63,7 +47,7 @@ const Notification = ({ setNotificationsCount }) => {
     setNotifications(updatedNotifications);
 
     // Count the number of objects where readFlag is true from the updatedNotifications
-    setNotificationsCount(calculateUnreadNotificationsCount(updatedNotifications));
+    dispatch(setNotificationCount(calculateUnreadNotificationsCount(updatedNotifications)));
   };
 
   const readNotification = async (index) => {
@@ -85,7 +69,7 @@ const Notification = ({ setNotificationsCount }) => {
     });
 
     // Count the number of objects where readFlag is true from the updatedNotifications
-    setNotificationsCount(calculateUnreadNotificationsCount(updatedNotifications));
+    dispatch(setNotificationCount(calculateUnreadNotificationsCount(updatedNotifications)));
   };
 
   const closeNotification = () => {
@@ -138,10 +122,6 @@ const Notification = ({ setNotificationsCount }) => {
       </div>
     </div>
   );
-};
-
-Notification.propTypes = {
-  setNotificationsCount: PropTypes.func.isRequired,
 };
 
 export default Notification;

@@ -7,6 +7,7 @@ import {
   selectProfileOpen,
   setNotificationOpen,
   selectNotificationOpen,
+  selectNotificationCount,
 } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import UserProfile from 'pages/dashboard/components/common/profile';
 import Notification from 'pages/dashboard/components/common/notification';
@@ -14,14 +15,13 @@ import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
 import { menuMode } from 'constant';
 import avatar from 'assets/images/avatar.png';
 import LanguageSelector from '../language-selector';
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const Navbar = ({ mainContentMargin }) => {
   const activeMenu = useSelector(selectActiveMenu);
   const isProfileOpen = useSelector(selectProfileOpen);
   const isNotificationOpen = useSelector(selectNotificationOpen);
-  const [notificationsCount, setNotificationsCount] = useState(0);
+  const notificationsCount = useSelector(selectNotificationCount);
 
   const dispatch = useDispatch();
   const currentMenuMode = useSelector(selectActiveMenu);
@@ -106,7 +106,7 @@ const Navbar = ({ mainContentMargin }) => {
           <ChevronDownIcon className='h-6 w-6 text-14 text-gray-400' />
         </div>
         {isProfileOpen && <UserProfile />}
-        {isNotificationOpen && <Notification setNotificationsCount={setNotificationsCount} />}
+        {isNotificationOpen && <Notification />}
       </div>
     </div>
   );
