@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-const PrimaryButton = ({ color, text, onClick = null }) => {
+const PrimaryButton = ({ type = null, color, text, onClick = null }) => {
   const { t } = useTranslation();
   return (
     <button
+      type={type}
       className={`min-w-20 cursor-pointer transition-all ${color} text-white text-sm px-4 py-1 rounded-lg border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] ative:border-b-[2px] active:brightness-90 active:translate-y-[2px]`}
       onClick={onClick}>
       {t(text)}
@@ -41,6 +42,7 @@ const ToggleButton = ({ value, onChange }) => {
 };
 
 PrimaryButton.propTypes = {
+  type: PropTypes.string,
   color: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func,

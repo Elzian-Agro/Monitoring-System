@@ -25,12 +25,10 @@ function convertArrayOfObjectsToCSV(data) {
   return result;
 }
 
-export function downloadCSV(data) {
+export function downloadCSV(data, filename) {
   const link = document.createElement('a');
   let csv = convertArrayOfObjectsToCSV(data);
   if (csv == null) return;
-
-  const filename = 'users.csv';
 
   if (!RegExp(/^data:text\/csv/i).exec(csv)) {
     csv = `data:text/csv;charset=utf-8,${csv}`;

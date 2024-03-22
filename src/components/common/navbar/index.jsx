@@ -15,21 +15,35 @@ import { menuMode } from 'constant';
 import avatar from 'assets/images/avatar.png';
 import LanguageSelector from '../language-selector';
 import { useEffect, useState } from 'react';
+import useAxios from 'hooks/useAxios';
+import PropTypes from 'prop-types';
 
-const Navbar = ({ notificationData }) => {
-  const dispatch = useDispatch();
+const Navbar = ({ mainContentMargin }) => {
   const activeMenu = useSelector(selectActiveMenu);
   const isProfileOpen = useSelector(selectProfileOpen);
   const isNotificationOpen = useSelector(selectNotificationOpen);
+  const userId = useSelector((state) => state.user._id);
+  const [notificationsData, setNotificationsData] = useState(0);
+  const [notificationsCount, setNotificationsCount] = useState(0);
 
-  const [notificationsCount, setNotificationCount] = useState(0);
+  const dispatch = useDispatch();
+  const currentMenuMode = useSelector(selectActiveMenu);
+  const { send } = useAxios();
 
   useEffect(() => {
-    const readNotificationsCount = notificationData?.filter((data) => !data.readFlag).length;
-    setNotificationCount(readNotificationsCount);
-  }, [notificationData]);
+    const fetchNotificationsData = async () => {
+      const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
+      setNotificationsData(res?.result || []);
+      setNotificationsCount(res?.result?.filter((data) => !data.readFlag).length || 0);
+    };
 
-  //Get username through redux toolkit
+    if (userId) {
+      fetchNotificationsData();
+    }
+    // eslint-disable-next-line
+  }, [userId]);
+
+  //Get user details through redux toolkit
   const userName = useSelector((state) => state.user.firstName);
   const profileImage = useSelector((state) => state.user.profileImage);
 
@@ -60,18 +74,23 @@ const Navbar = ({ notificationData }) => {
   };
 
   return (
-    <div className='flex justify-between xs:pl-2 pt-2 pb-2 pr-2 md:mr-6 relative'>
+    <div
+      className={`fixed top-0 left-0 right-0 z-20 bg-main-bg dark:bg-main-dark-bg flex p-2 ${
+        currentMenuMode === 'open' ? 'justify-end sm:justify-between' : 'justify-between'
+      }`}>
       <button
         type='button'
-        className='relative text-xl rounded-full p-3  dark:text-white hover:bg-light-gray dark:hover:text-black'
+        className={`relative dark:text-white hover:bg-light-gray dark:hover:text-black text-xl rounded-full p-3 ${mainContentMargin} ${
+          currentMenuMode === 'open' && 'hidden sm:block'
+        } ${currentMenuMode === 'onlyIcon' && 'ml-20'}`}
         onClick={toggleActiveMenu}>
         <Bars3Icon className='h-6 w-6 cursor-pointer' />
       </button>
 
       <div className='flex'>
         <div className='hidden md:flex gap-2'>
-          <LanguageSelector />
           <ThemeSettings />
+          <LanguageSelector />
         </div>
         <button
           type='button'
@@ -89,7 +108,11 @@ const Navbar = ({ notificationData }) => {
         <div
           className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
           onClick={handleProfileClick}>
-          <img className='rounded-full w-8 h-8' src={profileImage || avatar} alt='user-profile' />
+          <img
+            className='rounded-full w-8 h-8'
+            src={`${profileImage || avatar}?timestamp=${new Date().getTime()}`}
+            alt='user-profile'
+          />
           <p className='xxs:hidden sm:block'>
             <span className='text-gray-400 text-14 hidden md:inline-block'>Hi,</span>
             <span className='text-gray-400 font-bold ml-1 text-14'>
@@ -101,11 +124,15 @@ const Navbar = ({ notificationData }) => {
         </div>
         {isProfileOpen && <UserProfile />}
         {isNotificationOpen && (
-          <Notification notificationData={notificationData} setNotificationCount={setNotificationCount} />
+          <Notification notificationsData={notificationsData} setNotificationsCount={setNotificationsCount} />
         )}
       </div>
     </div>
   );
+};
+
+Navbar.propTypes = {
+  mainContentMargin: PropTypes.string.isRequired,
 };
 
 export default Navbar;

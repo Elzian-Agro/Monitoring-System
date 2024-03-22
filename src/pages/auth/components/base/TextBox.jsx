@@ -17,7 +17,7 @@ function TextBox({ label = null, placeholder = '', type = 'text', Icon = null, v
   return (
     <div className='relative border-2 border-gray-300 w-[100%] sm:w-[90%] md:w-[80%] lg:w-[70%] xl:w-[60%] rounded'>
       {label && (
-        <label className='absolute top-[-12px] left-2 bg-[#F9F9FA] px-1 text-gray-400 text-sm font-regular font-zenkaku'>
+        <label className='absolute top-[-12px] left-2 bg-[#F9F9FA] dark:bg-secondary-dark-bg px-1 text-gray-400 text-sm font-regular font-zenkaku'>
           {t(label)}
         </label>
       )}

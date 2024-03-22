@@ -34,6 +34,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - **Documentation**: [React Data Table Component Documentation](https://react-data-table-component.netlify.app/?path=/docs/getting-started-intro--docs)
 
+### HighChart
+
+- **Documentation**: [HighChart Documentation](https://www.highcharts.com/docs/index)
+
 ## Available Scripts
 
 In the project directory, you can run:

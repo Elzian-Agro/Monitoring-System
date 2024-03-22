@@ -24,24 +24,7 @@ const userSlice = createSlice({
     setUserData: (state, action) => {
       return { ...state, ...action.payload };
     },
-    clearUserData: (state) => {
-      return {
-        nic: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        orgName: '',
-        profileImage: '',
-        phoneNum: '',
-        userType: '',
-        userBio: '',
-        address: '',
-        facebook: '',
-        linkedIn: '',
-        youtube: '',
-        _id: '',
-      };
-    },
+    clearUserData: () => initialState, // Reset state to initial state
   },
 });
 

@@ -28,7 +28,7 @@ function TextBox({
     <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full'>
       <div className='mb-2'>
         <label htmlFor={label} className='bg-white dark:bg-secondary-dark-bg text-gray-400 text-sm'>
-          {t(label)}:
+          {t(label)}
         </label>
       </div>
       <div className='border-2 border-b-[3px] border-gray-300 rounded'>
@@ -41,7 +41,7 @@ function TextBox({
             value={value}
             onChange={(e) => setValue(e.target.value)}
             disabled={disabled}
-            className='text-sm appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white p-2 leading-tight focus:outline-none'
+            className='text-sm appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white px-2 leading-tight focus:outline-none'
             pattern={pattern}
             title={title}
             required={required}

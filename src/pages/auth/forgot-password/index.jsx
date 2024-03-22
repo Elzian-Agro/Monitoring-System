@@ -51,10 +51,10 @@ function ForgotPassword({ setPage }) {
       </button>
 
       <div className='flex-1 flex items-center flex-col lg:justify-center h-full w-full'>
-        <h1 className='font-zenkaku font-black text-[#212121] dark:text-white text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
+        <h1 className='font-zenkaku font-black text-black dark:text-white text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
           {t('FORGOT PASSWORD?')}
         </h1>
-        <p className='font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10'>
+        <p className='font-zenkaku font-normal text-center text-gray-400 text-[10px] sm:text-[16px] leading-5 xxs:leading-10'>
           {t('ENTER YOUR EMAIL FOR THE VERIFICATION PROCESS')}
         </p>
 

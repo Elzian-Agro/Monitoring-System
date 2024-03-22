@@ -4,16 +4,13 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const Notification = ({ notificationData, setNotificationCount }) => {
+const Notification = ({ notificationsData, setNotificationsCount }) => {
+  const [notifications, setNotifications] = useState(notificationsData || []);
   const dispatch = useDispatch();
-  const [allNotifications, setAllNotifications] = useState(notificationData);
   const { t } = useTranslation();
   const { send } = useAxios();
-
-  const closeNotification = () => {
-    dispatch(setNotificationOpen(false));
-  };
 
   const calculateUnreadNotificationsCount = (notifications) => {
     return notifications.filter((notification) => !notification.readFlag).length;
@@ -26,42 +23,42 @@ const Notification = ({ notificationData, setNotificationCount }) => {
     });
 
     // Update the local list to mark all notifications as read.
-    const updatedNotifications = allNotifications.map((notification) => ({
+    const updatedNotifications = notifications.map((notification) => ({
       ...notification,
       readFlag: true,
     }));
-    setAllNotifications(updatedNotifications);
+
+    setNotifications(updatedNotifications);
 
     // Set Notification Count
-    setNotificationCount(0);
+    setNotificationsCount(0);
   };
 
   const deleteNotification = async (index) => {
-    // Delete from the database
     await send({
       endpoint: 'notification',
       method: 'DELETE',
       body: {
-        notificationId: allNotifications[index]._id,
+        notificationId: notifications[index]._id,
       },
     });
 
     // Remove from the local list.
-    const updatedNotifications = allNotifications.filter((_, i) => i !== index);
-    setAllNotifications(updatedNotifications);
+    const updatedNotifications = notifications.filter((_, i) => i !== index);
+    setNotifications(updatedNotifications);
 
     // Count the number of objects where readFlag is true from the updatedNotifications
-    setNotificationCount(calculateUnreadNotificationsCount(updatedNotifications));
+    setNotificationsCount(calculateUnreadNotificationsCount(updatedNotifications));
   };
 
   const readNotification = async (index) => {
-    const notificationId = allNotifications[index]._id;
+    const notificationId = notifications[index]._id;
 
     // Change the flage to true on local list.
     // Deep cloning because the spread operator's shallow copy may not work as expected with nested objects.
-    const updatedNotifications = JSON.parse(JSON.stringify(allNotifications));
+    const updatedNotifications = JSON.parse(JSON.stringify(notifications));
     updatedNotifications[index].readFlag = true;
-    setAllNotifications(updatedNotifications);
+    setNotifications(updatedNotifications);
 
     //Change the flage to true on database
     await send({
@@ -73,7 +70,11 @@ const Notification = ({ notificationData, setNotificationCount }) => {
     });
 
     // Count the number of objects where readFlag is true from the updatedNotifications
-    setNotificationCount(calculateUnreadNotificationsCount(updatedNotifications));
+    setNotificationsCount(calculateUnreadNotificationsCount(updatedNotifications));
+  };
+
+  const closeNotification = () => {
+    dispatch(setNotificationOpen(false));
   };
 
   return (
@@ -93,7 +94,7 @@ const Notification = ({ notificationData, setNotificationCount }) => {
       </div>
 
       <div className='Notifications mt-4'>
-        {allNotifications.map((eachNotification, index) => (
+        {notifications.map((eachNotification, index) => (
           <div className='Each-Notifications mb-4' key={eachNotification._id}>
             <div
               className={`${
@@ -122,6 +123,11 @@ const Notification = ({ notificationData, setNotificationCount }) => {
       </div>
     </div>
   );
+};
+
+Notification.propTypes = {
+  notificationsData: PropTypes.array.isRequired,
+  setNotificationsCount: PropTypes.func.isRequired,
 };
 
 export default Notification;

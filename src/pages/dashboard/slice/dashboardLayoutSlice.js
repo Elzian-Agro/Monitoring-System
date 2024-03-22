@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  activeMenu: 'open',
+  activeMenu: window.innerWidth < 640 ? 'close' : 'open',
   isProfileOpen: false,
   isNotificationOpen: false,
   theme: '',

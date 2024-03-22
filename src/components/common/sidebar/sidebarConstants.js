@@ -4,6 +4,8 @@ import {
   UserCircleIcon,
   CloudIcon,
   DevicePhoneMobileIcon,
+  ChartBarIcon,
+  LightBulbIcon,
 } from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
 
@@ -17,6 +19,11 @@ const SidebarLinks = ({ t }) => {
       icon: Squares2X2Icon,
     },
     {
+      to: '/agro',
+      text: t('Agro Eye'),
+      icon: ChartBarIcon,
+    },
+    {
       to: '/weather',
       text: t('Weather'),
       icon: CloudIcon,
@@ -26,18 +33,6 @@ const SidebarLinks = ({ t }) => {
       text: t('Manage Devices'),
       icon: DevicePhoneMobileIcon,
     },
-  ];
-
-  if (userType === 'admin') {
-    sidebarLinks.push({
-      to: '/users',
-      text: t('Manage Users'),
-      icon: UsersIcon,
-    });
-  }
-
-  // Add the '/profile' link to the end of the array
-  sidebarLinks.push(
     {
       to: '/profile',
       text: t('My Profile'),
@@ -45,10 +40,18 @@ const SidebarLinks = ({ t }) => {
     },
     {
       to: '/about',
-      text: t('About'),
-      icon: DevicePhoneMobileIcon,
-    }
-  );
+      text: t('About Us'),
+      icon: LightBulbIcon,
+    },
+  ];
+
+  if (userType === 'admin') {
+    sidebarLinks.splice(3, 0, {
+      to: '/users',
+      text: t('Manage Users'),
+      icon: UsersIcon,
+    });
+  }
 
   return sidebarLinks;
 };

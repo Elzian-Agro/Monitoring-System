@@ -1,21 +1,20 @@
 import './index.css';
-
 import Navbar from 'components/common/navbar';
 import Sidebar from 'components/common/sidebar';
-
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectActiveMenu, selectTheme } from './slice/dashboardLayoutSlice';
-import GetUserData from 'pages/utils/GetUserData';
+import { useEffect } from 'react';
+import { setUserData } from 'pages/dashboard/slice/userSlice';
 import useAxios from 'hooks/useAxios';
-import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Loader from './components/common/loader';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
     case 'open':
-      return 'w-56 md:w-60 fixed';
+      return 'w-60';
     case 'onlyIcon':
-      return 'w-30';
+      return 'w-20';
     default:
       return 'w-0';
   }
@@ -24,11 +23,11 @@ const getSidebarWidth = (activeMenu) => {
 const getMainContentMargin = (activeMenu) => {
   switch (activeMenu) {
     case 'open':
-      return 'ml-56 md:ml-60';
+      return 'sm:ml-60';
     case 'onlyIcon':
-      return 'md:ml-2';
+      return 'sm:ml-20';
     default:
-      return 'flex-2';
+      return 'sm:ml-0';
   }
 };
 
@@ -36,47 +35,45 @@ const Dashboard = ({ page }) => {
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
-  const currentMode = useSelector(selectTheme);
-  const { send } = useAxios();
-  const userId = useSelector((state) => state.user._id);
-  const [response, setresponse] = useState(null);
-  const [loading, setloading] = useState(true);
+  const currentTheme = useSelector(selectTheme);
+  const dispatch = useDispatch();
+  const { loading, send } = useAxios();
 
-  // Get UserData for the user and save it inside the reduxtoolkit.
-  GetUserData();
+  const fetchUserData = async () => {
+    const userData = await send({ endpoint: 'user/profile', method: 'GET' });
+    dispatch(setUserData(userData));
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
-      setresponse(res?.result);
-      setloading(false);
-    };
-    if (userId) {
-      fetchData();
-    }
+    fetchUserData();
     // eslint-disable-next-line
-  }, [userId]);
+  }, []);
 
-  if (loading) {
-    return <Loader />;
-  }
+  useEffect(() => {
+    if (currentTheme === 'Dark') {
+      document.body.style.backgroundColor = '#20232A';
+    } else {
+      document.body.style.backgroundColor = '#FAFBFB';
+    }
+  }, [currentTheme]);
 
   return (
-    <div className={currentMode === 'Dark' ? 'dark' : ''}>
-      <div className='flex relative dark:bg-main-dark-bg bg-gray-100'>
-        <div className={`${sidebarWidth} z-20 md:z-0 dark:bg-secondary-dark-bg shadow-2xl dark:shadow-none bg-white`}>
-          <Sidebar />
+    <div className={currentTheme === 'Dark' ? 'dark' : ''}>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div>
+          <Navbar mainContentMargin={mainContentMargin} />
+          <div className={`${mainContentMargin} mt-16`}>{page}</div>
+          <Sidebar sidebarWidth={sidebarWidth} />
         </div>
-
-        <div className={`${mainContentMargin} dark:bg-main-dark-bg bg-main-bg min-h-screen w-full`}>
-          <div className='z-10 bg-main-bg dark:bg-main-dark-bg w-full'>
-            <Navbar notificationData={response} />
-            {page}
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
+};
+
+Dashboard.propTypes = {
+  page: PropTypes.element.isRequired,
 };
 
 export default Dashboard;

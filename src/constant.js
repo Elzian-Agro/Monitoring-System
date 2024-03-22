@@ -1,8 +1,12 @@
 export const authRegex = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])(?!.*\s)[A-Za-z\d\W_]{8,}$/,
-  nicNumber: /^(\d{9}[vV]|\d{12})$/,
-  phoneNumber: /^0?\d{9}$/,
+};
+
+export const patterns = {
+  email: '^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$',
+  nicNum: '^(\\d{9}[vV]|\\d{12})$',
+  phoneNum: '^(0\\d{9}|[1-9]\\d{8})$',
 };
 
 export const characterSets = {
@@ -74,9 +78,44 @@ export const errorType = {
     message: 'No records found',
   },
 
+  notificationNotFound: {
+    code: 13016,
+    message: 'Notification is not found',
+  },
+
+  notificationDeletedFailure: {
+    code: 13017,
+    message: 'Notification is deleted failure. Please try again!',
+  },
+
   accessDenied: {
     code: 13019,
     message: 'Access denied',
+  },
+
+  fileNotUploaded: {
+    code: 13020,
+    message: 'No file uploaded. Please try again!',
+  },
+
+  userDisabled: {
+    code: 13021,
+    message: 'The account has been disabled',
+  },
+
+  deviceNotFound: {
+    code: 13023,
+    message: 'Device not found',
+  },
+
+  deviceCreatedFailure: {
+    code: 13024,
+    message: 'Device is already exist!',
+  },
+
+  userDoesNotExistOrIsDisabled: {
+    code: 13025,
+    message: 'User does not exist or is disabled',
   },
 };
 
@@ -90,8 +129,17 @@ export const customTableStyles = {
   },
   headRow: {
     style: {
-      backgroundColor: '#494d4a',
+      backgroundColor: '#414345',
       color: '#ffffff',
+    },
+  },
+  headCells: {
+    style: {
+      '&:last-child': {
+        display: 'flex',
+        justifyContent: 'center',
+        minWidth: '300px',
+      },
     },
   },
   rows: {
@@ -101,8 +149,8 @@ export const customTableStyles = {
   },
   cells: {
     style: {
-      '&:first-child': {
-        borderLeft: '1px solid #e3e5e8',
+      '&:last-child': {
+        minWidth: '300px',
       },
     },
   },

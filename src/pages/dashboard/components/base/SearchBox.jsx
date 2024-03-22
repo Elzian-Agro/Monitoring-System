@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 function SearchBox({ value, onChange, onClick }) {
   return (
-    <div className='flex items-center md:justify-center'>
+    <div className='flex items-center'>
       <div className='flex rounded-lg border border-gray-400'>
         <div className='flex w-10 items-center justify-center rounded-tl-lg rounded-bl-lg border-r border-gray-400 bg-white dark:bg-secondary-dark-bg'>
           <MagnifyingGlassIcon className='text-gray-400 h-6 w-6' />

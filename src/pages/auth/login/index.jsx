@@ -18,8 +18,6 @@ function Login({ setPage }) {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  const baseURL = process.env.REACT_APP_BASE_URL;
   const { t } = useTranslation();
 
   // Retrieve remembered credentials from localStorage
@@ -60,8 +58,8 @@ function Login({ setPage }) {
     }
 
     axios
-      .post(`${baseURL}/auth/login`, { token })
-      .then((response) => {
+      .post(`${process.env.REACT_APP_BASE_URL}/auth/login`, { token })
+      .then(async (response) => {
         // Save the tokens in localStorage
         localStorage.setItem('jwtAccessToken', response.data.accessToken);
         localStorage.setItem('jwtRefreshToken', response.data.refreshToken);
@@ -87,10 +85,10 @@ function Login({ setPage }) {
 
   return (
     <div className='flex-1 flex items-center flex-col lg:justify-center h-full w-full gap-2 xxs:gap-0'>
-      <h1 className='font-zenkaku font-black text-[#212121] dark:text-white text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
+      <h1 className='font-zenkaku font-black text-black dark:text-white text-[18px] sm:text-[26px] leading-5 sm:leading-10'>
         {t('LOG IN')}
       </h1>
-      <p className='font-zenkaku font-normal text-center text-[#999] text-[10px] sm:text-[16px] leading-5 xxs:leading-10'>
+      <p className='font-zenkaku font-normal text-center text-gray-400 text-[10px] sm:text-[16px] leading-5 xxs:leading-10'>
         {t('LOG IN TO YOUR DASHBOARD')}
       </p>
 

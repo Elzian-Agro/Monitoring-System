@@ -32,6 +32,12 @@ const ManageUsers = () => {
       name: t('FIRST NAME'),
       selector: (row) => row.firstName,
       sortable: true,
+      cell: (row) => (
+        <div className='flex flex-row gap-2 items-center'>
+          <div className={`${row.isDisabled ? 'bg-red-500' : 'bg-green-500'} rounded-full h-3 w-3`}></div>
+          {row.firstName}
+        </div>
+      ),
     },
     {
       name: t('LAST NAME'),
@@ -61,19 +67,15 @@ const ManageUsers = () => {
     {
       name: t('ACTION'),
       cell: (row) => (
-        <PrimaryButton
-          color='bg-blue-500 border-blue-600'
-          text='Edit'
-          onClick={() => {
-            setSelectedUser(row);
-            setIsFormVisible(true);
-          }}
-        />
-      ),
-    },
-    {
-      cell: (row) => (
-        <div className='flex flex-row gap-2 items-center'>
+        <div className='flex flex-row justify-center gap-2 items-center w-full'>
+          <PrimaryButton
+            color='bg-blue-500 border-blue-600'
+            text='Edit'
+            onClick={() => {
+              setSelectedUser(row);
+              setIsFormVisible(true);
+            }}
+          />
           <PrimaryButton
             color='bg-red-500 border-red-600'
             text='Delete'
@@ -82,7 +84,6 @@ const ManageUsers = () => {
               setIsConfirmVisible(true);
             }}
           />
-          {row.isDisabled && <div className='bg-green-500 rounded-full h-3 w-3'></div>}
         </div>
       ),
     },
@@ -99,7 +100,7 @@ const ManageUsers = () => {
   }, []);
 
   // Function to filter the user based on the search text
-  const filteredUsers = useMemo(() => {
+  const filterUsers = useMemo(() => {
     if (!users) {
       return [];
     }
@@ -141,8 +142,8 @@ const ManageUsers = () => {
   };
 
   return (
-    <div className='mx-5 mt-2'>
-      {isFormVisible ? (
+    <div className='mx-5 mt-2 min-h-screen'>
+      {isFormVisible && (
         <Form
           onClose={() => {
             setIsFormVisible(false);
@@ -156,52 +157,48 @@ const ManageUsers = () => {
             getUsers();
           }}
         />
-      ) : (
-        <>
-          {loading ? (
-            <Loader />
-          ) : (
-            <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
-              <div className='flex flex-col md:flex-row mb-4 md:items-center md:justify-between'>
-                <div className='flex gap-2 mb-2 md:mb-0'>
-                  <VariantButton
-                    text='Add User'
-                    Icon={PlusIcon}
-                    onClick={() => {
-                      setIsFormVisible(true);
-                      setSelectedUser(null);
-                    }}
-                  />
-                  {filteredUsers.length > 0 && (
-                    <VariantButton
-                      text='Download'
-                      Icon={ArrowDownTrayIcon}
-                      onClick={() => downloadCSV(filteredUsers)}
-                    />
-                  )}
-                </div>
-                <SearchBox
-                  value={filterText}
-                  onChange={(e) => setFilterText(e.target.value)}
-                  onClick={() => {
-                    setFilterText('');
-                  }}
+      )}
+
+      {loading && <Loader />}
+
+      {!isFormVisible && !loading && (
+        <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
+          <div className='flex flex-col lg:flex-row mb-4 lg:items-center lg:justify-between'>
+            <div className='flex gap-2 mb-2 lg:mb-0'>
+              <VariantButton
+                text='Add User'
+                Icon={PlusIcon}
+                onClick={() => {
+                  setIsFormVisible(true);
+                  setSelectedUser(null);
+                }}
+              />
+              {filterUsers.length > 0 && (
+                <VariantButton
+                  text='Download'
+                  Icon={ArrowDownTrayIcon}
+                  onClick={() => downloadCSV(filterUsers, 'users.csv')}
                 />
-              </div>
-              <div className='rounded-t-lg'>
-                <DataTable
-                  columns={columns}
-                  data={filteredUsers}
-                  customStyles={currentMode === 'Dark' ? {} : customTableStyles}
-                  theme={currentMode === 'Dark' ? 'dark' : 'default'}
-                  pagination
-                  fixedHeader
-                  fixedHeaderScrollHeight='65vh'
-                />
-              </div>
+              )}
             </div>
-          )}
-        </>
+            <SearchBox
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+              onClick={() => {
+                setFilterText('');
+              }}
+            />
+          </div>
+          <div className='rounded-t-lg'>
+            <DataTable
+              columns={columns}
+              data={filterUsers}
+              customStyles={customTableStyles}
+              theme={currentMode === 'Dark' ? 'dark' : 'default'}
+              pagination
+            />
+          </div>
+        </div>
       )}
       <Modal
         isOpen={isConfirmVisible}
