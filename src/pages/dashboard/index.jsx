@@ -26,9 +26,9 @@ const getMainContentMargin = (activeMenu) => {
     case 'open':
       return 'sm:ml-60';
     case 'onlyIcon':
-      return 'sm:ml-20';
+      return 'ml-20';
     default:
-      return 'sm:ml-0';
+      return 'ml-0';
   }
 };
 
