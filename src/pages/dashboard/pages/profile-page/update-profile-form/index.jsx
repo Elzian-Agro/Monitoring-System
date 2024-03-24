@@ -13,7 +13,8 @@ import {
 } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
-import { useDispatch } from 'react-redux';
+import { setNotificationCount, selectNotificationCount } from 'pages/dashboard/slice/dashboardLayoutSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUserData } from 'pages/dashboard/slice/userSlice';
 import Modal from 'components/common/modal';
@@ -31,6 +32,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
   const [photoEditMode, setPhotoEditMode] = useState(false);
   const [isResetConfirmVisible, setIsResetConfirmVisible] = useState(false);
   const [localProfilePicture, setLocalProfilePicture] = useState('');
+  const notificationCount = useSelector(selectNotificationCount);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -71,6 +73,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
 
     if (response) {
       formSubmission('User details updated successfully');
+      dispatch(setNotificationCount(notificationCount + 1));
       onClose();
     }
   };

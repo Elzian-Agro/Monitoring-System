@@ -1,17 +1,16 @@
 import { XCircleIcon, EyeIcon, EyeSlashIcon, BellSlashIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { setNotificationOpen } from 'pages/dashboard/slice/dashboardLayoutSlice';
+import { setNotificationOpen, setNotificationCount } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import useNotification from 'hooks/useNotification';
 import ClickOutsideHandler from 'pages/utils/ClickOutsideHandler';
 
-const Notification = ({ notificationsData, setNotificationsCount }) => {
-  const [notifications, setNotifications] = useState(notificationsData || []);
+const Notification = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { send } = useAxios();
+  const { notifications, setNotifications } = useNotification();
 
   const calculateUnreadNotificationsCount = (notifications) => {
     return notifications.filter((notification) => !notification.readFlag).length;
@@ -32,7 +31,7 @@ const Notification = ({ notificationsData, setNotificationsCount }) => {
     setNotifications(updatedNotifications);
 
     // Set Notification Count
-    setNotificationsCount(0);
+    dispatch(setNotificationCount(0));
   };
 
   const deleteNotification = async (index) => {
@@ -49,7 +48,7 @@ const Notification = ({ notificationsData, setNotificationsCount }) => {
     setNotifications(updatedNotifications);
 
     // Count the number of objects where readFlag is true from the updatedNotifications
-    setNotificationsCount(calculateUnreadNotificationsCount(updatedNotifications));
+    dispatch(setNotificationCount(calculateUnreadNotificationsCount(updatedNotifications)));
   };
 
   const readNotification = async (index) => {
@@ -71,7 +70,7 @@ const Notification = ({ notificationsData, setNotificationsCount }) => {
     });
 
     // Count the number of objects where readFlag is true from the updatedNotifications
-    setNotificationsCount(calculateUnreadNotificationsCount(updatedNotifications));
+    dispatch(setNotificationCount(calculateUnreadNotificationsCount(updatedNotifications)));
   };
 
   const closeNotification = () => {
@@ -130,11 +129,6 @@ const Notification = ({ notificationsData, setNotificationsCount }) => {
       )}
     </ClickOutsideHandler>
   );
-};
-
-Notification.propTypes = {
-  notificationsData: PropTypes.array.isRequired,
-  setNotificationsCount: PropTypes.func.isRequired,
 };
 
 export default Notification;

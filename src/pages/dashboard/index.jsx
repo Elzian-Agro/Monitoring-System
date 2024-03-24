@@ -8,6 +8,7 @@ import { setUserData } from 'pages/dashboard/slice/userSlice';
 import useAxios from 'hooks/useAxios';
 import PropTypes from 'prop-types';
 import Loader from './components/common/loader';
+import useNotification from 'hooks/useNotification';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -25,9 +26,9 @@ const getMainContentMargin = (activeMenu) => {
     case 'open':
       return 'sm:ml-60';
     case 'onlyIcon':
-      return 'sm:ml-20';
+      return 'ml-20';
     default:
-      return 'sm:ml-0';
+      return 'ml-0';
   }
 };
 
@@ -38,6 +39,7 @@ const Dashboard = ({ page }) => {
   const currentTheme = useSelector(selectTheme);
   const dispatch = useDispatch();
   const { loading, send } = useAxios();
+  useNotification();
 
   const fetchUserData = async () => {
     const userData = await send({ endpoint: 'user/profile', method: 'GET' });
