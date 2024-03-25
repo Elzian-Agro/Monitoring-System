@@ -12,15 +12,28 @@ import Loader from '../../components/common/loader';
 import { useTranslation } from 'react-i18next';
 import Modal from 'components/common/modal';
 import useAxios from 'hooks/useAxios';
+import useFetch from 'hooks/useFetch';
 
 const ManageUsers = () => {
-  const [users, setUsers] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [message, setMessage] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const {
+    respond: users,
+    error,
+    loader,
+    recall,
+    setBody,
+  } = useFetch({
+    endpoint: 'user',
+    method: 'GET',
+    call: 1,
+    requestBody: {},
+    dependency: [],
+  });
 
   const currentMode = useSelector(selectTheme);
   const { t } = useTranslation();
@@ -89,16 +102,6 @@ const ManageUsers = () => {
     },
   ];
 
-  const getUsers = async () => {
-    const response = await send({ endpoint: 'user', method: 'GET' });
-    setUsers(response);
-  };
-
-  useEffect(() => {
-    getUsers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Function to filter the user based on the search text
   const filterUsers = useMemo(() => {
     if (!users) {
@@ -135,7 +138,7 @@ const ManageUsers = () => {
       if (response) {
         setMessage('User deleted successfully');
         setIsAlertVisible(true);
-        getUsers();
+        recall();
       }
     }
     setIsConfirmVisible(false);
@@ -154,7 +157,7 @@ const ManageUsers = () => {
           formSubmission={async (message) => {
             setMessage(message);
             setIsAlertVisible(true);
-            getUsers();
+            recall();
           }}
         />
       )}
