@@ -14,6 +14,7 @@ import DashboardPage from 'pages/dashboard/pages/dashboard-page';
 import AboutUsPage from 'pages/dashboard/pages/about-page';
 import UserProfilePage from 'pages/dashboard/pages/profile-page';
 import AgroEye from 'pages/dashboard/pages/agro-eye-page';
+import Temp from 'hooks/temp';
 
 function App() {
   return (
