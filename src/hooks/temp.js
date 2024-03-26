@@ -8,14 +8,13 @@ function Temp() {
   const myFunc = () => {
     console.log('clicked');
     recall();
-    console.log(respond);
   };
 
-//   useEffect(() => {
-//     if (!loader) {
-//       console.log(respond);
-//     }
-//   }, [loader]);
+  // useEffect(() => {
+  //   if (!loader) {
+  //     console.log(respond);
+  //   }
+  // }, [loader]);
 
   //   const { response, error, loading, send } = useAxios({ endpoint: '', method: 'get' });
 
@@ -29,6 +28,7 @@ function Temp() {
       <button className='w-100' onClick={myFunc}>
         click
       </button>
+      {respond}
     </div>
   );
 }
