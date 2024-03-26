@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../../slice/dashboardLayoutSlice';
 import { PrimaryButton, VariantButton } from '../../components/base/Button';
-import { customTableStyles } from 'constant';
+import { customTableStyles } from 'utils/constant';
 import DataTable from 'react-data-table-component';
 import { downloadCSV } from '../../utils/download';
 import Form from './user-form';
@@ -21,13 +21,7 @@ const ManageUsers = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
-  const {
-    respond: users,
-    error,
-    loader,
-    recall,
-    setBody,
-  } = useFetch({
+  const { respond: users, recall } = useFetch({
     endpoint: 'user',
     method: 'GET',
     call: 1,

@@ -85,7 +85,7 @@ const UserProfile = () => {
           </div>
           <div className='mt-5'>
             <NavLink
-              to='/'
+              to='/login'
               className='flex mt-12 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm md:text-base text-black dark:text-white  hover:bg-red-500 m-2 duration-300'
               onClick={logout}>
               <ArrowUpTrayIcon className='h-6 w-6 rotate-90' />

@@ -6,7 +6,7 @@ import LoginPage from '../components/common/container';
 import axios from 'axios';
 import { store } from 'store/store';
 import { tokenise } from 'utils/rsa.encrypt';
-import { errorType } from 'constant';
+import { errorType } from 'utils/constant';
 
 jest.mock('axios');
 

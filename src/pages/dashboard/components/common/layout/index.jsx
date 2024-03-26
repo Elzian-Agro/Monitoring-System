@@ -2,13 +2,13 @@ import './index.css';
 import Navbar from 'components/common/navbar';
 import Sidebar from 'components/common/sidebar';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectActiveMenu, selectTheme } from './slice/dashboardLayoutSlice';
+import { selectActiveMenu, selectTheme } from '../../../slice/dashboardLayoutSlice';
 import { useEffect } from 'react';
 import { setUserData } from 'pages/dashboard/slice/userSlice';
 import useAxios from 'hooks/useAxios';
-import PropTypes from 'prop-types';
-import Loader from './components/common/loader';
+import Loader from '../loader';
 import useNotification from 'hooks/useNotification';
+import { Outlet } from 'react-router';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -32,7 +32,7 @@ const getMainContentMargin = (activeMenu) => {
   }
 };
 
-const Dashboard = ({ page }) => {
+const Layout = () => {
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
@@ -66,7 +66,9 @@ const Dashboard = ({ page }) => {
       ) : (
         <div>
           <Navbar mainContentMargin={mainContentMargin} />
-          <div className={`${mainContentMargin} mt-16`}>{page}</div>
+          <div className={`${mainContentMargin} mt-16`}>
+            <Outlet />
+          </div>
           <Sidebar sidebarWidth={sidebarWidth} />
         </div>
       )}
@@ -74,8 +76,4 @@ const Dashboard = ({ page }) => {
   );
 };
 
-Dashboard.propTypes = {
-  page: PropTypes.element.isRequired,
-};
-
-export default Dashboard;
+export default Layout;

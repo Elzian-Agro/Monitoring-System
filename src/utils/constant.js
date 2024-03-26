@@ -73,6 +73,11 @@ export const errorType = {
     message: 'Email address not verified',
   },
 
+  userNotLogin: {
+    code: 13012,
+    message: 'You are not logged in. Please login to access this page!',
+  },
+
   noRecords: {
     code: 13015,
     message: 'No records found',

@@ -12,7 +12,7 @@ import {
 import UserProfile from 'pages/dashboard/components/common/profile';
 import Notification from 'pages/dashboard/components/common/notification';
 import ThemeSettings from 'pages/dashboard/components/common/theme-settings';
-import { menuMode } from 'constant';
+import { menuMode } from 'utils/constant';
 import avatar from 'assets/images/avatar.png';
 import LanguageSelector from '../language-selector';
 import PropTypes from 'prop-types';

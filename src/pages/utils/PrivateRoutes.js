@@ -24,7 +24,7 @@ const PrivateRoutes = () => {
     if (isAuthenticated) {
       return <Outlet />;
     } else {
-      return <Navigate to='/' />;
+      return <Navigate to='/login' />;
     }
   }
 };

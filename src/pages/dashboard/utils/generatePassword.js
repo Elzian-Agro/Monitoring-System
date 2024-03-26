@@ -1,4 +1,4 @@
-import { characterSets } from 'constant';
+import { characterSets } from 'utils/constant';
 
 export const generatePassword = (length = 12) => {
   const { lowercaseLetters, uppercaseLetters, numbers, symbols } = characterSets;

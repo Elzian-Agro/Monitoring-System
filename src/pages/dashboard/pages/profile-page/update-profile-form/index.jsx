@@ -20,7 +20,7 @@ import { setUserData } from 'pages/dashboard/slice/userSlice';
 import Modal from 'components/common/modal';
 import avatar from 'assets/images/avatar.png';
 import Loader from '../../../components/common/loader';
-import { patterns } from 'constant';
+import { patterns } from 'utils/constant';
 
 const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) => {
   const [userBio, setUserBio] = useState('');
@@ -45,9 +45,9 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       setUserBio(user.userBio);
       setPhoneNum(user.phoneNum);
       setAddress(user.address);
-      setFacebook(user.socialMedia?.facebook);
-      setLinkedIn(user.socialMedia?.linkedIn);
-      setYoutube(user.socialMedia?.youtube);
+      setFacebook(user.socialMedia?.facebook || '');
+      setLinkedIn(user.socialMedia?.linkedIn || '');
+      setYoutube(user.socialMedia?.youtube || '');
     }
   }, [user]);
 

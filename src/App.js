@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from 'pages/auth/components/common/container';
-import Dashboard from 'pages/dashboard';
+import Layout from 'pages/dashboard/components/common/layout';
 import NotFoundPage from 'pages/404';
 import ManageUsers from 'pages/dashboard/pages/users-page';
 import PrivateRoutes from 'pages/utils/PrivateRoutes';
@@ -20,21 +20,24 @@ function App() {
     <>
       <Router>
         <Routes>
+          <Route path='/login' element={<LoginPage />} />
+
+          {/* Below is the only route with Protected. */}
           <Route element={<PrivateRoutes />}>
-            <Route path='/dashboard' element={<Dashboard page={<DashboardPage />} />} />
-            <Route path='/weather' element={<Dashboard page={<Weather />} />} />
-            <Route path='/devices' element={<Dashboard page={<DeviceManagement />} />} />
-            <Route path='/users' element={<Dashboard page={<ManageUsers />} />} />
-            <Route path='/agro' element={<Dashboard page={<AgroEye />} />} />
-            <Route path='/profile' element={<Dashboard page={<UserProfilePage />} />} />
-            <Route path='/about' element={<Dashboard page={<AboutUsPage />} />} />
-            <Route path='/reset' element={<Dashboard page={<ResetForm />} />} />
+            <Route path='/' element={<Layout />}>
+              <Route path='/' element={<DashboardPage />} />
+              <Route path='/dashboard' element={<DashboardPage />} />
+              <Route path='/weather' element={<Weather />} />
+              <Route path='/devices' element={<DeviceManagement />} />
+              <Route path='/users' element={<ManageUsers />} />
+              <Route path='/agro' element={<AgroEye />} />
+              <Route path='/profile' element={<UserProfilePage />} />
+              <Route path='/about' element={<AboutUsPage />} />
+              <Route path='/reset' element={<ResetForm />} />
 
-            <Route path='*' element={<NotFoundPage />} />
+              <Route path='*' element={<NotFoundPage />} />
+            </Route>
           </Route>
-
-          {/* Below is the only route without Protected. */}
-          <Route path='/' element={<LoginPage />} />
         </Routes>
       </Router>
 

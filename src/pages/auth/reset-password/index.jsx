@@ -16,7 +16,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateEmail } from '../slice/emailSlice';
 import Redirect from 'pages/auth/components/base/Redirect';
 import { useTranslation } from 'react-i18next';
-import { errorType } from 'constant';
+import { errorType } from 'utils/constant';
 import { tokenise } from 'utils/rsa.encrypt';
 
 function ResetPassword({ setPage, showGoBackBtn = true }) {
