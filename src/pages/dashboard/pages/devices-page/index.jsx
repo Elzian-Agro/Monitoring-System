@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../../slice/dashboardLayoutSlice';
 import { PrimaryButton, VariantButton } from '../../components/base/Button';
@@ -12,9 +12,9 @@ import Loader from '../../components/common/loader';
 import { useTranslation } from 'react-i18next';
 import Modal from 'components/common/modal';
 import useAxios from 'hooks/useAxios';
+import useFetch from 'hooks/useFetch';
 
 const DeviceManagement = () => {
-  const [devices, setDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [filterText, setFilterText] = useState('');
   const [message, setMessage] = useState(null);
@@ -27,17 +27,18 @@ const DeviceManagement = () => {
   const currentMode = useSelector(selectTheme);
   const { t } = useTranslation();
   const { loading, send } = useAxios();
-
-  const getDevices = async () => {
-    const response = await send({ endpoint: 'device', method: 'GET' });
-    setDevices(response?.result);
-  };
-
-  useEffect(() => {
-    getDevices();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  const {
+    respond: devices,
+    loader,
+    recall,
+  } = useFetch({
+    endpoint: 'device',
+    method: 'GET',
+    call: 1,
+    requestBody: {},
+    dependency: [],
+  });
+  
   // Define columns array
   let columns = [
     {
@@ -109,10 +110,10 @@ const DeviceManagement = () => {
 
   // Function to filter the user based on the search text
   const filterDevices = useMemo(() => {
-    if (!devices) {
+    if (!devices?.result) {
       return [];
     }
-    return devices.filter((device) => {
+    return devices.result.filter((device) => {
       const deviceId = device.deviceId?.toLowerCase() || '';
       const firstName = (device.userId?.firstName || '').toLowerCase();
       const lastName = (device.userId?.lastName || '').toLowerCase();
@@ -155,7 +156,7 @@ const DeviceManagement = () => {
     if (response) {
       setMessage(successMessage);
       setIsAlertVisible(true);
-      getDevices();
+      recall();
     }
   };
 
@@ -172,14 +173,14 @@ const DeviceManagement = () => {
           formSubmission={async (message) => {
             setMessage(message);
             setIsAlertVisible(true);
-            getDevices();
+            recall();
           }}
         />
       )}
 
-      {loading && <Loader />}
+      {(loader || loading) && <Loader />}
 
-      {!devices && (
+      {!devices && !loader && !loading && (
         <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-lg p-8'>
           <p className='text-sm dark:text-white justify-center'>
             There are no devices allocated. Please contact{' '}
@@ -190,7 +191,7 @@ const DeviceManagement = () => {
         </div>
       )}
 
-      {!isFormVisible && !loading && devices && (
+      {!isFormVisible && !loading && !loader && devices && (
         <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
           <div className='flex flex-col lg:flex-row mb-4 lg:items-center lg:justify-between'>
             <div className='flex gap-2 mb-2 lg:mb-0'>

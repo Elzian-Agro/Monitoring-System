@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectActiveMenu, selectTheme } from '../../../slice/dashboardLayoutSlice';
 import { useEffect } from 'react';
 import { setUserData } from 'pages/dashboard/slice/userSlice';
-import useAxios from 'hooks/useAxios';
 import Loader from '../loader';
 import useNotification from 'hooks/useNotification';
 import { Outlet } from 'react-router';
+import useFetch from 'hooks/useFetch';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -38,18 +38,20 @@ const Layout = () => {
   const mainContentMargin = getMainContentMargin(activeMenu);
   const currentTheme = useSelector(selectTheme);
   const dispatch = useDispatch();
-  const { loading, send } = useAxios();
+  const { respond: userData, loader } = useFetch({
+    endpoint: 'user/profile',
+    method: 'GET',
+    call: 1,
+    requestBody: {},
+    dependency: [],
+  });
+
   useNotification();
 
-  const fetchUserData = async () => {
-    const userData = await send({ endpoint: 'user/profile', method: 'GET' });
-    dispatch(setUserData(userData));
-  };
-
   useEffect(() => {
-    fetchUserData();
+    dispatch(setUserData(userData));
     // eslint-disable-next-line
-  }, []);
+  }, [userData]);
 
   useEffect(() => {
     if (currentTheme === 'Dark') {
@@ -61,7 +63,7 @@ const Layout = () => {
 
   return (
     <div className={currentTheme === 'Dark' ? 'dark' : ''}>
-      {loading ? (
+      {loader ? (
         <Loader />
       ) : (
         <div>
