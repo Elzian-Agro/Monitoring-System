@@ -33,6 +33,12 @@ jest.mock('hooks/useAxios', () => () => ({
   send: jest.fn().mockResolvedValue(mockUserData),
 }));
 
+jest.mock('hooks/useFetch', () => () => ({
+  loader: false,
+  respond: mockUserData,
+  recall: jest.fn().mockReturnValue(null),
+}));
+
 // Mock react-i18next
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
