@@ -14,7 +14,6 @@ import DashboardPage from 'pages/dashboard/pages/dashboard-page';
 import AboutUsPage from 'pages/dashboard/pages/about-page';
 import UserProfilePage from 'pages/dashboard/pages/profile-page';
 import AgroEye from 'pages/dashboard/pages/agro-eye-page';
-import Temp from 'hooks/temp';
 
 function App() {
   return (
@@ -24,8 +23,8 @@ function App() {
           <Route path='/login' element={<LoginPage />} />
 
           {/* Below is the only route with Protected. */}
-          <Route element={<PrivateRoutes />}>
-            <Route path='/' element={<Layout />}>
+          <Route element={<PrivateRoutes />} errorElement={<NotFoundPage />}>
+            <Route path='/' element={<Layout />} errorElement={<NotFoundPage />}>
               <Route path='/' element={<DashboardPage />} />
               <Route path='/dashboard' element={<DashboardPage />} />
               <Route path='/weather' element={<Weather />} />

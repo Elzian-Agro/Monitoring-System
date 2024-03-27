@@ -11,7 +11,7 @@ const useAxios = ({ endpoint, method, call = 0, requestBody = {}, dependency = [
   const [token, setToken] = useState(localStorage.getItem('jwtAccessToken'));
   const [respond, setResponse] = useState(null);
   const [error, setError] = useState(null); //if already handled you don't need to retun
-  const [loader, setLoading] = useState(false);
+  const [loader, setLoading] = useState(true);  // TODO: use name as isLoading
   const [attempt, setAttempt] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -80,6 +80,7 @@ const useAxios = ({ endpoint, method, call = 0, requestBody = {}, dependency = [
     if (trigger > 0) {
       f_call();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...dependency, token, trigger]);
 
   return { respond, error, loader, recall, setBody };

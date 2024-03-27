@@ -21,7 +21,11 @@ const ManageUsers = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
-  const { respond: users, recall } = useFetch({
+  const {
+    respond: users,
+    recall,
+    loader,
+  } = useFetch({
     endpoint: 'user',
     method: 'GET',
     call: 1,
@@ -31,7 +35,7 @@ const ManageUsers = () => {
 
   const currentMode = useSelector(selectTheme);
   const { t } = useTranslation();
-  const { loading, send } = useAxios();
+  const { send } = useAxios();
 
   // User table columns define
   const columns = [
@@ -156,9 +160,9 @@ const ManageUsers = () => {
         />
       )}
 
-      {loading && <Loader />}
+      {loader && <Loader />}
 
-      {!isFormVisible && !loading && (
+      {!isFormVisible && !loader && (
         <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
           <div className='flex flex-col lg:flex-row mb-4 lg:items-center lg:justify-between'>
             <div className='flex gap-2 mb-2 lg:mb-0'>

@@ -1,6 +1,7 @@
 import { Outlet, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import useAxios from 'hooks/useAxios';
+import Loader from 'pages/dashboard/components/common/loader';
 
 const PrivateRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -19,7 +20,7 @@ const PrivateRoutes = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   } else {
     if (isAuthenticated) {
       return <Outlet />;

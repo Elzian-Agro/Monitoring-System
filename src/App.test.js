@@ -20,6 +20,6 @@ test('renders auth page by default', () => {
       <App />
     </Provider>
   );
-  const linkElement = screen.getByText('Loading...');
+  const linkElement = screen.getByAltText('Logo');
   expect(linkElement).toBeInTheDocument();
 });
