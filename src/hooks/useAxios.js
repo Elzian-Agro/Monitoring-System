@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 const useAxios = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // TODO: use name as isLoading
+  const [loading, setLoading] = useState(false); // TODO: use name as isLoading
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [attempt, setAttempt] = useState(0);
