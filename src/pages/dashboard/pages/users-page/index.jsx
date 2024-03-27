@@ -35,9 +35,9 @@ const ManageUsers = () => {
 
   const currentMode = useSelector(selectTheme);
   const { t } = useTranslation();
-  const { send } = useAxios();
+  const { send, loading } = useAxios();
 
-  // User table columns define
+  // User table columns definea
   const columns = [
     {
       name: t('FIRST NAME'),
