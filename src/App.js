@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from 'pages/auth/components/common/container';
 import Layout from 'pages/dashboard/components/common/layout';
-import NotFoundPage from 'pages/404';
+import NotFoundPage from 'pages/dashboard/components/common/404';
 import ManageUsers from 'pages/dashboard/pages/users-page';
 import PrivateRoutes from 'pages/utils/PrivateRoutes';
 import Weather from 'pages/dashboard/pages/weather-page';
