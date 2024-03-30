@@ -38,7 +38,7 @@ const DeviceManagement = () => {
     requestBody: {},
     dependency: [],
   });
-  
+
   // Define columns array
   let columns = [
     {
@@ -51,11 +51,6 @@ const DeviceManagement = () => {
           {row.deviceId}
         </div>
       ),
-    },
-    {
-      name: t('USER NAME'),
-      selector: (row) => (row.userId ? `${row.userId.firstName || ''} ${row.userId.lastName || ''}` : 'Not Allocated'),
-      sortable: true,
     },
     {
       name: t('DEVICE TYPE'),
@@ -71,6 +66,12 @@ const DeviceManagement = () => {
 
   // Conditionally add 'ACTION' columns if user is admin
   if (userType === 'admin') {
+    columns.push({
+      name: t('USER NAME'),
+      selector: (row) => (row.userId ? `${row.userId.firstName || ''} ${row.userId.lastName || ''}` : 'Not Allocated'),
+      sortable: true,
+    });
+
     columns.push({
       name: t('ACTION'),
       cell: (row) => (
