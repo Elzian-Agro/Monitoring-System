@@ -4,14 +4,20 @@ import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import From from './agro-eye-form';
 import Chart from './chart';
 import Loader from '../../components/common/loader';
+import Modal from 'components/common/modal';
 import useFetch from 'hooks/useFetch';
+import useAxios from 'hooks/useAxios';
 import { useTranslation } from 'react-i18next';
 
 const AgroEye = () => {
+  const [message, setMessage] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [selectedWidget, setSelectedWidget] = useState(null);
 
   const { t } = useTranslation();
+  const { send } = useAxios();
   const {
     respond: widgets,
     recall,
@@ -24,6 +30,24 @@ const AgroEye = () => {
     dependency: [],
   });
 
+  // Handle confiation and delete
+  const handleConfirmationAndDelete = async (result) => {
+    if (result) {
+      const response = await send({
+        endpoint: `widget/delete/${selectedWidget._id}`,
+        method: 'PUT',
+        body: { isDeleted: true },
+      });
+      setIsConfirmVisible(false);
+      if (response) {
+        setMessage('Widget deleted successfully');
+        setIsAlertVisible(true);
+        recall();
+      }
+    }
+    setIsConfirmVisible(false);
+  };
+
   return (
     <div className='mx-5 mt-2'>
       {isFormVisible && (
@@ -33,6 +57,11 @@ const AgroEye = () => {
           onClose={() => {
             setSelectedWidget(null);
             setIsFormVisible(false);
+          }}
+          formSubmission={async (message) => {
+            setMessage(message);
+            setIsAlertVisible(true);
+            recall();
           }}
         />
       )}
@@ -64,7 +93,14 @@ const AgroEye = () => {
                           setIsFormVisible(true);
                         }}
                       />
-                      <IconButton color='text-red-600' Icon={TrashIcon} onClick={() => {}} />
+                      <IconButton
+                        color='text-red-600'
+                        Icon={TrashIcon}
+                        onClick={() => {
+                          setSelectedWidget(widget);
+                          setIsConfirmVisible(true);
+                        }}
+                      />
                     </div>
                     <Chart key={index} widget={widget} />
                   </div>
@@ -76,6 +112,20 @@ const AgroEye = () => {
           </div>
         </div>
       )}
+      <Modal
+        isOpen={isConfirmVisible}
+        message='Are you sure want to delete?'
+        onClose={(result) => handleConfirmationAndDelete(result)}
+        type='confirmation'
+      />
+      <Modal
+        isOpen={isAlertVisible}
+        message={`${message}`}
+        onClose={() => {
+          setIsAlertVisible(false);
+        }}
+        type='alert'
+      />
     </div>
   );
 };
