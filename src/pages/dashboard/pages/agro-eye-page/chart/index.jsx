@@ -15,7 +15,7 @@ const Chart = ({ widget }) => {
 
   useEffect(() => {
     setChartType(widget.chartType);
-  }, []);
+  }, [widget.chartType]);
 
   // Function to get the color based on currentMode
   const getColor = (darkColor, lightColor) => (currentMode === 'Dark' ? darkColor : lightColor);
@@ -141,7 +141,7 @@ const Chart = ({ widget }) => {
 
   return (
     <>
-      <div className='bg-white dark:bg-gray-600 rounded-md border border-gray-200 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+      <div className='bg-white dark:bg-gray-600 border-t border-gray-200 dark:border-gray-600 p-1 w-full'>
         <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
       </div>
     </>

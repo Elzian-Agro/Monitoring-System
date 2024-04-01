@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { VariantButton } from '../../components/base/Button';
-import { PlusIcon } from '@heroicons/react/24/outline';
+import { IconButton, VariantButton } from '../../components/base/Button';
+import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import From from './agro-eye-form';
 import Chart from './chart';
 import Loader from '../../components/common/loader';
@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next';
 
 const AgroEye = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [selectedWidget, setSelectedWidget] = useState(null);
+
   const { t } = useTranslation();
   const {
     respond: widgets,
@@ -26,17 +28,19 @@ const AgroEye = () => {
     <div className='mx-5 mt-2'>
       {isFormVisible && (
         <From
+          visible={isFormVisible}
+          widget={selectedWidget}
           onClose={() => {
+            setSelectedWidget(null);
             setIsFormVisible(false);
           }}
-          visible={isFormVisible}
         />
       )}
 
       {loader && <Loader />}
 
       {!isFormVisible && !loader && (
-        <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-8'>
+        <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-6'>
           <div className='flex justify-end'>
             <VariantButton
               text='Add New'
@@ -46,11 +50,24 @@ const AgroEye = () => {
               }}
             />
           </div>
-          <div className='mt-10'>
+          <div className='mt-6'>
             {widgets && widgets.length > 0 ? (
-              <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+              <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
                 {widgets.map((widget, index) => (
-                  <Chart key={index} widget={widget} />
+                  <div className='bg-white dark:bg-gray-600 rounded-md border border-gray-200 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+                    <div className='flex justify-end gap-2 mr-2 py-2'>
+                      <IconButton
+                        color='text-blue-600'
+                        Icon={PencilIcon}
+                        onClick={() => {
+                          setSelectedWidget(widget);
+                          setIsFormVisible(true);
+                        }}
+                      />
+                      <IconButton color='text-red-600' Icon={TrashIcon} onClick={() => {}} />
+                    </div>
+                    <Chart key={index} widget={widget} />
+                  </div>
                 ))}
               </div>
             ) : (

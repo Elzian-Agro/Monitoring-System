@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 const Form = ({ visible, onClose, widget = null }) => {
+  const [name, setName] = useState('');
   const { t } = useTranslation();
+
+  useEffect(() => {
+    // Set form fields for edit mode
+    console.log(widget);
+    if (widget) {
+      setName(widget.name);
+    }
+  }, [widget]);
 
   return (
     <>
@@ -22,7 +31,6 @@ const Form = ({ visible, onClose, widget = null }) => {
               {widget ? t('UPDATE WIDGET DETAILS') : t('NEW WIDGET CREATION')}
             </h1>
           </div>
-
           <div>Form Element</div>
         </div>
       )}
