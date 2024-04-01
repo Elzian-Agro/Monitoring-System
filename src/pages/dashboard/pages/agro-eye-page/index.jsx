@@ -45,6 +45,7 @@ const AgroEye = () => {
         recall();
       }
     }
+    setSelectedWidget(null);
     setIsConfirmVisible(false);
   };
 
@@ -59,6 +60,7 @@ const AgroEye = () => {
             setIsFormVisible(false);
           }}
           formSubmission={async (message) => {
+            setSelectedWidget(null);
             setMessage(message);
             setIsAlertVisible(true);
             recall();

@@ -41,9 +41,9 @@ const ToggleButton = ({ value, onChange }) => {
   );
 };
 
-const IconButton = ({ color, Icon, onClick }) => {
+const IconButton = ({ color, type = null, Icon, onClick }) => {
   return (
-    <button className='cursor-pointer' onClick={onClick}>
+    <button className='cursor-pointer' type={type} onClick={onClick}>
       {Icon && <Icon className={`h-5 w-5 ${color}  mr-2`} />}
     </button>
   );
@@ -69,6 +69,7 @@ ToggleButton.propTypes = {
 
 IconButton.propTypes = {
   color: PropTypes.string,
+  type: PropTypes.string,
   Icon: PropTypes.elementType.isRequired,
   onClick: PropTypes.func.isRequired,
 };
