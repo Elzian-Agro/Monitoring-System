@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import exportingInit from 'highcharts/modules/exporting';
@@ -9,9 +9,13 @@ import { selectTheme } from 'pages/dashboard/slice/dashboardLayoutSlice';
 exportingInit(Highcharts);
 offlineExportingInit(Highcharts);
 
-const Chart = () => {
-  const [chartType, setChartType] = useState('line');
+const Chart = ({ widget }) => {
+  const [chartType, setChartType] = useState('');
   const currentMode = useSelector(selectTheme);
+
+  useEffect(() => {
+    setChartType(widget.chartType);
+  }, []);
 
   // Function to get the color based on currentMode
   const getColor = (darkColor, lightColor) => (currentMode === 'Dark' ? darkColor : lightColor);
@@ -26,7 +30,7 @@ const Chart = () => {
       backgroundColor: getColor('#414345', 'white'),
     },
     title: {
-      text: 'ELZ-0001-01',
+      text: widget.name,
       style: {
         color: getColor('white', 'black'),
       },
@@ -87,7 +91,7 @@ const Chart = () => {
       backgroundColor: getColor('#414345', 'white'),
     },
     title: {
-      text: 'ELZ-0001-01',
+      text: widget.name,
       style: {
         color: getColor('white', 'black'),
       },
@@ -137,45 +141,8 @@ const Chart = () => {
 
   return (
     <>
-      <div className='flex flex-col sm:flex-row'>
-        <label className='text-sm dark:text-white font-medium'>Chart Type :</label>
-        <div className='flex items-center sm:ml-2'>
-          <input
-            type='radio'
-            id='line-chart'
-            name='chart-type'
-            value='line'
-            checked={chartType === 'line'}
-            onChange={(e) => setChartType(e.target.value)}
-            className='mr-2'
-          />
-          <label htmlFor='line-chart' className='mr-4 dark:text-white'>
-            Line
-          </label>
-
-          <input
-            type='radio'
-            id='bar-chart'
-            name='chart-type'
-            value='bar'
-            checked={chartType === 'bar'}
-            onChange={(e) => setChartType(e.target.value)}
-            className='mr-2'
-          />
-          <label htmlFor='bar-chart' className='dark:text-white'>
-            Bar
-          </label>
-        </div>
-      </div>
-
-      <div className='mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8'>
-        <div className='bg-white dark:bg-gray-600 rounded-md border border-gray-200 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-          <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
-        </div>
-
-        <div className='bg-white dark:bg-gray-600 rounded-md border border-gray-200 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-          <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
-        </div>
+      <div className='bg-white dark:bg-gray-600 rounded-md border border-gray-200 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+        <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
       </div>
     </>
   );

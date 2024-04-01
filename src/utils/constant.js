@@ -122,6 +122,11 @@ export const errorType = {
     code: 13025,
     message: 'User does not exist or is disabled',
   },
+
+  widgetNotFound: {
+    code: 13027,
+    message: 'Widgets not found',
+  },
 };
 
 export const customTableStyles = {
