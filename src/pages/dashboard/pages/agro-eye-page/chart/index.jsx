@@ -141,7 +141,7 @@ const Chart = ({ widget }) => {
 
   return (
     <>
-      <div className='bg-white dark:bg-gray-600 border-t border-gray-200 dark:border-gray-600 p-1 w-full'>
+      <div className='bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-800 p-1 w-full'>
         <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
       </div>
     </>

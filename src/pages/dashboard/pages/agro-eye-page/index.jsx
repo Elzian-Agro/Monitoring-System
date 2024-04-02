@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IconButton, VariantButton } from '../../components/base/Button';
-import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { PencilSquareIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import From from './agro-eye-form';
 import Chart from './chart';
 import Loader from '../../components/common/loader';
@@ -85,11 +85,11 @@ const AgroEye = () => {
             {widgets && widgets.length > 0 ? (
               <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
                 {widgets.map((widget, index) => (
-                  <div className='bg-white dark:bg-gray-600 rounded-md border border-gray-200 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+                  <div className='bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-800 shadow-md shadow-black/5 p-1 w-full'>
                     <div className='flex justify-end gap-2 mr-2 py-2'>
                       <IconButton
                         color='text-blue-600'
-                        Icon={PencilIcon}
+                        Icon={PencilSquareIcon}
                         onClick={() => {
                           setSelectedWidget(widget);
                           setIsFormVisible(true);

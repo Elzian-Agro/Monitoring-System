@@ -5,7 +5,7 @@ const CheckBox = ({ label, checked, onChange }) => {
   return (
     <div className='flex items-center'>
       <input type='checkbox' id={label} checked={checked} onChange={onChange} className='mr-2' />
-      <label htmlFor={label} className='text-sm text-gray-400'>
+      <label htmlFor={label} className='text-sm dark:text-white'>
         {label}
       </label>
     </div>
