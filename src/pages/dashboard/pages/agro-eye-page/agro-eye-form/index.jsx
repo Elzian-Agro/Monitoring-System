@@ -47,6 +47,15 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
     // eslint-disable-next-line
   }, [widget]);
 
+  const resetForm = () => {
+    setName('');
+    setChartType('');
+    setDevices([{ deviceId: '', factors: [] }]);
+    setStartDate('');
+    setEndDate('');
+    setTimeGap('');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -103,7 +112,7 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
                 <Dropdown
                   label='Chart Type'
                   Icon={ChartBarIcon}
-                  defaultOption='Select'
+                  defaltOptions='Select a chart type'
                   value={chartType}
                   setValue={setChartType}
                   options={[
@@ -119,7 +128,7 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
                       <Dropdown
                         label={`Device Id`}
                         Icon={IdentificationIcon}
-                        defaultOption='Select a device'
+                        defaltOptions='Select a device'
                         value={device.deviceId}
                         setValue={(value) => {
                           const updatedDevices = [...devices];
@@ -218,7 +227,7 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
                 <Dropdown
                   label='Time Gap'
                   Icon={IdentificationIcon}
-                  defaultOption='Select a time gap'
+                  defaltOptions='Select a time gap'
                   value={timeGap}
                   setValue={setTimeGap}
                   options={[
@@ -250,7 +259,9 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
 
               <div className='flex justify-center pt-6'>
                 <div className='flex justify-end gap-2 w-60 sm:w-64 md:w-80 lg:w-full lg:px-24 xl:px-44'>
-                  {!widget && <PrimaryButton color='bg-red-500 border-red-600' type='button' text='Clear' />}
+                  {!widget && (
+                    <PrimaryButton color='bg-red-500 border-red-600' type='button' text='Clear' onClick={resetForm} />
+                  )}
                   <PrimaryButton color='bg-blue-500 border-blue-600' text={widget ? 'Update' : 'Submit'} />
                 </div>
               </div>
