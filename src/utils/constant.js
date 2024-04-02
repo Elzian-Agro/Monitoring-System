@@ -127,6 +127,11 @@ export const errorType = {
     code: 13027,
     message: 'Widgets not found',
   },
+
+  widgetCreatedFailure: {
+    code: 13026,
+    message: 'Widget creation failure',
+  },
 };
 
 export const customTableStyles = {
