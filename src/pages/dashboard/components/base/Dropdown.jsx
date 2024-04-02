@@ -24,7 +24,7 @@ function Dropdown({ label = null, Icon = null, required = false, defaltOptions =
             <option value='' disabled selected>
               {t(defaltOptions)}
             </option>
-            {options.map((option) => (
+            {options?.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.name}
               </option>
