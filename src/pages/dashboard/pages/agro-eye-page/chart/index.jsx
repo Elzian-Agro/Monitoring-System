@@ -10,139 +10,106 @@ exportingInit(Highcharts);
 offlineExportingInit(Highcharts);
 
 const Chart = ({ widget }) => {
-  const [chartType, setChartType] = useState('');
+  const [chartOptions, setChartOptions] = useState(null);
   const currentMode = useSelector(selectTheme);
 
   useEffect(() => {
-    setChartType(widget.chartType);
-  }, [widget.chartType]);
+    const getColor = (darkColor, lightColor) => (currentMode === 'Dark' ? darkColor : lightColor);
 
-  // Function to get the color based on currentMode
-  const getColor = (darkColor, lightColor) => (currentMode === 'Dark' ? darkColor : lightColor);
+    const generateAxisTime = () => {
+      const startDate = new Date(widget.startDate);
+      const endDate = new Date(widget.endDate);
+      const timeGap = widget.timeGap.toLowerCase();
+      const axisTime = [];
 
-  const lineChart = {
-    chart: {
-      type: 'line',
-      scrollablePlotArea: {
-        minWidth: 500,
-        scrollPositionX: 1,
-      },
-      backgroundColor: getColor('#414345', 'white'),
-    },
-    title: {
-      text: widget.name,
-      style: {
-        color: getColor('white', 'black'),
-      },
-    },
-    xAxis: {
-      categories: ['7.00 A.M', '8.00 A.M', '9.00 A.M', '10.00 A.M', '11.00 A.M'],
-      labels: {
-        style: {
-          color: getColor('white', 'black'),
+      let currentDate = startDate;
+      while (currentDate <= endDate) {
+        axisTime.push(currentDate.toLocaleString());
+        currentDate = new Date(currentDate.getTime() + getTimeGapInMilliseconds(timeGap));
+      }
+
+      return axisTime;
+    };
+
+    const getTimeGapInMilliseconds = (timeGap) => {
+      const timeGapMap = {
+        '2min': 120000,
+        '5min': 300000,
+        '10min': 600000,
+      };
+      return timeGapMap[timeGap];
+    };
+
+    const axisTime = generateAxisTime();
+
+    const sensorData = widget.devices
+      .map((device) => {
+        const deviceId = device.deviceId;
+        const factors = device.factors;
+        const series = factors.map((factor) => {
+          const data = widget.sensorData
+            .find((sensorData) => sensorData[deviceId])
+            [deviceId].map((entry) => entry[factor]);
+          return {
+            name: deviceId + ' ' + factor,
+            data,
+          };
+        });
+        return series;
+      })
+      .flat();
+
+    const chartConfig = {
+      chart: {
+        type: widget.chartType,
+        scrollablePlotArea: {
+          minWidth: 500,
+          scrollPositionX: 1,
         },
+        backgroundColor: getColor('#414345', 'white'),
       },
-    },
-    yAxis: {
       title: {
-        text: 'Values',
+        text: widget.name,
         style: {
           color: getColor('white', 'black'),
         },
       },
-      labels: {
-        style: {
+      xAxis: {
+        categories: axisTime,
+        labels: {
+          style: {
+            color: getColor('white', 'black'),
+          },
+        },
+      },
+      yAxis: {
+        title: {
+          text: '',
+          style: {
+            color: getColor('white', 'black'),
+          },
+        },
+        labels: {
+          style: {
+            color: getColor('white', 'black'),
+          },
+        },
+      },
+      legend: {
+        itemStyle: {
           color: getColor('white', 'black'),
         },
       },
-    },
-    legend: {
-      itemStyle: {
-        color: getColor('white', 'black'),
-      },
-    },
-    series: [
-      {
-        name: 'Temperature',
-        data: [25, 26, 27, 26, 25],
-      },
-      {
-        name: 'Humidity',
-        data: [60, 59, 58, 57, 56],
-      },
-      {
-        name: 'Soil Moisture',
-        data: [40, 42, 45, 43, 41],
-      },
-      {
-        name: 'Gas Detection',
-        data: [0.1, 0.2, 0.3, 0.2, 0.1],
-      },
-    ],
-  };
+      series: sensorData,
+    };
 
-  const barChart = {
-    chart: {
-      type: 'bar',
-      scrollablePlotArea: {
-        minWidth: 500,
-        scrollPositionX: 1,
-      },
-      backgroundColor: getColor('#414345', 'white'),
-    },
-    title: {
-      text: widget.name,
-      style: {
-        color: getColor('white', 'black'),
-      },
-    },
-    xAxis: {
-      categories: ['Temperature', 'Humidity', 'Soil Moisture', 'Gas Detection'],
-      labels: {
-        style: {
-          color: getColor('white', 'black'),
-        },
-      },
-    },
-    yAxis: {
-      title: {
-        text: 'Values',
-        style: {
-          color: getColor('white', 'black'),
-        },
-      },
-      labels: {
-        style: {
-          color: getColor('white', 'black'),
-        },
-      },
-    },
-    legend: {
-      itemStyle: {
-        color: getColor('white', 'black'),
-      },
-    },
-    series: [
-      {
-        name: '10.00 A.M',
-        data: [25, 60, 40, 20],
-      },
-      {
-        name: '11.00 A.M',
-        data: [26, 59, 42, 10],
-      },
-    ],
-  };
-
-  const chartOptions = {
-    line: lineChart,
-    bar: barChart,
-  };
+    setChartOptions(chartConfig);
+  }, [widget, currentMode]);
 
   return (
     <>
       <div className='bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-800 p-1 w-full'>
-        <HighchartsReact highcharts={Highcharts} options={chartOptions[chartType]} />
+        {chartOptions && <HighchartsReact highcharts={Highcharts} options={chartOptions} />}
       </div>
     </>
   );
