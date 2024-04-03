@@ -103,6 +103,11 @@ const Chart = ({ widget }) => {
           },
         },
       },
+      legend: {
+        itemStyle: {
+          color: getColor('#ffffff', '#00000'),
+        },
+      },
       series: sensorSeries,
     };
 
