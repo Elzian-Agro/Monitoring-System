@@ -147,9 +147,10 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
                   value={timeGap}
                   setValue={setTimeGap}
                   options={[
-                    { name: '2 Min', value: '2min' },
-                    { name: '5 Min', value: '5min' },
-                    { name: '10 Min', value: '10min' },
+                    { name: '1 Min', value: 60000 },
+                    { name: '2 Min', value: 120000 },
+                    { name: '5 Min', value: 300000 },
+                    { name: '10 Min', value: 600000 },
                   ]}
                   required={true}
                 />
