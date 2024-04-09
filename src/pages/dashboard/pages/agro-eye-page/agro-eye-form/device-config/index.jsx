@@ -30,7 +30,6 @@ const DeviceConfig = ({ device, setDevices, index, deviceList, devices }) => {
           updatedDevices[index].availableFactors = deviceList.filter((deviceInfo) => deviceInfo.name === value)[0][
             'factors'
           ];
-          console.log(updatedDevices);
           setDevices(updatedDevices);
         }}
         options={deviceList}
