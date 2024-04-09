@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CheckBox from 'pages/dashboard/components/base/CheckBox';
 import { IdentificationIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import Dropdown from 'pages/dashboard/components/base/Dropdown';
@@ -6,9 +6,10 @@ import { useTranslation } from 'react-i18next';
 
 const DeviceConfig = ({ device, setDevices, index, deviceList, devices }) => {
   const { t } = useTranslation();
+  const isSelected = (value) => device.factors.includes(value);
 
   return (
-    <div key={device.deviceId} className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full'>
+    <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full'>
       <div className='flex justify-end'>
         <XMarkIcon
           className='h-3 w-3 text-red-600'
@@ -42,12 +43,16 @@ const DeviceConfig = ({ device, setDevices, index, deviceList, devices }) => {
             return (
               <CheckBox
                 label={t(factor)}
-                checked={device.factors.includes(factor)}
                 onChange={() => {
                   const updatedDevices = [...devices];
-                  updatedDevices[index].factors.push(factor);
+                  if (!updatedDevices[index].factors.includes(factor)) {
+                    updatedDevices[index].factors.push(factor);
+                  } else {
+                    updatedDevices[index].factors = updatedDevices[index].factors.filter((f) => f !== factor);
+                  }
                   setDevices(updatedDevices);
                 }}
+                checked={isSelected(factor)}
               />
             );
           })}

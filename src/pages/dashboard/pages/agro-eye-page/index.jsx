@@ -85,7 +85,9 @@ const AgroEye = () => {
             {widgets && widgets.length > 0 ? (
               <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
                 {widgets.map((widget, index) => (
-                  <div className='bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-800 shadow-md shadow-black/5 p-1 w-full'>
+                  <div
+                    key={widget._id}
+                    className='bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-800 shadow-md shadow-black/5 p-1 w-full'>
                     <div className='flex justify-end gap-2 mr-2 py-2'>
                       <IconButton
                         color='text-blue-600'

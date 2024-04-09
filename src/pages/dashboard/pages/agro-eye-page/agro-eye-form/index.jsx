@@ -158,6 +158,7 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
 
                 {devices.map((device, index) => (
                   <DeviceConfig
+                    key={device.deviceId}
                     device={device}
                     index={index}
                     setDevices={setDevices}
