@@ -16,6 +16,8 @@ export const characterSets = {
   symbols: '!@#$%&*+-=<>?',
 };
 
+export const DeviceFactors = ['Temperature', 'Humidity', 'Soil Moisture', 'Gas Detection'];
+
 export const menuMode = {
   open: 'open',
   partiallyOpen: 'onlyIcon',

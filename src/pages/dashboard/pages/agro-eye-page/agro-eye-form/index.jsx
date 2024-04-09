@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import TextBox from 'pages/dashboard/components/base/TextBox';
 import Dropdown from 'pages/dashboard/components/base/Dropdown';
-import CheckBox from 'pages/dashboard/components/base/CheckBox';
+import DeviceConfig from './device-config';
 import { ArrowLeftIcon, CalendarIcon, ChartBarIcon, IdentificationIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { PrimaryButton } from 'pages/dashboard/components/base/Button';
 import PropTypes from 'prop-types';
@@ -24,12 +24,13 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
     const getDevices = async () => {
       const devices = await send({ endpoint: 'device', method: 'GET' });
 
-      const deviceIds = devices?.result.map((device) => ({
+      const deviceInfo = devices?.result.map((device) => ({
         name: `${device.deviceId}`,
         value: device.deviceId,
+        factors: device.monitoringFactors,
       }));
 
-      setDeviceList(deviceIds);
+      setDeviceList(deviceInfo);
     };
 
     getDevices();
@@ -156,106 +157,29 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
                 />
 
                 {devices.map((device, index) => (
-                  <div key={index} className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full'>
-                    <Dropdown
-                      label='Device Id'
-                      Icon={IdentificationIcon}
-                      defaltOptions='Select a device'
-                      value={device.deviceId}
-                      setValue={(value) => {
-                        const updatedDevices = [...devices];
-                        updatedDevices[index].deviceId = value;
-                        setDevices(updatedDevices);
-                      }}
-                      options={deviceList}
-                      required={true}
-                    />
-                    <div className='my-4'>
-                      <p className='text-sm text-gray-400 mb-2'>{t('Factors')}</p>
-                      <div className='grid grid-cols-2'>
-                        <CheckBox
-                          label={t('Temperature')}
-                          checked={device.factors.includes('temperature')}
-                          onChange={() => {
-                            const updatedDevices = [...devices];
-                            if (device.factors.includes('temperature')) {
-                              updatedDevices[index].factors = updatedDevices[index].factors.filter(
-                                (factor) => factor !== 'temperature'
-                              );
-                            } else {
-                              updatedDevices[index].factors.push('temperature');
-                            }
-                            setDevices(updatedDevices);
-                          }}
-                        />
-
-                        <CheckBox
-                          label={t('Humidity')}
-                          checked={device.factors.includes('humidity')}
-                          onChange={() => {
-                            const updatedDevices = [...devices];
-                            if (device.factors.includes('humidity')) {
-                              updatedDevices[index].factors = updatedDevices[index].factors.filter(
-                                (factor) => factor !== 'humidity'
-                              );
-                            } else {
-                              updatedDevices[index].factors.push('humidity');
-                            }
-                            setDevices(updatedDevices);
-                          }}
-                        />
-
-                        <CheckBox
-                          label={t('Soil Moisture')}
-                          checked={device.factors.includes('soil_moisture')}
-                          onChange={() => {
-                            const updatedDevices = [...devices];
-                            if (device.factors.includes('soil_moisture')) {
-                              updatedDevices[index].factors = updatedDevices[index].factors.filter(
-                                (factor) => factor !== 'soil_moisture'
-                              );
-                            } else {
-                              updatedDevices[index].factors.push('soil_moisture');
-                            }
-                            setDevices(updatedDevices);
-                          }}
-                        />
-
-                        <CheckBox
-                          label={t('Gas Detection')}
-                          checked={device.factors.includes('gas_detection')}
-                          onChange={() => {
-                            const updatedDevices = [...devices];
-                            if (device.factors.includes('gas_detection')) {
-                              updatedDevices[index].factors = updatedDevices[index].factors.filter(
-                                (factor) => factor !== 'gas_detection'
-                              );
-                            } else {
-                              updatedDevices[index].factors.push('gas_detection');
-                            }
-                            setDevices(updatedDevices);
-                          }}
-                        />
-                      </div>
-                    </div>
-                    {index === devices.length - 1 && (
-                      <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full border rounded-md py-2 flex justify-center items-center mt-4 dark:text-white'>
-                        <button
-                          type='button'
-                          onClick={() => {
-                            const newDevice = { deviceId: '', factors: [] };
-                            setDevices([...devices, newDevice]);
-                          }}
-                          className='flex items-center'>
-                          <span>{t('Add device')}</span>
-                          <span className='ml-1'>
-                            <PlusIcon className='h-5 w-5' />
-                          </span>
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                  <DeviceConfig
+                    device={device}
+                    index={index}
+                    setDevices={setDevices}
+                    deviceList={deviceList}
+                    devices={devices}
+                  />
                 ))}
+
+                <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full border rounded-md py-2 flex justify-center items-center mt-4 dark:text-white'>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      const newDevice = { deviceId: '', factors: [] };
+                      setDevices([...devices, newDevice]);
+                    }}
+                    className='flex items-center'>
+                    <span>{t('Add device')}</span>
+                    <span className='ml-1'>
+                      <PlusIcon className='h-5 w-5' />
+                    </span>
+                  </button>
+                </div>
               </div>
 
               <div className='flex justify-center pt-6'>

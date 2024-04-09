@@ -6,6 +6,8 @@ import { ArrowLeftIcon, DevicePhoneMobileIcon, IdentificationIcon } from '@heroi
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
 import Dropdown from 'pages/dashboard/components/base/Dropdown';
+import MultiSelectDropdown from 'pages/dashboard/components/base/MultiSelectDropdown';
+import { DeviceFactors } from 'utils/constant';
 
 const Form = ({ visible, onClose, device = null, formSubmission }) => {
   const [userList, setUserList] = useState([]);
@@ -13,6 +15,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   const [deviceId, setDeviceId] = useState('');
   const [deviceType, setDeviceType] = useState('');
   const [deviceStatus, setDeviceStatus] = useState('');
+  const [deviceFactors, setDeviceFactors] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isToggleClicked, setIsToggleClicked] = useState(false);
 
@@ -37,6 +40,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
       setDeviceId(device.deviceId);
       setDeviceType(device.deviceType);
       setDeviceStatus(device.deviceStatus);
+      setDeviceFactors(device.monitoringFactors);
       setIsDisabled(device.isDisabled);
 
       if (device?.userId) {
@@ -51,6 +55,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
     setDeviceId('');
     setDeviceType('');
     setDeviceStatus('');
+    setDeviceFactors([]);
   };
 
   const handleSubmit = async (e) => {
@@ -61,6 +66,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
       deviceId,
       deviceType,
       deviceStatus,
+      monitoringFactors: deviceFactors,
       isDisabled,
     };
 
@@ -126,6 +132,15 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
                     { name: 'Monitoring System v2', value: 'monitoring-system-v2' },
                   ]}
                   required={true}
+                />
+
+                <MultiSelectDropdown
+                  Icon={DevicePhoneMobileIcon}
+                  options={DeviceFactors}
+                  onChange={(values) => {
+                    setDeviceFactors(values);
+                  }}
+                  selectedValues={deviceFactors}
                 />
 
                 <div className='flex flex-col sm:flex-row lg:flex-col gap-5'>
