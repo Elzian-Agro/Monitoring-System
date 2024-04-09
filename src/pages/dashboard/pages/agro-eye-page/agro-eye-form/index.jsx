@@ -15,7 +15,7 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
   const [endDate, setEndDate] = useState('');
   const [timeGap, setTimeGap] = useState('');
   const [deviceList, setDeviceList] = useState([]);
-  const [devices, setDevices] = useState([{ deviceId: '', factors: [] }]);
+  const [devices, setDevices] = useState([{ deviceId: '', factors: [], availableFactors: [] }]);
 
   const { t } = useTranslation();
   const { send } = useAxios();
@@ -51,7 +51,7 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
   const resetForm = () => {
     setName('');
     setChartType('');
-    setDevices([{ deviceId: '', factors: [] }]);
+    setDevices([{ deviceId: '', factors: [], availableFactors: [] }]);
     setStartDate('');
     setEndDate('');
     setTimeGap('');
@@ -170,7 +170,7 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
                   <button
                     type='button'
                     onClick={() => {
-                      const newDevice = { deviceId: '', factors: [] };
+                      const newDevice = { deviceId: '', factors: [], availableFactors: [] };
                       setDevices([...devices, newDevice]);
                     }}
                     className='flex items-center'>
