@@ -20,6 +20,18 @@ const Chart = ({ widget }) => {
   const getColor = (darkColor, lightColor) => (currentMode === 'Dark' ? darkColor : lightColor);
 
   useEffect(() => {
+    const startDate = new Date(widget.startDate);
+    const endDate = new Date(widget.endDate);
+    const timeGap = widget.timeGap;
+
+    // Generate time array between start and end dates with time gap
+    const axisTime = [];
+    let currentTime = new Date(startDate);
+    while (currentTime <= endDate) {
+      axisTime.push(new Date(currentTime).toISOString());
+      currentTime = new Date(currentTime.getTime() + timeGap);
+    }
+
     const sensorSeries = widget.devices.flatMap((device) => {
       const deviceId = device.deviceId;
       const factors = device.factors;
@@ -28,21 +40,19 @@ const Chart = ({ widget }) => {
           .find((sensorData) => sensorData[deviceId])
           [deviceId].map((entry) => {
             return {
-              date: new Date(entry.dateTime).toLocaleString('en-US', {
-                timeZone: 'Asia/Colombo',
-                dateStyle: 'long',
-                timeStyle: 'short',
-              }),
-              values: entry[factor],
+              x: new Date(entry.timestamp).toISOString(),
+              y: entry[factor],
             };
           });
 
-        const timeSeriesData = Array.from({ length: widget.axisTime.length }).fill(null);
+        const timeSeriesData = [];
 
-        seriesData.forEach((data) => {
-          const timeIndex = widget.axisTime.findIndex((time) => time === data.date);
-          if (timeIndex !== -1) {
-            timeSeriesData[timeIndex] = data.values;
+        axisTime.forEach((time) => {
+          const dataPoint = seriesData.find((data) => data.x === time);
+          if (dataPoint) {
+            timeSeriesData.push(dataPoint.y);
+          } else {
+            timeSeriesData.push(null); // Push null for missing or empty data points
           }
         });
 
@@ -71,7 +81,7 @@ const Chart = ({ widget }) => {
         },
       },
       xAxis: {
-        categories: widget.axisTime,
+        categories: axisTime,
         title: {
           text: null,
           style: {
@@ -84,7 +94,7 @@ const Chart = ({ widget }) => {
           },
         },
         min: 0,
-        max: 4,
+        max: 3,
         scrollbar: {
           enabled: true,
         },
@@ -116,11 +126,9 @@ const Chart = ({ widget }) => {
   }, [widget, currentMode]);
 
   return (
-    <>
-      <div className='bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-800 p-1 '>
-        {chartOptions && <HighchartsReact highcharts={Highcharts} options={chartOptions} />}
-      </div>
-    </>
+    <div className='bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-800 p-1 '>
+      {chartOptions && <HighchartsReact highcharts={Highcharts} options={chartOptions} />}
+    </div>
   );
 };
 
