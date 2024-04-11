@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
-import { store } from 'store/store';
+import { store } from 'utils/store';
 import { Provider } from 'react-redux';
 
 jest.mock('react-i18next', () => ({

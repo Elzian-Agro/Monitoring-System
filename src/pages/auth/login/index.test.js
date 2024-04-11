@@ -4,7 +4,7 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import LoginPage from '../components/common/container';
 import axios from 'axios';
-import { store } from 'store/store';
+import { store } from 'utils/store';
 import { tokenise } from 'utils/rsa.encrypt';
 import { errorType } from 'utils/constant';
 

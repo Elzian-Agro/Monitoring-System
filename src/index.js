@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
-import { store } from 'store/store';
+import { store } from 'utils/store';
 import { Provider } from 'react-redux';
 import Loader from 'pages/dashboard/components/common/loader';
 
