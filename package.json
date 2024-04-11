@@ -26,6 +26,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "post-build": "node post-build.js",
     "test": "react-scripts test --detectOpenHandles",
     "eject": "react-scripts eject"
   },
