@@ -39,23 +39,21 @@ const DeviceConfig = ({ device, setDevices, index, deviceList, devices }) => {
       <div className='my-4'>
         <p className='text-sm text-gray-400 mb-2'>{t('Factors')}</p>
         <div className='grid grid-cols-2'>
-          {device.availableFactors?.map((factor) => {
-            return (
-              <CheckBox
-                label={t(factor)}
-                onChange={() => {
-                  const updatedDevices = [...devices];
-                  if (!updatedDevices[index].factors.includes(factor)) {
-                    updatedDevices[index].factors.push(factor);
-                  } else {
-                    updatedDevices[index].factors = updatedDevices[index].factors.filter((f) => f !== factor);
-                  }
-                  setDevices(updatedDevices);
-                }}
-                checked={isSelected(factor)}
-              />
-            );
-          })}
+          {device.availableFactors?.map((factor) => (
+            <CheckBox
+              label={t(factor)}
+              onChange={() => {
+                const updatedDevices = [...devices];
+                if (!updatedDevices[index].factors.includes(factor)) {
+                  updatedDevices[index].factors.push(factor);
+                } else {
+                  updatedDevices[index].factors = updatedDevices[index].factors.filter((f) => f !== factor);
+                }
+                setDevices(updatedDevices);
+              }}
+              checked={isSelected(factor)}
+            />
+          ))}
         </div>
       </div>
     </div>
