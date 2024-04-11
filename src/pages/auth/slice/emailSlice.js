@@ -1,12 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-  value: null,
-};
+import { createSlice } from '@reduxjs/toolkit';
 
 export const emailSlice = createSlice({
-  name: "email",
-  initialState,
+  name: 'email',
+  initialState: {
+    value: null,
+  },
   reducers: {
     updateEmail: (state, action) => {
       state.value = action.payload;

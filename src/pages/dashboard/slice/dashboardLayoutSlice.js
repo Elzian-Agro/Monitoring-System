@@ -1,16 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-  activeMenu: window.innerWidth < 640 ? 'close' : 'open',
-  isProfileOpen: false,
-  isNotificationOpen: false,
-  notificationCount: 0,
-  theme: '',
-};
-
 const dashboardLayoutSlice = createSlice({
   name: 'dashboardLayout',
-  initialState,
+  initialState: {
+    activeMenu: window.innerWidth < 640 ? 'close' : 'open',
+    isProfileOpen: false,
+    isNotificationOpen: false,
+    notificationCount: 0,
+    theme: '',
+  },
   reducers: {
     setActiveMenu: (state, action) => {
       state.activeMenu = action.payload;
@@ -30,7 +28,8 @@ const dashboardLayoutSlice = createSlice({
   },
 });
 
-export const { setActiveMenu, setProfileOpen, setNotificationOpen, setNotificationCount, setTheme } = dashboardLayoutSlice.actions;
+export const { setActiveMenu, setProfileOpen, setNotificationOpen, setNotificationCount, setTheme } =
+  dashboardLayoutSlice.actions;
 
 export const selectActiveMenu = (state) => state.dashboardLayout.activeMenu;
 export const selectProfileOpen = (state) => state.dashboardLayout.isProfileOpen;

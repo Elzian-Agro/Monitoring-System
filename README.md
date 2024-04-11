@@ -134,3 +134,7 @@ Postman
 Simple React Snippets
 gitHub Copilot
 Bracket Pair Color
+
+## Browser Extension for React Development
+
+React Developer Tool, Redux DevTool
