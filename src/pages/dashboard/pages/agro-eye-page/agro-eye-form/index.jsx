@@ -11,8 +11,10 @@ import useAxios from 'hooks/useAxios';
 const Form = ({ visible, onClose, widget = null, formSubmission }) => {
   const [name, setName] = useState('');
   const [chartType, setChartType] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDateTime, setStartDateTime] = useState('');
+  const [utcStartDateTime, setUtcStartDateTime] = useState('');
+  const [endDateTime, setEndDateTime] = useState('');
+  const [utcEndDateTime, setUtcEndDateTime] = useState('');
   const [timeGap, setTimeGap] = useState('');
   const [deviceList, setDeviceList] = useState([]);
   const [devices, setDevices] = useState([{ deviceId: '', factors: [], availableFactors: [] }]);
@@ -39,12 +41,15 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
     if (widget) {
       setName(widget.name);
       setChartType(widget.chartType);
-      setStartDate(new Date(widget.startDate));
-      setEndDate(new Date(widget.endDate));
+      setStartDateTime(
+        new Date(new Date(widget.startDateTime).getTime() - new Date(widget.startDateTime).getTimezoneOffset() * 60000)
+      );
+      setEndDateTime(
+        new Date(new Date(widget.endDateTime).getTime() - new Date(widget.endDateTime).getTimezoneOffset() * 60000)
+      );
       setTimeGap(widget.timeGap);
       setDevices(widget.devices || [{ deviceId: '', factors: [] }]);
     }
-
     // eslint-disable-next-line
   }, [widget]);
 
@@ -52,8 +57,8 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
     setName('');
     setChartType('');
     setDevices([{ deviceId: '', factors: [], availableFactors: [] }]);
-    setStartDate('');
-    setEndDate('');
+    setStartDateTime('');
+    setEndDateTime('');
     setTimeGap('');
   };
 
@@ -64,8 +69,8 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
       name,
       chartType,
       devices,
-      startDate,
-      endDate,
+      startDateTime: utcStartDateTime,
+      endDateTime: utcEndDateTime,
       timeGap,
     };
 
@@ -125,19 +130,33 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
 
                 <TextBox
                   label='Start Date'
-                  type='date'
+                  type='datetime-local'
                   Icon={CalendarIcon}
-                  value={startDate && startDate.toISOString().split('T')[0]}
-                  setValue={(value) => setStartDate(new Date(value))}
+                  value={startDateTime && startDateTime.toISOString().slice(0, 16)}
+                  setValue={(value) => {
+                    const selectedDateTime = new Date(value);
+                    const localDateTime = new Date(
+                      selectedDateTime.getTime() - selectedDateTime.getTimezoneOffset() * 60000 // Adjust the timezone offset to match the local time in Sri Lanka
+                    );
+                    setStartDateTime(localDateTime); // Set local date for display
+                    setUtcStartDateTime(selectedDateTime); // Set UTC date for request data
+                  }}
                   required={true}
                 />
 
                 <TextBox
                   label='End Date'
-                  type='date'
+                  type='datetime-local'
                   Icon={CalendarIcon}
-                  value={endDate && endDate.toISOString().split('T')[0]}
-                  setValue={(value) => setEndDate(new Date(value))}
+                  value={endDateTime && endDateTime.toISOString().slice(0, 16)}
+                  setValue={(value) => {
+                    const selectedDateTime = new Date(value);
+                    const localDateTime = new Date(
+                      selectedDateTime.getTime() - selectedDateTime.getTimezoneOffset() * 60000
+                    );
+                    setEndDateTime(localDateTime);
+                    setUtcEndDateTime(selectedDateTime);
+                  }}
                   required={true}
                 />
 

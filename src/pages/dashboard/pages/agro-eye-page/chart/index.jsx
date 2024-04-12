@@ -20,16 +20,16 @@ const Chart = ({ widget }) => {
   const getColor = (darkColor, lightColor) => (currentMode === 'Dark' ? darkColor : lightColor);
 
   useEffect(() => {
-    const startDate = new Date(widget.startDate);
-    const endDate = new Date(widget.endDate);
+    const startDateTime = new Date(widget.startDateTime);
+    const endDateTime = new Date(widget.endDateTime);
     const timeGap = widget.timeGap;
 
     // Generate time array between start and end dates with time gap
     const axisTime = [];
-    let currentTime = new Date(startDate);
-    while (currentTime <= endDate) {
-      axisTime.push(new Date(currentTime).toISOString());
-      currentTime = new Date(currentTime.getTime() + timeGap);
+    let currentDateTime = new Date(startDateTime);
+    while (currentDateTime <= endDateTime) {
+      axisTime.push(new Date(currentDateTime).toISOString());
+      currentDateTime = new Date(currentDateTime.getTime() + timeGap);
     }
 
     const sensorSeries = widget.devices.flatMap((device) => {
