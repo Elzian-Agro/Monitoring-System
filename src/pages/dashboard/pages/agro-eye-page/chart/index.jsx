@@ -81,7 +81,21 @@ const Chart = ({ widget }) => {
         },
       },
       xAxis: {
-        categories: axisTime,
+        categories: axisTime.map((time) => {
+          const dateTime = new Date(time);
+          const dateFormat = dateTime.toLocaleDateString('en-US', {
+            timeZone: 'Asia/Colombo',
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric',
+          });
+          const timeFormat = dateTime.toLocaleTimeString('en-US', {
+            timeZone: 'Asia/Colombo',
+            hour: 'numeric',
+            minute: 'numeric',
+          });
+          return `${dateFormat}<br>${timeFormat}`;
+        }),
         title: {
           text: null,
           style: {
@@ -94,7 +108,7 @@ const Chart = ({ widget }) => {
           },
         },
         min: 0,
-        max: 3,
+        max: 5,
         scrollbar: {
           enabled: true,
         },
