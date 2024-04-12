@@ -167,10 +167,15 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
                   value={timeGap}
                   setValue={setTimeGap}
                   options={[
-                    { name: '1 Min', value: 60000 },
-                    { name: '2 Min', value: 120000 },
-                    { name: '5 Min', value: 300000 },
-                    { name: '10 Min', value: 600000 },
+                    { name: '1 Min', value: 1 * 60 * 1000 },
+                    { name: '5 Min', value: 5 * 60 * 1000 },
+                    { name: '15 Min', value: 15 * 60 * 1000 },
+                    { name: '30 Min', value: 30 * 60 * 1000 },
+                    { name: '1 Hour', value: 1 * 60 * 60 * 1000 },
+                    { name: '2 Hours', value: 2 * 60 * 60 * 1000 },
+                    { name: '6 Hours', value: 6 * 60 * 60 * 1000 },
+                    { name: '12 Hours', value: 12 * 60 * 60 * 1000 },
+                    { name: '1 Day', value: 24 * 60 * 60 * 1000 },
                   ]}
                   required={true}
                 />
