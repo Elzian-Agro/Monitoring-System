@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
 import useNotification from 'hooks/useNotification';
-import ClickOutsideHandler from 'pages/utils/ClickOutsideHandler';
+import ClickOutsideHandler from 'pages/dashboard/utils/ClickOutsideHandler';
 
 const Notification = () => {
   const dispatch = useDispatch();

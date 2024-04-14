@@ -8,7 +8,7 @@ import LanguageSelector from 'components/common/language-selector';
 import { useTranslation } from 'react-i18next';
 import avatar from 'assets/images/avatar.png';
 import { clearUserData } from 'pages/dashboard/slice/userSlice';
-import ClickOutsideHandler from 'pages/utils/ClickOutsideHandler';
+import ClickOutsideHandler from 'pages/dashboard/utils/ClickOutsideHandler';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
