@@ -9,6 +9,8 @@ import Loader from '../loader';
 import useNotification from 'hooks/useNotification';
 import { Outlet } from 'react-router';
 import useFetch from 'hooks/useFetch';
+import useAxios from 'hooks/useAxios';
+import { useNavigate } from 'react-router-dom';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -38,6 +40,7 @@ const Layout = () => {
   const mainContentMargin = getMainContentMargin(activeMenu);
   const currentTheme = useSelector(selectTheme);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { respond: userData, loader } = useFetch({
     endpoint: 'user/profile',
     method: 'GET',
@@ -45,13 +48,23 @@ const Layout = () => {
     requestBody: {},
     dependency: [],
   });
-
-  useNotification();
+  const { send } = useAxios();
 
   useEffect(() => {
-    dispatch(setUserData(userData));
+    const verifyUser = async () => {
+      const response = await send({ endpoint: 'auth/verify', method: 'POST' });
+      if (response?.code !== 14017) {
+        navigate('/login');
+      } else {
+        dispatch(setUserData(userData));
+      }
+    };
+
+    verifyUser();
     // eslint-disable-next-line
   }, [userData]);
+
+  useNotification();
 
   useEffect(() => {
     if (currentTheme === 'Dark') {
