@@ -44,12 +44,15 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
       setStartDateTime(
         new Date(new Date(widget.startDateTime).getTime() - new Date(widget.startDateTime).getTimezoneOffset() * 60000)
       );
+      setUtcStartDateTime(new Date(widget.startDateTime));
       setEndDateTime(
         new Date(new Date(widget.endDateTime).getTime() - new Date(widget.endDateTime).getTimezoneOffset() * 60000)
       );
+      setUtcEndDateTime(new Date(widget.endDateTime));
       setTimeGap(widget.timeGap);
       setDevices(widget.devices || [{ deviceId: '', factors: [] }]);
     }
+
     // eslint-disable-next-line
   }, [widget]);
 
@@ -58,7 +61,9 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
     setChartType('');
     setDevices([{ deviceId: '', factors: [], availableFactors: [] }]);
     setStartDateTime('');
+    setUtcStartDateTime('');
     setEndDateTime('');
+    setUtcEndDateTime('');
     setTimeGap('');
   };
 
