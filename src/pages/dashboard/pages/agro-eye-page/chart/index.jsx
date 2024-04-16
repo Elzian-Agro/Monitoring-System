@@ -69,10 +69,6 @@ const Chart = ({ widget }) => {
       chart: {
         type: widget.chartType,
         backgroundColor: getColor('#414345', '#ffffff'),
-        scrollablePlotArea: {
-          minWidth: 500,
-          scrollPositionX: 1,
-        },
       },
       title: {
         text: widget.name,
