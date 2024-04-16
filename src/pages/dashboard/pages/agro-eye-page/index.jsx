@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IconButton, VariantButton } from '../../components/base/Button';
 import { PencilSquareIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import From from './agro-eye-form';
@@ -8,6 +8,8 @@ import Modal from 'components/common/modal';
 import useFetch from 'hooks/useFetch';
 import useAxios from 'hooks/useAxios';
 import { useTranslation } from 'react-i18next';
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 
 const AgroEye = () => {
   const [message, setMessage] = useState(null);
@@ -15,7 +17,6 @@ const AgroEye = () => {
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [selectedWidget, setSelectedWidget] = useState(null);
-
   const { t } = useTranslation();
   const { send } = useAxios();
   const {
@@ -29,6 +30,28 @@ const AgroEye = () => {
     requestBody: {},
     dependency: [],
   });
+  const sensors = useSensors(useSensor(PointerSensor));
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    if (widgets && widgets.length > 0) {
+      const ids = widgets.map((widget) => widget._id);
+      setItems(ids);
+    }
+  }, [widgets]);
+
+  function handleDragEnd(event) {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      setItems((items) => {
+        const oldIndex = items.indexOf(active.id);
+        const newIndex = items.indexOf(over.id);
+
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  }
 
   // Handle confiation and delete
   const handleConfirmationAndDelete = async (result) => {
@@ -81,35 +104,45 @@ const AgroEye = () => {
               }}
             />
           </div>
+
           <div className='mt-6'>
             {widgets && widgets.length > 0 ? (
-              <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-                {widgets.map((widget, index) => (
-                  <div
-                    key={widget._id}
-                    className='bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-800 shadow-md shadow-black/5 p-1 w-full'>
-                    <div className='flex justify-end gap-2 mr-2 py-2'>
-                      <IconButton
-                        color='text-blue-600'
-                        Icon={PencilSquareIcon}
-                        onClick={() => {
-                          setSelectedWidget(widget);
-                          setIsFormVisible(true);
-                        }}
-                      />
-                      <IconButton
-                        color='text-red-600'
-                        Icon={TrashIcon}
-                        onClick={() => {
-                          setSelectedWidget(widget);
-                          setIsConfirmVisible(true);
-                        }}
-                      />
-                    </div>
-                    <Chart key={index} widget={widget} />
-                  </div>
-                ))}
-              </div>
+              <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+                  <SortableContext items={items} strategy={verticalListSortingStrategy}>
+                    {items.map((id) => {
+                      // Find the widget with the corresponding id
+                      const widget = widgets.find((widget) => widget._id === id);
+
+                      return (
+                        <div>
+                          <div className='bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-800 shadow-md shadow-black/5 p-1 w-full'>
+                            <div className='flex justify-end gap-2 mr-2 py-2'>
+                              <IconButton
+                                color='text-blue-600'
+                                Icon={PencilSquareIcon}
+                                onClick={() => {
+                                  setSelectedWidget(widget);
+                                  setIsFormVisible(true);
+                                }}
+                              />
+                              <IconButton
+                                color='text-red-600'
+                                Icon={TrashIcon}
+                                onClick={() => {
+                                  setSelectedWidget(widget);
+                                  setIsConfirmVisible(true);
+                                }}
+                              />
+                            </div>
+                            <Chart key={id} id={id} widget={widget} />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </SortableContext>
+                </div>
+              </DndContext>
             ) : (
               <div className='flex justify-center dark:text-white'>{t('Widgets not found')}</div>
             )}
