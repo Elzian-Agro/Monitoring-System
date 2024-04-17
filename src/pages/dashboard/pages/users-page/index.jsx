@@ -22,7 +22,7 @@ const ManageUsers = () => {
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const {
-    respond: users,
+    response: users,
     recall,
     loader,
   } = useFetch({

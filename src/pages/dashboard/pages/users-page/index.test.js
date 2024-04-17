@@ -51,7 +51,7 @@ jest.mock('react-redux', () => ({
 
 jest.mock('hooks/useFetch', () => () => ({
   loading: false,
-  respond: mockedResponse,
+  response: mockedResponse,
   recall: jest.fn().mockReturnValue(null),
 }));
 

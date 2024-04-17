@@ -28,7 +28,7 @@ const DeviceManagement = () => {
   const { t } = useTranslation();
   const { loading, send } = useAxios();
   const {
-    respond: devices,
+    response: devices,
     loader,
     recall,
   } = useFetch({

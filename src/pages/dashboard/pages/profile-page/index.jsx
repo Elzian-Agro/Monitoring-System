@@ -26,7 +26,7 @@ const UserProfilePage = () => {
   const { t } = useTranslation();
 
   const {
-    respond: user,
+    response: user,
     loader,
     recall,
   } = useFetch({

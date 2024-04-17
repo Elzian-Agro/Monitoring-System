@@ -20,7 +20,7 @@ const AgroEye = () => {
   const { t } = useTranslation();
   const { send } = useAxios();
   const {
-    respond: widgets,
+    response: widgets,
     recall,
     loader,
   } = useFetch({

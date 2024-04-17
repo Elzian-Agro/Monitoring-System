@@ -41,7 +41,7 @@ const Layout = () => {
   const currentTheme = useSelector(selectTheme);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { respond: userData, loader } = useFetch({
+  const { response: userData, loader } = useFetch({
     endpoint: 'user/profile',
     method: 'GET',
     call: 1,

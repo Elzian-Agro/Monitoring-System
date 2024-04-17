@@ -5,13 +5,13 @@ import { useDispatch } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
 import { useNavigate } from 'react-router-dom';
 
-const useAxios = ({ endpoint, method, call = 0, requestBody = {}, dependency = [] }) => {
+const useFetch = ({ endpoint, method, call = 0, requestBody = {}, dependency = [] }) => {
   const [trigger, setTrigger] = useState(call);
   const [body, setBody] = useState(requestBody);
   const [token, setToken] = useState(localStorage.getItem('jwtAccessToken'));
-  const [respond, setResponse] = useState(null);
+  const [response, setResponse] = useState(null);
   const [error, setError] = useState(null); //if already handled you don't need to retun
-  const [loader, setLoading] = useState(true);  // TODO: use name as isLoading
+  const [loading, setLoading] = useState(true);  // TODO: use name as isLoading
   const [attempt, setAttempt] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const useAxios = ({ endpoint, method, call = 0, requestBody = {}, dependency = [
     setTrigger((prev) => prev + 1);
   };
 
-  async function f_call() {
+  async function callAPI() {
     setAttempt((prev) => prev + 1);
     setLoading(true);
     try {
@@ -78,12 +78,12 @@ const useAxios = ({ endpoint, method, call = 0, requestBody = {}, dependency = [
 
   useEffect(() => {
     if (trigger > 0) {
-      f_call();
+      callAPI();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...dependency, token, trigger]);
 
-  return { respond, error, loader, recall, setBody };
+  return { response, error, loading, recall, setBody };
 };
 
-export default useAxios;
+export default useFetch;
