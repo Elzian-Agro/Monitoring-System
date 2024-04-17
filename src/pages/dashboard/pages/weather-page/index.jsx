@@ -71,7 +71,7 @@ const WeatherComponent = () => {
 
   return (
     <div className='flex items-center justify-center min-h-screen'>
-      <div className='p-5 mr-2 ml-2 flex flex-wrap justify-center items-center gap-10 bg-white rounded-lg shadow-md'>
+      <div className='p-5 mr-2 ml-2 flex flex-wrap justify-center items-center gap-10 bg-white dark:bg-secondary-dark-bg rounded-lg shadow-md dark:shadow-gray-500'>
         <div className='flex flex-col justify-center items-center border-gray-300 border-4 rounded-lg p-5'>
           <img
             src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
@@ -79,7 +79,7 @@ const WeatherComponent = () => {
             className='w-full'
           />
 
-          <h1 className='font-bold text-[50px] font-zenkaku text-gray-900'>
+          <h1 className='font-bold text-[50px] font-zenkaku text-gray-900 dark:text-gray-100'>
             {weatherData?.main?.temp}
             <span className='font-extralight text-gray-400'>°C</span>
           </h1>
@@ -93,10 +93,10 @@ const WeatherComponent = () => {
               <button
                 onClick={() => handleDateChange(-1)}
                 disabled={btnIndex <= 0}
-                className='disabled:text-gray-300 disabled:cursor-not-allowed'>
+                className='disabled:text-gray-300 dark:disabled:text-gray-600 disabled:cursor-not-allowed dark:text-white'>
                 <ChevronLeftIcon className='w-[20px]' />
               </button>
-              <p className='text-center font-bold font-zenkaku text-[20px] text-gray-600'>
+              <p className='text-center font-bold font-zenkaku text-[20px] text-gray-600 dark:text-gray-100'>
                 {selectedDate.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase()},
                 <span className='font-normal'>
                   {' '}
@@ -106,42 +106,44 @@ const WeatherComponent = () => {
               <button
                 onClick={() => handleDateChange(1)}
                 disabled={btnIndex >= 4}
-                className='disabled:text-gray-300 disabled:cursor-not-allowed'>
+                className='disabled:text-gray-300 dark:disabled:text-gray-600 disabled:cursor-not-allowed dark:text-white'>
                 <ChevronRightIcon className='w-[20px]' />
               </button>
             </div>
 
-            <h1 className='font-zenkaku font-bold text-[50px] text-gray-700 text-center'>{location.toUpperCase()}</h1>
+            <h1 className='font-zenkaku font-bold text-[50px] text-gray-700 dark:text-gray-100 text-center'>
+              {location.toUpperCase()}
+            </h1>
           </div>
 
-          <div className='bg-[#f8f8f8] flex flex-wrap w-100% p-2 gap-5 justify-center items-center rounded-lg text-center border-gray-300 border-4'>
-            <div className='bg-white w-[40%] p-1 rounded-lg'>
-              <p className='font-zenkaku text-gray-500 font-normal'>Feels Like</p>
-              <p className='font-bold text-[25px] font-zenkaku text-gray-600'>
+          <div className='bg-[#f8f8f8] dark:bg-secondary-dark-bg flex flex-wrap w-100% p-2 gap-5 justify-center items-center rounded-lg text-center border-gray-300 border-4'>
+            <div className='bg-white dark:bg-main-dark-bg w-[40%] p-1 rounded-lg'>
+              <p className='font-zenkaku text-gray-500 font-normal dark:text-gray-100'>Feels Like</p>
+              <p className='font-bold text-[25px] font-zenkaku text-gray-600 dark:text-gray-100'>
                 {weatherData?.main?.feels_like}
                 <span className='font-extralight text-gray-400'>°C</span>
               </p>
             </div>
 
-            <div className='bg-white w-[40%] p-1 rounded-lg'>
-              <p className='font-zenkaku text-gray-500 font-normal'>Humidity</p>
-              <p className='font-bold text-[25px] font-zenkaku text-gray-600'>
+            <div className='bg-white dark:bg-main-dark-bg w-[40%] p-1 rounded-lg'>
+              <p className='font-zenkaku text-gray-500 font-normal dark:text-gray-100'>Humidity</p>
+              <p className='font-bold text-[25px] font-zenkaku text-gray-600 dark:text-gray-100'>
                 {weatherData?.main?.humidity}
                 <span className='font-extralight text-gray-400'>%</span>
               </p>
             </div>
 
-            <div className='bg-white w-[40%] p-1 rounded-lg'>
-              <p className='font-zenkaku text-gray-500 font-normal'>Wind Speed</p>
-              <p className='font-bold text-[25px] font-zenkaku text-gray-600'>
+            <div className='bg-white dark:bg-main-dark-bg w-[40%] p-1 rounded-lg'>
+              <p className='font-zenkaku text-gray-500 font-normal dark:text-gray-100'>Wind Speed</p>
+              <p className='font-bold text-[25px] font-zenkaku text-gray-600 dark:text-gray-100'>
                 {weatherData?.wind.speed}
                 <span className='font-extralight text-gray-400'> m/s</span>
               </p>
             </div>
 
-            <div className='bg-white w-[40%] p-1 rounded-lg'>
-              <p className='font-zenkaku text-gray-500 font-normal'>Pressure</p>
-              <p className='font-bold text-[25px] font-zenkaku text-gray-600'>
+            <div className='bg-white dark:bg-main-dark-bg w-[40%] p-1 rounded-lg'>
+              <p className='font-zenkaku text-gray-500 font-normal dark:text-gray-100'>Pressure</p>
+              <p className='font-bold text-[25px] font-zenkaku text-gray-600 dark:text-gray-100'>
                 {weatherData?.main?.pressure}
                 <span className='font-extralight text-gray-400'> hPa</span>
               </p>
