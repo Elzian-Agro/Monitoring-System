@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react';
 import useFetch from 'hooks/useFetch';
 import axios from 'axios';
 import Loader from 'pages/dashboard/components/common/loader';
+import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
+import { useDispatch } from 'react-redux';
+import { showErrorModal } from 'error/slice/errorSlice';
+import { useNavigate } from 'react-router-dom';
 
 const WeatherComponent = () => {
   const [location, setLocation] = useState(null);
   const [weatherData, setWeatherData] = useState();
-  const [date, setDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [btnIndex, setBtnIndex] = useState(0);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const {
-    response: user,
-    isLoading,
-    recall,
-  } = useFetch({
+  const { response: user, isLoading } = useFetch({
     endpoint: 'user/profile',
     method: 'GET',
     call: 1,
@@ -20,64 +23,56 @@ const WeatherComponent = () => {
     dependency: [],
   });
 
+  // TODO: Move fetch data to backend and use useAxios hook instead.
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=128a04a67f6b5706e842411e7a3cebe6`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=metric&appid=128a04a67f6b5706e842411e7a3cebe6`
       );
-      setWeatherData(response.data);
-      console.log(response.data); //You can see all the weather data in console log
+      const weatherForecast = response.data.list.filter((forecast) => {
+        const forecastDate = new Date(forecast.dt_txt);
+        return (
+          forecastDate.getFullYear() === selectedDate.getFullYear() &&
+          forecastDate.getMonth() === selectedDate.getMonth() &&
+          forecastDate.getDate() === selectedDate.getDate()
+        );
+      });
+      setWeatherData(weatherForecast[0]);
     } catch (error) {
-      console.error(error);
+      dispatch(showErrorModal('Failed to fetch weather data, check your location and try again'));
+      navigate('/profile');
     }
   };
 
   useEffect(() => {
     setLocation(user?.address);
     if (location) fetchData();
-    const date = new Date();
-    setDate({
-      day: date.toLocaleDateString('en-US', { weekday: 'long' }),
-      date: date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' }),
-    });
     // eslint-disable-next-line
-  }, [user]);
+  }, [user, btnIndex]);
+
+  const handleDateChange = (increment) => {
+    setBtnIndex((prev) => {
+      const newIndex = Math.max(0, Math.min(4, prev + increment));
+      if (newIndex !== prev) {
+        setSelectedDate((currentDate) => {
+          const newDate = new Date(currentDate);
+          newDate.setDate(newDate.getDate() + increment);
+          return newDate;
+        });
+        return newIndex;
+      }
+      return prev;
+    });
+  };
 
   if (!weatherData || isLoading) {
     return <Loader />;
   }
 
   return (
-    // <div className='flex items-center justify-center min-h-screen'>
-    //   <div className='w-full max-w-md bg-white bg-opacity-30 p-8 rounded-lg backdrop-blur-lg border border-gray-300 shadow-lg'>
-    //     <h1 className='text-3xl font-bold dark:text-white mb-4'>Weather Forecast</h1>
-    //     <div className='flex items-center justify-between'>
-    //       <div className='flex items-center'>
-    //         <img
-    //           src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
-    //           alt='Weather Icon'
-    //           className='h-12 w-12'
-    //         />
-    //         <div className='ml-4'>
-    //           <p className='text-lg font-semibold dark:text-white'>{location}</p>
-    //           <p className='text-sm text-gray-500 dark:text-gray-200'>{weatherData?.weather[0]?.description}</p>
-    //         </div>
-    //       </div>
-    //       <div>
-    //         <p className='text-4xl font-bold dark:text-white'>{weatherData?.main?.temp}°C</p>
-    //       </div>
-    //     </div>
-    //     <div className='mt-6'>
-    //       <p className='text-sm text-gray-500 dark:text-gray-200'>Humidity: {weatherData?.main?.humidity}%</p>
-    //       <p className='text-sm text-gray-500 dark:text-gray-200'>Wind: {weatherData?.wind.speed} m/s</p>
-    //       <p className='text-sm text-gray-500 dark:text-gray-200'>Pressure: {weatherData?.main?.pressure} hPa</p>
-    //     </div>
-    //   </div>
-    // </div>
-
     <div className='flex items-center justify-center min-h-screen'>
-      <div className='p-5 mr-2 ml-2 flex flex-wrap justify-center items-center gap-10 bg-white rounded'>
-        <div className='flex flex-col justify-center items-center border-gray-300 border-4 rounded p-5'>
+      <div className='p-5 mr-2 ml-2 flex flex-wrap justify-center items-center gap-10 bg-white rounded-lg shadow-md'>
+        <div className='flex flex-col justify-center items-center border-gray-300 border-4 rounded-lg p-5'>
           <img
             src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
             alt='Weather Icon'
@@ -94,13 +89,33 @@ const WeatherComponent = () => {
 
         <div className='flex-1 flex flex-col justify-between'>
           <div>
-            <p className='text-center font-bold font-zenkaku text-[20px] text-gray-600'>
-              {date?.day.toUpperCase()}, <span className='font-normal'>{date?.date.toUpperCase()}</span>
-            </p>
+            <div className='flex gap-2 items-center justify-around'>
+              <button
+                onClick={() => handleDateChange(-1)}
+                disabled={btnIndex <= 0}
+                className='disabled:text-gray-300 disabled:cursor-not-allowed'>
+                <ChevronLeftIcon className='w-[20px]' />
+              </button>
+              <p className='text-center font-bold font-zenkaku text-[20px] text-gray-600'>
+                {selectedDate.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase()},
+                <span className='font-normal'>
+                  {' '}
+                  {selectedDate.getDate()} {selectedDate.toLocaleDateString('en-US', { month: 'long' }).toUpperCase()}
+                </span>
+              </p>
+              <button
+                onClick={() => handleDateChange(1)}
+                disabled={btnIndex >= 4}
+                className='disabled:text-gray-300 disabled:cursor-not-allowed'>
+                <ChevronRightIcon className='w-[20px]' />
+              </button>
+            </div>
+
             <h1 className='font-zenkaku font-bold text-[50px] text-gray-700 text-center'>{location.toUpperCase()}</h1>
           </div>
-          <div className='bg-[#f8f8f8] flex flex-wrap w-100% p-2 gap-5 justify-center items-center rounded text-center border-gray-300 border-4'>
-            <div className='bg-white w-[40%] p-1 rounded'>
+
+          <div className='bg-[#f8f8f8] flex flex-wrap w-100% p-2 gap-5 justify-center items-center rounded-lg text-center border-gray-300 border-4'>
+            <div className='bg-white w-[40%] p-1 rounded-lg'>
               <p className='font-zenkaku text-gray-500 font-normal'>Feels Like</p>
               <p className='font-bold text-[25px] font-zenkaku text-gray-600'>
                 {weatherData?.main?.feels_like}
@@ -108,7 +123,7 @@ const WeatherComponent = () => {
               </p>
             </div>
 
-            <div className='bg-white w-[40%] p-1 rounded'>
+            <div className='bg-white w-[40%] p-1 rounded-lg'>
               <p className='font-zenkaku text-gray-500 font-normal'>Humidity</p>
               <p className='font-bold text-[25px] font-zenkaku text-gray-600'>
                 {weatherData?.main?.humidity}
@@ -116,7 +131,7 @@ const WeatherComponent = () => {
               </p>
             </div>
 
-            <div className='bg-white w-[40%] p-1 rounded'>
+            <div className='bg-white w-[40%] p-1 rounded-lg'>
               <p className='font-zenkaku text-gray-500 font-normal'>Wind Speed</p>
               <p className='font-bold text-[25px] font-zenkaku text-gray-600'>
                 {weatherData?.wind.speed}
@@ -124,7 +139,7 @@ const WeatherComponent = () => {
               </p>
             </div>
 
-            <div className='bg-white w-[40%] p-1 rounded'>
+            <div className='bg-white w-[40%] p-1 rounded-lg'>
               <p className='font-zenkaku text-gray-500 font-normal'>Pressure</p>
               <p className='font-bold text-[25px] font-zenkaku text-gray-600'>
                 {weatherData?.main?.pressure}
