@@ -38,6 +38,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - **Documentation**: [HighChart Documentation](https://www.highcharts.com/docs/index)
 
+### React dnd kit
+
+- **Documentation**: [React dnd kit Documentation](https://docs.dndkit.com/)
+
 ## Available Scripts
 
 In the project directory, you can run:
