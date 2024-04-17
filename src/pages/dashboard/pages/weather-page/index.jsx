@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useFetch from 'hooks/useFetch';
 import axios from 'axios';
+import Loader from 'pages/dashboard/components/common/loader';
 
 const WeatherComponent = () => {
   const [location, setLocation] = useState(null);
@@ -42,8 +43,8 @@ const WeatherComponent = () => {
     // eslint-disable-next-line
   }, [user]);
 
-  if (!weatherData) {
-    return 'loading..';
+  if (!weatherData || isLoading) {
+    return <Loader />;
   }
 
   return (
@@ -102,7 +103,8 @@ const WeatherComponent = () => {
             <div className='bg-white w-[40%] p-1 rounded'>
               <p className='font-zenkaku text-gray-500 font-normal'>Feels Like</p>
               <p className='font-bold text-[25px] font-zenkaku text-gray-600'>
-                23<span className='font-extralight text-gray-400'>°C</span>
+                {weatherData?.main?.feels_like}
+                <span className='font-extralight text-gray-400'>°C</span>
               </p>
             </div>
 
