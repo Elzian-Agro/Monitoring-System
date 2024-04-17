@@ -34,7 +34,7 @@ const WeatherComponent = () => {
 
   useEffect(() => {
     setLocation(user?.address);
-    if (user) fetchData();
+    if (location) fetchData();
     const date = new Date();
     setDate({
       day: date.toLocaleDateString('en-US', { weekday: 'long' }),
