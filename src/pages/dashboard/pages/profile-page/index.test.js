@@ -34,7 +34,7 @@ jest.mock('hooks/useAxios', () => () => ({
 }));
 
 jest.mock('hooks/useFetch', () => () => ({
-  loader: false,
+  isLoading: false,
   response: mockUserData,
   recall: jest.fn().mockReturnValue(null),
 }));

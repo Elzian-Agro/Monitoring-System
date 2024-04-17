@@ -29,7 +29,7 @@ const DeviceManagement = () => {
   const { loading, send } = useAxios();
   const {
     response: devices,
-    loader,
+    isLoading,
     recall,
   } = useFetch({
     endpoint: 'device',
@@ -179,9 +179,9 @@ const DeviceManagement = () => {
         />
       )}
 
-      {(loader || loading) && <Loader />}
+      {(isLoading || loading) && <Loader />}
 
-      {!devices && !loader && !loading && (
+      {!devices && !isLoading && !loading && (
         <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-lg p-8'>
           <p className='text-sm dark:text-white justify-center'>
             There are no devices allocated. Please contact{' '}
@@ -192,7 +192,7 @@ const DeviceManagement = () => {
         </div>
       )}
 
-      {!isFormVisible && !loading && !loader && devices && (
+      {!isFormVisible && !loading && !isLoading && devices && (
         <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
           <div className='flex flex-col lg:flex-row mb-4 lg:items-center lg:justify-between'>
             <div className='flex gap-2 mb-2 lg:mb-0'>

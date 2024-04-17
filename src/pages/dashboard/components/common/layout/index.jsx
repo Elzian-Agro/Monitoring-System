@@ -41,7 +41,7 @@ const Layout = () => {
   const currentTheme = useSelector(selectTheme);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { response: userData, loader } = useFetch({
+  const { response: userData, isLoading } = useFetch({
     endpoint: 'user/profile',
     method: 'GET',
     call: 1,
@@ -76,7 +76,7 @@ const Layout = () => {
 
   return (
     <div className={currentTheme === 'Dark' ? 'dark' : ''}>
-      {loader ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <div>

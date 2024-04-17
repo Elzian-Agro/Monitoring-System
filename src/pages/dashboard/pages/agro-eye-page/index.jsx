@@ -22,7 +22,7 @@ const AgroEye = () => {
   const {
     response: widgets,
     recall,
-    loader,
+    isLoading,
   } = useFetch({
     endpoint: 'widget',
     method: 'GET',
@@ -91,9 +91,9 @@ const AgroEye = () => {
         />
       )}
 
-      {loader && <Loader />}
+      {isLoading && <Loader />}
 
-      {!isFormVisible && !loader && (
+      {!isFormVisible && !isLoading && (
         <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-6'>
           <div className='flex justify-end'>
             <VariantButton

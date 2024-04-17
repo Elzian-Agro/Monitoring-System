@@ -27,7 +27,7 @@ const UserProfilePage = () => {
 
   const {
     response: user,
-    loader,
+    isLoading,
     recall,
   } = useFetch({
     endpoint: 'user/profile',
@@ -87,9 +87,9 @@ const UserProfilePage = () => {
         />
       )}
 
-      {(loading || loader) && <Loader />}
+      {(loading || isLoading) && <Loader />}
 
-      {!isFormVisible && !loading && !loader && user && (
+      {!isFormVisible && !loading && !isLoading && user && (
         <div className='flex flex-col justify-center items-center bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-700 rounded-xl shadow-md mb-6'>
           <div className='relative flex justify center h-48 w-full'>
             <img src={coverImage} alt='farmLand' className='w-full h-full object-cover rounded-tr-xl rounded-tl-xl ' />
