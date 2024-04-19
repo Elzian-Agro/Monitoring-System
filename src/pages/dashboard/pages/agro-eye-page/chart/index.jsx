@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import { selectTheme } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import { useSortable } from '@dnd-kit/sortable';
 import { ArrowsPointingOutIcon } from '@heroicons/react/24/outline';
+import PropTypes from 'prop-types';
 
 highchartsStock(Highcharts);
 highchartsAccessibility(Highcharts);
@@ -154,6 +155,11 @@ const Chart = ({ id, widget }) => {
       </div>
     </div>
   );
+};
+
+Chart.propTypes = {
+  id: PropTypes.number.isRequired,
+  widget: PropTypes.object,
 };
 
 export default Chart;
