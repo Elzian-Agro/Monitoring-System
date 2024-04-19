@@ -8,7 +8,7 @@ import { PrimaryButton } from 'pages/dashboard/components/base/Button';
 import PropTypes from 'prop-types';
 import useAxios from 'hooks/useAxios';
 
-const Form = ({ visible, onClose, widget = null, formSubmission }) => {
+const Form = ({ visible, onClose, widget = null, higherOrder, formSubmission }) => {
   const [name, setName] = useState('');
   const [chartType, setChartType] = useState('');
   const [startDateTime, setStartDateTime] = useState('');
@@ -77,6 +77,7 @@ const Form = ({ visible, onClose, widget = null, formSubmission }) => {
       startDateTime: utcStartDateTime,
       endDateTime: utcEndDateTime,
       timeGap,
+      order: widget ? widget.order : higherOrder + 1,
     };
 
     const response = await send({
@@ -232,6 +233,7 @@ Form.propTypes = {
   visible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   widget: PropTypes.object,
+  higherOrder: PropTypes.number,
   formSubmission: PropTypes.func.isRequired,
 };
 

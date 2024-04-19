@@ -34,22 +34,34 @@ const AgroEye = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    if (widgets && widgets.length > 0) {
-      const ids = widgets.map((widget) => widget._id);
-      setItems(ids);
-    }
+    const order = widgets?.map((widget) => widget.order)?.sort((a, b) => a - b) ?? [0];
+    setItems(order);
   }, [widgets]);
 
   function handleDragEnd(event) {
     const { active, over } = event;
 
     if (active.id !== over.id) {
-      setItems((items) => {
-        const oldIndex = items.indexOf(active.id);
-        const newIndex = items.indexOf(over.id);
+      const oldIndex = items.indexOf(active.id);
+      const newIndex = items.indexOf(over.id);
 
-        return arrayMove(items, oldIndex, newIndex);
+      const newOrder = arrayMove(items, oldIndex, newIndex);
+      setItems(newOrder);
+
+      const updatedWidgets = newOrder.map((id, index) => ({
+        ...widgets.find((widget) => widget.order === id),
+        order: index + 1,
+      }));
+
+      updatedWidgets.forEach(async (widget) => {
+        await send({
+          endpoint: `widget/${widget._id}`,
+          method: 'PUT',
+          body: { order: widget.order },
+        });
       });
+
+      recall();
     }
   }
 
@@ -78,6 +90,7 @@ const AgroEye = () => {
         <From
           visible={isFormVisible}
           widget={selectedWidget}
+          higherOrder={items[items.length - 1]}
           onClose={() => {
             setSelectedWidget(null);
             setIsFormVisible(false);
@@ -112,10 +125,10 @@ const AgroEye = () => {
                   <SortableContext items={items} strategy={verticalListSortingStrategy}>
                     {items.map((id) => {
                       // Find the widget with the corresponding id
-                      const widget = widgets.find((widget) => widget._id === id);
+                      const widget = widgets.find((widget) => widget.order === id);
 
                       return (
-                        <div>
+                        <div key={id}>
                           <div className='bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-800 shadow-md shadow-black/5 p-1 w-full'>
                             <div className='flex justify-end gap-2 mr-2 py-2'>
                               <IconButton
