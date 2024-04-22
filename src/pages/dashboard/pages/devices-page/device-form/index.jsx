@@ -135,6 +135,8 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
                 />
 
                 <MultiSelectDropdown
+                  label='Monitoring Factors'
+                  placeholder='Multiple selection'
                   Icon={DevicePhoneMobileIcon}
                   options={DeviceFactors}
                   onChange={(values) => {

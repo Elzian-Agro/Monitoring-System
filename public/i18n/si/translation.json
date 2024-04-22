@@ -104,7 +104,7 @@
   "First Name:": "මුල් නම:",
   "Last Name:": "අවසන් නම:",
   "Organization": "සංවිධානය",
-  "Email": "විද්යුත් තැපෑල",
+  "Email": "විද්‍යුත් තැපෑල",
   "Phone No": "දුරකතන අංකය",
   "Address": "ලිපිනය",
   "User Type:": "පරිශීලක වර්ගය:",
@@ -177,11 +177,12 @@
   "Select a device": "උපාංගයක් තෝරන්න",
   "Factors": "සාධක",
   "Temperature": "උෂ්ණත්වය",
-  "Humidity": "ආර්ද්රතාවය",
+  "Humidity": "ආර්දතාවය",
   "Soil Moisture": "පාංශු තෙතමන",
   "Gas Detection": "ගෑස් හඳුනාගැනීම",
   "Ex: North Field": "උදා: උතුරු ක්ෂේත්‍රය",
   "Add New": "අලුතින්",
   "Add device": "උපාංගය එක් කරන්න",
-  "Select Multiple Items": "Select Multiple Items"
+  "Monitoring Factors": "නිරීක්ෂණ සාධක",
+  "Multiple selection": "බහු තේරීම"
 }

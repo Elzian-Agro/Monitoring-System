@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
 const MultiSelectDropdown = ({
   label = 'Select Multiple Items',
+  placeholder = 'Select Items',
   Icon = null,
   options,
   onChange,
@@ -43,7 +45,7 @@ const MultiSelectDropdown = ({
               setIsOpen(!isOpen);
             }}
             className='text-left text-sm appearance-none bg-transparent w-full text-gray-700 dark:text-white dark:bg-secondary-dark-bg leading-tight px-2 focus:outling-none'>
-            {selectedValues.length > 0 ? selectedValues.join(', ') : 'Select Items'}
+            {selectedValues.length > 0 ? selectedValues.join(', ') : t(placeholder)}
           </button>
           {isOpen && (
             <ul className='absolute z-50 m-3 top-5 border-2 p-4 text-gray-700 dark:text-white dark:be-secondary-dark-bg bg-white'>
@@ -57,7 +59,7 @@ const MultiSelectDropdown = ({
                       }}
                       checked={isSelected(option)}
                     />
-                    <p className='text-gray-700 px-2 dark:text-white'>{option}</p>
+                    <p className='text-gray-700 px-2 dark:text-white'>{t(option)}</p>
                   </label>
                 </li>
               ))}
@@ -67,6 +69,15 @@ const MultiSelectDropdown = ({
       </div>
     </div>
   );
+};
+
+MultiSelectDropdown.propTypes = {
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  Icon: PropTypes.elementType,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onChange: PropTypes.func.isRequired,
+  selectedValues: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default MultiSelectDropdown;
