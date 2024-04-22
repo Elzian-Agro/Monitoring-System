@@ -4,29 +4,17 @@ import { identifyError } from 'pages/auth/utils';
 import { useDispatch } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
 import { useNavigate } from 'react-router-dom';
+import { getNewAccessToken } from 'pages/dashboard/utils/getAccessToken';
 
 const useFetch = ({ endpoint, method, call = 0, requestBody = {}, dependency = [] }) => {
   const [trigger, setTrigger] = useState(call);
   const [body, setBody] = useState(requestBody);
-  const [token, setToken] = useState(localStorage.getItem('jwtAccessToken'));
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null); //if already handled you don't need to retun
   const [isLoading, setLoading] = useState(true);
   const [attempt, setAttempt] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const getNewAccessToken = async () => {
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/refresh`, {
-        refreshToken: localStorage.getItem('jwtRefreshToken'),
-      });
-      localStorage.setItem('jwtAccessToken', response.data.accessToken);
-      setToken(response.data.accessToken);
-    } catch (error) {
-      throw error;
-    }
-  };
 
   const recall = () => {
     setTrigger((prev) => prev + 1);
@@ -37,7 +25,7 @@ const useFetch = ({ endpoint, method, call = 0, requestBody = {}, dependency = [
     setLoading(true);
     try {
       const headers = {
-        ...(token && { Authorization: `Bearer ${token}` }),
+        ...{ Authorization: `Bearer ${localStorage.getItem('jwtAccessToken')}` },
       };
 
       const res = await axios({
@@ -56,6 +44,7 @@ const useFetch = ({ endpoint, method, call = 0, requestBody = {}, dependency = [
       if (error.response?.data?.code === 13004 && attempt <= 1) {
         try {
           await getNewAccessToken();
+          return callAPI();
         } catch (refreshError) {
           error = refreshError;
 
@@ -81,7 +70,7 @@ const useFetch = ({ endpoint, method, call = 0, requestBody = {}, dependency = [
       callAPI();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [...dependency, token, trigger]);
+  }, [...dependency, trigger]);
 
   return { response, error, isLoading, recall, setBody };
 };
