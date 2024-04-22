@@ -8,6 +8,7 @@ const useNotification = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user._id);
   const [notifications, setNotifications] = useState([]);
+  const [fetch, setNotificationFetch] = useState(false);
 
   const fetchNotificationsData = async () => {
     const res = await send({ endpoint: `notification/?userId=${userId}`, method: 'GET' });
@@ -16,12 +17,12 @@ const useNotification = () => {
   };
 
   useEffect(() => {
-    if (userId) {
+    if (userId && fetch) {
       fetchNotificationsData();
     }
     // eslint-disable-next-line
-  }, [userId]);
-  return { notifications, setNotifications };
+  }, [userId, fetch]);
+  return { notifications, setNotificationFetch };
 };
 
 export default useNotification;

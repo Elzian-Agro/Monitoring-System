@@ -1,16 +1,16 @@
 import './index.css';
 import Navbar from 'components/common/navbar';
 import Sidebar from 'components/common/sidebar';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectActiveMenu, selectTheme } from '../../../slice/dashboardLayoutSlice';
 import { useEffect } from 'react';
-import { setUserData } from 'pages/dashboard/slice/userSlice';
 import Loader from '../loader';
 import useNotification from 'hooks/useNotification';
 import { Outlet } from 'react-router';
-import useFetch from 'hooks/useFetch';
 import useAxios from 'hooks/useAxios';
 import { useNavigate } from 'react-router-dom';
+import { getNewAccessToken } from 'pages/dashboard/utils/getAccessToken';
+import useUserData from 'hooks/useUserData';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -39,32 +39,26 @@ const Layout = () => {
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
   const currentTheme = useSelector(selectTheme);
-  const dispatch = useDispatch();
+  const { isLoading, setUserFetch } = useUserData();
+  const { setNotificationFetch } = useNotification();
   const navigate = useNavigate();
-  const { response: userData, isLoading } = useFetch({
-    endpoint: 'user/profile',
-    method: 'GET',
-    call: 1,
-    requestBody: {},
-    dependency: [],
-  });
   const { send } = useAxios();
 
   useEffect(() => {
+    getNewAccessToken();
     const verifyUser = async () => {
       const response = await send({ endpoint: 'auth/verify', method: 'POST' });
       if (response?.code !== 14017) {
         navigate('/login');
       } else {
-        dispatch(setUserData(userData));
+        setUserFetch(true);
+        setNotificationFetch(true);
       }
     };
 
     verifyUser();
     // eslint-disable-next-line
-  }, [userData]);
-
-  useNotification();
+  }, []);
 
   useEffect(() => {
     if (currentTheme === 'Dark') {
