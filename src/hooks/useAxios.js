@@ -4,6 +4,7 @@ import { identifyError } from 'pages/auth/utils';
 import { useDispatch } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
 import { useNavigate } from 'react-router-dom';
+import { getNewAccessToken } from 'pages/dashboard/utils/getAccessToken';
 
 const useAxios = () => {
   const [response, setResponse] = useState(null);
@@ -12,17 +13,6 @@ const useAxios = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [attempt, setAttempt] = useState(0);
-
-  const getNewAccessToken = async () => {
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/refresh`, {
-        refreshToken: localStorage.getItem('jwtRefreshToken'),
-      });
-      localStorage.setItem('jwtAccessToken', response.data.accessToken);
-    } catch (error) {
-      throw error;
-    }
-  };
 
   const send = async ({ endpoint, method, body = null, requestHeaders = null }) => {
     setAttempt((prev) => prev + 1);
