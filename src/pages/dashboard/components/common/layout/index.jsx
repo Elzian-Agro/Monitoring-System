@@ -45,10 +45,13 @@ const Layout = () => {
   const { send } = useAxios();
 
   useEffect(() => {
+    getNewAccessToken();
     const verifyUser = async () => {
       const response = await send({ endpoint: 'auth/verify', method: 'POST' });
-      if (typeof window !== 'undefined' && response?.code !== 14017) {
-        navigate('/login');
+      if (response?.code !== 14017) {
+        setTimeout(() => {
+          navigate('/login');
+        }, 0);
       } else {
         setUserFetch(true);
         setNotificationFetch(true);
