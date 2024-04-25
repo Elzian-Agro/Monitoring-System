@@ -45,10 +45,9 @@ const Layout = () => {
   const { send } = useAxios();
 
   useEffect(() => {
-    getNewAccessToken();
     const verifyUser = async () => {
       const response = await send({ endpoint: 'auth/verify', method: 'POST' });
-      if (response?.code !== 14017) {
+      if (typeof window !== 'undefined' && response?.code !== 14017) {
         navigate('/login');
       } else {
         setUserFetch(true);
