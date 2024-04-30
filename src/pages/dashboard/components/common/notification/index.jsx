@@ -10,7 +10,7 @@ const Notification = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { send } = useAxios();
-  const { notifications, setNotifications } = useNotification();
+  const { notifications, setNotifications, setNotificationFetch } = useNotification();
 
   const calculateUnreadNotificationsCount = (notifications) => {
     return notifications.filter((notification) => !notification.readFlag).length;
@@ -22,16 +22,7 @@ const Notification = () => {
       method: 'PUT',
     });
 
-    // Update the local list to mark all notifications as read.
-    const updatedNotifications = notifications.map((notification) => ({
-      ...notification,
-      readFlag: true,
-    }));
-
-    setNotifications(updatedNotifications);
-
-    // Set Notification Count
-    dispatch(setNotificationCount(0));
+    setNotificationFetch(true);
   };
 
   const deleteNotification = async (index) => {
