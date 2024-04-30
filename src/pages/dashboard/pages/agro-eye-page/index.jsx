@@ -76,7 +76,8 @@ const AgroEye = () => {
       if (response) {
         setMessage(messages.widgetDeleted);
         setIsAlertVisible(true);
-        recall();
+        setItems((items) => items.filter((id) => id !== selectedWidget.order));
+        console.log(items);
       }
     }
     setSelectedWidget(null);
