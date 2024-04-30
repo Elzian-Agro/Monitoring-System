@@ -118,7 +118,7 @@ describe('Profile Page', () => {
     fireEvent.click(screen.getByText('YES'));
 
     await waitFor(() => {
-      expect(screen.getByText('Disabled successfully')).toBeInTheDocument();
+      expect(screen.getByText('Account disabled successfully')).toBeInTheDocument();
     });
 
     fireEvent.click(screen.getByText('OK'));
