@@ -1,27 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import useFetch from 'hooks/useFetch';
 import axios from 'axios';
 import Loader from 'pages/dashboard/components/common/loader';
 import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
 import { useNavigate } from 'react-router-dom';
+import { selectUserAddress } from '../../slice/userSlice';
 
 const WeatherComponent = () => {
-  const [location, setLocation] = useState(null);
   const [weatherData, setWeatherData] = useState();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [btnIndex, setBtnIndex] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { response: user, isLoading } = useFetch({
-    endpoint: 'user/profile',
-    method: 'GET',
-    call: 1,
-    requestBody: {},
-    dependency: [],
-  });
+  const location = useSelector(selectUserAddress);
 
   // TODO: Move fetch data to backend and use useAxios hook instead.
   const fetchData = async () => {
@@ -45,10 +37,11 @@ const WeatherComponent = () => {
   };
 
   useEffect(() => {
-    setLocation(user?.address);
-    if (location) fetchData();
+    if (location) {
+      fetchData();
+    }
     // eslint-disable-next-line
-  }, [user, btnIndex]);
+  }, [location, btnIndex]);
 
   const handleDateChange = (increment) => {
     setBtnIndex((prev) => {
@@ -65,7 +58,7 @@ const WeatherComponent = () => {
     });
   };
 
-  if (!weatherData || isLoading) {
+  if (!weatherData) {
     return <Loader />;
   }
 
