@@ -60,8 +60,6 @@ const AgroEye = () => {
           body: { order: widget.order },
         });
       });
-
-      recall();
     }
   }
 
