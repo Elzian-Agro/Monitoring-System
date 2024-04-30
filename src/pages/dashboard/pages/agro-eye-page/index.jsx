@@ -68,8 +68,8 @@ const AgroEye = () => {
   const handleConfirmationAndDelete = async (result) => {
     if (result) {
       const response = await send({
-        endpoint: `widget/delete/${selectedWidget._id}`,
-        method: 'PUT',
+        endpoint: `widget/${selectedWidget._id}`,
+        method: 'DELETE',
         body: { isDeleted: true },
       });
       setIsConfirmVisible(false);
