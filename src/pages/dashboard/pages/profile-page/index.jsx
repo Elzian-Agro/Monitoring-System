@@ -12,6 +12,7 @@ import { PrimaryButton } from 'pages/dashboard/components/base/Button';
 import SocialLink from './social-link';
 import Loader from 'pages/dashboard/components/common/loader';
 import useFetch from 'hooks/useFetch';
+import { messages } from 'utils/constant';
 
 const UserProfilePage = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -64,7 +65,7 @@ const UserProfilePage = () => {
     });
 
     if (response) {
-      setMessage('Disabled successfully');
+      setMessage(messages.accountDisabled);
       setIsDisableAlertVisible(true);
       //Removed locally sotored user data
       localStorage.removeItem('jwtAccessToken');
@@ -238,7 +239,7 @@ const UserProfilePage = () => {
       {/* Disable confirmation */}
       <Modal
         isOpen={isConfirmVisible}
-        message={'Are you sure you want to disable this account?'}
+        message={messages.accountConfirmDisable}
         onClose={(result) => confirmDialogCloseDisable(result)}
         type='confirmation'
       />

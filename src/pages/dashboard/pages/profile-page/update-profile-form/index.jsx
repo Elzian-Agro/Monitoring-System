@@ -20,7 +20,7 @@ import { setUserData } from 'pages/dashboard/slice/userSlice';
 import Modal from 'components/common/modal';
 import avatar from 'assets/images/avatar.png';
 import Loader from '../../../components/common/loader';
-import { patterns } from 'utils/constant';
+import { patterns, messages } from 'utils/constant';
 
 const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) => {
   const [userBio, setUserBio] = useState('');
@@ -72,7 +72,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
     });
 
     if (response) {
-      formSubmission('User details updated successfully');
+      formSubmission(messages.accountUpdated);
       dispatch(setNotificationCount(notificationCount + 1));
       onClose();
     }
@@ -267,7 +267,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
           {/* Reset Password confirmation */}
           <Modal
             isOpen={isResetConfirmVisible}
-            message={t('Do you want to reset the password?')}
+            message={t(messages.confirmResetPassword)}
             onClose={confirmDialogCloseReset}
             type='confirmation'
           />

@@ -140,6 +140,9 @@ export const messages = {
   userCreated: 'User registered successfully',
   userUpdated: 'User details updated successfully',
   userDeleted: 'User deleted successfully',
+  accountConfirmDisable: 'Are you sure you want to disable this account?',
+  accountDisabled: 'Account disabled successfully',
+  accountUpdated: 'Account details updated successfully',
   deviceCreated: 'Device created successfully',
   deviceUpdated: 'Device updated successfully',
   deviceDeleted: 'Device deleted successfully',
@@ -149,6 +152,7 @@ export const messages = {
   widgetDeleted: 'Widget deleted successfully',
   confirmDelete: 'Are you sure want to delete?',
   confirmDisable: 'Are you sure you want to disable?',
+  confirmResetPassword: 'Do you want to reset the password?',
 };
 
 export const customTableStyles = {
