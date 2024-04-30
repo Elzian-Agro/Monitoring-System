@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
 import Dropdown from 'pages/dashboard/components/base/Dropdown';
 import MultiSelectDropdown from 'pages/dashboard/components/base/MultiSelectDropdown';
-import { DeviceFactors } from 'utils/constant';
+import { DeviceFactors, messages } from 'utils/constant';
 
 const Form = ({ visible, onClose, device = null, formSubmission }) => {
   const [userList, setUserList] = useState([]);
@@ -77,7 +77,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
     });
 
     if (response) {
-      formSubmission(device ? 'Device updated successfully' : 'Device created successfully');
+      formSubmission(device ? messages.deviceUpdated : messages.deviceCreated);
       onClose();
     }
   };

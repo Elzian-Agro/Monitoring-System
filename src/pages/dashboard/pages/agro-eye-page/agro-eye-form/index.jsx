@@ -7,6 +7,7 @@ import { ArrowLeftIcon, CalendarIcon, ChartBarIcon, IdentificationIcon, PlusIcon
 import { PrimaryButton } from 'pages/dashboard/components/base/Button';
 import PropTypes from 'prop-types';
 import useAxios from 'hooks/useAxios';
+import { messages } from 'utils/constant';
 
 const Form = ({ visible, onClose, widget = null, higherOrder, formSubmission }) => {
   const [name, setName] = useState('');
@@ -87,7 +88,7 @@ const Form = ({ visible, onClose, widget = null, higherOrder, formSubmission }) 
     });
 
     if (response) {
-      formSubmission(widget ? 'Widget updated successfully' : 'Widget created successfully');
+      formSubmission(widget ? messages.widgetUpdated : messages.widgetCreated);
       onClose();
     }
   };

@@ -15,7 +15,7 @@ import { encryptData } from 'utils/rsa.encrypt';
 import { generatePassword } from 'pages/dashboard/utils/generatePassword';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
-import { patterns } from 'utils/constant';
+import { patterns, messages } from 'utils/constant';
 
 const Form = ({ visible, onClose, user = null, formSubmission }) => {
   const [firstName, setFirstName] = useState('');
@@ -87,7 +87,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
     });
 
     if (response) {
-      formSubmission(user ? 'User details updated successfully' : 'User registered successfully');
+      formSubmission(user ? messages.userUpdated : messages.userCreated);
       onClose();
     }
   };

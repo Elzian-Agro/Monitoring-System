@@ -10,6 +10,7 @@ import useAxios from 'hooks/useAxios';
 import { useTranslation } from 'react-i18next';
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { arrayMove, SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import { messages } from 'utils/constant';
 
 const AgroEye = () => {
   const [message, setMessage] = useState(null);
@@ -73,7 +74,7 @@ const AgroEye = () => {
       });
       setIsConfirmVisible(false);
       if (response) {
-        setMessage('Widget deleted successfully');
+        setMessage(messages.widgetDeleted);
         setIsAlertVisible(true);
         recall();
       }
@@ -162,7 +163,7 @@ const AgroEye = () => {
       )}
       <Modal
         isOpen={isConfirmVisible}
-        message='Are you sure want to delete?'
+        message={messages.confirmDelete}
         onClose={(result) => handleConfirmationAndDelete(result)}
         type='confirmation'
       />

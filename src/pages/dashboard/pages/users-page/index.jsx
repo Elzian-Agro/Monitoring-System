@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../../slice/dashboardLayoutSlice';
 import { PrimaryButton, VariantButton } from '../../components/base/Button';
-import { customTableStyles } from 'utils/constant';
+import { customTableStyles, messages } from 'utils/constant';
 import DataTable from 'react-data-table-component';
 import { downloadCSV } from '../../utils/download';
 import Form from './user-form';
@@ -134,7 +134,7 @@ const ManageUsers = () => {
       });
       setIsConfirmVisible(false);
       if (response) {
-        setMessage('User deleted successfully');
+        setMessage(messages.userDeleted);
         setIsAlertVisible(true);
         recall();
       }
@@ -203,7 +203,7 @@ const ManageUsers = () => {
       )}
       <Modal
         isOpen={isConfirmVisible}
-        message='Are you sure want to delete?'
+        message={messages.confirmDelete}
         onClose={(result) => handleConfirmationAndDelete(result)}
         type='confirmation'
       />

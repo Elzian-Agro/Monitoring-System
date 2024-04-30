@@ -136,6 +136,21 @@ export const errorType = {
   },
 };
 
+export const messages = {
+  userCreated: 'User registered successfully',
+  userUpdated: 'User details updated successfully',
+  userDeleted: 'User deleted successfully',
+  deviceCreated: 'Device created successfully',
+  deviceUpdated: 'Device updated successfully',
+  deviceDeleted: 'Device deleted successfully',
+  deviceDisabled: 'Device disabled successfully',
+  widgetCreated: 'Widget created successfully',
+  widgetUpdated: 'Widget updated successfully',
+  widgetDeleted: 'Widget deleted successfully',
+  confirmDelete: 'Are you sure want to delete?',
+  confirmDisable: 'Are you sure you want to disable?',
+};
+
 export const customTableStyles = {
   table: {
     style: {

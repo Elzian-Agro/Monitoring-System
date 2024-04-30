@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../../slice/dashboardLayoutSlice';
 import { PrimaryButton, VariantButton } from '../../components/base/Button';
-import { customTableStyles } from 'utils/constant';
+import { customTableStyles, messages } from 'utils/constant';
 import DataTable from 'react-data-table-component';
 import { downloadCSV } from '../../utils/download';
 import Form from './device-form';
@@ -90,7 +90,7 @@ const DeviceManagement = () => {
             onClick={() => {
               setSelectedDevice(row);
               setActionType('Disable');
-              setMessage('Are you sure you want to disable this device?');
+              setMessage(messages.confirmDisable);
               setIsConfirmVisible(true);
             }}
           />
@@ -100,7 +100,7 @@ const DeviceManagement = () => {
             onClick={() => {
               setSelectedDevice(row);
               setActionType('Delete');
-              setMessage('Are you sure you want to delete this device?');
+              setMessage(messages.confirmDelete);
               setIsConfirmVisible(true);
             }}
           />
@@ -135,13 +135,9 @@ const DeviceManagement = () => {
   const handleConfirmation = async (result) => {
     if (result) {
       if (actionType === 'Delete') {
-        await handleAction(`device/delete/${selectedDevice?._id}`, { isDeleted: true }, 'Device deleted successfully');
+        await handleAction(`device/delete/${selectedDevice?._id}`, { isDeleted: true }, messages.deviceDeleted);
       } else if (actionType === 'Disable') {
-        await handleAction(
-          `device/disable/${selectedDevice?._id}`,
-          { isDisabled: true },
-          'Device disabled successfully'
-        );
+        await handleAction(`device/disable/${selectedDevice?._id}`, { isDisabled: true }, messages.deviceDisabled);
       }
     }
     setIsConfirmVisible(false);
