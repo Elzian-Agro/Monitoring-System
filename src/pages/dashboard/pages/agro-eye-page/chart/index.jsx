@@ -27,9 +27,9 @@ const Chart = ({ id, widget }) => {
     const startDateTime = new Date(widget?.startDateTime);
     const endDateTime = new Date(widget?.endDateTime);
     const timeGap = widget?.timeGap;
-
-    const axisTime = []; // Generate time array between start and end time with time gap
+    const axisTime = [];
     let currentDateTime = new Date(startDateTime);
+
     while (currentDateTime <= endDateTime) {
       axisTime.push(new Date(currentDateTime).toISOString());
       currentDateTime = new Date(currentDateTime.getTime() + timeGap);
@@ -37,26 +37,14 @@ const Chart = ({ id, widget }) => {
 
     const sensorSeries = widget?.devices.flatMap((device) => {
       const deviceId = device.deviceId;
-      const factors = device.factors;
-      const series = factors.map((factor) => {
-        const seriesData = widget.sensorData
-          .find((sensorData) => sensorData[deviceId])
-          [deviceId].map((entry) => {
-            return {
-              x: new Date(entry.timestamp).toISOString(),
-              y: entry[factor],
-            };
-          });
 
+      return device.factors?.map((factor) => {
         const timeSeriesData = [];
+        const deviceData = widget.sensorData.find((sensorData) => sensorData[deviceId]);
 
         axisTime.forEach((time) => {
-          const dataPoint = seriesData.find((data) => data.x === time);
-          if (dataPoint) {
-            timeSeriesData.push(dataPoint.y);
-          } else {
-            timeSeriesData.push(null);
-          }
+          const entry = deviceData?.[deviceId].find((data) => new Date(data.timestamp).toISOString() === time);
+          timeSeriesData.push(entry ? entry[factor] : null);
         });
 
         return {
@@ -64,8 +52,6 @@ const Chart = ({ id, widget }) => {
           data: timeSeriesData,
         };
       });
-
-      return series;
     });
 
     const chartConfig = {
