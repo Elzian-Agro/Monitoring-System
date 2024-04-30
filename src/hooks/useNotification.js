@@ -19,6 +19,7 @@ const useNotification = () => {
   useEffect(() => {
     if (userId && fetch) {
       fetchNotificationsData();
+      setNotificationFetch(false);
     }
     // eslint-disable-next-line
   }, [userId, fetch]);

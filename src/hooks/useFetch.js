@@ -50,7 +50,7 @@ const useFetch = ({ endpoint, method, call = 0, requestBody = {}, dependency = [
 
           localStorage.removeItem('jwtAccessToken');
           localStorage.removeItem('jwtRefreshToken');
-          navigate('/', { replace: true });
+          navigate('/login', { replace: true });
         }
       }
 
