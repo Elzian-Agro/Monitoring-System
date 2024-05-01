@@ -22,7 +22,7 @@ function Dropdown({ label = null, Icon = null, required = false, defaltOptions =
             required={required}
             className='text-sm appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white dark:bg-secondary-dark-bg leading-tight px-2 focus:outline-none'>
             {defaltOptions && (
-              <option value='' disabled>
+              <option value='' disabled selected>
                 {t(defaltOptions)}
               </option>
             )}
