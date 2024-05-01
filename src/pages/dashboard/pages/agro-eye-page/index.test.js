@@ -1,10 +1,10 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AgroEye from './index';
-import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
+import { messages } from 'utils/constant';
 
-const mockedResponse = [
+const mockedWidgets = [
   {
     _id: '6625f5492151cfa14811e79e',
     userId: '659b88d3fcf416d1f89e79e8',
@@ -83,12 +83,13 @@ jest.mock('react-redux', () => ({
 // Mock useAxios
 jest.mock('hooks/useAxios', () => () => ({
   loading: false,
-  send: jest.fn().mockResolvedValue(mockedResponse),
+  send: jest.fn().mockResolvedValue(mockedWidgets),
 }));
 
+// Mock useFetch
 jest.mock('hooks/useFetch', () => () => ({
   isLoading: false,
-  response: mockedResponse,
+  response: mockedWidgets,
   recall: jest.fn().mockReturnValue(null),
 }));
 
@@ -96,28 +97,97 @@ jest.mock('hooks/useFetch', () => () => ({
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
     return {
-      t: (key) => key, // Mock translation function
+      t: (key) => key,
     };
   },
 }));
 
 describe('AgroEye Page', () => {
-  it('renders user data correctly', async () => {
-    await act(async () => {
-      render(
-        <MemoryRouter>
-          <AgroEye />
-        </MemoryRouter>
-      );
-    });
+  it('renders widget data correctly', async () => {
+    render(
+      <MemoryRouter>
+        <AgroEye />
+      </MemoryRouter>
+    );
 
+    // Find Add new widgets button
     expect(screen.getByText('Add New')).toBeInTheDocument();
 
+    // Find the widgets
     expect(screen.getAllByText('Widget 01').length).toBeGreaterThan(0);
     expect(screen.getAllByText('Widget 02').length).toBeGreaterThan(0);
 
+    // Find the device factors
     expect(screen.getAllByText('ELZ-0001-01 Temperature').length).toBeGreaterThan(0);
     expect(screen.getAllByText('ELZ-0001-01 Humidity').length).toBeGreaterThan(0);
     expect(screen.getAllByText('ELZ-0001-01 Soil Moisture').length).toBeGreaterThan(0);
+  });
+
+  it('opens widget form  when Add New button is clicked', async () => {
+    render(
+      <MemoryRouter>
+        <AgroEye />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByText('Add New'));
+
+    // Wait for load widget form
+    await waitFor(() => {
+      expect(screen.getByText('NEW WIDGET CREATION')).toBeInTheDocument();
+    });
+
+    // Simulate Submit form
+    fireEvent.click(screen.getByText('Submit'));
+
+    // Assuming an alert is shown after creating
+    await waitFor(() => {
+      expect(screen.getByText(messages.widgetCreated)).toBeInTheDocument();
+    });
+  });
+
+  it('opens update form when update button is clicked', async () => {
+    render(
+      <MemoryRouter>
+        <AgroEye />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getAllByTestId('update-button')[0]);
+
+    // Wait for widget form open
+    await waitFor(() => {
+      expect(screen.getByText('UPDATE WIDGET DETAILS')).toBeInTheDocument();
+    });
+
+    // Simulate update form
+    fireEvent.click(screen.getByText('Update'));
+
+    // Assuming an alert is shown after updating
+    await waitFor(() => {
+      expect(screen.getByText(messages.widgetUpdated)).toBeInTheDocument();
+    });
+  });
+
+  it('opens confirmation modal when delete button is clicked and confirms deletion', async () => {
+    render(
+      <MemoryRouter>
+        <AgroEye />
+      </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getAllByTestId('delete-button')[0]);
+
+    await waitFor(() => {
+      expect(screen.getByText(messages.confirmDelete)).toBeInTheDocument();
+    });
+
+    // Simulate user confirming the deletion
+    fireEvent.click(screen.getByText('YES'));
+
+    await waitFor(() => {
+      // Assuming an alert is shown after deletion
+      expect(screen.getByText(messages.widgetDeleted)).toBeInTheDocument();
+    });
   });
 });
