@@ -4,7 +4,7 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import LoginPage from './index'; // Update the path to your component
 import axios from 'axios';
-import { store } from 'store/store'; // Import your store
+import { store } from 'utils/store'; // Import your store
 
 jest.mock('axios');
 
@@ -49,5 +49,4 @@ describe('LoginPage Component', () => {
     // Adjust this to match the text/content you expect to see in Forgot Password page
     expect(screen.getByText('FORGOT PASSWORD?')).toBeInTheDocument();
   });
-
 });

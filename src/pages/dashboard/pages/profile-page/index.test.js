@@ -33,6 +33,12 @@ jest.mock('hooks/useAxios', () => () => ({
   send: jest.fn().mockResolvedValue(mockUserData),
 }));
 
+jest.mock('hooks/useFetch', () => () => ({
+  isLoading: false,
+  response: mockUserData,
+  recall: jest.fn().mockReturnValue(null),
+}));
+
 // Mock react-i18next
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
@@ -112,7 +118,7 @@ describe('Profile Page', () => {
     fireEvent.click(screen.getByText('YES'));
 
     await waitFor(() => {
-      expect(screen.getByText('Disabled successfully')).toBeInTheDocument();
+      expect(screen.getByText('Account disabled successfully')).toBeInTheDocument();
     });
 
     fireEvent.click(screen.getByText('OK'));

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../../slice/dashboardLayoutSlice';
 import { PrimaryButton, VariantButton } from '../../components/base/Button';
-import { customTableStyles } from 'constant';
+import { customTableStyles, messages } from 'utils/constant';
 import DataTable from 'react-data-table-component';
 import { downloadCSV } from '../../utils/download';
 import Form from './device-form';
@@ -12,9 +12,9 @@ import Loader from '../../components/common/loader';
 import { useTranslation } from 'react-i18next';
 import Modal from 'components/common/modal';
 import useAxios from 'hooks/useAxios';
+import useFetch from 'hooks/useFetch';
 
 const DeviceManagement = () => {
-  const [devices, setDevices] = useState([]);
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [filterText, setFilterText] = useState('');
   const [message, setMessage] = useState(null);
@@ -27,16 +27,17 @@ const DeviceManagement = () => {
   const currentMode = useSelector(selectTheme);
   const { t } = useTranslation();
   const { loading, send } = useAxios();
-
-  const getDevices = async () => {
-    const response = await send({ endpoint: 'device', method: 'GET' });
-    setDevices(response?.result);
-  };
-
-  useEffect(() => {
-    getDevices();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const {
+    response: devices,
+    isLoading,
+    recall,
+  } = useFetch({
+    endpoint: 'device',
+    method: 'GET',
+    call: 1,
+    requestBody: {},
+    dependency: [],
+  });
 
   // Define columns array
   let columns = [
@@ -52,11 +53,6 @@ const DeviceManagement = () => {
       ),
     },
     {
-      name: t('USER NAME'),
-      selector: (row) => (row.userId ? `${row.userId.firstName || ''} ${row.userId.lastName || ''}` : 'Not Allocated'),
-      sortable: true,
-    },
-    {
       name: t('DEVICE TYPE'),
       selector: (row) => row.deviceType,
       sortable: true,
@@ -70,6 +66,12 @@ const DeviceManagement = () => {
 
   // Conditionally add 'ACTION' columns if user is admin
   if (userType === 'admin') {
+    columns.push({
+      name: t('USER NAME'),
+      selector: (row) => (row.userId ? `${row.userId.firstName || ''} ${row.userId.lastName || ''}` : 'Not Allocated'),
+      sortable: true,
+    });
+
     columns.push({
       name: t('ACTION'),
       cell: (row) => (
@@ -88,7 +90,7 @@ const DeviceManagement = () => {
             onClick={() => {
               setSelectedDevice(row);
               setActionType('Disable');
-              setMessage('Are you sure you want to disable this device?');
+              setMessage(messages.confirmDisable);
               setIsConfirmVisible(true);
             }}
           />
@@ -98,7 +100,7 @@ const DeviceManagement = () => {
             onClick={() => {
               setSelectedDevice(row);
               setActionType('Delete');
-              setMessage('Are you sure you want to delete this device?');
+              setMessage(messages.confirmDelete);
               setIsConfirmVisible(true);
             }}
           />
@@ -109,10 +111,10 @@ const DeviceManagement = () => {
 
   // Function to filter the user based on the search text
   const filterDevices = useMemo(() => {
-    if (!devices) {
+    if (!devices?.result) {
       return [];
     }
-    return devices.filter((device) => {
+    return devices.result.filter((device) => {
       const deviceId = device.deviceId?.toLowerCase() || '';
       const firstName = (device.userId?.firstName || '').toLowerCase();
       const lastName = (device.userId?.lastName || '').toLowerCase();
@@ -133,13 +135,9 @@ const DeviceManagement = () => {
   const handleConfirmation = async (result) => {
     if (result) {
       if (actionType === 'Delete') {
-        await handleAction(`device/delete/${selectedDevice?._id}`, { isDeleted: true }, 'Device deleted successfully');
+        await handleAction(`device/delete/${selectedDevice?._id}`, { isDeleted: true }, messages.deviceDeleted);
       } else if (actionType === 'Disable') {
-        await handleAction(
-          `device/disable/${selectedDevice?._id}`,
-          { isDisabled: true },
-          'Device disabled successfully'
-        );
+        await handleAction(`device/disable/${selectedDevice?._id}`, { isDisabled: true }, messages.deviceDisabled);
       }
     }
     setIsConfirmVisible(false);
@@ -155,7 +153,7 @@ const DeviceManagement = () => {
     if (response) {
       setMessage(successMessage);
       setIsAlertVisible(true);
-      getDevices();
+      recall();
     }
   };
 
@@ -172,14 +170,14 @@ const DeviceManagement = () => {
           formSubmission={async (message) => {
             setMessage(message);
             setIsAlertVisible(true);
-            getDevices();
+            recall();
           }}
         />
       )}
 
-      {loading && <Loader />}
+      {(isLoading || loading) && <Loader />}
 
-      {!devices && (
+      {!devices && !isLoading && !loading && (
         <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-lg p-8'>
           <p className='text-sm dark:text-white justify-center'>
             There are no devices allocated. Please contact{' '}
@@ -190,7 +188,7 @@ const DeviceManagement = () => {
         </div>
       )}
 
-      {!isFormVisible && !loading && devices && (
+      {!isFormVisible && !loading && !isLoading && devices && (
         <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
           <div className='flex flex-col lg:flex-row mb-4 lg:items-center lg:justify-between'>
             <div className='flex gap-2 mb-2 lg:mb-0'>

@@ -13,13 +13,14 @@ import {
 } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
-import { useDispatch } from 'react-redux';
+import { setNotificationCount, selectNotificationCount } from 'pages/dashboard/slice/dashboardLayoutSlice';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setUserData } from 'pages/dashboard/slice/userSlice';
 import Modal from 'components/common/modal';
 import avatar from 'assets/images/avatar.png';
 import Loader from '../../../components/common/loader';
-import { patterns } from 'constant';
+import { patterns, messages } from 'utils/constant';
 
 const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) => {
   const [userBio, setUserBio] = useState('');
@@ -31,6 +32,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
   const [photoEditMode, setPhotoEditMode] = useState(false);
   const [isResetConfirmVisible, setIsResetConfirmVisible] = useState(false);
   const [localProfilePicture, setLocalProfilePicture] = useState('');
+  const notificationCount = useSelector(selectNotificationCount);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,9 +45,9 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       setUserBio(user.userBio);
       setPhoneNum(user.phoneNum);
       setAddress(user.address);
-      setFacebook(user.socialMedia?.facebook);
-      setLinkedIn(user.socialMedia?.linkedIn);
-      setYoutube(user.socialMedia?.youtube);
+      setFacebook(user.socialMedia?.facebook || '');
+      setLinkedIn(user.socialMedia?.linkedIn || '');
+      setYoutube(user.socialMedia?.youtube || '');
     }
   }, [user]);
 
@@ -70,7 +72,8 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
     });
 
     if (response) {
-      formSubmission('User details updated successfully');
+      formSubmission(messages.accountUpdated);
+      dispatch(setNotificationCount(notificationCount + 1));
       onClose();
     }
   };
@@ -264,7 +267,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
           {/* Reset Password confirmation */}
           <Modal
             isOpen={isResetConfirmVisible}
-            message={t('Do you want to reset the password?')}
+            message={t(messages.confirmResetPassword)}
             onClose={confirmDialogCloseReset}
             type='confirmation'
           />

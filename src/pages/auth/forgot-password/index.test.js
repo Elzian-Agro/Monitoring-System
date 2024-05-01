@@ -5,9 +5,9 @@ import '@testing-library/jest-dom';
 import { Provider, useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
-import { store } from 'store/store'; // Import your store
+import { store } from 'utils/store'; // Import your store
 import { updateEmail } from '../slice/emailSlice'; // Import the action you want to dispatch
-import { errorType } from 'constant';
+import { errorType } from 'utils/constant';
 
 jest.mock('axios');
 

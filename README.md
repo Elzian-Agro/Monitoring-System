@@ -38,6 +38,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - **Documentation**: [HighChart Documentation](https://www.highcharts.com/docs/index)
 
+### React dnd kit
+
+- **Documentation**: [React dnd kit Documentation](https://docs.dndkit.com/)
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -119,3 +123,22 @@ Prod: http://monitoring.elzian.com/
 Backend Dev API: https://monitoring-dev-api.elzian.com
 
 ngRok - n6ABQf$nDZ3S
+
+## VS Code Extensions
+
+Tailwind css IntelliSence
+Prettier
+ESLint
+Auto Close Tag
+Auto Rename Tag
+Draw.io integration
+GitLens
+Path Intellisense
+Postman
+Simple React Snippets
+gitHub Copilot
+Bracket Pair Color
+
+## Browser Extension for React Development
+
+React Developer Tool, Redux DevTool

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../../slice/dashboardLayoutSlice';
 import { PrimaryButton, VariantButton } from '../../components/base/Button';
-import { customTableStyles } from 'constant';
+import { customTableStyles, messages } from 'utils/constant';
 import DataTable from 'react-data-table-component';
 import { downloadCSV } from '../../utils/download';
 import Form from './user-form';
@@ -12,21 +12,32 @@ import Loader from '../../components/common/loader';
 import { useTranslation } from 'react-i18next';
 import Modal from 'components/common/modal';
 import useAxios from 'hooks/useAxios';
+import useFetch from 'hooks/useFetch';
 
 const ManageUsers = () => {
-  const [users, setUsers] = useState([]);
   const [filterText, setFilterText] = useState('');
   const [message, setMessage] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const {
+    response: users,
+    recall,
+    isLoading,
+  } = useFetch({
+    endpoint: 'user',
+    method: 'GET',
+    call: 1,
+    requestBody: {},
+    dependency: [],
+  });
 
   const currentMode = useSelector(selectTheme);
   const { t } = useTranslation();
-  const { loading, send } = useAxios();
+  const { send, loading } = useAxios();
 
-  // User table columns define
+  // User table columns definea
   const columns = [
     {
       name: t('FIRST NAME'),
@@ -89,16 +100,6 @@ const ManageUsers = () => {
     },
   ];
 
-  const getUsers = async () => {
-    const response = await send({ endpoint: 'user', method: 'GET' });
-    setUsers(response);
-  };
-
-  useEffect(() => {
-    getUsers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Function to filter the user based on the search text
   const filterUsers = useMemo(() => {
     if (!users) {
@@ -133,9 +134,9 @@ const ManageUsers = () => {
       });
       setIsConfirmVisible(false);
       if (response) {
-        setMessage('User deleted successfully');
+        setMessage(messages.userDeleted);
         setIsAlertVisible(true);
-        getUsers();
+        recall();
       }
     }
     setIsConfirmVisible(false);
@@ -154,14 +155,14 @@ const ManageUsers = () => {
           formSubmission={async (message) => {
             setMessage(message);
             setIsAlertVisible(true);
-            getUsers();
+            recall();
           }}
         />
       )}
 
-      {loading && <Loader />}
+      {(loading || isLoading) && <Loader />}
 
-      {!isFormVisible && !loading && (
+      {!isFormVisible && !loading && !isLoading && (
         <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
           <div className='flex flex-col lg:flex-row mb-4 lg:items-center lg:justify-between'>
             <div className='flex gap-2 mb-2 lg:mb-0'>
@@ -202,7 +203,7 @@ const ManageUsers = () => {
       )}
       <Modal
         isOpen={isConfirmVisible}
-        message='Are you sure want to delete?'
+        message={messages.confirmDelete}
         onClose={(result) => handleConfirmationAndDelete(result)}
         type='confirmation'
       />

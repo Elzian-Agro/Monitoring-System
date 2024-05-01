@@ -16,6 +16,8 @@ export const characterSets = {
   symbols: '!@#$%&*+-=<>?',
 };
 
+export const DeviceFactors = ['Temperature', 'Humidity', 'Soil Moisture', 'Gas Detection'];
+
 export const menuMode = {
   open: 'open',
   partiallyOpen: 'onlyIcon',
@@ -73,6 +75,11 @@ export const errorType = {
     message: 'Email address not verified',
   },
 
+  userNotLogin: {
+    code: 13012,
+    message: 'You are not logged in. Please login to access this page!',
+  },
+
   noRecords: {
     code: 13015,
     message: 'No records found',
@@ -117,6 +124,35 @@ export const errorType = {
     code: 13025,
     message: 'User does not exist or is disabled',
   },
+
+  widgetNotFound: {
+    code: 13027,
+    message: 'Widgets not found',
+  },
+
+  widgetCreatedFailure: {
+    code: 13026,
+    message: 'Widget creation failure',
+  },
+};
+
+export const messages = {
+  userCreated: 'User registered successfully',
+  userUpdated: 'User details updated successfully',
+  userDeleted: 'User deleted successfully',
+  accountConfirmDisable: 'Are you sure you want to disable this account?',
+  accountDisabled: 'Account disabled successfully',
+  accountUpdated: 'Account details updated successfully',
+  deviceCreated: 'Device created successfully',
+  deviceUpdated: 'Device updated successfully',
+  deviceDeleted: 'Device deleted successfully',
+  deviceDisabled: 'Device disabled successfully',
+  widgetCreated: 'Widget created successfully',
+  widgetUpdated: 'Widget updated successfully',
+  widgetDeleted: 'Widget deleted successfully',
+  confirmDelete: 'Are you sure want to delete?',
+  confirmDisable: 'Are you sure you want to disable?',
+  confirmResetPassword: 'Do you want to reset the password?',
 };
 
 export const customTableStyles = {

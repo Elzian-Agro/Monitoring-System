@@ -1,30 +1,147 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Loader from 'pages/dashboard/components/common/loader';
+import { ChevronRightIcon, ChevronLeftIcon } from '@heroicons/react/24/outline';
+import { useDispatch, useSelector } from 'react-redux';
+import { showErrorModal } from 'error/slice/errorSlice';
+import { useNavigate } from 'react-router-dom';
+import { selectUserAddress } from '../../slice/userSlice';
 
 const WeatherComponent = () => {
+  const [weatherData, setWeatherData] = useState();
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [btnIndex, setBtnIndex] = useState(0);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useSelector(selectUserAddress);
+
+  // TODO: Move fetch data to backend and use useAxios hook instead.
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=metric&appid=128a04a67f6b5706e842411e7a3cebe6`
+      );
+      const weatherForecast = response.data.list.filter((forecast) => {
+        const forecastDate = new Date(forecast.dt_txt);
+        return (
+          forecastDate.getFullYear() === selectedDate.getFullYear() &&
+          forecastDate.getMonth() === selectedDate.getMonth() &&
+          forecastDate.getDate() === selectedDate.getDate()
+        );
+      });
+      setWeatherData(weatherForecast[0]);
+    } catch (error) {
+      dispatch(showErrorModal('Failed to fetch weather data, check your location and try again'));
+      navigate('/profile');
+    }
+  };
+
+  useEffect(() => {
+    if (location) {
+      fetchData();
+    }
+    // eslint-disable-next-line
+  }, [location, btnIndex]);
+
+  const handleDateChange = (increment) => {
+    setBtnIndex((prev) => {
+      const newIndex = Math.max(0, Math.min(4, prev + increment));
+      if (newIndex !== prev) {
+        setSelectedDate((currentDate) => {
+          const newDate = new Date(currentDate);
+          newDate.setDate(newDate.getDate() + increment);
+          return newDate;
+        });
+        return newIndex;
+      }
+      return prev;
+    });
+  };
+
+  if (!weatherData) {
+    return <Loader />;
+  }
+
   return (
     <div className='flex items-center justify-center min-h-screen'>
-      <div className='w-full max-w-md bg-white bg-opacity-30 p-8 rounded-lg backdrop-blur-lg border border-gray-300 shadow-lg'>
-        <h1 className='text-3xl font-bold dark:text-white mb-4'>Weather Forecast</h1>
-        <div className='flex items-center justify-between'>
-          <div className='flex items-center'>
-            <img
-              src='https://cdn-icons-png.flaticon.com/512/3104/3104612.png'
-              alt='Weather Icon'
-              className='h-12 w-12'
-            />
-            <div className='ml-4'>
-              <p className='text-lg font-semibold dark:text-white'>Today</p>
-              <p className='text-sm text-gray-500 dark:text-gray-200'>Partly Cloudy</p>
+      <div className='p-5 mr-2 ml-2 flex flex-wrap justify-center items-center gap-10 bg-white dark:bg-secondary-dark-bg rounded-lg shadow-md dark:shadow-gray-500'>
+        <div className='flex flex-col justify-center items-center border-gray-300 border-4 rounded-lg p-5'>
+          <img
+            src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+            alt='Weather Icon'
+            className='w-full'
+          />
+
+          <h1 className='font-bold text-[50px] font-zenkaku text-gray-900 dark:text-gray-100'>
+            {weatherData?.main?.temp}
+            <span className='font-extralight text-gray-400'>°C</span>
+          </h1>
+
+          <p className='text-gray-400 font-zenkaku font-normal'>{weatherData?.weather[0]?.description.toUpperCase()}</p>
+        </div>
+
+        <div className='flex-1 flex flex-col justify-between'>
+          <div>
+            <div className='flex gap-2 items-center justify-around'>
+              <button
+                onClick={() => handleDateChange(-1)}
+                disabled={btnIndex <= 0}
+                className='disabled:text-gray-300 dark:disabled:text-gray-600 disabled:cursor-not-allowed dark:text-white'>
+                <ChevronLeftIcon className='w-[20px]' />
+              </button>
+              <p className='text-center font-bold font-zenkaku text-[20px] text-gray-600 dark:text-gray-100'>
+                {selectedDate.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase()},
+                <span className='font-normal'>
+                  {' '}
+                  {selectedDate.getDate()} {selectedDate.toLocaleDateString('en-US', { month: 'long' }).toUpperCase()}
+                </span>
+              </p>
+              <button
+                onClick={() => handleDateChange(1)}
+                disabled={btnIndex >= 4}
+                className='disabled:text-gray-300 dark:disabled:text-gray-600 disabled:cursor-not-allowed dark:text-white'>
+                <ChevronRightIcon className='w-[20px]' />
+              </button>
+            </div>
+
+            <h1 className='font-zenkaku font-bold text-[50px] text-gray-700 dark:text-gray-100 text-center'>
+              {location.toUpperCase()}
+            </h1>
+          </div>
+
+          <div className='bg-[#f8f8f8] dark:bg-secondary-dark-bg flex flex-wrap w-100% p-2 gap-5 justify-center items-center rounded-lg text-center border-gray-300 border-4'>
+            <div className='bg-white dark:bg-main-dark-bg w-[40%] p-1 rounded-lg'>
+              <p className='font-zenkaku text-gray-500 font-normal dark:text-gray-100'>Feels Like</p>
+              <p className='font-bold text-[25px] font-zenkaku text-gray-600 dark:text-gray-100'>
+                {weatherData?.main?.feels_like}
+                <span className='font-extralight text-gray-400'>°C</span>
+              </p>
+            </div>
+
+            <div className='bg-white dark:bg-main-dark-bg w-[40%] p-1 rounded-lg'>
+              <p className='font-zenkaku text-gray-500 font-normal dark:text-gray-100'>Humidity</p>
+              <p className='font-bold text-[25px] font-zenkaku text-gray-600 dark:text-gray-100'>
+                {weatherData?.main?.humidity}
+                <span className='font-extralight text-gray-400'>%</span>
+              </p>
+            </div>
+
+            <div className='bg-white dark:bg-main-dark-bg w-[40%] p-1 rounded-lg'>
+              <p className='font-zenkaku text-gray-500 font-normal dark:text-gray-100'>Wind Speed</p>
+              <p className='font-bold text-[25px] font-zenkaku text-gray-600 dark:text-gray-100'>
+                {weatherData?.wind.speed}
+                <span className='font-extralight text-gray-400'> m/s</span>
+              </p>
+            </div>
+
+            <div className='bg-white dark:bg-main-dark-bg w-[40%] p-1 rounded-lg'>
+              <p className='font-zenkaku text-gray-500 font-normal dark:text-gray-100'>Pressure</p>
+              <p className='font-bold text-[25px] font-zenkaku text-gray-600 dark:text-gray-100'>
+                {weatherData?.main?.pressure}
+                <span className='font-extralight text-gray-400'> hPa</span>
+              </p>
             </div>
           </div>
-          <div>
-            <p className='text-4xl font-bold dark:text-white'>25°C</p>
-          </div>
-        </div>
-        <div className='mt-6'>
-          <p className='text-sm text-gray-500 dark:text-gray-200'>Humidity: 65%</p>
-          <p className='text-sm text-gray-500 dark:text-gray-200'>Wind: 15 km/h</p>
-          <p className='text-sm text-gray-500 dark:text-gray-200'>Pressure: 1015 hPa</p>
         </div>
       </div>
     </div>

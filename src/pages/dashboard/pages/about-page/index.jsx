@@ -13,7 +13,7 @@ const AboutUsPage = () => {
         <img src={coverImage} alt='farmLand' className='w-full h-full object-cover rounded-tr-xl rounded-tl-xl ' />
       </div>
 
-      <div className='flex flex-col bg-opacity-30 border border-gray-100 dark:border-gray-600 shadow-md rounded-md shadow-black/5 gap-4 p-8 m-10'>
+      <div className='flex flex-col bg-opacity-30 sm:border sm:border-gray-100 sm:dark:border-gray-600 sm:shadow-md sm:rounded-md sm:shadow-black/5 gap-4 p-8 sm:m-10'>
         <h2 className='text-4xl font-bold text-black dark:text-white text-center'>
           ELZIAN AGRO<sup className='text-2xl text-black dark:text-white'>TM</sup>
         </h2>

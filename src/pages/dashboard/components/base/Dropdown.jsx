@@ -20,11 +20,11 @@ function Dropdown({ label = null, Icon = null, required = false, defaltOptions =
             value={value}
             onChange={(e) => setValue(e.target.value)}
             required={required}
-            className='text-base appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white dark:bg-secondary-dark-bg leading-tight px-2 focus:outline-none'>
+            className='text-sm appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white dark:bg-secondary-dark-bg leading-tight px-2 focus:outline-none'>
             <option value='' disabled selected>
               {t(defaltOptions)}
             </option>
-            {options.map((option) => (
+            {options?.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.name}
               </option>

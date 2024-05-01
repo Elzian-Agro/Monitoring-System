@@ -11,7 +11,7 @@ const NotFoundPage = () => {
         <h1 className='text-6xl font-bold text-gray-800'>404</h1>
         <p className='text-xl font-light text-gray-600 mb-4'>{t('Page Not Found')}</p>
         <NavLink
-          to='/'
+          to='/dashboard'
           className='px-4 py-2 bg-[#0B8021] hover:bg-[#006102] text-white rounded transition-all duration-300'>
           {t('Go Home')}
         </NavLink>

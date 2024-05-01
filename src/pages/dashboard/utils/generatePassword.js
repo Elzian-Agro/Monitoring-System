@@ -1,4 +1,4 @@
-import { characterSets } from 'constant';
+import { characterSets } from 'utils/constant';
 
 export const generatePassword = (length = 12) => {
   const { lowercaseLetters, uppercaseLetters, numbers, symbols } = characterSets;
@@ -21,5 +21,5 @@ export const generatePassword = (length = 12) => {
   }
 
   // Shuffle characters for randomness
-  return password.toSorted(() => Math.random() - 0.5).join('');
+  return password.sort(() => Math.random() - 0.5).join('');
 };

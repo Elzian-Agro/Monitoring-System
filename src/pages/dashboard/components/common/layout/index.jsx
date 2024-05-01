@@ -1,13 +1,16 @@
 import './index.css';
 import Navbar from 'components/common/navbar';
 import Sidebar from 'components/common/sidebar';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectActiveMenu, selectTheme } from './slice/dashboardLayoutSlice';
+import { useSelector } from 'react-redux';
+import { selectActiveMenu, selectTheme } from '../../../slice/dashboardLayoutSlice';
 import { useEffect } from 'react';
-import { setUserData } from 'pages/dashboard/slice/userSlice';
+import Loader from '../loader';
+import useNotification from 'hooks/useNotification';
+import { Outlet } from 'react-router';
 import useAxios from 'hooks/useAxios';
-import PropTypes from 'prop-types';
-import Loader from './components/common/loader';
+import { useNavigate } from 'react-router-dom';
+import { getNewAccessToken } from 'pages/dashboard/utils/getAccessToken';
+import useUserData from 'hooks/useUserData';
 
 const getSidebarWidth = (activeMenu) => {
   switch (activeMenu) {
@@ -25,27 +28,37 @@ const getMainContentMargin = (activeMenu) => {
     case 'open':
       return 'sm:ml-60';
     case 'onlyIcon':
-      return 'sm:ml-20';
+      return 'ml-20';
     default:
-      return 'sm:ml-0';
+      return 'ml-0';
   }
 };
 
-const Dashboard = ({ page }) => {
+const Layout = () => {
   const activeMenu = useSelector(selectActiveMenu);
   const sidebarWidth = getSidebarWidth(activeMenu);
   const mainContentMargin = getMainContentMargin(activeMenu);
   const currentTheme = useSelector(selectTheme);
-  const dispatch = useDispatch();
-  const { loading, send } = useAxios();
-
-  const fetchUserData = async () => {
-    const userData = await send({ endpoint: 'user/profile', method: 'GET' });
-    dispatch(setUserData(userData));
-  };
+  const { isLoading, setUserFetch } = useUserData();
+  const { setNotificationFetch } = useNotification();
+  const navigate = useNavigate();
+  const { send } = useAxios();
 
   useEffect(() => {
-    fetchUserData();
+    getNewAccessToken();
+    const verifyUser = async () => {
+      const response = await send({ endpoint: 'auth/verify', method: 'POST' });
+      if (response?.code !== 14017) {
+        setTimeout(() => {
+          navigate('/login');
+        }, 0);
+      } else {
+        setUserFetch(true);
+        setNotificationFetch(true);
+      }
+    };
+
+    verifyUser();
     // eslint-disable-next-line
   }, []);
 
@@ -59,12 +72,14 @@ const Dashboard = ({ page }) => {
 
   return (
     <div className={currentTheme === 'Dark' ? 'dark' : ''}>
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <div>
           <Navbar mainContentMargin={mainContentMargin} />
-          <div className={`${mainContentMargin} mt-16`}>{page}</div>
+          <div className={`${mainContentMargin} mt-16`}>
+            <Outlet />
+          </div>
           <Sidebar sidebarWidth={sidebarWidth} />
         </div>
       )}
@@ -72,8 +87,4 @@ const Dashboard = ({ page }) => {
   );
 };
 
-Dashboard.propTypes = {
-  page: PropTypes.element.isRequired,
-};
-
-export default Dashboard;
+export default Layout;

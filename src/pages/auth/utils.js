@@ -1,4 +1,4 @@
-import { authRegex, errorType } from 'constant';
+import { authRegex, errorType } from 'utils/constant';
 
 // Email validation function
 export const isValidEmail = (email) => {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { identifyError } from 'pages/auth/utils';
 import { useDispatch } from 'react-redux';
@@ -6,22 +6,26 @@ import { showErrorModal } from 'error/slice/errorSlice';
 import { useNavigate } from 'react-router-dom';
 import { getNewAccessToken } from 'pages/dashboard/utils/getAccessToken';
 
-const useAxios = () => {
+const useFetch = ({ endpoint, method, call = 0, requestBody = {}, dependency = [] }) => {
+  const [trigger, setTrigger] = useState(call);
+  const [body, setBody] = useState(requestBody);
   const [response, setResponse] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); // TODO: use name as isLoading
+  const [error, setError] = useState(null); //if already handled you don't need to retun
+  const [isLoading, setLoading] = useState(true);
+  const [attempt, setAttempt] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [attempt, setAttempt] = useState(0);
 
-  const send = async ({ endpoint, method, body = null, requestHeaders = null }) => {
+  const recall = () => {
+    setTrigger((prev) => prev + 1);
+  };
+
+  async function callAPI() {
     setAttempt((prev) => prev + 1);
     setLoading(true);
     try {
-      const accessToken = localStorage.getItem('jwtAccessToken');
       const headers = {
-        ...requestHeaders,
-        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+        ...{ Authorization: `Bearer ${localStorage.getItem('jwtAccessToken')}` },
       };
 
       const res = await axios({
@@ -34,25 +38,19 @@ const useAxios = () => {
       setResponse(res.data);
       setError(null);
       setAttempt(0);
-      return res.data;
     } catch (err) {
       let error = err;
       setResponse(null);
       if (error.response?.data?.code === 13004 && attempt <= 1) {
         try {
           await getNewAccessToken();
-          return send({
-            endpoint,
-            method,
-            body,
-            requestHeaders,
-          });
+          return callAPI();
         } catch (refreshError) {
           error = refreshError;
 
           localStorage.removeItem('jwtAccessToken');
           localStorage.removeItem('jwtRefreshToken');
-          navigate('/', { replace: true });
+          navigate('/login', { replace: true });
         }
       }
 
@@ -62,14 +60,19 @@ const useAxios = () => {
       });
 
       dispatch(showErrorModal(identifyError(error.response?.data?.code)));
-
-      return null;
     } finally {
       setLoading(false);
     }
-  };
+  }
 
-  return { response, error, loading, send };
+  useEffect(() => {
+    if (trigger > 0) {
+      callAPI();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [...dependency, trigger]);
+
+  return { response, error, isLoading, recall, setBody };
 };
 
-export default useAxios;
+export default useFetch;

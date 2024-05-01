@@ -11,9 +11,10 @@ import { useNavigate } from 'react-router-dom';
 import { PrimaryButton } from 'pages/dashboard/components/base/Button';
 import SocialLink from './social-link';
 import Loader from 'pages/dashboard/components/common/loader';
+import useFetch from 'hooks/useFetch';
+import { messages } from 'utils/constant';
 
 const UserProfilePage = () => {
-  const [user, setUser] = useState(null);
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
@@ -25,21 +26,27 @@ const UserProfilePage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const getUserData = async () => {
-    const userData = await send({ endpoint: 'user/profile', method: 'GET' });
-    setUser(userData);
-    dispatch(setUserData(userData));
-  };
+  const {
+    response: user,
+    isLoading,
+    recall,
+  } = useFetch({
+    endpoint: 'user/profile',
+    method: 'GET',
+    call: 1,
+    requestBody: {},
+    dependency: [],
+  });
 
   useEffect(() => {
-    getUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(setUserData(user));
+    // eslint-disable-next-line
+  }, [user]);
 
   const formSubmission = async (message) => {
     setMessage(message);
     setIsAlertVisible(true);
-    getUserData();
+    recall();
   };
 
   // Disable
@@ -58,7 +65,7 @@ const UserProfilePage = () => {
     });
 
     if (response) {
-      setMessage('Disabled successfully');
+      setMessage(messages.accountDisabled);
       setIsDisableAlertVisible(true);
       //Removed locally sotored user data
       localStorage.removeItem('jwtAccessToken');
@@ -73,7 +80,7 @@ const UserProfilePage = () => {
         <UpdateProfileForm
           onClose={() => {
             setIsFormVisible(false);
-            getUserData();
+            recall();
           }}
           visible={isFormVisible}
           user={user}
@@ -81,9 +88,9 @@ const UserProfilePage = () => {
         />
       )}
 
-      {loading && <Loader />}
+      {(loading || isLoading) && <Loader />}
 
-      {!isFormVisible && !loading && user && (
+      {!isFormVisible && !loading && !isLoading && user && (
         <div className='flex flex-col justify-center items-center bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-700 rounded-xl shadow-md mb-6'>
           <div className='relative flex justify center h-48 w-full'>
             <img src={coverImage} alt='farmLand' className='w-full h-full object-cover rounded-tr-xl rounded-tl-xl ' />
@@ -232,7 +239,7 @@ const UserProfilePage = () => {
       {/* Disable confirmation */}
       <Modal
         isOpen={isConfirmVisible}
-        message={'Are you sure you want to disable this account?'}
+        message={messages.accountConfirmDisable}
         onClose={(result) => confirmDialogCloseDisable(result)}
         type='confirmation'
       />

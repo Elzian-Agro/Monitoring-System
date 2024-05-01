@@ -4,13 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './i18n';
-import { store } from 'store/store';
+import { store } from 'utils/store';
 import { Provider } from 'react-redux';
+import Loader from 'pages/dashboard/components/common/loader';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <React.Suspense fallback='loading'>
+    <React.Suspense fallback={<Loader />}>
       <Provider store={store}>
         <App />
       </Provider>
