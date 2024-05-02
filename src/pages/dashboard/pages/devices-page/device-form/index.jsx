@@ -11,7 +11,7 @@ import { DeviceFactors, messages } from 'utils/constant';
 
 const Form = ({ visible, onClose, device = null, formSubmission }) => {
   const [userList, setUserList] = useState([]);
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState('');
   const [deviceId, setDeviceId] = useState('');
   const [deviceType, setDeviceType] = useState('');
   const [deviceStatus, setDeviceStatus] = useState('');
