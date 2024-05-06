@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
 import { useNavigate } from 'react-router-dom';
 import { selectUserAddress } from '../../slice/userSlice';
+import { selectTheme } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
@@ -15,6 +16,7 @@ const WeatherComponent = () => {
   const [selectedWeather, setSelectedWeather] = useState({});
   const [summaryWeather, setSummaryWeather] = useState([]);
   const [view, setView] = useState('summary');
+  const currentMode = useSelector(selectTheme);
   const location = useSelector(selectUserAddress);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,6 +27,8 @@ const WeatherComponent = () => {
     }
     // eslint-disable-next-line
   }, [location]);
+
+  const getColor = (darkColor, lightColor) => (currentMode === 'Dark' ? darkColor : lightColor);
 
   // TODO: Move fetch data to backend and use useAxios hook instead.
   const fetchData = async () => {
@@ -58,6 +62,7 @@ const WeatherComponent = () => {
     chart: {
       type: 'area',
       height: 300,
+      backgroundColor: getColor('#414345', '#ffffff'),
     },
     title: {
       text: null,
@@ -75,6 +80,11 @@ const WeatherComponent = () => {
         enabled: true,
       },
       tickLength: 0,
+      labels: {
+        style: {
+          color: '#8f8b8b',
+        },
+      },
     },
     plotOptions: {
       series: {
@@ -90,11 +100,8 @@ const WeatherComponent = () => {
         },
       },
       area: {
-        lineColor: '#666666',
-        lineWidth: 1,
         marker: {
-          lineWidth: 1,
-          lineColor: '#666666',
+          enabled: false,
         },
       },
     },
