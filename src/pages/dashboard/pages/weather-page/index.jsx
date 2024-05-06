@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loader from 'pages/dashboard/components/common/loader';
-import { ArrowUpIcon, ChevronRightIcon, HomeIcon } from '@heroicons/react/24/outline';
+import { ArrowUpIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { useDispatch, useSelector } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
 import { useNavigate } from 'react-router-dom';
@@ -12,11 +12,12 @@ import HighchartsReact from 'highcharts-react-official';
 const WeatherComponent = () => {
   const [weatherData, setWeatherData] = useState();
   const [currentdWeather, setCurrentdWeather] = useState({});
+  const [selectedWeather, setSelectedWeather] = useState({});
   const [summaryWeather, setSummaryWeather] = useState([]);
   const [view, setView] = useState('summary');
+  const location = useSelector(selectUserAddress);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useSelector(selectUserAddress);
 
   useEffect(() => {
     if (location) {
@@ -124,7 +125,7 @@ const WeatherComponent = () => {
         />
         <p>
           {currentdWeather[0]?.main?.temp}
-          <span>°C</span>
+          <span className='text-gray-400'>°C</span>
         </p>
       </div>
 
@@ -133,7 +134,6 @@ const WeatherComponent = () => {
         <p className='font-bold text-sm text-gray-600 dark:text-gray-400'>
           {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </p>
-
         <div className='flex flex-col sm:flex-row items-center'>
           <div className='flex flex-row gap-2 items-center'>
             <img
@@ -186,36 +186,59 @@ const WeatherComponent = () => {
               <span className='font-extralight text-gray-400'> hPa</span>
             </p>
           </div>
+          <div>
+            <p className='font-2xl text-gray-600 dark:text-gray-400'>Visibility</p>
+            <p className='font-semibold text-2xl text-gray-600 dark:text-gray-400'>
+              {(currentdWeather[0]?.visibility / 1000).toFixed(1)}
+              <span className='font-extralight text-gray-400'> km</span>
+            </p>
+          </div>
         </div>
       </div>
 
       <div className='flex flex-col rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-md overflow-x-auto'>
         <h1 className='text-md text-gray-600 dark:text-gray-400'>5 DAY FORECAST</h1>
-
         <div className='flex flex-row justify-between mt-4'>
           {summaryWeather.map((data, index) => {
-            console.log(data);
             return (
               <button
                 key={index}
-                className='flex flex-col lg:flex-row md:w-28 lg:w-40 items-center justify-center rounded-md border border-gray-100 dark:border-gray-600 p-2 shadow-sm'>
-                <img
-                  src={`https://openweathermap.org/img/wn/${data?.weather[0]?.icon}@2x.png`}
-                  alt='Weather Icon'
-                  className='w-16 sm:w-20'
-                />
-                <div>
-                  <p className='text-md text-gray-600 dark:text-gray-400'>
-                    {new Date(data?.dt_txt).toLocaleString('en-US', {
-                      weekday: 'short',
-                      day: 'numeric',
-                    })}
-                  </p>
-                  <p className='tex-md text-gray-600 dark:text-gray-400'>
-                    {data?.main?.temp}
-                    <span className='font-extralight text-gray-400'> °C</span>
-                  </p>
+                className='flex flex-row items-center rounded-md border border-gray-100 dark:border-gray-600 p-2 shadow-sm'
+                onClick={() => setSelectedWeather(data)}>
+                <div className='flex flex-row items-center'>
+                  <img
+                    src={`https://openweathermap.org/img/wn/${data?.weather[0]?.icon}@2x.png`}
+                    alt='Weather Icon'
+                    className='w-16 sm:w-20'
+                  />
+                  <div>
+                    <p className='text-md text-left text-gray-600 dark:text-gray-400'>
+                      {new Date(data?.dt_txt).toLocaleString('en-US', {
+                        weekday: 'short',
+                        day: 'numeric',
+                      })}
+                    </p>
+                    <p className='text-md text-left text-gray-600 dark:text-gray-400'>
+                      {data?.main?.temp}
+                      <span className='font-extralight text-gray-400'> °C</span>
+                    </p>
+                  </div>
                 </div>
+
+                {selectedWeather && selectedWeather === data && (
+                  <div className='flex flex-col p-4 ml-2'>
+                    <p className='font-semibold text-sm text-right text-gray-400'>
+                      {data?.weather[0]?.description
+                        ?.split(' ')
+                        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                        .join(' ')}
+                    </p>
+                    <p className='text-sm text-right text-gray-600 dark:text-gray-400'>
+                      {data?.main?.humidity}
+                      <span className='font-extralight text-gray-400'> %</span>
+                    </p>
+                  </div>
+                )}
               </button>
             );
           })}
@@ -257,7 +280,7 @@ const WeatherComponent = () => {
                       {data?.main?.temp}
                       <span className='font-extralight text-gray-400'> °C</span>
                     </p>
-                    <p className='font-semibold text-sm text-gray-600 dark:text-gray-400'>
+                    <p className='font-semibold text-sm text-gray-400'>
                       {data?.weather[0]?.description
                         ?.split(' ')
                         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
