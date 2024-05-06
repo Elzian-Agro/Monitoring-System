@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Loader from 'pages/dashboard/components/common/loader';
-import { HomeIcon } from '@heroicons/react/24/outline';
+import { ArrowUpIcon, ChevronRightIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { useDispatch, useSelector } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
 import { useNavigate } from 'react-router-dom';
@@ -56,7 +56,7 @@ const WeatherComponent = () => {
   const chartConfig = {
     chart: {
       type: 'area',
-      height: 250,
+      height: 300,
     },
     title: {
       text: null,
@@ -160,9 +160,6 @@ const WeatherComponent = () => {
           </div>
         </div>
 
-        {/* Add description
-        <p>description</p> */}
-
         <div className='flex justify-between mt-4 w-full sm:w-2/3 lg:w-1/2'>
           <div>
             <p className='font-2xl text-gray-600 dark:text-gray-400'>Humidity</p>
@@ -173,9 +170,13 @@ const WeatherComponent = () => {
           </div>
           <div>
             <p className='font-2xl text-gray-600 dark:text-gray-400'>Wind Speed</p>
-            <p className='font-semibold text-2xl text-gray-600 dark:text-gray-400'>
-              {currentdWeather[0]?.wind?.speed}
-              <span className='font-extralight text-gray-400'> m/s</span>
+            <p className='font-semibold text-2xl text-gray-600 dark:text-gray-400 flex items-center'>
+              <ArrowUpIcon
+                className='h-6 w-6 transform font-extralight text-gray-400 mr-1'
+                style={{ transform: `rotate(${currentdWeather[0]?.wind?.deg || 0}deg)` }}
+              />
+              <span className='mr-1'>{currentdWeather[0]?.wind?.speed}</span>
+              <span className='font-extralight text-gray-400'>m/s</span>
             </p>
           </div>
           <div>
@@ -245,10 +246,8 @@ const WeatherComponent = () => {
           <div className='flex flex-row gap-2 max-w-full overflow-x-auto'>
             <div className='flex flex-nowrap space-x-2 overflow-x-auto'>
               {weatherData.map((data, index) => (
-                <div>
-                  <div
-                    key={index}
-                    className='flex flex-col justify-center items-center w-32 rounded-sm border border-gray-300 dark:border-gray-600 p-2'>
+                <div key={index}>
+                  <div className='flex flex-col justify-center items-center w-32 rounded-sm border border-gray-300 dark:border-gray-600 p-2'>
                     <img
                       src={`https://openweathermap.org/img/wn/${data?.weather[0]?.icon}@2x.png`}
                       alt='Weather Icon'
@@ -259,7 +258,7 @@ const WeatherComponent = () => {
                       <span className='font-extralight text-gray-400'> °C</span>
                     </p>
                     <p className='font-semibold text-sm text-gray-600 dark:text-gray-400'>
-                      {currentdWeather[0]?.weather[0]?.description
+                      {data?.weather[0]?.description
                         ?.split(' ')
                         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                         .join(' ')}
@@ -268,9 +267,13 @@ const WeatherComponent = () => {
                       {data?.main?.humidity}
                       <span className='font-extralight text-gray-400'> %</span>
                     </p>
-                    <p className='font-semibold text-sm text-gray-600 dark:text-gray-400'>
-                      {data?.wind?.speed}
-                      <span className='font-extralight text-gray-400'> m/s</span>
+                    <p className='font-semibold text-sm text-gray-600 dark:text-gray-400 flex items-center'>
+                      <ArrowUpIcon
+                        className='h-4 w-4 transform font-extralight text-gray-400 mr-1'
+                        style={{ transform: `rotate(${data?.wind?.deg || 0}deg)` }}
+                      />
+                      <span className='mr-1'>{data?.wind?.speed}</span>
+                      <span className='font-extralight text-gray-400'>m/s</span>
                     </p>
                     <p className='font-semibold text-sm text-gray-600 dark:text-gray-400'>
                       {data?.main?.pressure}
