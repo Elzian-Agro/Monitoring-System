@@ -211,5 +211,13 @@
   "Research Contribution": "ஆராய்ச்சி பங்களிப்பு",
   "EARNING": "இப்பேம்",
   "January": "ஜனவரி",
-  "February": "பிப்ரவரி"
+  "February": "பிப்ரவரி",
+  "CURRENT WEATHER": "தற்போதைய வானிலை",
+  "Wind Speed": "காற்றின் வேகம்",
+  "Pressure": "அழுத்தம்",
+  "Visibility": "தெரிவு",
+  "5 DAY FORECAST": "5 நாள் முன்னறிவிப்பு",
+  "Summary": "சுருக்கம்",
+  "Hourly": "மணிநேரம்",
+  "Feels like": "உணர்கிறது"
 }

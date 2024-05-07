@@ -9,6 +9,7 @@ import { selectUserAddress } from '../../slice/userSlice';
 import { selectTheme } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { useTranslation } from 'react-i18next';
 
 const WeatherComponent = () => {
   const [weatherData, setWeatherData] = useState();
@@ -20,6 +21,7 @@ const WeatherComponent = () => {
   const location = useSelector(selectUserAddress);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (location) {
@@ -110,7 +112,7 @@ const WeatherComponent = () => {
     },
     series: [
       {
-        name: 'Temperature',
+        name: t('Temperature'),
         data: weatherData?.map((data) => data?.main?.temp),
       },
     ],
@@ -139,7 +141,7 @@ const WeatherComponent = () => {
       <div
         className='flex flex-col rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-md  overflow-x-auto'
         style={{ scrollbarWidth: 'thin', scrollbarColor: '#999696 #d6d4d4' }}>
-        <h1 className='text-md text-gray-600 dark:text-gray-200'>CURRENT WEATHER</h1>
+        <h1 className='text-md text-gray-600 dark:text-gray-200'>{t('CURRENT WEATHER')}</h1>
         <p className='font-bold text-sm text-gray-600 dark:text-gray-200'>
           {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </p>
@@ -163,7 +165,8 @@ const WeatherComponent = () => {
                 .join(' ')}
             </p>
             <p className='text-sm lg:text-lg text-gray-600 dark:text-gray-200'>
-              Feels like<span className='font-semibold ml-2'>{currentdWeather[0]?.main?.feels_like}</span>
+              {t('Feels like')}
+              <span className='font-semibold ml-2'>{currentdWeather[0]?.main?.feels_like}</span>
               <span className='font-extralight text-gray-400'>°C</span>
             </p>
           </div>
@@ -171,14 +174,14 @@ const WeatherComponent = () => {
 
         <div className='flex justify-between mt-2 md:mt-0 w-full lg:w-2/3'>
           <div className='min-w-24'>
-            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>Humidity</p>
+            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>{t('Humidity')}</p>
             <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>
               {currentdWeather[0]?.main?.humidity}
               <span className='font-extralight text-gray-400'>%</span>
             </p>
           </div>
           <div className='min-w-24'>
-            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>Wind Speed</p>
+            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>{t('Wind Speed')}</p>
             <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200 flex items-center'>
               <ArrowUpIcon
                 className='h-6 w-6 transform font-extralight text-gray-400 mr-1'
@@ -189,14 +192,14 @@ const WeatherComponent = () => {
             </p>
           </div>
           <div className='min-w-24 ml-5'>
-            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>Pressure</p>
+            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>{t('Pressure')}</p>
             <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>
               {currentdWeather[0]?.main?.pressure}
               <span className='font-extralight text-gray-400'>hPa</span>
             </p>
           </div>
           <div className='min-w-24'>
-            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>Visibility</p>
+            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>{t('Visibility')}</p>
             <p className='font-semiboldfont-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>
               {(currentdWeather[0]?.visibility / 1000).toFixed(1)}
               <span className='font-extralight text-gray-400'>km</span>
@@ -206,7 +209,7 @@ const WeatherComponent = () => {
       </div>
 
       <div className='flex flex-col rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-md'>
-        <h1 className='text-md text-gray-600 dark:text-gray-200'>5 DAY FORECAST</h1>
+        <h1 className='text-md text-gray-600 dark:text-gray-200'>{t('5 DAY FORECAST')}</h1>
         <div
           className='grid grid-flow-col justify-between gap-4 auto-cols-max mt-4 overflow-x-auto'
           style={{ scrollbarWidth: 'thin', scrollbarColor: '#999696 #d6d4d4' }}>
@@ -265,14 +268,14 @@ const WeatherComponent = () => {
               view === 'summary' && 'underline underline-offset-4 decoration-2'
             }`}
             onClick={() => setView('summary')}>
-            Summary
+            {t('Summary')}
           </button>
           <button
             className={`text-sm text-gray-600 dark:text-gray-200 mb-4 hover:underline underline-offset-4 ${
               view === 'hourly' && 'underline underline-offset-4 decoration-2'
             }`}
             onClick={() => setView('hourly')}>
-            Hourly
+            {t('Hourly')}
           </button>
         </div>
 

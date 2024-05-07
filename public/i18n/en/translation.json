@@ -211,5 +211,13 @@
   "Research Contribution": "Research Contribution",
   "EARNING": "EARNING",
   "January": "January",
-  "February": "February"
+  "February": "February",
+  "CURRENT WEATHER": "CURRENT WEATHER",
+  "Wind Speed": "Wind Speed",
+  "Pressure": "Pressure",
+  "Visibility": "Visibility",
+  "5 DAY FORECAST": "5 DAY FORECAST",
+  "Summary": "Summary",
+  "Hourly": "Hourly",
+  "Feels like": "Feels like"
 }
