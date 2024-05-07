@@ -28,8 +28,6 @@ const WeatherComponent = () => {
     // eslint-disable-next-line
   }, [location]);
 
-  const getColor = (darkColor, lightColor) => (currentMode === 'Dark' ? darkColor : lightColor);
-
   // TODO: Move fetch data to backend and use useAxios hook instead.
   const fetchData = async () => {
     try {
@@ -58,6 +56,8 @@ const WeatherComponent = () => {
     }
   };
 
+  const getColor = (darkColor, lightColor) => (currentMode === 'Dark' ? darkColor : lightColor);
+
   const chartConfig = {
     chart: {
       type: 'area',
@@ -79,7 +79,6 @@ const WeatherComponent = () => {
       scrollbar: {
         enabled: true,
       },
-      tickLength: 0,
       labels: {
         style: {
           color: '#8f8b8b',
@@ -95,7 +94,8 @@ const WeatherComponent = () => {
             return this.y + '°C';
           },
           style: {
-            color: 'black',
+            color: getColor('#dee0e3', '#7d7f82'),
+            textOutline: '0px',
           },
         },
       },
@@ -122,33 +122,35 @@ const WeatherComponent = () => {
 
   return (
     <div className='flex flex-col gap-5 bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-700 rounded-xl shadow-md mx-6 mt-3 p-4 min-h-screen'>
-      <div className='flex flex-row items-center rounded-md border border-gray-100 dark:border-gray-600 px-4 py-2 shadow-md text-md text-gray-700 dark:text-gray-400'>
-        <HomeIcon className='h-6 w-6 mr-2' />
-        <h1 className='mr-2'>{location}</h1>
+      <div className='flex flex-row items-center rounded-md border border-gray-100 dark:border-gray-600 px-4 py-2 shadow-md'>
+        <HomeIcon className='h-6 w-6 mr-2 text-md text-gray-700 dark:text-gray-200' />
+        <h1 className='mr-2 text-md text-gray-700 dark:text-gray-200'>{location}</h1>
         <img
           src={`https://openweathermap.org/img/wn/${currentdWeather[0]?.weather[0]?.icon}@2x.png`}
           alt='Weather Icon'
           className='w-10'
         />
-        <p>
+        <p className='text-md text-gray-700 dark:text-gray-200'>
           {currentdWeather[0]?.main?.temp}
           <span className='text-gray-400'>°C</span>
         </p>
       </div>
 
-      <div className='flex flex-col rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-md'>
-        <h1 className='text-md text-gray-600 dark:text-gray-400'>CURRENT WEATHER</h1>
-        <p className='font-bold text-sm text-gray-600 dark:text-gray-400'>
+      <div
+        className='flex flex-col rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-md  overflow-x-auto'
+        style={{ scrollbarWidth: 'thin', scrollbarColor: '#999696 #d6d4d4' }}>
+        <h1 className='text-md text-gray-600 dark:text-gray-200'>CURRENT WEATHER</h1>
+        <p className='font-bold text-sm text-gray-600 dark:text-gray-200'>
           {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </p>
-        <div className='flex flex-col sm:flex-row items-center'>
+        <div className='flex flex-col md:flex-row item-start md:items-center'>
           <div className='flex flex-row gap-2 items-center'>
             <img
               src={`https://openweathermap.org/img/wn/${currentdWeather[0]?.weather[0]?.icon}@2x.png`}
               alt='Weather Icon'
-              className='w-32 sm:w-40'
+              className='w-20 sm:w-24 lg:w-40'
             />
-            <p className='font-semibold text-gray-600 dark:text-gray-400 text-5xl sm:text-6xl mr-10'>
+            <p className='font-semibold text-gray-600 dark:text-gray-200 text-5xl lg:text-6xl mr-5 lg:mr-10'>
               {currentdWeather[0]?.main?.temp}
               <span className='text-gray-400'>°C</span>
             </p>
@@ -160,24 +162,24 @@ const WeatherComponent = () => {
                 .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(' ')}
             </p>
-            <p className='text-gray-600 dark:text-gray-400'>
+            <p className='text-sm lg:text-lg text-gray-600 dark:text-gray-200'>
               Feels like<span className='font-semibold ml-2'>{currentdWeather[0]?.main?.feels_like}</span>
               <span className='font-extralight text-gray-400'>°C</span>
             </p>
           </div>
         </div>
 
-        <div className='flex justify-between mt-4 w-full sm:w-2/3 lg:w-1/2'>
-          <div>
-            <p className='font-2xl text-gray-600 dark:text-gray-400'>Humidity</p>
-            <p className='font-semibold text-2xl text-gray-600 dark:text-gray-400'>
+        <div className='flex justify-between mt-2 md:mt-0 w-full lg:w-2/3'>
+          <div className='min-w-24'>
+            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>Humidity</p>
+            <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>
               {currentdWeather[0]?.main?.humidity}
-              <span className='font-extralight text-gray-400'> %</span>
+              <span className='font-extralight text-gray-400'>%</span>
             </p>
           </div>
-          <div>
-            <p className='font-2xl text-gray-600 dark:text-gray-400'>Wind Speed</p>
-            <p className='font-semibold text-2xl text-gray-600 dark:text-gray-400 flex items-center'>
+          <div className='min-w-24'>
+            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>Wind Speed</p>
+            <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200 flex items-center'>
               <ArrowUpIcon
                 className='h-6 w-6 transform font-extralight text-gray-400 mr-1'
                 style={{ transform: `rotate(${currentdWeather[0]?.wind?.deg || 0}deg)` }}
@@ -186,31 +188,35 @@ const WeatherComponent = () => {
               <span className='font-extralight text-gray-400'>m/s</span>
             </p>
           </div>
-          <div>
-            <p className='font-2xl text-gray-600 dark:text-gray-400'>Pressure</p>
-            <p className='font-semibold text-2xl text-gray-600 dark:text-gray-400'>
+          <div className='min-w-24 ml-5'>
+            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>Pressure</p>
+            <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>
               {currentdWeather[0]?.main?.pressure}
-              <span className='font-extralight text-gray-400'> hPa</span>
+              <span className='font-extralight text-gray-400'>hPa</span>
             </p>
           </div>
-          <div>
-            <p className='font-2xl text-gray-600 dark:text-gray-400'>Visibility</p>
-            <p className='font-semibold text-2xl text-gray-600 dark:text-gray-400'>
+          <div className='min-w-24'>
+            <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>Visibility</p>
+            <p className='font-semiboldfont-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-200'>
               {(currentdWeather[0]?.visibility / 1000).toFixed(1)}
-              <span className='font-extralight text-gray-400'> km</span>
+              <span className='font-extralight text-gray-400'>km</span>
             </p>
           </div>
         </div>
       </div>
 
-      <div className='flex flex-col rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-md overflow-x-auto'>
-        <h1 className='text-md text-gray-600 dark:text-gray-400'>5 DAY FORECAST</h1>
-        <div className='flex flex-row justify-between mt-4'>
+      <div className='flex flex-col rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-md'>
+        <h1 className='text-md text-gray-600 dark:text-gray-200'>5 DAY FORECAST</h1>
+        <div
+          className='grid grid-flow-col justify-between gap-4 auto-cols-max mt-4 overflow-x-auto'
+          style={{ scrollbarWidth: 'thin', scrollbarColor: '#999696 #d6d4d4' }}>
           {summaryWeather.map((data, index) => {
             return (
               <button
                 key={index}
-                className='flex flex-row items-center rounded-md border border-gray-100 dark:border-gray-600 p-2 shadow-sm'
+                className={`flex flex-row ${
+                  selectedWeather && selectedWeather === data ? 'w-76' : 'w-44'
+                } items-center rounded-md border border-gray-100 dark:border-gray-600 p-2 shadow-sm`}
                 onClick={() => setSelectedWeather(data)}>
                 <div className='flex flex-row items-center'>
                   <img
@@ -219,13 +225,13 @@ const WeatherComponent = () => {
                     className='w-16 sm:w-20'
                   />
                   <div>
-                    <p className='text-md text-left text-gray-600 dark:text-gray-400'>
+                    <p className='text-md text-left text-gray-600 dark:text-gray-200'>
                       {new Date(data?.dt_txt).toLocaleString('en-US', {
                         weekday: 'short',
                         day: 'numeric',
                       })}
                     </p>
-                    <p className='text-md text-left text-gray-600 dark:text-gray-400'>
+                    <p className='text-md text-left text-gray-600 dark:text-gray-200'>
                       {data?.main?.temp}
                       <span className='font-extralight text-gray-400'> °C</span>
                     </p>
@@ -233,14 +239,14 @@ const WeatherComponent = () => {
                 </div>
 
                 {selectedWeather && selectedWeather === data && (
-                  <div className='flex flex-col p-4 ml-2'>
+                  <div className='flex flex-col w-32 p-2'>
                     <p className='font-semibold text-sm text-right text-gray-400'>
                       {data?.weather[0]?.description
                         ?.split(' ')
                         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                         .join(' ')}
                     </p>
-                    <p className='text-sm text-right text-gray-600 dark:text-gray-400'>
+                    <p className='text-sm text-right text-gray-600 dark:text-gray-200'>
                       {data?.main?.humidity}
                       <span className='font-extralight text-gray-400'> %</span>
                     </p>
@@ -255,14 +261,14 @@ const WeatherComponent = () => {
       <div className='rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-md'>
         <div className='flex flex-row gap-2'>
           <button
-            className={`text-sm text-gray-600 dark:text-gray-400 mb-4 hover:underline underline-offset-4 ${
+            className={`text-sm text-gray-600 dark:text-gray-200 mb-4 hover:underline underline-offset-4 ${
               view === 'summary' && 'underline underline-offset-4 decoration-2'
             }`}
             onClick={() => setView('summary')}>
             Summary
           </button>
           <button
-            className={`text-sm text-gray-600 dark:text-gray-400 mb-4 hover:underline underline-offset-4 ${
+            className={`text-sm text-gray-600 dark:text-gray-200 mb-4 hover:underline underline-offset-4 ${
               view === 'hourly' && 'underline underline-offset-4 decoration-2'
             }`}
             onClick={() => setView('hourly')}>
@@ -273,8 +279,10 @@ const WeatherComponent = () => {
         {view === 'summary' && <HighchartsReact highcharts={Highcharts} options={chartConfig} />}
 
         {view === 'hourly' && (
-          <div className='flex flex-row gap-2 max-w-full overflow-x-auto'>
-            <div className='flex flex-nowrap space-x-2 overflow-x-auto'>
+          <div className='flex flex-row gap-2 max-w-full'>
+            <div
+              className='flex flex-nowrap space-x-2 overflow-x-auto'
+              style={{ scrollbarWidth: 'thin', scrollbarColor: '#999696 #d6d4d4' }}>
               {weatherData.map((data, index) => (
                 <div key={index}>
                   <div className='flex flex-col justify-center items-center w-32 rounded-sm border border-gray-300 dark:border-gray-600 p-2'>
@@ -283,7 +291,7 @@ const WeatherComponent = () => {
                       alt='Weather Icon'
                       className='w-20'
                     />
-                    <p className='font-semibold text-sm text-gray-600 dark:text-gray-400'>
+                    <p className='font-semibold text-sm text-gray-600 dark:text-gray-200'>
                       {data?.main?.temp}
                       <span className='font-extralight text-gray-400'> °C</span>
                     </p>
@@ -293,11 +301,11 @@ const WeatherComponent = () => {
                         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                         .join(' ')}
                     </p>
-                    <p className='font-semibold text-sm text-gray-600 dark:text-gray-400'>
+                    <p className='font-semibold text-sm text-gray-600 dark:text-gray-200'>
                       {data?.main?.humidity}
                       <span className='font-extralight text-gray-400'> %</span>
                     </p>
-                    <p className='font-semibold text-sm text-gray-600 dark:text-gray-400 flex items-center'>
+                    <p className='font-semibold text-sm text-gray-600 dark:text-gray-200 flex items-center'>
                       <ArrowUpIcon
                         className='h-4 w-4 transform font-extralight text-gray-400 mr-1'
                         style={{ transform: `rotate(${data?.wind?.deg || 0}deg)` }}
@@ -305,14 +313,14 @@ const WeatherComponent = () => {
                       <span className='mr-1'>{data?.wind?.speed}</span>
                       <span className='font-extralight text-gray-400'>m/s</span>
                     </p>
-                    <p className='font-semibold text-sm text-gray-600 dark:text-gray-400'>
+                    <p className='font-semibold text-sm text-gray-600 dark:text-gray-200'>
                       {data?.main?.pressure}
                       <span className='font-extralight text-gray-400'> hPa</span>
                     </p>
                   </div>
                   <p className='text-center'>
                     {data?.dt_txt && (
-                      <span className='text-sm text-gray-600 dark:text-gray-400'>
+                      <span className='text-sm text-gray-600 dark:text-gray-200'>
                         {new Date(data?.dt_txt).toLocaleTimeString('en-US', {
                           hour: 'numeric',
                           minute: 'numeric',
