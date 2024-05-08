@@ -44,8 +44,8 @@ const Chart = ({ weatherData }) => {
         showInLegend: false,
         dataLabels: {
           enabled: true,
-          formatter: () => {
-            return `${this.y}°C`;
+          formatter: function () {
+            return this.y + '°C';
           },
           style: {
             color: getColor('#dee0e3', '#7d7f82'),

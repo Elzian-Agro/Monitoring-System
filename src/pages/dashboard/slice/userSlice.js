@@ -30,6 +30,5 @@ const userSlice = createSlice({
 
 export const { setUserData, clearUserData } = userSlice.actions;
 export const selectUserData = (state) => state.user;
-export const selectUserAddress = (state) => state.user.address;
 
 export default userSlice.reducer;

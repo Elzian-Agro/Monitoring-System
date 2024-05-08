@@ -5,11 +5,11 @@ import { ArrowUpIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { useDispatch, useSelector } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
 import { useNavigate } from 'react-router-dom';
-import { selectUserAddress } from '../../slice/userSlice';
+import { selectUserData } from '../../slice/userSlice';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton } from 'pages/dashboard/components/base/Button';
-import TextBox from 'pages/dashboard/components/base/TextBox';
 import Chart from './chart';
+import Form from './form';
 
 const WeatherComponent = () => {
   const [weatherData, setWeatherData] = useState();
@@ -18,34 +18,23 @@ const WeatherComponent = () => {
   const [summaryWeather, setSummaryWeather] = useState([]);
   const [view, setView] = useState('summary');
   const [isFormVisible, setIsFormVisible] = useState(false);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-  const location = useSelector(selectUserAddress);
+  const user = useSelector(selectUserData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (location) {
+    if (user?.location?.latitude && user?.location?.longitude) {
       fetchData();
     }
     // eslint-disable-next-line
-  }, [location, latitude, longitude]);
+  }, [user]);
 
-  // TODO: Move fetch data to backend and use useAxios hook instead.
   const fetchData = async () => {
     try {
-      let response = {};
-      console.log(latitude);
-      if (latitude && longitude) {
-        response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=128a04a67f6b5706e842411e7a3cebe6`
-        );
-      } else {
-        response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/forecast?q=${location}&units=metric&appid=128a04a67f6b5706e842411e7a3cebe6`
-        );
-      }
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${user.location.latitude}&lon=${user.location.longitude}&units=metric&appid=128a04a67f6b5706e842411e7a3cebe6`
+      );
 
       const weatherForecast = response?.data?.list;
 
@@ -63,15 +52,10 @@ const WeatherComponent = () => {
       setCurrentdWeather(currentWeather);
       setSummaryWeather(summaryWeather);
     } catch (error) {
+      //To do something
       dispatch(showErrorModal('Failed to fetch weather data, check your location and try again'));
       navigate('/profile');
     }
-  };
-
-  // TO DO: complete function
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsFormVisible(false);
   };
 
   if (!weatherData) {
@@ -84,7 +68,7 @@ const WeatherComponent = () => {
         <div className='flex flex-row items-center justify-between'>
           <div className='flex flex-row items-center'>
             <HomeIcon className='h-6 w-6 mr-2 text-md text-gray-700 dark:text-gray-300' />
-            <h1 className='mr-2 text-md text-gray-700 dark:text-gray-300'>{location}</h1>
+            <h1 className='mr-2 text-md text-gray-700 dark:text-gray-300'>location</h1>
             <img
               src={`https://openweathermap.org/img/wn/${currentdWeather[0]?.weather[0]?.icon}@2x.png`}
               alt='Weather Icon'
@@ -105,13 +89,15 @@ const WeatherComponent = () => {
           )}
         </div>
         {isFormVisible ? (
-          <form className='flex flex-col lg:flex-row gap-2 lg:w-1/2' onSubmit={handleSubmit}>
-            <TextBox placeholder='Latitude' type='text' value={latitude} setValue={setLatitude} required={true} />
-            <TextBox placeholder='Longitude' type='text' value={longitude} setValue={setLongitude} required={true} />
-            <div className='w-full lg:w-20 lg:mt-3'>
-              <PrimaryButton type='submit' text='Submit' color='bg-blue-500 border-blue-600' />
-            </div>
-          </form>
+          <div className='flex justify-center'>
+            <Form
+              userLocation={user?.location}
+              onClose={() => {
+                setIsFormVisible(false);
+                fetchData();
+              }}
+            />
+          </div>
         ) : null}
       </div>
 
@@ -275,7 +261,7 @@ const WeatherComponent = () => {
                       {data?.main?.temp}
                       <span className='font-extralight text-gray-400'>°C</span>
                     </p>
-                    <p className='font-semibold text-sm text-gray-400'>
+                    <p className='text-sm text-gray-400'>
                       {data?.weather[0]?.description
                         ?.split(' ')
                         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
@@ -300,7 +286,7 @@ const WeatherComponent = () => {
                   </div>
                   <p className='text-center'>
                     {data?.dt_txt && (
-                      <span className='text-sm text-gray-600 dark:text-gray-300'>
+                      <span className='text-sm text-gray-400'>
                         {new Date(data?.dt_txt).toLocaleTimeString('en-US', {
                           hour: 'numeric',
                           minute: 'numeric',
