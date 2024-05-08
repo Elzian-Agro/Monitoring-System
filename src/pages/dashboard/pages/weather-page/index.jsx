@@ -32,7 +32,7 @@ const WeatherComponent = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${user.location.latitude}&lon=${user.location.longitude}&units=metric&appid=128a04a67f6b5706e842411e7a3cebe6`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${user.location.latitude}&lon=${user.location.longitude}&units=metric&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY}`
       );
 
       const weatherForecast = response?.data?.list;
