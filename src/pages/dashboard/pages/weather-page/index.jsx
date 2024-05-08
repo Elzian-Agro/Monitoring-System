@@ -6,12 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
 import { useNavigate } from 'react-router-dom';
 import { selectUserAddress } from '../../slice/userSlice';
-import { selectTheme } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton } from 'pages/dashboard/components/base/Button';
 import TextBox from 'pages/dashboard/components/base/TextBox';
+import Chart from './chart';
 
 const WeatherComponent = () => {
   const [weatherData, setWeatherData] = useState();
@@ -22,7 +20,6 @@ const WeatherComponent = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const currentMode = useSelector(selectTheme);
   const location = useSelector(selectUserAddress);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -69,66 +66,6 @@ const WeatherComponent = () => {
       dispatch(showErrorModal('Failed to fetch weather data, check your location and try again'));
       navigate('/profile');
     }
-  };
-
-  const getColor = (darkColor, lightColor) => (currentMode === 'Dark' ? darkColor : lightColor);
-
-  const chartConfig = {
-    chart: {
-      type: 'area',
-      height: 300,
-      backgroundColor: getColor('#414345', '#ffffff'),
-    },
-    title: {
-      text: null,
-    },
-    yAxis: {
-      visible: false,
-    },
-    xAxis: {
-      categories: weatherData?.map((data) =>
-        new Date(data?.dt_txt).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true })
-      ),
-      min: 0,
-      max: 15,
-      scrollbar: {
-        enabled: true,
-      },
-      labels: {
-        style: {
-          color: '#8f8b8b',
-        },
-      },
-    },
-    plotOptions: {
-      series: {
-        showInLegend: false,
-        dataLabels: {
-          enabled: true,
-          formatter: function () {
-            return this.y + '°C';
-          },
-          style: {
-            color: getColor('#dee0e3', '#7d7f82'),
-            textOutline: '0px',
-          },
-        },
-      },
-      area: {
-        marker: {
-          enabled: false,
-        },
-      },
-    },
-    exporting: {
-      enabled: false,
-    },
-    series: [
-      {
-        name: t('Temperature'),
-        data: weatherData?.map((data) => data?.main?.temp),
-      },
-    ],
   };
 
   // TO DO: complete function
@@ -319,7 +256,7 @@ const WeatherComponent = () => {
           </button>
         </div>
 
-        {view === 'summary' && <HighchartsReact highcharts={Highcharts} options={chartConfig} />}
+        {view === 'summary' && <Chart weatherData={weatherData} />}
 
         {view === 'hourly' && (
           <div className='flex flex-row gap-2 max-w-full'>
