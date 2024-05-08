@@ -219,5 +219,13 @@
   "5 DAY FORECAST": "5 DAY FORECAST",
   "Summary": "Summary",
   "Hourly": "Hourly",
-  "Feels like": "Feels like"
+  "Feels like": "Feels like",
+  "Location": "Location",
+  "Latitude": "Latitude",
+  "Longitude": "Longitude",
+  "Eg. 6.02145": "Eg. 6.02145",
+  "Location Description": "Google Maps can help you find latitude and longitude coordinates for your location. Please go to this link and click on the map at your location.",
+  "Change": "Change",
+  "click": "click",
+  "Failed to fetch weather data": "Failed to fetch weather data"
 }

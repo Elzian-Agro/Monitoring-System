@@ -153,6 +153,7 @@ export const messages = {
   confirmDelete: 'Are you sure want to delete?',
   confirmDisable: 'Are you sure you want to disable?',
   confirmResetPassword: 'Do you want to reset the password?',
+  failedFetchWeathering: 'Failed to fetch weather data',
 };
 
 export const customTableStyles = {

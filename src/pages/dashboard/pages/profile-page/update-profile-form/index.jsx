@@ -264,7 +264,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
                         href='https://www.google.com/maps/'
                         rel='noreferrer'
                         target='_blank'>
-                        click
+                        {t('click')}
                       </a>
                     </p>
                   </div>

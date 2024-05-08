@@ -4,12 +4,12 @@ import Loader from 'pages/dashboard/components/common/loader';
 import { ArrowUpIcon, HomeIcon } from '@heroicons/react/24/outline';
 import { useDispatch, useSelector } from 'react-redux';
 import { showErrorModal } from 'error/slice/errorSlice';
-import { useNavigate } from 'react-router-dom';
 import { selectUserData } from '../../slice/userSlice';
 import { useTranslation } from 'react-i18next';
 import { PrimaryButton } from 'pages/dashboard/components/base/Button';
 import Chart from './chart';
 import Form from './form';
+import { messages } from 'utils/constant';
 
 const WeatherComponent = () => {
   const [weatherData, setWeatherData] = useState();
@@ -20,7 +20,6 @@ const WeatherComponent = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const user = useSelector(selectUserData);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -52,9 +51,7 @@ const WeatherComponent = () => {
       setCurrentdWeather(currentWeather);
       setSummaryWeather(summaryWeather);
     } catch (error) {
-      //To do something
-      dispatch(showErrorModal('Failed to fetch weather data, check your location and try again'));
-      navigate('/profile');
+      dispatch(showErrorModal(messages.failedFetchWeathering));
     }
   };
 
