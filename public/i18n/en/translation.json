@@ -227,5 +227,6 @@
   "Location Description": "Google Maps can help you find latitude and longitude coordinates for your location. Please go to this link and click on the map at your location.",
   "Change": "Change",
   "click": "click",
-  "Failed to fetch weather data": "Failed to fetch weather data"
+  "Failed to fetch weather data": "Failed to fetch weather data",
+  "Please provide a valid location": "Please provide a valid location"
 }

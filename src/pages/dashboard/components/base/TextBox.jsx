@@ -67,7 +67,7 @@ TextBox.propTypes = {
   placeholder: PropTypes.string,
   type: PropTypes.string,
   Icon: PropTypes.elementType,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   setValue: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   required: PropTypes.bool,

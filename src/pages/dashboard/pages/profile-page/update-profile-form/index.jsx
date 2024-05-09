@@ -27,7 +27,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
   const [userBio, setUserBio] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [address, setAddress] = useState('');
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [facebook, setFacebook] = useState('');
   const [youtube, setYoutube] = useState('');
   const [linkedIn, setLinkedIn] = useState('');
@@ -47,7 +47,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       setUserBio(user.userBio);
       setPhoneNum(user.phoneNum);
       setAddress(user.address);
-      setLocation({ latitude: user.location?.latitude || null, longitude: user.location?.longitude || null });
+      setLocation({ latitude: user.location?.latitude || 0, longitude: user.location?.longitude || 0 });
       setFacebook(user.socialMedia?.facebook || '');
       setLinkedIn(user.socialMedia?.linkedIn || '');
       setYoutube(user.socialMedia?.youtube || '');
