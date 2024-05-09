@@ -192,3 +192,20 @@ export const customTableStyles = {
     },
   },
 };
+
+export const weatherIcons = {
+  '01d': 'https://cdn-icons-png.flaticon.com/128/869/869869.png',
+  '01n': 'https://cdn-icons-png.flaticon.com/128/869/869869.png',
+  '02d': 'https://cdn-icons-png.flaticon.com/128/2698/2698213.png',
+  '02n': 'https://cdn-icons-png.flaticon.com/128/2698/2698213.png',
+  '03d': 'https://cdn-icons-png.flaticon.com/128/1163/1163624.png',
+  '03n': 'https://cdn-icons-png.flaticon.com/128/1163/1163624.png',
+  '04d': 'https://cdn-icons-png.flaticon.com/128/414/414927.png',
+  '04n': 'https://cdn-icons-png.flaticon.com/128/414/414927.png',
+  '09d': 'https://cdn-icons-png.flaticon.com/128/3217/3217172.png',
+  '10d': 'https://cdn-icons-png.flaticon.com/128/1163/1163657.png',
+  '10n': 'https://cdn-icons-png.flaticon.com/128/1163/1163657.png',
+  '11d': 'https://cdn-icons-png.flaticon.com/128/1959/1959321.png',
+  '13d': 'https://cdn-icons-png.flaticon.com/128/13882/13882500.png',
+  '50d': 'https://cdn-icons-png.flaticon.com/128/1779/1779931.png',
+};

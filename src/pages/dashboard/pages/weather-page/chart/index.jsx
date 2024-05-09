@@ -26,7 +26,7 @@ const Chart = ({ weatherData }) => {
     },
     xAxis: {
       categories: weatherData?.map((data) =>
-        new Date(data?.dt_txt).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true })
+        new Date(data?.date).toLocaleTimeString('en-US', { hour: 'numeric', hour12: true })
       ),
       min: 0,
       max: 15,
@@ -65,7 +65,7 @@ const Chart = ({ weatherData }) => {
     series: [
       {
         name: t('Temperature'),
-        data: weatherData?.map((data) => data?.main?.temp),
+        data: weatherData?.map((data) => data?.temperature),
       },
     ],
   };
