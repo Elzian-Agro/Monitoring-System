@@ -3,7 +3,7 @@ import TextBox from 'pages/dashboard/components/base/TextBox';
 import { PrimaryButton } from 'pages/dashboard/components/base/Button';
 import { useDispatch } from 'react-redux';
 import { setUserData } from 'pages/dashboard/slice/userSlice';
-import { MapPinIcon } from '@heroicons/react/24/outline';
+import { MapPinIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
 import PropTypes from 'prop-types';
@@ -37,6 +37,14 @@ const Form = ({ userLocation, onClose }) => {
 
   return (
     <form className='flex flex-col lg:w-80' onSubmit={handleSubmit}>
+      <div className='flex justify-end'>
+        <XMarkIcon
+          className='h-4 w-4 text-red-600'
+          onClick={() => {
+            onClose();
+          }}
+        />
+      </div>
       <div>
         <TextBox
           placeholder='Eg. 6.02145'
