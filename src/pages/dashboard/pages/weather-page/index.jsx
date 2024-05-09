@@ -211,33 +211,53 @@ const WeatherComponent = () => {
                 } items-center rounded-md border border-gray-100 dark:border-gray-600 p-3 shadow-sm`}
                 onClick={() => setSelectedWeather(data)}>
                 <div className='flex flex-row items-center'>
-                  <img src={getWeatherIconUrl(data?.weather_icon)} alt='Weather Icon' className='w-8 sm:w-12 mr-5' />
+                  <img
+                    src={getWeatherIconUrl(data?.weather_icon)}
+                    alt='Weather Icon'
+                    className='w-8 sm:w-12 mr-5 ml-4'
+                  />
                   <div>
-                    <p className='text-md text-left text-gray-600 dark:text-gray-300'>
+                    <p className='text-sm text-left text-gray-600 dark:text-gray-300'>
                       {new Date(data?.date).toLocaleString('en-US', {
                         weekday: 'short',
                         day: 'numeric',
                       })}
                     </p>
-                    <p className='font-semibold text-md text-left text-gray-600 dark:text-gray-300'>
+                    <p className='font-semibold text-sm text-left text-gray-600 dark:text-gray-300'>
                       {data?.temperature}
-                      <span className='font-extralight text-gray-400'> °C</span>
+                      <span className='font-extralight text-gray-400'>°C</span>
+                    </p>
+                    <p className='font-semibold text-sm text-left text-gray-600 dark:text-gray-300'>
+                      {data?.humidity}
+                      <span className='font-extralight text-gray-400'>%</span>
                     </p>
                   </div>
                 </div>
 
                 {selectedWeather && selectedWeather === data && (
-                  <div className='flex flex-col w-32 p-2'>
-                    <p className='font-semibold text-sm text-right text-gray-400'>
-                      {data?.weather_description
-                        ?.split(' ')
-                        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                        .join(' ')}
-                    </p>
-                    <p className='text-sm text-right text-gray-600 dark:text-gray-300'>
-                      {data?.humidity}
-                      <span className='font-extralight text-gray-400'> %</span>
-                    </p>
+                  <div className='flex flex-row justify-end w-full'>
+                    <div className='flex flex-col w-32 p-2'>
+                      <p className='font-semibold text-sm text-right text-gray-400'>
+                        {data?.weather_description
+                          ?.split(' ')
+                          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                          .join(' ')}
+                      </p>
+                      <div className='flex items-center justify-end'>
+                        <p className='flex flex-row font-semibold text-sm text-gray-600 dark:text-gray-300'>
+                          <ArrowUpIcon
+                            className='h-4 w-4 transform font-extralight text-right text-gray-400 mr-1'
+                            style={{ transform: `rotate(${data?.wind_deg || 0}deg)` }}
+                          />
+                          <span>{data?.wind_speed}</span>
+                          <span className='font-extralight text-gray-400'>m/s</span>
+                        </p>
+                      </div>
+                      <p className='font-semibold text-sm text-right text-gray-600 dark:text-gray-300'>
+                        {data?.pressure}
+                        <span className='font-extralight text-gray-400'>hPa</span>
+                      </p>
+                    </div>
                   </div>
                 )}
               </button>
@@ -276,13 +296,13 @@ const WeatherComponent = () => {
               }}>
               {weatherData.map((data, index) => (
                 <div key={index}>
-                  <div className='flex flex-col justify-center items-center w-32 rounded-sm border border-gray-200 dark:border-gray-600 p-2'>
+                  <div className='flex flex-col justify-center items-center w-32 h-48 rounded-sm border border-gray-200 dark:border-gray-600 px-2'>
                     <img src={getWeatherIconUrl(data?.weather_icon)} alt='Weather Icon' className='w-12 mb-2' />
                     <p className='font-semibold text-sm text-gray-600 dark:text-gray-300'>
                       {data?.temperature}
                       <span className='font-extralight text-gray-400'>°C</span>
                     </p>
-                    <p className='text-sm text-gray-400'>
+                    <p className='text-sm text-gray-400 text-center'>
                       {data?.weather_description
                         ?.split(' ')
                         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))

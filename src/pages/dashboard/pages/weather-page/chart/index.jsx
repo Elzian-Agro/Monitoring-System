@@ -15,8 +15,9 @@ const Chart = ({ weatherData }) => {
   const chartConfig = {
     chart: {
       type: 'area',
-      height: 300,
+      height: 250,
       backgroundColor: getColor('#414345', '#ffffff'),
+      marginTop: 0,
     },
     title: {
       text: null,
