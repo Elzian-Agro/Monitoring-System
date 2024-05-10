@@ -42,6 +42,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - **Documentation**: [React dnd kit Documentation](https://docs.dndkit.com/)
 
+### Weather Icons
+
+- **Official Site**: [axios](https://www.flaticon.com/)
+
 ## Available Scripts
 
 In the project directory, you can run:
