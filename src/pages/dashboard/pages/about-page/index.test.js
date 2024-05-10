@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { act } from 'react-dom/test-utils';
 import AboutUsPage from './index';
 import { MemoryRouter } from 'react-router-dom';
 
@@ -15,13 +14,11 @@ jest.mock('react-i18next', () => ({
 
 describe('About US Page', () => {
   it('renders user data correctly', async () => {
-    await act(async () => {
-      render(
-        <MemoryRouter>
-          <AboutUsPage />
-        </MemoryRouter>
-      );
-    });
+    render(
+      <MemoryRouter>
+        <AboutUsPage />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('ELZIAN AGRO')).toBeInTheDocument();
     expect(screen.getByText('Go To Elzian Agro')).toBeInTheDocument();
