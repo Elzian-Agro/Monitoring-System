@@ -72,6 +72,48 @@ jest.mock('axios', () => ({
 }));
 
 describe('Weather Page', () => {
+  it('render page correctly', async () => {
+    render(
+      <MemoryRouter>
+        <WeatherComponent />
+      </MemoryRouter>
+    );
+
+    // Find Add new widgets button
+    expect(screen.getByText('Change')).toBeInTheDocument();
+  });
+
+  it('opens form when change button is clicked', async () => {
+    render(
+      <MemoryRouter>
+        <WeatherComponent />
+      </MemoryRouter>
+    );
+
+    // Simulate change button click
+    fireEvent.click(screen.getByText('Change'));
+
+    // Hide the "Change" button and display form
+    await waitFor(() => {
+      expect(screen.queryByText('Change')).not.toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(screen.getByText('Latitude')).toBeInTheDocument();
+    });
+
+    // Simulate form submission by clicking submit button
+
+    fireEvent.click(screen.getByText('Submit'));
+
+    // Display the "Change" button and hide form
+    await waitFor(() => {
+      expect(screen.getByText('Change')).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(screen.queryByText('Latitude')).not.toBeInTheDocument();
+    });
+  });
+
   it('renders weather data correctly', async () => {
     // Mock user location data and theme
     useSelector.mockImplementation((selector) =>
@@ -97,39 +139,17 @@ describe('Weather Page', () => {
     // Find Add new widgets button
     expect(screen.getByText('Change')).toBeInTheDocument();
 
-    // Check if the location is rendered correctly
+    // Check the location is rendered correctly
     await waitFor(() => {
       expect(screen.getByText('Mock City, Mock State, Mock Country')).toBeInTheDocument();
     });
-  });
 
-  it('opens form when change button is clicked', async () => {
-    render(
-      <MemoryRouter>
-        <WeatherComponent />
-      </MemoryRouter>
-    );
-
-    // Simulate change button click
-    fireEvent.click(screen.getByText('Change'));
-
-    // Hide the "Change" button and display form
+    // Check  the current weather is rendered correctly
     await waitFor(() => {
-      expect(screen.queryByText('Change')).not.toBeInTheDocument();
+      expect(screen.getByText('CURRENT WEATHER')).toBeInTheDocument();
     });
     await waitFor(() => {
-      expect(screen.getByText('Latitude')).toBeInTheDocument();
-    });
-
-    // Simulate form submission by clicking submit button
-    fireEvent.click(screen.getByText('Submit'));
-
-    // Display the "Change" button and hide form
-    await waitFor(() => {
-      expect(screen.getByText('Change')).toBeInTheDocument();
-    });
-    await waitFor(() => {
-      expect(screen.queryByText('Latitude')).not.toBeInTheDocument();
+      expect(screen.getByText('20°C')).toBeInTheDocument();
     });
   });
 });

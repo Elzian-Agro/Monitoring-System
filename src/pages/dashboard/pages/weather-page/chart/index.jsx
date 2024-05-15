@@ -63,6 +63,9 @@ const Chart = ({ weatherData }) => {
     exporting: {
       enabled: false,
     },
+    accessibility: {
+      enabled: false,
+    },
     series: [
       {
         name: t('Temperature'),
