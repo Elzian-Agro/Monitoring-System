@@ -67,7 +67,7 @@ const WeatherComponent = () => {
 
         const summaryWeather = weatherForecast.filter((weather) => {
           const dateTime = new Date(weather.date);
-          return dateTime.getHours() === 6 && dateTime.getMinutes() === 0;
+          return dateTime.getHours() === 12 && dateTime.getMinutes() === 0;
         });
 
         setWeatherData(weatherForecast);
@@ -230,8 +230,18 @@ const WeatherComponent = () => {
                           {new Date(data?.date).toLocaleString('en-US', {
                             weekday: 'short',
                             day: 'numeric',
-                          })}
+                          }) ===
+                          new Date().toLocaleString('en-US', {
+                            weekday: 'short',
+                            day: 'numeric',
+                          })
+                            ? 'Today'
+                            : new Date(data?.date).toLocaleString('en-US', {
+                                weekday: 'short',
+                                day: 'numeric',
+                              })}
                         </p>
+
                         <p className='font-semibold text-sm text-left text-gray-600 dark:text-gray-300'>
                           {data?.temperature}
                           <span className='font-extralight text-gray-400'>°C</span>
