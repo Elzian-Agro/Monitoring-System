@@ -135,69 +135,78 @@ const WeatherComponent = () => {
               {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </p>
 
-            <div className='flex flex-col md:flex-row item-start md:items-center'>
-              <div className='flex flex-row gap-2 items-center py-4'>
-                <img
-                  src={getWeatherIconUrl(currentdWeather[0]?.weather_icon)}
-                  alt='Weather Icon'
-                  className='w-12 sm:w-16 lg:w-32'
-                />
-                <p className='font-semibold text-gray-600 dark:text-gray-300 text-5xl lg:text-6xl mr-5 lg:mr-10 ml-5'>
-                  {currentdWeather[0]?.temperature}
-                  <span className='text-gray-400'>°C</span>
-                </p>
-              </div>
-
-              <div className='flex flex-col mt-2 sm:mt-0'>
-                <p className='text-gray-400 text-md'>
-                  {currentdWeather[0]?.weather_description
-                    ?.split(' ')
-                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ')}
-                </p>
-                <p className='text-sm lg:text-lg text-gray-600 dark:text-gray-300'>
-                  {t('Feels like')}
-                  <span className='font-semibold ml-2'>{currentdWeather[0]?.feels_like}</span>
-                  <span className='font-extralight text-gray-400'>°C</span>
-                </p>
-              </div>
-            </div>
-
-            <div className='flex justify-between mt-2 md:mt-0 w-full lg:w-2/3'>
-              <div className='min-w-24'>
-                <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>{t('Humidity')}</p>
-                <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>
-                  {currentdWeather[0]?.humidity}
-                  <span className='font-extralight text-gray-400'>%</span>
-                </p>
-              </div>
-
-              <div className='min-w-24'>
-                <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>{t('Wind Speed')}</p>
-                <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300 flex items-center'>
-                  <ArrowUpIcon
-                    className='h-6 w-6 transform font-extralight text-gray-400 mr-1'
-                    style={{ transform: `rotate(${currentdWeather[0]?.wind_deg || 0}deg)` }}
+            <div className='flex flex-col xl:flex-row xl:justify-center'>
+              <div className='flex flex-col md:flex-row'>
+                <div className='flex flex-row gap-2 items-center py-4 xl:mr-10'>
+                  <img
+                    src={getWeatherIconUrl(currentdWeather[0]?.weather_icon)}
+                    alt='Weather Icon'
+                    className='w-12 sm:w-16 lg:w-32'
                   />
-                  <span>{currentdWeather[0]?.wind_speed}</span>
-                  <span className='font-extralight text-gray-400'>m/s</span>
-                </p>
-              </div>
+                  <p className='font-semibold text-gray-600 dark:text-gray-300 text-5xl lg:text-6xl mr-5 lg:mr-10 ml-5'>
+                    {currentdWeather[0]?.temperature}
+                    <span className='text-gray-400'>°C</span>
+                  </p>
+                </div>
 
-              <div className='min-w-24 ml-5'>
-                <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>{t('Pressure')}</p>
-                <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>
-                  {currentdWeather[0]?.pressure}
-                  <span className='font-extralight text-gray-400'>hPa</span>
-                </p>
+                <div className='flex flex-col item-center justify-center xl:mr-20'>
+                  <p className='text-gray-400 text-md'>
+                    {currentdWeather[0]?.weather_description
+                      ?.split(' ')
+                      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                      .join(' ')}
+                  </p>
+                  <p className='text-sm min-w-28 lg:text-lg text-gray-600 dark:text-gray-300'>
+                    {t('Feels like')}
+                    <span className='font-semibold ml-2'>{currentdWeather[0]?.feels_like}</span>
+                    <span className='font-extralight text-gray-400'>°C</span>
+                  </p>
+                </div>
               </div>
+              <div className='flex flex-col justify-between mt-2'>
+                <div className='flex flex-row'>
+                  <p className='min-w-28 font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>
+                    {t('Humidity')}
+                  </p>
+                  <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>
+                    {currentdWeather[0]?.humidity}
+                    <span className='font-extralight text-gray-400'>%</span>
+                  </p>
+                </div>
 
-              <div className='min-w-24'>
-                <p className='font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>{t('Visibility')}</p>
-                <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>
-                  {(currentdWeather[0]?.visibility / 1000).toFixed(1)}
-                  <span className='font-extralight text-gray-400'>km</span>
-                </p>
+                <div className='flex flex-row'>
+                  <p className='min-w-28 font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>
+                    {t('Wind Speed')}
+                  </p>
+                  <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300 flex items-center'>
+                    <span>{currentdWeather[0]?.wind_speed}</span>
+                    <span className='font-extralight text-gray-400'>m/s</span>
+                    <ArrowUpIcon
+                      className='h-6 w-6 transform font-extralight text-gray-400 ml-1'
+                      style={{ transform: `rotate(${currentdWeather[0]?.wind_deg || 0}deg)` }}
+                    />
+                  </p>
+                </div>
+
+                <div className='flex flex-row'>
+                  <p className='min-w-28 font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>
+                    {t('Pressure')}
+                  </p>
+                  <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>
+                    {currentdWeather[0]?.pressure}
+                    <span className='font-extralight text-gray-400'>hPa</span>
+                  </p>
+                </div>
+
+                <div className='flex flex-row'>
+                  <p className='min-w-28 font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>
+                    {t('Visibility')}
+                  </p>
+                  <p className='font-semibold font-md sm:font-lg lg:font-2xl text-gray-600 dark:text-gray-300'>
+                    {(currentdWeather[0]?.visibility / 1000).toFixed(1)}
+                    <span className='font-extralight text-gray-400'>km</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
