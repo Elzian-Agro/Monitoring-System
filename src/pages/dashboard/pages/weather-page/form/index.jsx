@@ -70,7 +70,7 @@ const Form = ({ userLocation, onClose }) => {
           {t('Location Description')}
           <a
             className='text-blue-500 underline ml-1'
-            href='https://www.google.com/maps/'
+            href={`https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`}
             rel='noreferrer'
             target='_blank'>
             {t('click')}
