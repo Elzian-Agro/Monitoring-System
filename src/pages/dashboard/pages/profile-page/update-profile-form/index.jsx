@@ -227,32 +227,34 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
                   required={true}
                 />
 
-                <TextBox
-                  placeholder='Add your facebook link here'
-                  label='Facebook'
-                  type='text'
-                  Icon={LinkIcon}
-                  value={facebook}
-                  setValue={setFacebook}
-                />
+                <div className='row-span-3 space-y-4 lg:space-y-6'>
+                  <TextBox
+                    placeholder='Add your facebook link here'
+                    label='Facebook'
+                    type='text'
+                    Icon={LinkIcon}
+                    value={facebook}
+                    setValue={setFacebook}
+                  />
 
-                <TextBox
-                  placeholder='Add your linkedIn link here'
-                  label='LinkedIn'
-                  type='text'
-                  Icon={LinkIcon}
-                  value={linkedIn}
-                  setValue={setLinkedIn}
-                />
+                  <TextBox
+                    placeholder='Add your linkedIn link here'
+                    label='LinkedIn'
+                    type='text'
+                    Icon={LinkIcon}
+                    value={linkedIn}
+                    setValue={setLinkedIn}
+                  />
 
-                <TextBox
-                  placeholder='Add your youtube link here'
-                  label='Youtube'
-                  type='text'
-                  Icon={LinkIcon}
-                  value={youtube}
-                  setValue={setYoutube}
-                />
+                  <TextBox
+                    placeholder='Add your youtube link here'
+                    label='Youtube'
+                    type='text'
+                    Icon={LinkIcon}
+                    value={youtube}
+                    setValue={setYoutube}
+                  />
+                </div>
 
                 <div>
                   <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full'>
@@ -261,7 +263,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
                       {t('Location Description')}
                       <a
                         className='text-blue-500 underline ml-1'
-                        href='https://www.google.com/maps/'
+                        href={`https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`}
                         rel='noreferrer'
                         target='_blank'>
                         {t('click')}
