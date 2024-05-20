@@ -123,7 +123,7 @@ const WeatherComponent = () => {
       {!weatherData && <Loader />}
 
       {weatherData && (
-        <div>
+        <div className='flex flex-col gap-5'>
           <div
             className='flex flex-col rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-md  overflow-x-auto'
             style={{
