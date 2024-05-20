@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import Chart from './chart';
 
 const DashboardPage = () => {
   const { t } = useTranslation();
@@ -32,6 +33,25 @@ const DashboardPage = () => {
       </div>
 
       <div className='p-6'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white dark:bg-secondary-dark-bg mb-6'>
+          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+            <h1 className='text-md text-center font-semibold dark:text-white'>{t('Temperature')}</h1>
+            <Chart />
+          </div>
+          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+            <h1 className='text-md text-center font-semibold dark:text-white'>{t('Humidity')}</h1>
+            <Chart />
+          </div>
+          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+            <h1 className='text-md text-center font-semibold dark:text-white'>{t('Soil Moisture')}</h1>
+            <Chart />
+          </div>
+          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+            <h1 className='text-md text-center font-semibold dark:text-white'>{t('Gas Detection')}</h1>
+            <Chart />
+          </div>
+        </div>
+
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6'>
           <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 p-6 shadow-md shadow-black/5'>
             <div className='flex justify-between mb-6'>
@@ -84,6 +104,7 @@ const DashboardPage = () => {
             <p className='text-[#f84525] font-medium text-sm hover:text-red-800'>{t('View')}</p>
           </div>
         </div>
+
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
           <div className='p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 w-full shadow-lg rounded'>
             <div className='rounded-t mb-0 px-0 border-0'>
@@ -212,6 +233,7 @@ const DashboardPage = () => {
             </div>
           </div>
         </div>
+
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6'>
           <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 shadow-black/5 p-6 rounded-md lg:col-span-2'>
             <div className='flex justify-between mb-4 items-start'>
