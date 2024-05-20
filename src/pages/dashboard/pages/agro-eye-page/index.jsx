@@ -128,7 +128,7 @@ const AgroEye = () => {
 
                       return (
                         <div key={id}>
-                          <div className='bg-white dark:bg-gray-800 rounded-md border border-gray-200 dark:border-gray-800 shadow-md shadow-black/5 p-1 w-full'>
+                          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
                             <div className='flex justify-end gap-2 mr-2 py-2'>
                               <IconButton
                                 testid='update-button'
