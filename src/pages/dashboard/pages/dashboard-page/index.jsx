@@ -33,7 +33,7 @@ const DashboardPage = () => {
       </div>
 
       <div className='p-6'>
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white dark:bg-secondary-dark-bg mb-6'>
+        <div className='flex flex-col gap-6 bg-white dark:bg-secondary-dark-bg mb-6'>
           <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
             <h1 className='text-md text-center font-semibold dark:text-white'>{t('Temperature')}</h1>
             <Chart />

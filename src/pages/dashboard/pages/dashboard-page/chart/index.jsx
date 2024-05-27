@@ -49,11 +49,7 @@ const Chart = () => {
           },
         },
         min: 0,
-        max: 5,
-        scrollbar: {
-          enabled: true,
-        },
-        tickLength: 0,
+        max: 30,
       },
       yAxis: {
         title: {
@@ -93,7 +89,7 @@ const Chart = () => {
 
     setChartOptions(chartConfig);
     // eslint-disable-next-line
-  }, []);
+  }, [currentMode]);
 
   return (
     <div className='bg-white dark:bg-gray-800'>
