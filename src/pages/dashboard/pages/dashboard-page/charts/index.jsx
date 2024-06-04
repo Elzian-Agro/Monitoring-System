@@ -27,6 +27,9 @@ const Charts = () => {
   useEffect(() => {
     if (!thisMonthSensorData) return;
 
+    const factors = ['temperature', 'humidity', 'soil_moisture', 'gas_detection'];
+    const options = {};
+
     const generateSeriesData = (factor) => {
       const series = {};
       const categories = [];
@@ -35,7 +38,7 @@ const Charts = () => {
       const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
       // Generate complete list of dates for the month
-      for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+      for (let date = new Date(startDate); date <= endDate; date.setDate(date.getDate() + 1)) {
         categories.push(new Date(date).toISOString().split('T')[0]);
       }
 
@@ -48,9 +51,6 @@ const Charts = () => {
 
       return { series, categories };
     };
-
-    const factors = ['temperature', 'humidity', 'soil_moisture', 'gas_detection'];
-    const options = {};
 
     factors.forEach((factor) => {
       const { series, categories } = generateSeriesData(factor);
