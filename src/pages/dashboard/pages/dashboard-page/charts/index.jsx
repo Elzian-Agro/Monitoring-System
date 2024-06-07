@@ -6,6 +6,7 @@ import { selectTheme } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import useFetch from 'hooks/useFetch';
 import { useTranslation } from 'react-i18next';
 import Loader from 'pages/dashboard/components/common/loader';
+import { DeviceFactors } from 'utils/constant';
 
 const Charts = () => {
   const [temperatureOptions, setTemperatureOptions] = useState(null);
@@ -27,7 +28,6 @@ const Charts = () => {
   useEffect(() => {
     if (!thisMonthSensorData) return;
 
-    const factors = ['temperature', 'humidity', 'soil_moisture', 'gas_detection'];
     const options = {};
 
     const generateSeriesData = (factor) => {
@@ -52,7 +52,7 @@ const Charts = () => {
       return { series, categories };
     };
 
-    factors.forEach((factor) => {
+    DeviceFactors.map((factor) => factor.replace(/\s+/g, '_').toLowerCase()).forEach((factor) => {
       const { series, categories } = generateSeriesData(factor);
 
       options[factor] = {
