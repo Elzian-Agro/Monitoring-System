@@ -44,7 +44,7 @@ const Charts = () => {
 
       thisMonthSensorData.forEach((device) => {
         series[device.deviceId] = categories.map((date) => {
-          const entry = device.data.find((data) => data.timestamp.startsWith(date));
+          const entry = device.data?.find((data) => data.timestamp.startsWith(date));
           return entry ? entry[factor] : null;
         });
       });

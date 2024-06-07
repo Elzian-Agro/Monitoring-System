@@ -4,6 +4,8 @@ import { act } from 'react-dom/test-utils';
 import DashboardPage from './index';
 import { MemoryRouter } from 'react-router-dom';
 
+const mockedResponse = [];
+
 // Mock react-i18next
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
@@ -11,6 +13,18 @@ jest.mock('react-i18next', () => ({
       t: (key) => key,
     };
   },
+}));
+
+// Mock Redux and useAxios hook
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn(),
+  useDispatch: () => jest.fn(),
+}));
+
+jest.mock('hooks/useFetch', () => () => ({
+  loading: false,
+  response: mockedResponse,
+  recall: jest.fn().mockReturnValue(null),
 }));
 
 describe('About US Page', () => {
