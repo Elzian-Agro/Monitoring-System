@@ -52,6 +52,8 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   }, [device]);
 
   useEffect(() => {
+    setDeviceFactors([]);
+
     if (deviceType) {
       setFactors(DeviceFactors[deviceType] || []);
     }
