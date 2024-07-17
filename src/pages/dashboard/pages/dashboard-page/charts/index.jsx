@@ -52,71 +52,73 @@ const Charts = () => {
       return { series, categories };
     };
 
-    DeviceFactors.map((factor) => factor.replace(/\s+/g, '_').toLowerCase()).forEach((factor) => {
-      const { series, categories } = generateSeriesData(factor);
+    DeviceFactors['Monitoring System']
+      .map((factor) => factor.replace(/\s+/g, '_').toLowerCase())
+      .forEach((factor) => {
+        const { series, categories } = generateSeriesData(factor);
 
-      options[factor] = {
-        chart: {
-          type: 'line',
-          backgroundColor: getColor('#414345', '#ffffff'),
-        },
-        title: {
-          text: null,
-          style: {
-            color: getColor('#ffffff', '#000000'),
+        options[factor] = {
+          chart: {
+            type: 'line',
+            backgroundColor: getColor('#414345', '#ffffff'),
           },
-        },
-        xAxis: {
-          categories: categories.map((date) => {
-            const dateTime = new Date(date);
-            return dateTime.toLocaleDateString('en-US', {
-              timeZone: 'Asia/Colombo',
-              month: 'short',
-              day: 'numeric',
-            });
-          }),
           title: {
             text: null,
             style: {
               color: getColor('#ffffff', '#000000'),
             },
           },
-          labels: {
-            style: {
+          xAxis: {
+            categories: categories.map((date) => {
+              const dateTime = new Date(date);
+              return dateTime.toLocaleDateString('en-US', {
+                timeZone: 'Asia/Colombo',
+                month: 'short',
+                day: 'numeric',
+              });
+            }),
+            title: {
+              text: null,
+              style: {
+                color: getColor('#ffffff', '#000000'),
+              },
+            },
+            labels: {
+              style: {
+                color: getColor('#ffffff', '#000000'),
+              },
+            },
+          },
+          yAxis: {
+            title: {
+              text: null,
+              style: {
+                color: getColor('#ffffff', '#000000'),
+              },
+            },
+            labels: {
+              style: {
+                color: getColor('#ffffff', '#000000'),
+              },
+            },
+          },
+          legend: {
+            itemStyle: {
               color: getColor('#ffffff', '#000000'),
             },
           },
-        },
-        yAxis: {
-          title: {
-            text: null,
-            style: {
-              color: getColor('#ffffff', '#000000'),
-            },
+          exporting: {
+            enabled: false,
           },
-          labels: {
-            style: {
-              color: getColor('#ffffff', '#000000'),
-            },
+          accessibility: {
+            enabled: false,
           },
-        },
-        legend: {
-          itemStyle: {
-            color: getColor('#ffffff', '#000000'),
-          },
-        },
-        exporting: {
-          enabled: false,
-        },
-        accessibility: {
-          enabled: false,
-        },
-        series: Object.keys(series).map((deviceId) => ({
-          name: deviceId,
-          data: series[deviceId],
-        })),
-      };
-    });
+          series: Object.keys(series).map((deviceId) => ({
+            name: deviceId,
+            data: series[deviceId],
+          })),
+        };
+      });
 
     setTemperatureOptions(options.temperature);
     setHumidityOptions(options.humidity);
