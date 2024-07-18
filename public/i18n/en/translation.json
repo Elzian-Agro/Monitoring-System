@@ -228,5 +228,12 @@
   "Change": "Change",
   "click": "click",
   "Failed to fetch weather data": "Failed to fetch weather data",
-  "Please provide a valid location": "Please provide a valid location"
+  "Please provide a valid location": "Please provide a valid location",
+  "Portable Device": "Portable Device",
+  "Nitrogen": "Nitrogen",
+  "Phosphorous": "Phosphorous",
+  "Potassium": "Potassium",
+  "PH": "PH",
+  "Elec Conductivity": " Elec Conductivity",
+  "Soil Temperature": "Soil Temperature"
 }

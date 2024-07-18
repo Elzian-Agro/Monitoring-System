@@ -228,5 +228,12 @@
   "Change": "மாற்றம்",
   "click": "கிளிக்",
   "Failed to fetch weather data": "வானிலைத் தரவைப் பெறுவதில் தோல்வி",
-  "Please provide a valid location": "சரியான இருப்பிடத்தை வழங்கவும்"
+  "Please provide a valid location": "சரியான இருப்பிடத்தை வழங்கவும்",
+  "Portable Device": "கையடக்க சாதனங்கள்",
+  "Nitrogen": "நைட்ரஜன்",
+  "Phosphorous": "பாஸ்பரஸ்",
+  "Potassium": "பொட்டாசியம்",
+  "PH": "PH",
+  "Elec Conductivity": "மின் கடத்துத்திறன்",
+  "Soil Temperature": "மண் வெப்பநிலை"
 }

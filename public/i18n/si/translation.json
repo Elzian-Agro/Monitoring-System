@@ -228,5 +228,12 @@
   "Change": "වෙනස් කරන්න",
   "click": "ඔබන්න",
   "Failed to fetch weather data": "කාලගුණ දත්ත ලබා ගැනීමට අපොහොසත් විය",
-  "Please provide a valid location": "කරුණාකර වලංගු ස්ථානයක් ලබා දෙන්න"
+  "Please provide a valid location": "කරුණාකර වලංගු ස්ථානයක් ලබා දෙන්න",
+  "Portable Device": "අතේ ගෙන යා හැකි උපාංගය",
+  "Nitrogen": "නයිට්රජන්",
+  "Phosphorous": "පොස්පරස්",
+  "Potassium": "පොටෑසියම්",
+  "PH": "PH",
+  "Elec Conductivity": "විද්යුත් සන්නායකතාව",
+  "Soil Temperature": "පාංශු උෂ්ණත්වය"
 }
