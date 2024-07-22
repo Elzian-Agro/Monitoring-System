@@ -75,25 +75,57 @@ const PortableDevice = () => {
                         {data.gpsValues.latitude}, {data.gpsValues.longitude}
                       </span>
                     </p>
+
                     <p>
-                      <span>Nitrogen: {data.nitrogen} mg/kg</span>
-                      <br />
-                      <span>Phosphorus: {data.phosphorous} mg/kg</span>
-                      <br />
-                      <span>Potassium: {data.potassium} mg/kg</span>
-                      <br />
-                      <span>pH: {data.ph}</span>
-                      <br />
-                      <span>Soil Moisture: {data.soil_moisture} %RH</span>
-                      <br />
-                      <span>Electric Conductivity: {data.elec_conductivity} us/cm</span>
-                      <br />
-                      <span>Soil Temperature: {data.soil_temperature} °C</span>
+                      {data.nitrogen !== undefined && (
+                        <>
+                          <span>Nitrogen: {data.nitrogen} mg/kg</span>
+                          <br />
+                        </>
+                      )}
+                      {data.phosphorous !== undefined && (
+                        <>
+                          <span>Phosphorus: {data.phosphorous} mg/kg</span>
+                          <br />
+                        </>
+                      )}
+                      {data.potassium !== undefined && (
+                        <>
+                          <span>Potassium: {data.potassium} mg/kg</span>
+                          <br />
+                        </>
+                      )}
+                      {data.ph !== undefined && (
+                        <>
+                          <span>pH: {data.ph}</span>
+                          <br />
+                        </>
+                      )}
+                      {data.soil_moisture !== undefined && (
+                        <>
+                          <span>Soil Moisture: {data.soil_moisture} %RH</span>
+                          <br />
+                        </>
+                      )}
+                      {data.elec_conductivity !== undefined && (
+                        <>
+                          <span>Electric Conductivity: {data.elec_conductivity} us/cm</span>
+                          <br />
+                        </>
+                      )}
+                      {data.soil_temperature !== undefined && (
+                        <>
+                          <span>Soil Temperature: {data.soil_temperature} °C</span>
+                          <br />
+                        </>
+                      )}
                     </p>
-                    <div className='flex flex-row justify-between'>
-                      <p className='text-gray-400'>
-                        <span>{data.deviceId}</span>
+
+                    <div className='flex flex-row justify-between '>
+                      <p className='text-gray-400' style={{ margin: 0 }}>
+                        {data.deviceId}
                       </p>
+
                       <IconButton
                         testid='delete-button'
                         color='text-red-600'
