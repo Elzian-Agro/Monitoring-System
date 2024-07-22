@@ -8,6 +8,7 @@ import { IconButton } from '../../components/base/Button';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import Modal from 'components/common/modal';
 import { messages } from 'utils/constant';
+import Loader from '../../components/common/loader';
 
 // Create custom icon using Leaflet's Icon class
 const redIcon = L.icon({
@@ -57,55 +58,60 @@ const PortableDevice = () => {
 
   return (
     <div className='mx-5 mt-2'>
-      <MapContainer center={[7.555494, 80.713784]} zoom={8} style={{ height: '600px', width: '100%' }} cla>
-        <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
-        <div>
-          {soilData?.map((data, index) => (
-            <Marker key={index} position={[data.gpsValues.latitude, data.gpsValues.longitude]} icon={redIcon}>
-              <Popup>
-                <div>
-                  <p className='text-blue-400'>
-                    <span>{data.location}</span>
-                    <br />
-                    <span>
-                      {data.gpsValues.latitude}, {data.gpsValues.longitude}
-                    </span>
-                  </p>
-                  <p>
-                    <span>Nitrogen: {data.nitrogen} mg/kg</span>
-                    <br />
-                    <span>Phosphorus: {data.phosphorous} mg/kg</span>
-                    <br />
-                    <span>Potassium: {data.potassium} mg/kg</span>
-                    <br />
-                    <span>pH: {data.ph}</span>
-                    <br />
-                    <span>Soil Moisture: {data.soil_moisture} %RH</span>
-                    <br />
-                    <span>Electric Conductivity: {data.elec_conductivity} us/cm</span>
-                    <br />
-                    <span>Soil Temperature: {data.soil_temperature} °C</span>
-                  </p>
-                  <div className='flex flex-row justify-between'>
-                    <p className='text-gray-400'>
-                      <span>{data.deviceId}</span>
+      {isLoading && <Loader />}
+
+      {!isLoading && (
+        <MapContainer center={[7.555494, 80.713784]} zoom={8} className='w-full h-[90vh]'>
+          <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
+          <div>
+            {soilData?.map((data, index) => (
+              <Marker key={index} position={[data.gpsValues.latitude, data.gpsValues.longitude]} icon={redIcon}>
+                <Popup>
+                  <div>
+                    <p className='text-blue-400'>
+                      <span>{data.location}</span>
+                      <br />
+                      <span>
+                        {data.gpsValues.latitude}, {data.gpsValues.longitude}
+                      </span>
                     </p>
-                    <IconButton
-                      testid='delete-button'
-                      color='text-red-600'
-                      Icon={TrashIcon}
-                      onClick={() => {
-                        setSelectedPortableData(data);
-                        setIsConfirmVisible(true);
-                      }}
-                    />
+                    <p>
+                      <span>Nitrogen: {data.nitrogen} mg/kg</span>
+                      <br />
+                      <span>Phosphorus: {data.phosphorous} mg/kg</span>
+                      <br />
+                      <span>Potassium: {data.potassium} mg/kg</span>
+                      <br />
+                      <span>pH: {data.ph}</span>
+                      <br />
+                      <span>Soil Moisture: {data.soil_moisture} %RH</span>
+                      <br />
+                      <span>Electric Conductivity: {data.elec_conductivity} us/cm</span>
+                      <br />
+                      <span>Soil Temperature: {data.soil_temperature} °C</span>
+                    </p>
+                    <div className='flex flex-row justify-between'>
+                      <p className='text-gray-400'>
+                        <span>{data.deviceId}</span>
+                      </p>
+                      <IconButton
+                        testid='delete-button'
+                        color='text-red-600'
+                        Icon={TrashIcon}
+                        onClick={() => {
+                          setSelectedPortableData(data);
+                          setIsConfirmVisible(true);
+                        }}
+                      />
+                    </div>
                   </div>
-                </div>
-              </Popup>
-            </Marker>
-          ))}
-        </div>
-      </MapContainer>
+                </Popup>
+              </Marker>
+            ))}
+          </div>
+        </MapContainer>
+      )}
+
       <Modal
         isOpen={isConfirmVisible}
         message={messages.confirmDelete}
