@@ -73,7 +73,7 @@ const Notification = () => {
       {(ref) => (
         <div
           ref={ref}
-          className='nav-item z-[999] absolute right-5 md:right-40 top-16 shadow-lg bg-white dark:bg-secondary-dark-bg p-6 rounded-lg w-72 md:w-[22rem]'>
+          className='nav-item z-[999] absolute right-5 md:right-40 top-16 shadow-lg bg-white dark:bg-secondary-dark-bg p-6 rounded-lg w-72 md:w-[22rem] max-h-96 overflow-y-auto'>
           <div className='flex justify-between items-center'>
             <div className='flex gap-3'>
               <p className='font-semibold md:text-lg dark:text-white'>{t('Notifications')}</p>

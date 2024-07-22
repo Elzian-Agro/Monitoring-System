@@ -15,7 +15,7 @@ const Modal = ({ isOpen, message, onClose, type }) => {
   }
 
   return (
-    <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-25 backdrop-blur-sm'>
+    <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-25 backdrop-blur-sm z-[50]'>
       <div className='xxs:w-72 w-64 bg-white dark:bg-black p-4 rounded-lg shadow-2xl border-gray-300 dark:border-gray-600 border-b-[4px]'>
         {modalContent[type](message, onClose, t)}
       </div>

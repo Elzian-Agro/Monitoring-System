@@ -61,7 +61,7 @@ const PortableDevice = () => {
       {isLoading && <Loader />}
 
       {!isLoading && (
-        <MapContainer center={[7.555494, 80.713784]} zoom={8} className='w-full h-[90vh]'>
+        <MapContainer center={[7.555494, 80.713784]} zoom={8} className='w-full h-[90vh] z-[1]'>
           <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
           <div>
             {soilData?.map((data, index) => (
