@@ -145,6 +145,11 @@ export const errorType = {
     code: 13026,
     message: 'Widget creation failure',
   },
+
+  portableDeviceDataNotFound: {
+    code: 13029,
+    message: 'Portable device data not found',
+  },
 };
 
 export const messages = {
@@ -166,6 +171,7 @@ export const messages = {
   confirmResetPassword: 'Do you want to reset the password?',
   failedFetchWeathering: 'Failed to fetch weather data',
   provideValidLocation: 'Please provide a valid location',
+  portableDeviceDataDeleted: 'Portable device data deleted successfully',
 };
 
 export const customTableStyles = {

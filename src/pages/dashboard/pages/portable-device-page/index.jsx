@@ -120,7 +120,7 @@ const PortableDevice = () => {
       />
       <Modal
         isOpen={isAlertVisible}
-        message={'DELETED!'}
+        message={messages.portableDeviceDataDeleted}
         onClose={() => {
           setIsAlertVisible(false);
         }}

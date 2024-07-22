@@ -235,5 +235,7 @@
   "Potassium": "Potassium",
   "PH": "PH",
   "Elec Conductivity": " Elec Conductivity",
-  "Soil Temperature": "Soil Temperature"
+  "Soil Temperature": "Soil Temperature",
+  "Portable device data deleted successfully": "Portable device data deleted successfully",
+  "Portable device data not found": "Portable device data not found"
 }
