@@ -20,11 +20,11 @@ export const DeviceFactors = {
   'Monitoring System': ['Temperature', 'Humidity', 'Soil Moisture', 'Gas Detection'],
   'Portable Device': [
     'Nitrogen',
-    'Phosphorous',
+    'Phosphorus',
     'Potassium',
-    'PH',
+    'pH',
     'Soil Moisture',
-    'Elec Conductivity',
+    'Electric Conductivity',
     'Soil Temperature',
   ],
 };

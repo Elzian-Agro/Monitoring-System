@@ -231,10 +231,10 @@
   "Please provide a valid location": "Please provide a valid location",
   "Portable Device": "Portable Device",
   "Nitrogen": "Nitrogen",
-  "Phosphorous": "Phosphorous",
+  "Phosphorus": "Phosphorous",
   "Potassium": "Potassium",
-  "PH": "PH",
-  "Elec Conductivity": " Elec Conductivity",
+  "pH": "pH",
+  "Electric Conductivity": " Elec Conductivity",
   "Soil Temperature": "Soil Temperature",
   "Portable device data deleted successfully": "Portable device data deleted successfully",
   "Portable device data not found": "Portable device data not found"

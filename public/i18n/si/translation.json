@@ -231,10 +231,10 @@
   "Please provide a valid location": "කරුණාකර වලංගු ස්ථානයක් ලබා දෙන්න",
   "Portable Device": "අතේ ගෙන යා හැකි උපාංගය",
   "Nitrogen": "නයිට්රජන්",
-  "Phosphorous": "පොස්පරස්",
+  "Phosphorus": "පොස්පරස්",
   "Potassium": "පොටෑසියම්",
-  "PH": "PH",
-  "Elec Conductivity": "විද්යුත් සන්නායකතාව",
+  "pH": "pH",
+  "Electric Conductivity": "විද්යුත් සන්නායකතාව",
   "Soil Temperature": "පාංශු උෂ්ණත්වය",
   "Portable device data deleted successfully": "අතේ ගෙන යා හැකි උපාංග දත්ත සාර්ථකව මකා ඇත",
   "Portable device data not found": "තේ ගෙන යා හැකි උපාංග දත්ත හමු නොවීය"

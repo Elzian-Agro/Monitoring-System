@@ -9,6 +9,9 @@ import { TrashIcon } from '@heroicons/react/24/outline';
 import Modal from 'components/common/modal';
 import { messages } from 'utils/constant';
 import Loader from '../../components/common/loader';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { selectTheme } from 'pages/dashboard/slice/dashboardLayoutSlice';
 
 // Custom icon using Leaflet's Icon class
 const redIcon = L.icon({
@@ -24,8 +27,9 @@ const PortableDevice = () => {
   const [isConfirmVisible, setIsConfirmVisible] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [selectedPortableData, setSelectedPortableData] = useState(null);
+  const currentMode = useSelector(selectTheme);
   const { send } = useAxios();
-
+  const { t } = useTranslation();
   const {
     response: soilData,
     recall,
@@ -58,6 +62,16 @@ const PortableDevice = () => {
 
   return (
     <div className='mx-5 mt-2'>
+      {currentMode === 'Dark' && (
+        <style>
+          {`
+          .leaflet-popup-content-wrapper {
+            background: #33373E;
+          } 
+        `}
+        </style>
+      )}
+
       {isLoading && <Loader />}
 
       {!isLoading && (
@@ -88,8 +102,8 @@ const PortableDevice = () => {
                       ].map(
                         (item) =>
                           item.value !== undefined && (
-                            <span key={item.label} className='text-black text-sm'>
-                              {item.label}: {item.value} {item.unit}
+                            <span key={item.label} className='text-black dark:text-gray-200 text-sm'>
+                              {t(item.label)} : {item.value} {item.unit}
                               <br />
                             </span>
                           )
