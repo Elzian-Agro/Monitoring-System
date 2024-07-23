@@ -10,7 +10,7 @@ import Modal from 'components/common/modal';
 import { messages } from 'utils/constant';
 import Loader from '../../components/common/loader';
 
-// Create custom icon using Leaflet's Icon class
+// Custom icon using Leaflet's Icon class
 const redIcon = L.icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
   iconSize: [25, 41],
@@ -77,47 +77,22 @@ const PortableDevice = () => {
                     </p>
 
                     <p>
-                      {data.nitrogen !== undefined && (
-                        <>
-                          <span>Nitrogen: {data.nitrogen} mg/kg</span>
-                          <br />
-                        </>
-                      )}
-                      {data.phosphorous !== undefined && (
-                        <>
-                          <span>Phosphorus: {data.phosphorous} mg/kg</span>
-                          <br />
-                        </>
-                      )}
-                      {data.potassium !== undefined && (
-                        <>
-                          <span>Potassium: {data.potassium} mg/kg</span>
-                          <br />
-                        </>
-                      )}
-                      {data.ph !== undefined && (
-                        <>
-                          <span>pH: {data.ph}</span>
-                          <br />
-                        </>
-                      )}
-                      {data.soil_moisture !== undefined && (
-                        <>
-                          <span>Soil Moisture: {data.soil_moisture} %RH</span>
-                          <br />
-                        </>
-                      )}
-                      {data.elec_conductivity !== undefined && (
-                        <>
-                          <span>Electric Conductivity: {data.elec_conductivity} us/cm</span>
-                          <br />
-                        </>
-                      )}
-                      {data.soil_temperature !== undefined && (
-                        <>
-                          <span>Soil Temperature: {data.soil_temperature} °C</span>
-                          <br />
-                        </>
+                      {[
+                        { label: 'Nitrogen', value: data.nitrogen, unit: 'mg/kg' },
+                        { label: 'Phosphorus', value: data.phosphorous, unit: 'mg/kg' },
+                        { label: 'Potassium', value: data.potassium, unit: 'mg/kg' },
+                        { label: 'pH', value: data.ph, unit: '' },
+                        { label: 'Soil Moisture', value: data.soil_moisture, unit: '%RH' },
+                        { label: 'Electric Conductivity', value: data.elec_conductivity, unit: 'us/cm' },
+                        { label: 'Soil Temperature', value: data.soil_temperature, unit: '°C' },
+                      ].map(
+                        (item) =>
+                          item.value !== undefined && (
+                            <span key={item.label} className='text-black text-sm'>
+                              {item.label}: {item.value} {item.unit}
+                              <br />
+                            </span>
+                          )
                       )}
                     </p>
 
