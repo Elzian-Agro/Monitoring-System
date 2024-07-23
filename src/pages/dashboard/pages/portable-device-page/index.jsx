@@ -93,11 +93,11 @@ const PortableDevice = () => {
                     <p>
                       {[
                         { label: 'Nitrogen', value: data.nitrogen, unit: 'mg/kg' },
-                        { label: 'Phosphorus', value: data.phosphorous, unit: 'mg/kg' },
+                        { label: 'Phosphorus', value: data.phosphorus, unit: 'mg/kg' },
                         { label: 'Potassium', value: data.potassium, unit: 'mg/kg' },
                         { label: 'pH', value: data.ph, unit: '' },
                         { label: 'Soil Moisture', value: data.soil_moisture, unit: '%RH' },
-                        { label: 'Electric Conductivity', value: data.elec_conductivity, unit: 'us/cm' },
+                        { label: 'Electric Conductivity', value: data.electric_conductivity, unit: 'us/cm' },
                         { label: 'Soil Temperature', value: data.soil_temperature, unit: '°C' },
                       ].map(
                         (item) =>
