@@ -90,7 +90,8 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "^axios$": "axios/dist/node/axios.cjs"
+      "^axios$": "axios/dist/node/axios.cjs",
+      "^react-leaflet$": "pages/dashboard/pages/portable-device-page/react-leaflet-mock.jsx"
     },
     "resetMocks": false
   }

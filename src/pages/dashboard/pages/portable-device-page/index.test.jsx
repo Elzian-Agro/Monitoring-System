@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
 import PortableDevice from './index';
@@ -72,7 +72,5 @@ describe('Portable Device Page', () => {
         </MemoryRouter>
       );
     });
-
-    // expect(screen.getByText('Nitrogen')).toBeInTheDocument();
   });
 });
