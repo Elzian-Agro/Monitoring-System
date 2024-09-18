@@ -41,9 +41,9 @@ const ToggleButton = ({ value, onChange }) => {
   );
 };
 
-const IconButton = ({ color, type = null, Icon, onClick }) => {
+const IconButton = ({ color, type = null, Icon, onClick, testid }) => {
   return (
-    <button className='cursor-pointer' type={type} onClick={onClick}>
+    <button className='cursor-pointer' data-testid={testid} type={type} onClick={onClick}>
       {Icon && <Icon className={`h-5 w-5 ${color}  mr-2`} />}
     </button>
   );
@@ -72,6 +72,7 @@ IconButton.propTypes = {
   type: PropTypes.string,
   Icon: PropTypes.elementType.isRequired,
   onClick: PropTypes.func.isRequired,
+  testid: PropTypes.string,
 };
 
 export { PrimaryButton, VariantButton, ToggleButton, IconButton };

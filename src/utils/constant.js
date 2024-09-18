@@ -16,7 +16,18 @@ export const characterSets = {
   symbols: '!@#$%&*+-=<>?',
 };
 
-export const DeviceFactors = ['Temperature', 'Humidity', 'Soil Moisture', 'Gas Detection'];
+export const DeviceFactors = {
+  'Monitoring System': ['Temperature', 'Humidity', 'Soil Moisture', 'Gas Detection'],
+  'Portable Device': [
+    'Nitrogen',
+    'Phosphorus',
+    'Potassium',
+    'pH',
+    'Soil Moisture',
+    'Electric Conductivity',
+    'Soil Temperature',
+  ],
+};
 
 export const menuMode = {
   open: 'open',
@@ -134,6 +145,11 @@ export const errorType = {
     code: 13026,
     message: 'Widget creation failure',
   },
+
+  portableDeviceDataNotFound: {
+    code: 13029,
+    message: 'Portable device data not found',
+  },
 };
 
 export const messages = {
@@ -153,6 +169,9 @@ export const messages = {
   confirmDelete: 'Are you sure want to delete?',
   confirmDisable: 'Are you sure you want to disable?',
   confirmResetPassword: 'Do you want to reset the password?',
+  failedFetchWeathering: 'Failed to fetch weather data',
+  provideValidLocation: 'Please provide a valid location',
+  portableDeviceDataDeleted: 'Portable device data deleted successfully',
 };
 
 export const customTableStyles = {
@@ -190,4 +209,21 @@ export const customTableStyles = {
       },
     },
   },
+};
+
+export const weatherIcons = {
+  '01d': 'https://cdn-icons-png.flaticon.com/128/869/869869.png',
+  '01n': 'https://cdn-icons-png.flaticon.com/128/869/869869.png',
+  '02d': 'https://cdn-icons-png.flaticon.com/128/2698/2698213.png',
+  '02n': 'https://cdn-icons-png.flaticon.com/128/2698/2698213.png',
+  '03d': 'https://cdn-icons-png.flaticon.com/128/1163/1163624.png',
+  '03n': 'https://cdn-icons-png.flaticon.com/128/1163/1163624.png',
+  '04d': 'https://cdn-icons-png.flaticon.com/128/414/414927.png',
+  '04n': 'https://cdn-icons-png.flaticon.com/128/414/414927.png',
+  '09d': 'https://cdn-icons-png.flaticon.com/128/3217/3217172.png',
+  '10d': 'https://cdn-icons-png.flaticon.com/128/1163/1163657.png',
+  '10n': 'https://cdn-icons-png.flaticon.com/128/1163/1163657.png',
+  '11d': 'https://cdn-icons-png.flaticon.com/128/1959/1959321.png',
+  '13d': 'https://cdn-icons-png.flaticon.com/128/13882/13882500.png',
+  '50d': 'https://cdn-icons-png.flaticon.com/128/1779/1779931.png',
 };

@@ -21,9 +21,11 @@ function Dropdown({ label = null, Icon = null, required = false, defaltOptions =
             onChange={(e) => setValue(e.target.value)}
             required={required}
             className='text-sm appearance-none bg-transparent border-none w-full h-6 text-gray-700 dark:text-white dark:bg-secondary-dark-bg leading-tight px-2 focus:outline-none'>
-            <option value='' disabled selected>
-              {t(defaltOptions)}
-            </option>
+            {defaltOptions && (
+              <option value='' disabled>
+                {t(defaltOptions)}
+              </option>
+            )}
             {options?.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.name}
@@ -43,13 +45,13 @@ Dropdown.propTypes = {
   label: PropTypes.string,
   Icon: PropTypes.elementType,
   defaltOptions: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   setValue: PropTypes.func.isRequired,
   required: PropTypes.bool,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string.isRequired,
-      value: PropTypes.string.isRequired,
+      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     })
   ).isRequired,
 };

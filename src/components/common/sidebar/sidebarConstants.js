@@ -24,6 +24,11 @@ const SidebarLinks = ({ t }) => {
       icon: ChartBarIcon,
     },
     {
+      to: '/portable-device',
+      text: t('Portable Device'),
+      icon: ChartBarIcon,
+    },
+    {
       to: '/weather',
       text: t('Weather'),
       icon: CloudIcon,

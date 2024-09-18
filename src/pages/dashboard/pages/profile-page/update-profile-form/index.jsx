@@ -10,6 +10,7 @@ import {
   PencilSquareIcon,
   CheckIcon,
   LinkIcon,
+  MapPinIcon,
 } from '@heroicons/react/24/outline';
 import { useTranslation } from 'react-i18next';
 import useAxios from 'hooks/useAxios';
@@ -26,6 +27,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
   const [userBio, setUserBio] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
   const [address, setAddress] = useState('');
+  const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
   const [facebook, setFacebook] = useState('');
   const [youtube, setYoutube] = useState('');
   const [linkedIn, setLinkedIn] = useState('');
@@ -45,6 +47,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       setUserBio(user.userBio);
       setPhoneNum(user.phoneNum);
       setAddress(user.address);
+      setLocation({ latitude: user.location?.latitude || 0, longitude: user.location?.longitude || 0 });
       setFacebook(user.socialMedia?.facebook || '');
       setLinkedIn(user.socialMedia?.linkedIn || '');
       setYoutube(user.socialMedia?.youtube || '');
@@ -58,6 +61,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       userBio,
       phoneNum,
       address,
+      location: { latitude: location.latitude, longitude: location.longitude },
       socialMedia: {
         facebook: facebook,
         linkedIn: linkedIn,
@@ -223,32 +227,67 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
                   required={true}
                 />
 
-                <TextBox
-                  placeholder='Add your facebook link here'
-                  label='Facebook'
-                  type='text'
-                  Icon={LinkIcon}
-                  value={facebook}
-                  setValue={setFacebook}
-                />
+                <div className='row-span-3 space-y-4 lg:space-y-6'>
+                  <TextBox
+                    placeholder='Add your facebook link here'
+                    label='Facebook'
+                    type='text'
+                    Icon={LinkIcon}
+                    value={facebook}
+                    setValue={setFacebook}
+                  />
 
-                <TextBox
-                  placeholder='Add your linkedIn link here'
-                  label='LinkedIn'
-                  type='text'
-                  Icon={LinkIcon}
-                  value={linkedIn}
-                  setValue={setLinkedIn}
-                />
+                  <TextBox
+                    placeholder='Add your linkedIn link here'
+                    label='LinkedIn'
+                    type='text'
+                    Icon={LinkIcon}
+                    value={linkedIn}
+                    setValue={setLinkedIn}
+                  />
 
-                <TextBox
-                  placeholder='Add your youtube link here'
-                  label='Youtube'
-                  type='text'
-                  Icon={LinkIcon}
-                  value={youtube}
-                  setValue={setYoutube}
-                />
+                  <TextBox
+                    placeholder='Add your youtube link here'
+                    label='Youtube'
+                    type='text'
+                    Icon={LinkIcon}
+                    value={youtube}
+                    setValue={setYoutube}
+                  />
+                </div>
+
+                <div>
+                  <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full'>
+                    <p className='text-gray-400 text-sm'>{t('Location')}</p>
+                    <p className='text-gray-400 text-xs'>
+                      {t('Location Description')}
+                      <a
+                        className='text-blue-500 underline ml-1'
+                        href={`https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`}
+                        rel='noreferrer'
+                        target='_blank'>
+                        {t('click')}
+                      </a>
+                    </p>
+                  </div>
+                  <TextBox
+                    placeholder='Eg. 6.02145'
+                    label='Latitude'
+                    type='number'
+                    Icon={MapPinIcon}
+                    value={location?.latitude}
+                    setValue={(value) => setLocation({ ...location, latitude: value })}
+                  />
+
+                  <TextBox
+                    placeholder='Eg. 6.02145'
+                    label='Longitude'
+                    type='number'
+                    Icon={MapPinIcon}
+                    value={location?.longitude}
+                    setValue={(value) => setLocation({ ...location, longitude: value })}
+                  />
+                </div>
               </div>
               <div className='flex justify-center mt-8'>
                 <div className='flex justify-end gap-2 w-60 sm:w-64 md:w-80 lg:w-full lg:px-24 xl:px-48'>

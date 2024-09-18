@@ -51,7 +51,7 @@ const MultiSelectDropdown = ({
                 {selectedValues.length > 0 ? selectedValues.join(', ') : t(placeholder)}
               </button>
               {isOpen && (
-                <ul className='absolute z-50 m-3 top-5 border-2 p-4 text-gray-700 dark:text-white dark:be-secondary-dark-bg bg-white'>
+                <ul className='absolute z-50 m-3 top-5 border-2 p-4 text-gray-700 dark:text-white dark:bg-secondary-dark-bg bg-white'>
                   {options.map((option) => (
                     <li key={option}>
                       <label className='flex p-1'>

@@ -76,7 +76,7 @@ const Sidebar = ({ sidebarWidth }) => {
           </NavLink>
         </div>
         {isOpenMenu() && (
-          <footer className='text-gray-400 text-xs text-center mt-12'>
+          <footer className='text-gray-400 text-xs text-center'>
             <p
               dangerouslySetInnerHTML={{
                 __html: t(`Copyright Elzian Agro. All Rights Reserved`, { val: new Date().getFullYear() }),

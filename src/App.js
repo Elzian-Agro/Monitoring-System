@@ -13,6 +13,7 @@ import DashboardPage from 'pages/dashboard/pages/dashboard-page';
 import AboutUsPage from 'pages/dashboard/pages/about-page';
 import UserProfilePage from 'pages/dashboard/pages/profile-page';
 import AgroEye from 'pages/dashboard/pages/agro-eye-page';
+import PortableDevice from 'pages/dashboard/pages/portable-device-page';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path='/devices' element={<DeviceManagement />} />
             <Route path='/users' element={<ManageUsers />} />
             <Route path='/agro' element={<AgroEye />} />
+            <Route path='/portable-device' element={<PortableDevice />} />
             <Route path='/profile' element={<UserProfilePage />} />
             <Route path='/about' element={<AboutUsPage />} />
             <Route path='/reset' element={<ResetForm />} />

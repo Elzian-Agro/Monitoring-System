@@ -27,13 +27,17 @@ const Form = ({ visible, onClose, widget = null, higherOrder, formSubmission }) 
     const getDevices = async () => {
       const devices = await send({ endpoint: 'device', method: 'GET' });
 
-      const deviceInfo = devices?.result.map((device) => ({
-        name: `${device.deviceId}`,
-        value: device.deviceId,
-        factors: device.monitoringFactors,
-      }));
+      if (devices?.result) {
+        const deviceInfo = devices.result
+          .filter((device) => device.deviceType === 'Monitoring System')
+          .map((device) => ({
+            name: `${device.deviceId}`,
+            value: device.deviceId,
+            factors: device.monitoringFactors,
+          }));
 
-      setDeviceList(deviceInfo);
+        setDeviceList(deviceInfo);
+      }
     };
 
     getDevices();

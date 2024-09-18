@@ -127,7 +127,7 @@ const Chart = ({ id, widget }) => {
   return (
     <div
       ref={setNodeRef}
-      className='bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-800 p-1 relative'
+      className='bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-800 relative'
       style={{
         transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : '',
         transition: transition ?? '',

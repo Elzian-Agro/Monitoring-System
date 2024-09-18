@@ -11,11 +11,12 @@ import { DeviceFactors, messages } from 'utils/constant';
 
 const Form = ({ visible, onClose, device = null, formSubmission }) => {
   const [userList, setUserList] = useState([]);
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState('');
   const [deviceId, setDeviceId] = useState('');
   const [deviceType, setDeviceType] = useState('');
   const [deviceStatus, setDeviceStatus] = useState('');
   const [deviceFactors, setDeviceFactors] = useState([]);
+  const [Factors, setFactors] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isToggleClicked, setIsToggleClicked] = useState(false);
 
@@ -49,6 +50,14 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
     }
     // eslint-disable-next-line
   }, [device]);
+
+  useEffect(() => {
+    setDeviceFactors([]);
+
+    if (deviceType) {
+      setFactors(DeviceFactors[deviceType] || []);
+    }
+  }, [deviceType]);
 
   const resetForm = () => {
     setUserId('');
@@ -128,8 +137,8 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
                   value={deviceType}
                   setValue={setDeviceType}
                   options={[
-                    { name: 'Monitoring System v1', value: 'monitoring-system-v1' },
-                    { name: 'Monitoring System v2', value: 'monitoring-system-v2' },
+                    { name: 'Monitoring System', value: 'Monitoring System' },
+                    { name: 'Portable Device', value: 'Portable Device' },
                   ]}
                   required={true}
                 />
@@ -138,7 +147,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
                   label='Monitoring Factors'
                   placeholder='Multiple selection'
                   Icon={DevicePhoneMobileIcon}
-                  options={DeviceFactors}
+                  options={Factors}
                   onChange={(values) => {
                     setDeviceFactors(values);
                   }}

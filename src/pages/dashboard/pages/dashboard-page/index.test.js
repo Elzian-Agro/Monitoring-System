@@ -4,6 +4,36 @@ import { act } from 'react-dom/test-utils';
 import DashboardPage from './index';
 import { MemoryRouter } from 'react-router-dom';
 
+const mockedResponse = [
+  {
+    deviceId: 'mockDevice-01',
+    data: [
+      {
+        timestamp: '2024-06-09T12:00:00.000Z',
+        temperature: null,
+        soil_moisture: 638,
+        humidity: 88.6,
+        gas_detection: 379,
+      },
+      {
+        timestamp: '2024-06-10T12:00:00.000Z',
+        temperature: null,
+        soil_moisture: 847,
+        humidity: 43.4,
+        gas_detection: 184,
+      },
+    ],
+  },
+  {
+    deviceId: 'mockDevice-02',
+    data: [],
+  },
+  {
+    deviceId: 'mockDevice-03',
+    data: [],
+  },
+];
+
 // Mock react-i18next
 jest.mock('react-i18next', () => ({
   useTranslation: () => {
@@ -11,6 +41,18 @@ jest.mock('react-i18next', () => ({
       t: (key) => key,
     };
   },
+}));
+
+// Mock Redux and useAxios hook
+jest.mock('react-redux', () => ({
+  useSelector: jest.fn(),
+  useDispatch: () => jest.fn(),
+}));
+
+jest.mock('hooks/useFetch', () => () => ({
+  loading: false,
+  response: mockedResponse,
+  recall: jest.fn().mockReturnValue(null),
 }));
 
 describe('About US Page', () => {
@@ -27,5 +69,13 @@ describe('About US Page', () => {
     expect(screen.getByText('Weather Prediction')).toBeInTheDocument();
     expect(screen.getByText('Disaster Alert')).toBeInTheDocument();
     expect(screen.getByText('Farmers Info Hub')).toBeInTheDocument();
+
+    // Check temperature chart
+    expect(screen.getByText('Temperature')).toBeInTheDocument();
+    expect(screen.getAllByText('mockDevice-01')).toHaveLength(4);
+
+    // Check humudity chart
+    expect(screen.getByText('Humidity')).toBeInTheDocument();
+    expect(screen.getAllByText('mockDevice-01')).toHaveLength(4);
   });
 });
