@@ -71,7 +71,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
     e.preventDefault();
 
     const requestData = {
-      userId: userId === 'deallocate' ? null : userId,
+      userId: userId === 'deallocate' || userId === '' ? null : userId,
       deviceId,
       deviceType,
       deviceStatus,
