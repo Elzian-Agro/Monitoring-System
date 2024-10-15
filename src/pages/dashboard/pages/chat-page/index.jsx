@@ -5,30 +5,31 @@ import { useSelector } from 'react-redux';
 import { selectTheme } from '../../slice/dashboardLayoutSlice';
 
 const Chat = () => {
-  let hasError = false;
   const currentMode = useSelector(selectTheme);
 
   // Call the Python backend API to get the chat response
   const callChatbot = async (params) => {
     try {
-      const answer = await axios.post(`${process.env.REACT_APP_CHATBOT_URL}`, {
-        question: params.userInput.trim(),
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
+      const answer = await axios.post(
+        `${process.env.REACT_APP_CHATBOT_URL}`,
+        {
+          text_input: params.userInput.trim(),
         },
-      });
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       // Check if botReply is available and inject it
       if (answer.data) {
         await params.injectMessage(answer.data);
       } else {
         await params.injectMessage('Sorry, no response from the bot.');
-        hasError = true;
       }
     } catch (error) {
       await params.injectMessage('Unable to load response from the bot.');
-      hasError = true;
     }
   };
 
@@ -42,9 +43,6 @@ const Chat = () => {
         await callChatbot(params);
       },
       path: () => {
-        if (hasError) {
-          return 'start';
-        }
         return 'loop';
       },
     },
@@ -58,12 +56,12 @@ const Chat = () => {
     chatWindowStyle: {
       backgroundColor: currentMode === 'Dark' ? ' #33373e' : '#ffffff',
       width: '100%',
+      height: '88vh',
     },
-    sendButtonStyle: { backgroundColor: '#3b82f6' },
+    sendButtonStyle: { backgroundColor: '#3b82f6'},
     userBubbleStyle: { backgroundColor: '#3b82f6' },
     botBubbleStyle: { backgroundColor: '#19b553' },
     chatInputContainerStyle: {
-      alignItems: 'end',
       backgroundColor: currentMode === 'Dark' ? ' #33373e' : '#ffffff',
     },
     chatInputAreaStyle: {
