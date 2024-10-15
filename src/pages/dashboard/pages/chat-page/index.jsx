@@ -6,6 +6,7 @@ import { selectTheme } from '../../slice/dashboardLayoutSlice';
 
 const Chat = () => {
   const currentMode = useSelector(selectTheme);
+  const firstName = useSelector((state) => state.user.firstName);
 
   // Call the Python backend API to get the chat response
   const callChatbot = async (params) => {
@@ -35,7 +36,7 @@ const Chat = () => {
 
   const flow = {
     start: {
-      message: 'Hello, How can help you?',
+      message: `Hello ${firstName}, How can help you?`,
       path: 'loop',
     },
     loop: {
