@@ -58,7 +58,7 @@ const Sidebar = ({ sidebarWidth }) => {
             </button>
           )}
         </div>
-        <div className='flex-grow sidebar-items mt-6 md:mt-8 lg:mt-10'>
+        <div className='flex-grow sidebar-items '>
           {translatedSidebarLinks.map((link) => (
             <NavLink key={link.to} to={link.to} className={({ isActive }) => (isActive ? activeLink : normalLink)}>
               <link.icon className='h-6 w-6' />
