@@ -6,6 +6,7 @@ import {
   DevicePhoneMobileIcon,
   ChartBarIcon,
   LightBulbIcon,
+  ChatBubbleOvalLeftIcon,
 } from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
 
@@ -42,6 +43,11 @@ const SidebarLinks = ({ t }) => {
       to: '/profile',
       text: t('My Profile'),
       icon: UserCircleIcon,
+    },
+    {
+      to: '/chat',
+      text: t('Agro Bot'),
+      icon: ChatBubbleOvalLeftIcon,
     },
     {
       to: '/about',

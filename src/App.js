@@ -14,6 +14,7 @@ import AboutUsPage from 'pages/dashboard/pages/about-page';
 import UserProfilePage from 'pages/dashboard/pages/profile-page';
 import AgroEye from 'pages/dashboard/pages/agro-eye-page';
 import PortableDevice from 'pages/dashboard/pages/portable-device-page';
+import Chat from 'pages/dashboard/pages/chat-page';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path='/users' element={<ManageUsers />} />
             <Route path='/agro' element={<AgroEye />} />
             <Route path='/portable-device' element={<PortableDevice />} />
+            <Route path='/chat' element={<Chat />} />
             <Route path='/profile' element={<UserProfilePage />} />
             <Route path='/about' element={<AboutUsPage />} />
             <Route path='/reset' element={<ResetForm />} />
