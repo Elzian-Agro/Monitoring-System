@@ -1,6 +1,5 @@
 import React from 'react';
 import ChatBot from 'react-chatbotify';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectTheme } from '../../slice/dashboardLayoutSlice';
 
@@ -11,24 +10,37 @@ const Chat = () => {
   // Call the Python backend API to get the chat response
   const callChatbot = async (params) => {
     try {
-      const answer = await axios.post(
-        `${process.env.REACT_APP_CHATBOT_URL}`,
-        {
-          text_input: params.userInput.trim(),
+      const response = await fetch(`${process.env.REACT_APP_CHATBOT_URL}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+        body: JSON.stringify({
+          text_input: params.userInput.trim(),
+        }),
+      });
 
-      // Check if botReply is available and inject it
-      if (answer.data) {
-        await params.injectMessage(answer.data);
-      } else {
-        await params.injectMessage('Sorry, no response from the bot.');
+      // Handle streaming response
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
+      let botReply = '';
+
+      while (!done) {
+        const { value, done: readerDone } = await reader.read();
+        if (readerDone) {
+          done = true;
+        }
+
+        // Decode and append the streamed text
+        botReply += decoder.decode(value, { stream: true });
+
+        // Update the UI with the bot's reply as it comes in
+        await params.streamMessage(botReply);
       }
+
+      // Indicate that all streaming has ended here
+      await params.endStreamMessage();
     } catch (error) {
       await params.injectMessage('Unable to load response from the bot.');
     }
@@ -59,7 +71,7 @@ const Chat = () => {
       width: '100%',
       height: '88vh',
     },
-    sendButtonStyle: { backgroundColor: '#3b82f6'},
+    sendButtonStyle: { backgroundColor: '#3b82f6' },
     userBubbleStyle: { backgroundColor: '#3b82f6' },
     botBubbleStyle: { backgroundColor: '#19b553' },
     chatInputContainerStyle: {
