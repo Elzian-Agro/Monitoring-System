@@ -2,11 +2,12 @@ import {
   Squares2X2Icon,
   UsersIcon,
   UserCircleIcon,
+  MapIcon,
   CloudIcon,
   DevicePhoneMobileIcon,
   ChartBarIcon,
   LightBulbIcon,
-  ChatBubbleOvalLeftIcon,
+  ChatBubbleOvalLeftEllipsisIcon,
 } from '@heroicons/react/24/outline';
 import { useSelector } from 'react-redux';
 
@@ -27,7 +28,7 @@ const SidebarLinks = ({ t }) => {
     {
       to: '/portable-device',
       text: t('Portable Device'),
-      icon: ChartBarIcon,
+      icon: MapIcon,
     },
     {
       to: '/weather',
@@ -40,14 +41,14 @@ const SidebarLinks = ({ t }) => {
       icon: DevicePhoneMobileIcon,
     },
     {
+      to: '/chat',
+      text: t('Agro Bot'),
+      icon: ChatBubbleOvalLeftEllipsisIcon,
+    },
+    {
       to: '/profile',
       text: t('My Profile'),
       icon: UserCircleIcon,
-    },
-    {
-      to: '/chat',
-      text: t('Agro Bot'),
-      icon: ChatBubbleOvalLeftIcon,
     },
     {
       to: '/about',
@@ -57,7 +58,7 @@ const SidebarLinks = ({ t }) => {
   ];
 
   if (userType === 'admin') {
-    sidebarLinks.splice(3, 0, {
+    sidebarLinks.splice(4, 0, {
       to: '/users',
       text: t('Manage Users'),
       icon: UsersIcon,
