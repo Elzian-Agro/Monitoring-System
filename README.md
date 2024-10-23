@@ -121,7 +121,27 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-### Postman Documentation
+## VS Code Extensions
+
+- Tailwind css IntelliSence
+- Prettier
+- ESLint
+- Auto Close Tag
+- Auto Rename Tag
+- Draw.io integration
+- GitLens
+- Path Intellisense
+- Postman
+- Simple React Snippets
+- GitHub Copilot
+- Bracket Pair Color
+
+## Browser Extension for React Development
+
+- React Developer Tool
+- Redux DevTool
+
+## Postman Documentation
 
 This link is for the postman documentation reference.
 https://documenter.getpostman.com/view/32012154/2s9Ykt6KYB
@@ -136,21 +156,8 @@ Backend Dev API: https://monitoring-dev-api.elzian.com
 
 ngRok - n6ABQf$nDZ3S
 
-## VS Code Extensions
+## Documents
 
-Tailwind css IntelliSence
-Prettier
-ESLint
-Auto Close Tag
-Auto Rename Tag
-Draw.io integration
-GitLens
-Path Intellisense
-Postman
-Simple React Snippets
-gitHub Copilot
-Bracket Pair Color
+SRS: https://docs.google.com/document/d/14-l6UuyDuaSgWUF2YltPx0ubYR1A8GDgl9BMZQZHXwQ/edit?usp=sharing
 
-## Browser Extension for React Development
-
-React Developer Tool, Redux DevTool
+User Manual: https://docs.google.com/document/d/1HD805vUUVp90BJolHdBFZXv6i0fBSc8Ou9ekK4jzt2E/edit?usp=sharing
