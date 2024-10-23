@@ -52,12 +52,15 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   }, [device]);
 
   useEffect(() => {
-    setDeviceFactors([]);
-
     if (deviceType) {
+      // Only clear device factors if the form is in update mode and the deviceType has changed
+      if (device && deviceType !== device.deviceType) {
+        setDeviceFactors([]);
+      }
+
       setFactors(DeviceFactors[deviceType] || []);
     }
-  }, [deviceType]);
+  }, [deviceType, device]);
 
   const resetForm = () => {
     setUserId('');
