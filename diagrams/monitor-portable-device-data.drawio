@@ -62,14 +62,17 @@
         <mxCell id="7ROorTEk_Ga1uGUvGw2F-29" value="1. data upload to aws iot core" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="220" y="340" width="121.25" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="7ROorTEk_Ga1uGUvGw2F-30" value="2. call the backend when kinesis trigger" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
+        <mxCell id="7ROorTEk_Ga1uGUvGw2F-30" value="2. trigger kinesis&amp;nbsp;" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="387.5" y="340" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="7ROorTEk_Ga1uGUvGw2F-31" value="&lt;div&gt;3. validate device id&amp;nbsp;&lt;/div&gt;" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
+        <mxCell id="7ROorTEk_Ga1uGUvGw2F-31" value="&lt;div&gt;4. validate device id&amp;nbsp;&lt;/div&gt;" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="790" y="260" width="120" height="72" as="geometry" />
         </mxCell>
-        <mxCell id="7ROorTEk_Ga1uGUvGw2F-32" value="4. pass portable data to database to save" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
+        <mxCell id="7ROorTEk_Ga1uGUvGw2F-32" value="5. pass portable data to database to save" style="html=1;whiteSpace=wrap;" parent="1" vertex="1">
           <mxGeometry x="700" y="370" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Gr79XBlmeAd5cP14u92l-1" value="3. call the backend when kinesis trigger" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="557.5" y="330" width="120" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
