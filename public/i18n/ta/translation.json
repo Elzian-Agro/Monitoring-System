@@ -234,5 +234,7 @@
   "Soil Temperature": "மண் வெப்பநிலை",
   "Portable device data deleted successfully": "கையடக்க சாதன தரவு வெற்றிகரமாக நீக்கப்பட்டது",
   "Portable device data not found": "கையடக்க சாதன தரவு கிடைக்கவில்லை",
-  "Agro Bot": "அக்ரோ பாட்"
+  "Agro Bot": "அக்ரோ பாட்",
+  "There are no devices allocated yet.": "இன்னும் சாதனங்கள் எதுவும் ஒதுக்கப்படவில்லை.",
+  "There are no devices allocated yet. Please contact": "இதுவரை சாதனங்கள் எதுவும் ஒதுக்கப்படவில்லை. தொடர்பு கொள்ளவும்"
 }

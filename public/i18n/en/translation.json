@@ -234,5 +234,7 @@
   "Soil Temperature": "Soil Temperature",
   "Portable device data deleted successfully": "Portable device data deleted successfully",
   "Portable device data not found": "Portable device data not found",
-  "Agro Bot": "Agro Bot"
+  "Agro Bot": "Agro Bot",
+  "There are no devices allocated yet.": "There are no devices allocated yet.",
+  "There are no devices allocated yet. Please contact": "There are no devices allocated yet. Please contact"
 }
