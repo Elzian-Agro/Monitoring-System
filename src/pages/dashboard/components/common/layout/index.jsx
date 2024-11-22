@@ -77,7 +77,7 @@ const Layout = () => {
       ) : (
         <div>
           <Navbar mainContentMargin={mainContentMargin} />
-          <div className={`${mainContentMargin} mt-16`}>
+          <div className={`${mainContentMargin} mt-16 ease-linear duration-300`}>
             <Outlet />
           </div>
           <Sidebar sidebarWidth={sidebarWidth} />

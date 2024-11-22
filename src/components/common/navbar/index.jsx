@@ -63,7 +63,7 @@ const Navbar = ({ mainContentMargin }) => {
       }`}>
       <button
         type='button'
-        className={`relative dark:text-white hover:bg-light-gray dark:hover:text-black text-xl rounded-full p-3 ${mainContentMargin} ${
+        className={`relative dark:text-white hover:bg-light-gray dark:hover:text-black text-xl rounded-full p-3 ease-linear duration-300 ${mainContentMargin} ${
           currentMenuMode === 'open' && 'hidden sm:block'
         } ${currentMenuMode === 'onlyIcon' && 'ml-20'}`}
         onClick={toggleActiveMenu}>

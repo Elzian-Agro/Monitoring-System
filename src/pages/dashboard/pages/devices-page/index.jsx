@@ -220,7 +220,9 @@ const DeviceManagement = () => {
               />
             )}
           </div>
-          <div className='rounded-t-lg'>
+          <div
+            className='rounded-t-lg overflow-hidden'
+            style={{ scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
             <DataTable
               columns={columns}
               data={filterDevices}
