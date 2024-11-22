@@ -31,14 +31,14 @@ const SidebarLinks = ({ t }) => {
       icon: MapIcon,
     },
     {
-      to: '/weather',
-      text: t('Weather'),
-      icon: CloudIcon,
-    },
-    {
       to: '/devices',
       text: t('Manage Devices'),
       icon: DevicePhoneMobileIcon,
+    },
+    {
+      to: '/weather',
+      text: t('Weather Forecast'),
+      icon: CloudIcon,
     },
     {
       to: '/chat',
