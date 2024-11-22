@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { PrimaryButton, ToggleButton } from '../../../components/base/Button';
 import TextBox from '../../../components/base/TextBox';
+import Dropdown from 'pages/dashboard/components/base/Dropdown';
 import {
   EnvelopeIcon,
-  HomeIcon,
   PhoneIcon,
   UserIcon,
   LockClosedIcon,
@@ -25,7 +25,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [orgName, setOrgName] = useState('');
-  const [address, setAddress] = useState('');
+  const [userType, setUserType] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
   const [isToggleClicked, setIsToggleClicked] = useState(false);
 
@@ -42,7 +42,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
       setPhoneNum(user.phoneNum);
       setOrgName(user.orgName);
       setIsDisabled(user.isDisabled);
-      setAddress(user.address || '');
+      setUserType(user.userType || '');
     }
 
     // Generate random password for register mode
@@ -59,7 +59,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
     setPhoneNum('');
     setPassword(generatePassword());
     setOrgName('');
-    setAddress('');
+    setUserType('');
   };
 
   const handleSubmit = async (e) => {
@@ -73,7 +73,7 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
       phoneNum,
       orgName,
       isDisabled,
-      address,
+      userType,
     };
 
     if (!user) {
@@ -191,13 +191,16 @@ const Form = ({ visible, onClose, user = null, formSubmission }) => {
                   required={true}
                 />
 
-                <TextBox
-                  placeholder='Eg. 232, Main Street, Negombo, LK.'
-                  label='Address'
-                  type='text'
-                  Icon={HomeIcon}
-                  value={address}
-                  setValue={setAddress}
+                <Dropdown
+                  label='User Type'
+                  Icon={UserIcon}
+                  defaltOptions='Select a user type'
+                  value={userType}
+                  setValue={setUserType}
+                  options={[
+                    { name: 'Admin', value: 'admin' },
+                    { name: 'Farmer', value: 'farmer' },
+                  ]}
                   required={true}
                 />
 
