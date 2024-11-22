@@ -228,7 +228,7 @@ const DeviceManagement = () => {
             </div>
           )}
 
-          {filterDevices > 0 && (
+          {devices && (
             <div
               className='rounded-t-lg overflow-hidden'
               style={{ scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
