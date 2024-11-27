@@ -11,22 +11,22 @@ const CurrentWeather = () => {
   return (
     <div>
       {/* Header */}
-      <div className='flex justify-between items-center mb-4'>
+      <div className='flex flex-col md:flex-row gap-2 md:gap-0 md:justify-between md:items-center mb-4'>
         <div>
-          <h2 className='text-lg font-semibold'>Current Weather</h2>
-          <p className='text-gray-500'>10:52 A.M.</p>
+          <h2 className='text-lg font-semibold  text-gray-600 dark:text-gray-200'>Current Weather</h2>
+          <p className='text-gray-700 dark:text-gray-300'>10:52 A.M.</p>
         </div>
-        <select className='border border-gray-300 rounded-md p-2'>
+        <select className='border border-gray-300 rounded-md p-2 focus:outline-none dark:bg-secondary-dark-bg dark:text-white'>
           <option value='ELZ-003-01'>ELZ-003-01</option>
           <option value='ELZ-003-02'>ELZ-003-02</option>
         </select>
       </div>
 
       {/* Weather Cards */}
-      <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+      <div className='grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
         {/* Temperature */}
         <div className='bg-gray-50 dark:bg-gray-800 rounded-md p-4 shadow'>
-          <h3 className='text-sm font-medium text-gray-500'>Temperature</h3>
+          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>Temperature</h3>
 
           <div className='flex items-center justify-center mt-4'>
             <div className='relative w-8 h-40 bg-gray-200 rounded-full overflow-hidden'>
@@ -43,7 +43,7 @@ const CurrentWeather = () => {
 
         {/* Humidity */}
         <div className='bg-gray-50 dark:bg-gray-800 rounded-md p-4 shadow'>
-          <h3 className='text-sm font-medium text-gray-500'>Humidity</h3>
+          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>Humidity</h3>
           <div className='flex flex-col items-center justify-center mt-4'>
             <div className='relative w-40 h-40'>
               <svg className='w-full h-full' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none'>
@@ -70,7 +70,7 @@ const CurrentWeather = () => {
 
         {/* Air Pressure */}
         <div className='bg-gray-50 dark:bg-gray-800 rounded-md p-4 shadow'>
-          <h3 className='text-sm font-medium text-gray-500'>Air Pressure</h3>
+          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>Air Pressure</h3>
           <div className='flex flex-col items-center justify-center mt-4'>
             {/* Gauge */}
             <div className='relative w-40 h-40'>
@@ -82,7 +82,7 @@ const CurrentWeather = () => {
                   cx='18'
                   cy='18'
                   r='16'
-                  stroke='#ff6600'
+                  stroke='#29c24c'
                   strokeWidth='4'
                   fill='none'
                   strokeDasharray='100'
@@ -93,15 +93,15 @@ const CurrentWeather = () => {
               </svg>
             </div>
 
-            <p className='text-center text-4xl font-semibold text-red-500'>{airPressure.toFixed(1)} mmHg</p>
+            <p className='text-center text-4xl font-semibold text-green-500'>{airPressure.toFixed(1)} mmHg</p>
           </div>
         </div>
 
         {/* Wind */}
         <div className='bg-gray-50 dark:bg-gray-800 rounded-md p-4 shadow'>
-          <h3 className='text-sm font-medium text-gray-500'>Wind</h3>
-          <div className='flex justify-center items-center mt-4'>
-            <div className='relative w-56 h-56'>
+          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>Wind</h3>
+          <div className='flex flex-col justify-center items-center mt-4'>
+            <div className='relative w-40 h-40'>
               <svg className='w-full h-full' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg' fill='none'>
                 {/* Background Circle */}
                 <circle cx='20' cy='20' r='16' stroke='#e5e5e5' strokeWidth='2' fill='none' />
@@ -111,7 +111,7 @@ const CurrentWeather = () => {
                   cx='20'
                   cy='20'
                   r='16'
-                  stroke='#ff6600'
+                  stroke='#fcba03'
                   strokeWidth='2'
                   fill='none'
                   strokeDasharray='2 100' /* Small stroke (2 units) and gap (100 units) */
@@ -122,24 +122,29 @@ const CurrentWeather = () => {
 
               {/* Directional Text */}
               <div className='absolute inset-0'>
-                <span className='text-xs text-gray-600 absolute top-0 left-1/2 transform -translate-x-1/2'>N</span>
-                <span className='text-xs text-gray-600 absolute bottom-0 left-1/2 transform -translate-x-1/2'>S</span>
-                <span className='text-xs text-gray-600 absolute left-0 top-1/2 transform -translate-y-1/2'>W</span>
-                <span className='text-xs text-gray-600 absolute right-2 top-1/2 transform -translate-y-1/2'>E</span>
+                <span className='text-xs text-gray-600 dark:text-gray-100 absolute top-6 left-1/2 transform -translate-x-1/2'>
+                  N
+                </span>
+                <span className='text-xs text-gray-600 dark:text-gray-100 absolute bottom-6 left-1/2 transform -translate-x-1/2'>
+                  S
+                </span>
+                <span className='text-xs text-gray-600 dark:text-gray-100 absolute left-6 top-1/2 transform -translate-y-1/2'>
+                  W
+                </span>
+                <span className='text-xs text-gray-600 dark:text-gray-100 absolute right-6 top-1/2 transform -translate-y-1/2'>
+                  E
+                </span>
               </div>
-
-              <p className='absolute inset-0 flex items-center justify-center text-4xl font-semibold text-red-500 dark:text-gray-300'>
-                {windSpeed.toFixed(1)} kph
-              </p>
             </div>
+            <p className='text-center text-4xl font-semibold text-yellow-500 mt-2'> {windSpeed.toFixed(1)} kph</p>
           </div>
         </div>
 
         {/* Rainfall */}
         <div className='bg-gray-50 dark:bg-gray-800 rounded-md p-4 shadow'>
-          <h3 className='text-sm font-medium text-gray-500'>Rainfall</h3>
+          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>Rainfall</h3>
           <div className='mt-4 flex flex-col items-center'>
-            <div className='relative w-28 h-40 bg-gray-200 rounded-b-md overflow-hidden border-2 border-gray-300'>
+            <div className='relative w-24 h-40 bg-gray-200 rounded-b-md overflow-hidden border-2 border-gray-300'>
               <div
                 className='absolute bottom-0 w-full bg-blue-500'
                 style={{
