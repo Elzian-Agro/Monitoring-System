@@ -91,7 +91,7 @@
   "ORG. NAME": "ORG. NAME",
   "ACTION": "ACTION",
   "Dashboard": "Dashboard",
-  "Weather Forecast ": "Weather Forecast",
+  "Weather Forecast": "Weather Forecast",
   "Manage Users": "Manage Users",
   "My Profile": "My Profile",
   "Logout": "Logout",
@@ -235,5 +235,6 @@
   "Agro Bot": "Agro Bot",
   "There are no devices allocated yet.": "There are no devices allocated yet.",
   "There are no devices allocated yet. Please contact": "There are no devices allocated yet. Please contact",
-  "Weather Station": "Weather Station"
+  "Weather Station": "Weather Station",
+  "Widgets not found": "Widgets not found"
 }
