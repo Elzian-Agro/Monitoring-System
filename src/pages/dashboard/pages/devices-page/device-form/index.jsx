@@ -16,7 +16,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   const [deviceType, setDeviceType] = useState('');
   const [deviceStatus, setDeviceStatus] = useState('');
   const [deviceFactors, setDeviceFactors] = useState([]);
-  const [Factors, setFactors] = useState([]);
+  const [factors, setFactors] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isToggleClicked, setIsToggleClicked] = useState(false);
 
@@ -26,10 +26,16 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   useEffect(() => {
     const getUsers = async () => {
       const users = await send({ endpoint: 'user', method: 'GET' });
-      const userNames = users.map((user) => ({
+
+      // Filter users where isDisabled is false
+      const activeUsers = users.filter((user) => !user.isDisabled);
+
+      // Map the active users to the desired format
+      const userNames = activeUsers.map((user) => ({
         name: `${user.firstName} ${user.lastName}`,
         value: user._id,
       }));
+
       setUserList(userNames);
     };
 
@@ -150,7 +156,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
                   label='Monitoring Factors'
                   placeholder='Multiple selection'
                   Icon={DevicePhoneMobileIcon}
-                  options={Factors}
+                  options={factors}
                   onChange={(values) => {
                     setDeviceFactors(values);
                   }}
