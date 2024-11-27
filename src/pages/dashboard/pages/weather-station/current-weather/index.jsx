@@ -48,14 +48,14 @@ const CurrentWeather = () => {
             <div className='relative w-40 h-40'>
               <svg className='w-full h-full' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none'>
                 <path
-                  d='M12 2C12 2 4 10 4 15C4 18.866 7.134 22 11 22C14.866 22 18 18.866 18 15C18 10 12 2 12 2Z'
+                  d='M11 2C11 2 4 10 4 15C4 18.866 7.134 22 11 22C14.866 22 18 18.866 18 15C18 11 11 2 11 2Z'
                   stroke='#e5e5e5'
                   strokeWidth='0.8'
                   strokeLinecap='round'
                   strokeLinejoin='round'
                 />
                 <path
-                  d='M12 2C12 2 4 10 4 15C4 18.866 7.134 22 11 22C14.866 22 18 18.866 18 15C18 10 12 2 12 2Z'
+                  d='M11 2C11 2 4 10 4 15C4 18.866 7.134 22 11 22C14.866 22 18 18.866 18 15C18 11 11 2 11 2Z'
                   fill='#4287f5'
                   style={{
                     clipPath: `inset(${100 - Math.max(0, Math.min(100, humidity))}% 0% 0% 0%)`,
