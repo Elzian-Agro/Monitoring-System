@@ -197,11 +197,9 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
                   </div>
                 </div>
 
-                {device && (
+                {device?.isDisabled && (
                   <div className='flex flex-row items-center gap-4'>
-                    <div className='text-gray-400'>
-                      {device.isDisabled ? t('Enable device') : t('Disable device')} :
-                    </div>
+                    <div className='text-gray-400'>{t('Enable device')} :</div>
                     <ToggleButton
                       value={isToggleClicked}
                       onChange={() => {
