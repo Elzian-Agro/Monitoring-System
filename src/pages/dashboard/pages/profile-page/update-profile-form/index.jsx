@@ -143,7 +143,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
       {loading && <Loader />}
 
       {!loading && (
-        <div className='flex flex-col p-8 gap-4 min-h-full w-full shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg'>
+        <div className='flex flex-col p-2 sm:p-8 gap-4 min-h-full w-full shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg'>
           <div>
             <button
               className='flex justify-start bg-red-500 hover:brightness-110 self-end rounded-lg transition-transform'
@@ -257,7 +257,7 @@ const UpdateProfileForm = ({ visible, onClose, user = null, formSubmission }) =>
                 </div>
 
                 <div>
-                  <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full'>
+                  <div className='w-full xs:w-60 sm:w-64 md:w-80 lg:w-full'>
                     <p className='text-gray-400 text-sm'>{t('Location')}</p>
                     <p className='text-gray-400 text-xs'>
                       {t('Location Description')}

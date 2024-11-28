@@ -29,8 +29,8 @@ const Sidebar = ({ sidebarWidth }) => {
     'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm text-black dark:text-white dark:hover:text-black hover:bg-gray-100 m-2 hover:translate-x-2 duration-300';
 
   return (
-    <div className={`${sidebarWidth} fixed top-0 z-20`}>
-      <div className='flex flex-col min-h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-2 bg-white dark:bg-secondary-dark-bg shadow-lg dark:border-r  dark:border-gray-600'>
+    <div className={`${sidebarWidth} fixed top-0 h-full z-20 ease-linear duration-300`}>
+      <div className='flex flex-col h-full overflow-hidden bg-white dark:bg-secondary-dark-bg shadow-lg dark:border-r  dark:border-gray-600'>
         <div className='flex justify-between items-center mt-4 ml-4'>
           <a href='https://agro.elzian.com' target='_blank' rel='noopener noreferrer' className='flex flex-row gap-2'>
             <img className='xxs:w-10 md:w-14 ' src={logo} alt='Elzian Agro logo' />
@@ -58,25 +58,29 @@ const Sidebar = ({ sidebarWidth }) => {
             </button>
           )}
         </div>
-        <div className='flex-grow sidebar-items mt-6 md:mt-8 lg:mt-10'>
-          {translatedSidebarLinks.map((link) => (
-            <NavLink key={link.to} to={link.to} className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-              <link.icon className='h-6 w-6' />
-              {isOpenMenu() && link.text}
-            </NavLink>
-          ))}
+        <div className='flex flex-col justify-between mt-2 h-5/6'>
+          <div className='flex-grow sidebar-items overflow-y-auto'>
+            {translatedSidebarLinks.map((link) => (
+              <NavLink key={link.to} to={link.to} className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                <link.icon className='h-6 w-6' />
+                {isOpenMenu() && link.text}
+              </NavLink>
+            ))}
+          </div>
 
-          {/* Logout */}
-          <NavLink
-            to='/login'
-            className='flex mt-10 items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-sm text-black dark:text-white hover:bg-red-500 m-2 duration-300'
-            onClick={logout}>
-            <ArrowUpTrayIcon className='h-6 w-6 rotate-90' />
-            {isOpenMenu() && t('Logout')}
-          </NavLink>
+          <div>
+            {/* Logout */}
+            <NavLink
+              to='/login'
+              className='flex items-center pl-5 pt-3 pb-2.5 gap-4 rounded-lg text-sm text-black dark:text-white hover:bg-red-500 m-2 duration-300'
+              onClick={logout}>
+              <ArrowUpTrayIcon className='h-6 w-6 rotate-90' />
+              {isOpenMenu() && t('Logout')}
+            </NavLink>
+          </div>
         </div>
         {isOpenMenu() && (
-          <footer className='text-gray-400 text-xs text-center'>
+          <footer className='text-gray-400 text-xs text-center p-2'>
             <p
               dangerouslySetInnerHTML={{
                 __html: t(`Copyright Elzian Agro. All Rights Reserved`, { val: new Date().getFullYear() }),

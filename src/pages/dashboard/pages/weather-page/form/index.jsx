@@ -65,7 +65,7 @@ const Form = ({ userLocation, onClose }) => {
         />
       </div>
 
-      <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full my-2'>
+      <div className='w-full xs:w-60 sm:w-64 md:w-80 lg:w-full my-2'>
         <p className='text-gray-400 text-xs'>
           {t('Location Description')}
           <a
@@ -77,7 +77,7 @@ const Form = ({ userLocation, onClose }) => {
           </a>
         </p>
       </div>
-      <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full flex justify-end'>
+      <div className='w-full xs:w-60 sm:w-64 md:w-80 lg:w-full flex justify-end'>
         <PrimaryButton type='submit' text='Submit' color='bg-blue-500 border-blue-600' />
       </div>
     </form>

@@ -110,9 +110,9 @@ const PortableDevice = () => {
                       )}
                     </p>
 
-                    <div className='flex flex-row justify-between '>
+                    <div className='flex flex-row justify-between items-center'>
                       <p className='text-gray-400' style={{ margin: 0 }}>
-                        {data.deviceId}
+                        {data.recordId} &nbsp; {data.deviceId}
                       </p>
 
                       <IconButton

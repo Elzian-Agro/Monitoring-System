@@ -47,7 +47,10 @@ const DeviceManagement = () => {
       sortable: true,
       cell: (row) => (
         <div className='flex flex-row gap-2 items-center'>
-          <div className={`${row.isDisabled ? 'bg-red-500' : 'bg-green-500'} rounded-full h-3 w-3`}></div>
+          {userType === 'admin' && (
+            <div className={`${row.isDisabled ? 'bg-red-500' : 'bg-green-500'} rounded-full h-3 w-3`}></div>
+          )}
+
           {row.deviceId}
         </div>
       ),
@@ -177,18 +180,19 @@ const DeviceManagement = () => {
 
       {(isLoading || loading) && <Loader />}
 
-      {!devices && !isLoading && !loading && (
+      {!devices && !isLoading && !loading && userType === 'farmer' && (
         <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-lg p-8'>
           <p className='text-sm dark:text-white justify-center'>
-            There are no devices allocated. Please contact{' '}
+            {t('There are no devices allocated yet. Please contact')}
             <a className='text-blue-500' href='mailto:support@elzian.com'>
+              {' '}
               support@elzian.com
             </a>
           </p>
         </div>
       )}
 
-      {!isFormVisible && !loading && !isLoading && devices && (
+      {!isFormVisible && !loading && !isLoading && (
         <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>
           <div className='flex flex-col lg:flex-row mb-4 lg:items-center lg:justify-between'>
             <div className='flex gap-2 mb-2 lg:mb-0'>
@@ -220,15 +224,26 @@ const DeviceManagement = () => {
               />
             )}
           </div>
-          <div className='rounded-t-lg'>
-            <DataTable
-              columns={columns}
-              data={filterDevices}
-              customStyles={customTableStyles}
-              theme={currentMode === 'Dark' ? 'dark' : 'default'}
-              pagination
-            />
-          </div>
+
+          {!devices && !isLoading && !loading && userType === 'admin' && (
+            <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-lg p-8'>
+              <p className='text-sm dark:text-white justify-center'>{t('There are no devices allocated yet.')}</p>
+            </div>
+          )}
+
+          {devices && (
+            <div
+              className='rounded-t-lg overflow-hidden'
+              style={{ scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
+              <DataTable
+                columns={columns}
+                data={filterDevices}
+                customStyles={customTableStyles}
+                theme={currentMode === 'Dark' ? 'dark' : 'default'}
+                pagination
+              />
+            </div>
+          )}
         </div>
       )}
       <Modal

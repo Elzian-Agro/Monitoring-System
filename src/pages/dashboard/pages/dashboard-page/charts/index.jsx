@@ -42,20 +42,32 @@ const Charts = () => {
         categories.push(new Date(date).toISOString().split('T')[0]);
       }
 
+      let hasData = false;
+
       thisMonthSensorData.forEach((device) => {
-        series[device.deviceId] = categories.map((date) => {
+        const seriesData = categories.map((date) => {
           const entry = device.data?.find((data) => data.timestamp.startsWith(date));
-          return entry ? entry[factor] : null;
+          // Check if the entry contains the factor and return the value, else return null
+          return entry && factor in entry ? entry[factor] : null;
         });
+
+        if (seriesData.some((value) => value !== null)) {
+          hasData = true; // Data exists for this factor
+        }
+
+        series[device.deviceId] = seriesData;
       });
 
-      return { series, categories };
+
+      return { series, categories, hasData };
     };
 
     DeviceFactors['Monitoring System']
       .map((factor) => factor.replace(/\s+/g, '_').toLowerCase())
       .forEach((factor) => {
-        const { series, categories } = generateSeriesData(factor);
+        const { series, categories, hasData } = generateSeriesData(factor);
+
+        if (!hasData) return; // Skip if no data exists for this factor
 
         options[factor] = {
           chart: {

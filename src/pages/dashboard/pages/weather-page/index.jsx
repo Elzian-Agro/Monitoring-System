@@ -89,8 +89,8 @@ const WeatherComponent = () => {
   return (
     <div className='flex flex-col gap-5 bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-700 rounded-xl shadow-md mx-6 mt-3 p-4 min-h-screen'>
       <div className='flex flex-col rounded-md border border-gray-100 dark:border-gray-600 px-4 py-2 shadow-md'>
-        <div className='flex flex-row items-center justify-between'>
-          <div className='flex flex-row items-center'>
+        <div className='flex flex-col sm:flex-row gap-2 sm:gap-0 items-start sm:items-center justify-between'>
+          <div className='flex flex-col xs:flex-row items-start xs:items-center'>
             <HomeIcon className='h-6 w-6 mr-2 text-md text-gray-700 dark:text-gray-300' />
             <h1 className='mr-2 text-md text-gray-700 dark:text-gray-300'>
               {`${location?.name || '__'}${location?.name ? ',' : ''} ${location?.state || ''}${

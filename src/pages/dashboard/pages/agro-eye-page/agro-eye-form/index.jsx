@@ -100,7 +100,7 @@ const Form = ({ visible, onClose, widget = null, higherOrder, formSubmission }) 
   return (
     <>
       {!visible ? null : (
-        <div className='flex flex-col p-8 gap-4 min-h-full w-full shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg'>
+        <div className='flex flex-col p-2 sm:p-8 gap-4 min-h-full w-full shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg'>
           <div>
             <button
               className='flex justify-start bg-red-500 hover:brightness-110 self-end rounded-lg transition-transform'
@@ -202,7 +202,7 @@ const Form = ({ visible, onClose, widget = null, higherOrder, formSubmission }) 
                   />
                 ))}
 
-                <div className='min-w-60 w-60 sm:w-64 md:w-80 lg:w-full border rounded-md py-2 flex justify-center items-center mt-4 dark:text-white'>
+                <div className='w-full xs:w-60 sm:w-64 md:w-80 lg:w-full border rounded-md py-2 flex justify-center items-center mt-4 dark:text-white'>
                   <button
                     type='button'
                     onClick={() => {
@@ -219,7 +219,7 @@ const Form = ({ visible, onClose, widget = null, higherOrder, formSubmission }) 
               </div>
 
               <div className='flex justify-center pt-6'>
-                <div className='flex justify-end gap-2 w-60 sm:w-64 md:w-80 lg:w-full lg:px-24 xl:px-44'>
+                <div className='flex justify-end gap-2 w-full xs:w-60 sm:w-64 md:w-80 lg:w-full lg:px-24 xl:px-44'>
                   {!widget && (
                     <PrimaryButton color='bg-red-500 border-red-600' type='button' text='Clear' onClick={resetForm} />
                   )}

@@ -16,7 +16,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   const [deviceType, setDeviceType] = useState('');
   const [deviceStatus, setDeviceStatus] = useState('');
   const [deviceFactors, setDeviceFactors] = useState([]);
-  const [Factors, setFactors] = useState([]);
+  const [factors, setFactors] = useState([]);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isToggleClicked, setIsToggleClicked] = useState(false);
 
@@ -26,10 +26,16 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   useEffect(() => {
     const getUsers = async () => {
       const users = await send({ endpoint: 'user', method: 'GET' });
-      const userNames = users.map((user) => ({
+
+      // Filter users where isDisabled is false
+      const activeUsers = users.filter((user) => !user.isDisabled);
+
+      // Map the active users to the desired format
+      const userNames = activeUsers.map((user) => ({
         name: `${user.firstName} ${user.lastName}`,
         value: user._id,
       }));
+
       setUserList(userNames);
     };
 
@@ -52,12 +58,15 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   }, [device]);
 
   useEffect(() => {
-    setDeviceFactors([]);
-
     if (deviceType) {
+      // Only clear device factors if the form is in update mode and the deviceType has changed
+      if (device && deviceType !== device.deviceType) {
+        setDeviceFactors([]);
+      }
+
       setFactors(DeviceFactors[deviceType] || []);
     }
-  }, [deviceType]);
+  }, [deviceType, device]);
 
   const resetForm = () => {
     setUserId('');
@@ -71,7 +80,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
     e.preventDefault();
 
     const requestData = {
-      userId: userId === 'deallocate' ? null : userId,
+      userId: userId === 'deallocate' || userId === '' ? null : userId,
       deviceId,
       deviceType,
       deviceStatus,
@@ -94,7 +103,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
   return (
     <>
       {!visible ? null : (
-        <div className='flex flex-col p-8 gap-8 min-h-full w-full shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg'>
+        <div className='flex flex-col p-2 sm:p-8 gap-8 min-h-full w-full shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg'>
           <div>
             <button
               className='flex justify-start bg-red-500 hover:brightness-110 self-end rounded-lg transition-transform'
@@ -147,7 +156,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
                   label='Monitoring Factors'
                   placeholder='Multiple selection'
                   Icon={DevicePhoneMobileIcon}
-                  options={Factors}
+                  options={factors}
                   onChange={(values) => {
                     setDeviceFactors(values);
                   }}
@@ -188,11 +197,9 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
                   </div>
                 </div>
 
-                {device && (
+                {device?.isDisabled && (
                   <div className='flex flex-row items-center gap-4'>
-                    <div className='text-gray-400'>
-                      {device.isDisabled ? t('Enable device') : t('Disable device')} :
-                    </div>
+                    <div className='text-gray-400'>{t('Enable device')} :</div>
                     <ToggleButton
                       value={isToggleClicked}
                       onChange={() => {
@@ -205,7 +212,7 @@ const Form = ({ visible, onClose, device = null, formSubmission }) => {
               </div>
 
               <div className='flex justify-center pt-6'>
-                <div className='flex justify-end gap-2 w-60 sm:w-64 md:w-80 lg:w-full lg:px-28 xl:px-48'>
+                <div className='flex justify-end gap-2 w-full xs:w-60 sm:w-64 md:w-80 lg:w-full lg:px-28 xl:px-48'>
                   {!device && <PrimaryButton color='bg-red-500 border-red-600' text='Clear' onClick={resetForm} />}
                   <PrimaryButton color='bg-blue-500 border-blue-600' text={device ? 'Update' : 'Submit'} />
                 </div>

@@ -7,8 +7,8 @@ const DashboardPage = () => {
 
   return (
     <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-700 rounded-xl shadow-md mx-6 mt-3'>
-      <div className='container mx-auto px-4 py-8'>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+      <div className=' px-6 py-6'>
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 w-full'>
           {/* Card 1 */}
           <div className='bg-opacity-20 p-6 bg-gradient-to-br from-green-500 to-lime-500 rounded-xl shadow-md'>
             <h2 className='text-xl font-semibold text-white mb-4'>{t('Weather Monitoring')}</h2>
@@ -89,14 +89,14 @@ const DashboardPage = () => {
         </div>
 
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6'>
-          <div className='p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 w-full shadow-lg rounded'>
+          <div className='p-6 relative flex flex-col min-w-0 mb-4 lg:mb-0 break-words bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 rounded-md w-full'>
             <div className='rounded-t mb-0 px-0 border-0'>
               <div className='flex flex-wrap items-center px-4 py-2'>
                 <div className='relative w-full max-w-full flex-grow flex-1'>
                   <h3 className='font-semibold text-base text-gray-900 dark:text-gray-50'>{t('Payments')}</h3>
                 </div>
               </div>
-              <div className='block w-full overflow-x-auto'>
+              <div className='overflow-x-auto' style={{ scrollbarWidth: 'thin', scrollbarColor: '#888 #f1f1f1' }}>
                 <table className='items-center w-full bg-transparent border-collapse'>
                   <thead>
                     <tr>
@@ -218,7 +218,7 @@ const DashboardPage = () => {
         </div>
 
         <div className='grid grid-cols-1 lg:grid-cols-4 gap-6 mb-6'>
-          <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 shadow-black/5 p-6 rounded-md lg:col-span-2'>
+          <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2'>
             <div className='flex justify-between mb-4 items-start'>
               <div className='font-medium dark:text-white'>{t('Device Statistics')}</div>
               <div className='dropdown'>
@@ -255,9 +255,6 @@ const DashboardPage = () => {
                 </div>
                 <span className='text-gray-400 text-sm'>{t('Disabled')}</span>
               </div>
-            </div>
-            <div>
-              <canvas id='order-chart'></canvas>
             </div>
           </div>
           <div className='bg-white dark:bg-secondary-dark-bg border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-6 rounded-md lg:col-span-2'>
