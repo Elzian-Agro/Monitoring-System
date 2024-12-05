@@ -27,7 +27,7 @@ export const DeviceFactors = {
     'Electric Conductivity',
     'Soil Temperature',
   ],
-  'Weather Station': ['Temperature', 'Humidity', 'Wind Speed', 'Wind Direction', 'Rainfall', 'Light'],
+  'Weather Station': ['Temperature', 'Humidity', 'Rainfall', 'Wind Speed', 'Wind Direction', 'Light'],
 };
 
 export const menuMode = {

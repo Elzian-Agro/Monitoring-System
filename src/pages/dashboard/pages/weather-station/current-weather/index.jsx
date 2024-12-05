@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 // Weather data for devices
 const weatherData = [
   {
     deviceId: 'ELZ-0003-01',
-    data: { temperature: 20, humidity: 10, rainfall: 0, windSpeed: 0, windDirection: 0, light: 0 },
+    data: { temperature: 28, humidity: 40, rainfall: 4300, windSpeed: 20, windDirection: 160, light: 50 },
   },
   {
     deviceId: 'ELZ-0003-02',
@@ -24,6 +25,8 @@ const CurrentWeather = () => {
   const [selectedDevice, setSelectedDevice] = useState(weatherData[0].deviceId);
   const selectedWeatherData = weatherData.find((device) => device.deviceId === selectedDevice)?.data;
 
+  const { t } = useTranslation();
+
   const handleDeviceChange = (e) => {
     setSelectedDevice(e.target.value);
   };
@@ -33,8 +36,8 @@ const CurrentWeather = () => {
       {/* Header */}
       <div className='flex flex-col md:flex-row gap-2 md:gap-0 md:justify-between md:items-center mb-4'>
         <div>
-          <h2 className='text-lg font-semibold  text-gray-600 dark:text-gray-200'>Current Weather</h2>
-          <p className='text-gray-700 dark:text-gray-300'>
+          <h2 className='text-md text-gray-600 dark:text-gray-300'>{t('CURRENT WEATHER')}</h2>
+          <p className='font-bold text-sm text-gray-600 dark:text-gray-300'>
             {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </p>
         </div>
@@ -54,7 +57,7 @@ const CurrentWeather = () => {
       <div className='grid md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4'>
         {/* Temperature */}
         <div className='rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-sm'>
-          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>Temperature</h3>
+          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>{t('Temperature')}</h3>
 
           <div className='flex items-center justify-center mt-4'>
             <div className='relative'>
@@ -75,21 +78,21 @@ const CurrentWeather = () => {
 
         {/* Humidity */}
         <div className='rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-sm'>
-          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>Humidity</h3>
+          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>{t('Humidity')}</h3>
 
-          <div className='flex flex-col items-center justify-center mt-4'>
-            <div className='relative w-40 h-40'>
+          <div className='flex flex-col items-center justify-center mt-7'>
+            <div className='relative w-36 h-36'>
               <svg className='w-full h-full' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' fill='none'>
                 <path
                   d='M11 2C11 2 4 10 4 15C4 18.866 7.134 22 11 22C14.866 22 18 18.866 18 15C18 11 11 2 11 2Z'
                   stroke='#e5e5e5'
-                  strokeWidth='0.8'
+                  strokeWidth='0.6'
                   strokeLinecap='round'
                   strokeLinejoin='round'
                 />
                 <path
                   d='M11 2C11 2 4 10 4 15C4 18.866 7.134 22 11 22C14.866 22 18 18.866 18 15C18 11 11 2 11 2Z'
-                  fill='#4287f5'
+                  fill='#60a5fa'
                   style={{
                     clipPath: `inset(${99 - Math.max(0, Math.min(99, selectedWeatherData?.humidity))}% 0% 0% 0%)`,
                   }}
@@ -97,13 +100,45 @@ const CurrentWeather = () => {
                 {/* min humidity = 0 and max humidity = 99 */}
               </svg>
             </div>
-            <p className='text-center text-4xl font-semibold text-blue-500 mt-2'>{selectedWeatherData?.humidity}%</p>
+            <p className='text-center text-4xl font-semibold text-blue-400 mt-3'>{selectedWeatherData?.humidity}%</p>
+          </div>
+        </div>
+
+        {/* Rainfall */}
+        <div className='rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-sm'>
+          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>{t('Rainfall')}</h3>
+
+          <div className='mt-4 flex flex-col items-center'>
+            {/* Beaker Shape */}
+            <div className='relative w-24 h-40'>
+              <svg
+                className='w-full h-full scale-150' // Scale the beaker size
+                viewBox='0 0 100 100'
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'>
+                <path
+                  d='M30 10 L70 10 L68 20 L80 85 Q80 90 75 90 L25 90 Q20 90 20 85 L30 20 L30 10'
+                  fill='none'
+                  stroke='#d4d4d4'
+                  strokeWidth='2'
+                />
+                {/* Rainfall Level */}
+                <path
+                  d='M30 10 L70 10 L68 20 L80 85 Q80 90 75 90 L25 90 Q20 90 20 85 L30 20 L30 10'
+                  fill='#2563eb'
+                  style={{
+                    clipPath: `inset(${100 - (selectedWeatherData?.rainfall / 9999) * 100}% 0% 0% 0%)`, // Proportional filling
+                  }}
+                />
+              </svg>
+            </div>
+            <p className='text-center text-4xl font-semibold text-blue-600 mt-2'>{selectedWeatherData?.rainfall}mm</p>
           </div>
         </div>
 
         {/* Wind */}
         <div className='rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-sm'>
-          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>Wind</h3>
+          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>{t('Wind Speed')}</h3>
 
           <div className='flex flex-col justify-center items-center mt-4'>
             <div className='relative w-40 h-40'>
@@ -116,7 +151,7 @@ const CurrentWeather = () => {
                   cx='20'
                   cy='20'
                   r='16'
-                  stroke='#fcba03'
+                  stroke='#22C55E'
                   strokeWidth='2'
                   fill='none'
                   strokeDasharray='2 100' /* Small stroke (2 units) and gap (100 units) */
@@ -143,32 +178,15 @@ const CurrentWeather = () => {
                 </span>
               </div>
             </div>
-            <p className='text-center text-4xl font-semibold text-yellow-500 mt-2'>
+            <p className='text-center text-4xl font-semibold text-green-500 mt-2'>
               {selectedWeatherData?.windSpeed}m/s
             </p>
           </div>
         </div>
 
-        {/* Rainfall */}
-        <div className='rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-sm'>
-          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>Rainfall</h3>
-
-          <div className='mt-4 flex flex-col items-center'>
-            <div className='relative w-24 h-40 bg-gray-200 rounded-b-md overflow-hidden border-2 border-gray-300'>
-              <div
-                className='absolute bottom-0 w-full bg-blue-500'
-                style={{
-                  height: `${Math.min((selectedWeatherData?.rainfall / 9999) * 100, 100)}%`, // 9999 = max rainfall
-                }}></div>
-            </div>
-
-            <p className='text-center text-4xl font-semibold text-blue-500 mt-2'>{selectedWeatherData?.rainfall}mm</p>
-          </div>
-        </div>
-
         {/* Light */}
         <div className='rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-sm'>
-          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>Light</h3>
+          <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>{t('Light')}</h3>
 
           <div className='mt-4 flex flex-col items-center'>
             <div className='relative w-40 h-40 flex items-center justify-center'>

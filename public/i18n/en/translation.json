@@ -236,5 +236,8 @@
   "There are no devices allocated yet.": "There are no devices allocated yet.",
   "There are no devices allocated yet. Please contact": "There are no devices allocated yet. Please contact",
   "Weather Station": "Weather Station",
-  "Widgets not found": "Widgets not found"
+  "Widgets not found": "Widgets not found",
+  "Rainfall": "Rainfall",
+  "Wind Direction": "Wind Direction",
+  "Light": "Light"
 }

@@ -227,7 +227,7 @@ const HistryWeather = () => {
           accessibility: {
             enabled: false,
           },
-          
+
           series: Object.keys(series).map((deviceId) => ({
             name: deviceId,
             data: series[deviceId],
@@ -243,7 +243,7 @@ const HistryWeather = () => {
     setLightOptions(options.light);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedRange, selectedInterval,currentMode]);
+  }, [selectedRange, selectedInterval, currentMode]);
 
   return (
     <div>
@@ -273,31 +273,41 @@ const HistryWeather = () => {
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
         {temperatureOptions && (
           <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-            <h1 className='text-md text-center font-semibold dark:text-white'>{t('Temperature')}</h1>
+            <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+              {t('Temperature')} (°C)
+            </h1>
             <HighchartsReact highcharts={Highcharts} options={temperatureOptions} />
           </div>
         )}
         {humidityOptions && (
           <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-            <h1 className='text-md text-center font-semibold dark:text-white'>{t('Humidity')}</h1>
+            <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+              {t('Humidity')} (%)
+            </h1>
             <HighchartsReact highcharts={Highcharts} options={humidityOptions} />
           </div>
         )}
         {rainfallOptions && (
           <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-            <h1 className='text-md text-center font-semibold dark:text-white'>{t('Rainfall')}</h1>
+            <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+              {t('Rainfall')} (mm)
+            </h1>
             <HighchartsReact highcharts={Highcharts} options={rainfallOptions} />
           </div>
         )}
         {windSpeedOptions && (
           <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-            <h1 className='text-md text-center font-semibold dark:text-white'>{t('Wind')}</h1>
+            <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+              {t('Wind Speed')} (m/s)
+            </h1>
             <HighchartsReact highcharts={Highcharts} options={windSpeedOptions} />
           </div>
         )}
         {lightOptions && (
           <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-            <h1 className='text-md text-center font-semibold dark:text-white'>{t('Light')}</h1>
+            <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+              {t('Light')} (lux)
+            </h1>
             <HighchartsReact highcharts={Highcharts} options={lightOptions} />
           </div>
         )}
