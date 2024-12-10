@@ -160,7 +160,11 @@ const ManageUsers = () => {
         />
       )}
 
-      {(loading || isLoading) && <Loader />}
+      {(loading || isLoading) && (
+        <div className='h-[90vh]'>
+          <Loader />
+        </div>
+      )}
 
       {!isFormVisible && !loading && !isLoading && (
         <div className='flex flex-col shadow-lg bg-white dark:bg-secondary-dark-bg rounded-lg p-4'>

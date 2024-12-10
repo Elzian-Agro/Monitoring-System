@@ -72,7 +72,11 @@ const PortableDevice = () => {
         </style>
       )}
 
-      {isLoading && <Loader />}
+      {isLoading && (
+        <div className='h-[90vh]'>
+          <Loader />
+        </div>
+      )}
 
       {!isLoading && (
         <MapContainer center={[7.555494, 80.713784]} zoom={8} className='w-full h-[90vh] z-[1]'>

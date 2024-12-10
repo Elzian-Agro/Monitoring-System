@@ -73,7 +73,9 @@ const Layout = () => {
   return (
     <div className={currentTheme === 'Dark' ? 'dark' : ''}>
       {isLoading ? (
-        <Loader />
+        <div className='h-screen'>
+          <Loader />
+        </div>
       ) : (
         <div>
           <Navbar mainContentMargin={mainContentMargin} />

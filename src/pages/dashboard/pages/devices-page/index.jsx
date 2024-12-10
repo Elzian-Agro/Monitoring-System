@@ -178,7 +178,11 @@ const DeviceManagement = () => {
         />
       )}
 
-      {(isLoading || loading) && <Loader />}
+      {(isLoading || loading) && (
+        <div className='h-[90vh]'>
+          <Loader />
+        </div>
+      )}
 
       {!devices && !isLoading && !loading && userType === 'farmer' && (
         <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-lg p-8'>
