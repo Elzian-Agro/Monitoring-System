@@ -36,6 +36,14 @@ export const menuMode = {
   close: 'close',
 };
 
+export const weatherStationChartTypes = {
+  temperature: 'column',
+  humidity: 'line',
+  rainfall: 'column',
+  wind_speed: 'line',
+  light: 'line',
+};
+
 export const errorType = {
   userBlocked: {
     code: 13001,
@@ -150,6 +158,16 @@ export const errorType = {
   portableDeviceDataNotFound: {
     code: 13029,
     message: 'Portable device data not found',
+  },
+
+  currentWeatherNotFound: {
+    code: 13031,
+    message: 'Curent weather data not found',
+  },
+
+  histryWeatherNotFound: {
+    code: 13032,
+    message: 'Histry weather data not found',
   },
 };
 

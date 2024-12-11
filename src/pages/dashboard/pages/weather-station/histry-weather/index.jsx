@@ -5,63 +5,39 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { selectTheme } from 'pages/dashboard/slice/dashboardLayoutSlice';
 import { DeviceFactors } from 'utils/constant';
+import useFetch from 'hooks/useFetch';
+import Loader from 'pages/dashboard/components/common/loader';
+import { weatherStationChartTypes } from 'utils/constant';
 
-// Weather data for devices
-const weatherData = [
-  {
-    'ELZ-0003-01': [
-      {
-        timestamp: '2024-12-05T06:12:00.000Z',
-        temperature: 38.3,
-        humidity: 50,
-        rainfall: 3500,
-        wind_speed: 25,
-        wind_direction: 120,
-        light: 180,
-      },
-      {
-        timestamp: '2024-12-05T06:13:00.000Z',
-        temperature: 34.3,
-        humidity: 50,
-        rainfall: 3500,
-        wind_speed: 25,
-        wind_direction: 120,
-        light: 180,
-      },
-      {
-        timestamp: '2024-12-05T06:14:00.000Z',
-        temperature: 32.0,
-        humidity: 50,
-        rainfall: 3500,
-        wind_speed: 25,
-        wind_direction: 120,
-        light: 180,
-      },
-    ],
-  },
-  {
-    'ELZ-0003-02': [
-      {
-        timestamp: '2024-12-05T06:12:00.000Z',
-        temperature: 20.3,
-        humidity: 50,
-        rainfall: 3500,
-        wind_speed: 25,
-        wind_direction: 120,
-        light: 180,
-      },
-      {
-        timestamp: '2024-12-05T06:14:00.000Z',
-        temperature: 31.3,
-        humidity: 50,
-        rainfall: 3500,
-        wind_speed: 25,
-        wind_direction: 120,
-        light: 180,
-      },
-    ],
-  },
-];
+const calculateStartDate = (range) => {
+  switch (range) {
+    case 'Last 24 hours':
+      return 24 * 60 * 60 * 1000;
+    case 'Last week':
+      return 7 * 24 * 60 * 60 * 1000;
+    case 'Last Month':
+      return 30 * 7 * 24 * 60 * 60 * 1000;
+    default:
+      return 24 * 60 * 60 * 1000;
+  }
+};
+
+const calculateInterval = (interval) => {
+  switch (interval) {
+    case '1 min':
+      return 60 * 1000;
+    case '5 min':
+      return 5 * 60 * 1000;
+    case '30 min':
+      return 30 * 60 * 1000;
+    case '1 hour':
+      return 60 * 60 * 1000;
+    case '1 day':
+      return 24 * 60 * 60 * 1000;
+    default:
+      return 60 * 1000;
+  }
+};
 
 const HistryWeather = () => {
   const [selectedRange, setSelectedRange] = useState('Last 24 hours');
@@ -76,61 +52,47 @@ const HistryWeather = () => {
   const currentMode = useSelector(selectTheme);
   const { t } = useTranslation();
 
+  // Update the endpoint dynamically with the current time
+  const endpoint = `weather-station/histry/${calculateStartDate(selectedRange)}/${calculateInterval(selectedInterval)}`;
+
+  const { response: histryWeatherData, isLoading } = useFetch({
+    endpoint,
+    method: 'GET',
+    call: 1,
+    requestBody: {},
+    dependency: [selectedRange, selectedInterval],
+  });
+
   const getColor = (darkColor, lightColor) => (currentMode === 'Dark' ? darkColor : lightColor);
 
-  const calculateStartDate = (range) => {
-    const now = new Date();
-    switch (range) {
-      case 'Last 24 hours':
-        return new Date(now.getTime() - 24 * 60 * 60 * 1000).setSeconds(0, 0);
-      case 'Last week':
-        return new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).setSeconds(0, 0);
-      case 'Last Month':
-        return new Date(now.getFullYear(), now.getMonth() - 1, now.getDate()).setSeconds(0, 0);
-      default:
-        return new Date(now.getFullYear(), now.getMonth(), 1).setSeconds(0, 0);
-    }
-  };
-
-  const calculateInterval = (interval) => {
-    switch (interval) {
-      case '1 min':
-        return 60 * 1000;
-      case '5 min':
-        return 5 * 60 * 1000;
-      case '30 min':
-        return 30 * 60 * 1000;
-      case '1 hour':
-        return 60 * 60 * 1000;
-      case '1 day':
-        return 24 * 60 * 60 * 1000;
-      default:
-        return 60 * 60 * 1000;
-    }
+  // Function to check if the history data is empty
+  const isDataEmpty = (data) => {
+    return !data || data.every((item) => Object.values(item)[0].length === 0);
   };
 
   useEffect(() => {
-    if (!weatherData) return;
+    if (!histryWeatherData) return;
 
     const options = {};
 
     const generateSeriesData = (factor) => {
       const series = {};
-      const startDate = calculateStartDate(selectedRange);
-      const interval = calculateInterval(selectedInterval);
       const now = new Date();
+      now.setSeconds(0, 0);
+      const lastDate = new Date(now.getTime() - calculateStartDate(selectedRange));
+      const interval = calculateInterval(selectedInterval);
       const categories = [];
 
-      let currentTime = new Date(startDate);
-      while (currentTime <= now) {
-        categories.push(currentTime.toISOString());
-        currentTime = new Date(currentTime.getTime() + interval);
+      let time = new Date(now);
+      while (time >= lastDate) {
+        categories.push(time.toISOString());
+        time = new Date(time.getTime() - interval);
       }
+      categories.reverse();
 
-      console.log(categories);
       let hasData = false;
 
-      weatherData.forEach((device) => {
+      histryWeatherData.forEach((device) => {
         const deviceId = Object.keys(device)[0];
         const deviceData = device[deviceId];
 
@@ -160,7 +122,7 @@ const HistryWeather = () => {
 
         options[factor] = {
           chart: {
-            type: 'line',
+            type: weatherStationChartTypes[factor],
             backgroundColor: getColor('#414345', '#ffffff'),
           },
           title: {
@@ -243,7 +205,7 @@ const HistryWeather = () => {
     setLightOptions(options.light);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedRange, selectedInterval, currentMode]);
+  }, [selectedRange, selectedInterval, currentMode, histryWeatherData]);
 
   return (
     <div>
@@ -269,49 +231,58 @@ const HistryWeather = () => {
         </select>
       </div>
 
-      {/* Weather Charts */}
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-        {temperatureOptions && (
-          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-            <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
-              {t('Temperature')} (°C)
-            </h1>
-            <HighchartsReact highcharts={Highcharts} options={temperatureOptions} />
-          </div>
-        )}
-        {humidityOptions && (
-          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-            <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
-              {t('Humidity')} (%)
-            </h1>
-            <HighchartsReact highcharts={Highcharts} options={humidityOptions} />
-          </div>
-        )}
-        {rainfallOptions && (
-          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-            <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
-              {t('Rainfall')} (mm)
-            </h1>
-            <HighchartsReact highcharts={Highcharts} options={rainfallOptions} />
-          </div>
-        )}
-        {windSpeedOptions && (
-          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-            <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
-              {t('Wind Speed')} (m/s)
-            </h1>
-            <HighchartsReact highcharts={Highcharts} options={windSpeedOptions} />
-          </div>
-        )}
-        {lightOptions && (
-          <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-            <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
-              {t('Light')} (lux)
-            </h1>
-            <HighchartsReact highcharts={Highcharts} options={lightOptions} />
-          </div>
-        )}
-      </div>
+      {isLoading && <Loader />}
+
+      {!isLoading && isDataEmpty(histryWeatherData) && (
+        <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-lg p-8'>
+          <p className='text-sm dark:text-white justify-center'>{t('There are no history weather data available!')}</p>
+        </div>
+      )}
+
+      {!isLoading && histryWeatherData && (
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+          {temperatureOptions && (
+            <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+              <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+                {t('Temperature')} (°C)
+              </h1>
+              <HighchartsReact highcharts={Highcharts} options={temperatureOptions} />
+            </div>
+          )}
+          {humidityOptions && (
+            <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+              <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+                {t('Humidity')} (%)
+              </h1>
+              <HighchartsReact highcharts={Highcharts} options={humidityOptions} />
+            </div>
+          )}
+          {rainfallOptions && (
+            <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+              <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+                {t('Rainfall')} (mm)
+              </h1>
+              <HighchartsReact highcharts={Highcharts} options={rainfallOptions} />
+            </div>
+          )}
+          {windSpeedOptions && (
+            <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+              <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+                {t('Wind Speed')} (m/s)
+              </h1>
+              <HighchartsReact highcharts={Highcharts} options={windSpeedOptions} />
+            </div>
+          )}
+          {lightOptions && (
+            <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+              <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+                {t('Light')} (lux)
+              </h1>
+              <HighchartsReact highcharts={Highcharts} options={lightOptions} />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

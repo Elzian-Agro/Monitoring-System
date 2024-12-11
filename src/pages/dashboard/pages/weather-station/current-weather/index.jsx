@@ -11,11 +11,8 @@ const CurrentWeather = () => {
 
   const { t } = useTranslation();
 
-  // Update the endpoint dynamically with the current time
-  const endpoint = `weather-station/current`;
-
   const { response: currentWeatherData, isLoading } = useFetch({
-    endpoint,
+    endpoint: 'weather-station/current',
     method: 'GET',
     call: 1,
     requestBody: {},
@@ -78,7 +75,7 @@ const CurrentWeather = () => {
 
       {!isLoading && !currentWeatherData && (
         <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-lg p-8'>
-          <p className='text-sm dark:text-white justify-center'>{t('There are no weather data available!')}</p>
+          <p className='text-sm dark:text-white justify-center'>{t('There are no current weather data available!')}</p>
         </div>
       )}
 
