@@ -158,8 +158,8 @@ const HistryWeather = () => {
                 color: getColor('#ffffff', '#000000'),
               },
             },
-            min: 0,
-            max: 5,
+            min: categories.length - 5,
+            max: categories.length - 1,
             scrollbar: {
               enabled: true,
             },
