@@ -12,7 +12,7 @@ const CurrentWeather = () => {
   const { t } = useTranslation();
 
   // Update the endpoint dynamically with the current time
-  const endpoint = `weather-station/current/${currentTime}`;
+  const endpoint = `weather-station/current`;
 
   const { response: currentWeatherData, isLoading } = useFetch({
     endpoint,
