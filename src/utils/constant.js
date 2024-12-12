@@ -246,3 +246,25 @@ export const weatherIcons = {
   '13d': 'https://cdn-icons-png.flaticon.com/128/13882/13882500.png',
   '50d': 'https://cdn-icons-png.flaticon.com/128/1779/1779931.png',
 };
+
+export const deviceCsvHeaders = [
+  'Device ID',
+  'User Name',
+  'Device Type',
+  'Monitoring Factors',
+  'Device Status',
+  'Disable',
+  'Created At',
+  'Updated At',
+];
+
+export const userCsvHeaders = [
+  'User Name',
+  'Organization Name',
+  'NIC',
+  'Phone Number',
+  'Email Address',
+  'Address',
+  'GPS',
+  'Disable',
+];
