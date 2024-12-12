@@ -257,20 +257,20 @@ const HistryWeather = () => {
               <HighchartsReact highcharts={Highcharts} options={humidityOptions} />
             </div>
           )}
-          {rainfallOptions && (
-            <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
-              <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
-                {t('Rainfall')} (mm)
-              </h1>
-              <HighchartsReact highcharts={Highcharts} options={rainfallOptions} />
-            </div>
-          )}
           {windSpeedOptions && (
             <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
               <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
                 {t('Wind Speed')} (m/s)
               </h1>
               <HighchartsReact highcharts={Highcharts} options={windSpeedOptions} />
+            </div>
+          )}
+          {rainfallOptions && (
+            <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+              <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+                {t('Rainfall')} (mm)
+              </h1>
+              <HighchartsReact highcharts={Highcharts} options={rainfallOptions} />
             </div>
           )}
           {lightOptions && (
