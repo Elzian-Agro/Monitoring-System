@@ -26,7 +26,7 @@ const DeviceConfig = ({ device, setDevices, index, deviceList, devices }) => {
     <div className='w-full xs:w-60 sm:w-64 md:w-80 lg:w-full'>
       <div className='flex justify-end'>
         <XMarkIcon
-          className='h-3 w-3 text-red-600'
+          className='h-3 w-3 text-red-600 curser-pointer'
           onClick={() => {
             const updatedDevices = [...devices];
             updatedDevices.splice(index, 1);
