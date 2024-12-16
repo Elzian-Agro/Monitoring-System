@@ -57,7 +57,7 @@ const CurrentWeather = () => {
           </p>
         </div>
 
-        {!isLoading && currentWeatherData && (
+        {!isLoading && Array.isArray(currentWeatherData) && currentWeatherData.length > 0 && (
           <select
             className='border border-gray-300 dark:border-gray-500 rounded-md p-2 focus:outline-none dark:bg-secondary-dark-bg dark:text-white'
             value={selectedDevice || ''}

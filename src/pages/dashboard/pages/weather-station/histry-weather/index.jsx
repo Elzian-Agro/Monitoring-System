@@ -46,7 +46,6 @@ const HistryWeather = () => {
   const [humidityOptions, setHumidityOptions] = useState(null);
   const [rainfallOptions, setRainfallOptions] = useState(null);
   const [windSpeedOptions, setWindSpeedOptions] = useState(null);
-  const [windDirectionOptions, setWindDirectionOptions] = useState(null);
   const [lightOptions, setLightOptions] = useState(null);
 
   const currentMode = useSelector(selectTheme);
@@ -97,10 +96,11 @@ const HistryWeather = () => {
         const deviceData = device[deviceId];
 
         const seriesData = categories.map((date) => {
-          const entry = deviceData.find((data) => data.timestamp === date);
-
-          // Check if the entry contains the factor and return the value, else return null
-          return entry && factor in entry ? entry[factor] : null;
+          if (Array.isArray(deviceData)) {
+            const entry = deviceData.find((data) => data.timestamp === date);
+            return entry && factor in entry ? entry[factor] : null;
+          }
+          return null; // Handle cases where deviceData is not an array
         });
 
         if (seriesData.some((value) => value !== null)) {
@@ -201,7 +201,6 @@ const HistryWeather = () => {
     setHumidityOptions(options.humidity);
     setRainfallOptions(options.rainfall);
     setWindSpeedOptions(options.wind_speed);
-    setWindDirectionOptions(options.wind_direction);
     setLightOptions(options.light);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
