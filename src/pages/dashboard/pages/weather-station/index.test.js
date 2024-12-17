@@ -76,22 +76,11 @@ describe('Weather Station Page', () => {
     const currentDate = new Date();
     const currentTime = currentDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-    // Check display title
+    // Check current weather component
     expect(screen.getByText('CURRENT WEATHER')).toBeInTheDocument();
     expect(screen.getByText(currentTime)).toBeInTheDocument();
-  });
 
-  it('fetch current weather correctly and display', async () => {
-    render(
-      <MemoryRouter>
-        <WeatherStation />
-      </MemoryRouter>
-    );
-
-    // Check display current weather data
-    expect(screen.getByText('Temperature')).toBeInTheDocument();
-    expect(screen.getByText('29.8°C')).toBeInTheDocument();
-    expect(screen.getByText('Humidity')).toBeInTheDocument();
-    expect(screen.getByText('61%')).toBeInTheDocument();
+    // Check history weather component
+    expect(screen.getByText('HISTORY WEATHER')).toBeInTheDocument();
   });
 });

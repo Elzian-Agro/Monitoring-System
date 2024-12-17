@@ -51,7 +51,7 @@ const HistryWeather = () => {
   const currentMode = useSelector(selectTheme);
   const { t } = useTranslation();
 
-  // Update the endpoint dynamically with the current time
+  // Update the endpoint dynamically with range and intervel
   const endpoint = `weather-station/histry/${calculateStartDate(selectedRange)}/${calculateInterval(selectedInterval)}`;
 
   const { response: histryWeatherData, isLoading } = useFetch({
@@ -208,26 +208,30 @@ const HistryWeather = () => {
 
   return (
     <div>
-      {/* Filters */}
-      <div className='flex flex-col xs:flex-row gap-2 xs:justify-end xs:items-center mb-4'>
-        <select
-          className='border border-gray-300 dark:border-gray-500 rounded-md p-2 focus:outline-none dark:bg-secondary-dark-bg dark:text-white'
-          value={selectedRange}
-          onChange={(e) => setSelectedRange(e.target.value)}>
-          <option>Last 24 hours</option>
-          <option>Last week</option>
-          <option>Last Month</option>
-        </select>
-        <select
-          className='border border-gray-300 dark:border-gray-500 rounded-md p-2 focus:outline-none dark:bg-secondary-dark-bg dark:text-white'
-          value={selectedInterval}
-          onChange={(e) => setSelectedInterval(e.target.value)}>
-          <option>1 min</option>
-          <option>5 min</option>
-          <option>30 min</option>
-          <option>1 hour</option>
-          <option>1 day</option>
-        </select>
+      <div className='flex flex-col md:flex-row gap-2 md:gap-0 md:justify-between md:items-center mb-4'>
+        <h2 className='text-md text-gray-600 dark:text-gray-300'>{t('HISTORY WEATHER')}</h2>
+
+        {/* Filters */}
+        <div className='flex flex-col xs:flex-row gap-2 xs:justify-end xs:items-center mb-4'>
+          <select
+            className='border border-gray-300 dark:border-gray-500 rounded-md p-2 focus:outline-none dark:bg-secondary-dark-bg dark:text-white'
+            value={selectedRange}
+            onChange={(e) => setSelectedRange(e.target.value)}>
+            <option>Last 24 hours</option>
+            <option>Last week</option>
+            <option>Last Month</option>
+          </select>
+          <select
+            className='border border-gray-300 dark:border-gray-500 rounded-md p-2 focus:outline-none dark:bg-secondary-dark-bg dark:text-white'
+            value={selectedInterval}
+            onChange={(e) => setSelectedInterval(e.target.value)}>
+            <option>1 min</option>
+            <option>5 min</option>
+            <option>30 min</option>
+            <option>1 hour</option>
+            <option>1 day</option>
+          </select>
+        </div>
       </div>
 
       {isLoading && <Loader />}
