@@ -4,10 +4,9 @@ import HighchartsReact from 'highcharts-react-official';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { selectTheme } from 'pages/dashboard/slice/dashboardLayoutSlice';
-import { DeviceFactors } from 'utils/constant';
+import { DeviceFactors, weatherStationChartTypes } from 'utils/constant';
 import useFetch from 'hooks/useFetch';
 import Loader from 'pages/dashboard/components/common/loader';
-import { weatherStationChartTypes } from 'utils/constant';
 
 const calculateStartDate = (range) => {
   switch (range) {
@@ -39,7 +38,7 @@ const calculateInterval = (interval) => {
   }
 };
 
-const HistryWeather = () => {
+const HistoryWeather = () => {
   const [selectedRange, setSelectedRange] = useState('Last 24 hours');
   const [selectedInterval, setSelectedInterval] = useState('1 min');
   const [temperatureOptions, setTemperatureOptions] = useState(null);
@@ -52,9 +51,9 @@ const HistryWeather = () => {
   const { t } = useTranslation();
 
   // Update the endpoint dynamically with range and intervel
-  const endpoint = `weather-station/histry/${calculateStartDate(selectedRange)}/${calculateInterval(selectedInterval)}`;
+  const endpoint = `weather-station/history/${calculateStartDate(selectedRange)}/${calculateInterval(selectedInterval)}`;
 
-  const { response: histryWeatherData, isLoading } = useFetch({
+  const { response: HistoryWeatherData, isLoading } = useFetch({
     endpoint,
     method: 'GET',
     call: 1,
@@ -70,7 +69,7 @@ const HistryWeather = () => {
   };
 
   useEffect(() => {
-    if (!histryWeatherData) return;
+    if (!HistoryWeatherData) return;
 
     const options = {};
 
@@ -91,7 +90,7 @@ const HistryWeather = () => {
 
       let hasData = false;
 
-      histryWeatherData.forEach((device) => {
+      HistoryWeatherData.forEach((device) => {
         const deviceId = Object.keys(device)[0];
         const deviceData = device[deviceId];
 
@@ -204,7 +203,7 @@ const HistryWeather = () => {
     setLightOptions(options.light);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedRange, selectedInterval, currentMode, histryWeatherData]);
+  }, [selectedRange, selectedInterval, currentMode, HistoryWeatherData]);
 
   return (
     <div>
@@ -236,13 +235,13 @@ const HistryWeather = () => {
 
       {isLoading && <Loader />}
 
-      {!isLoading && isDataEmpty(histryWeatherData) && (
+      {!isLoading && isDataEmpty(HistoryWeatherData) && (
         <div className='flex justify-center bg-white dark:bg-secondary-dark-bg rounded-lg p-8'>
           <p className='text-sm dark:text-white justify-center'>{t('There are no history weather data available!')}</p>
         </div>
       )}
 
-      {!isLoading && histryWeatherData && (
+      {!isLoading && HistoryWeatherData && (
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
           {temperatureOptions && (
             <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
@@ -290,4 +289,4 @@ const HistryWeather = () => {
   );
 };
 
-export default HistryWeather;
+export default HistoryWeather;

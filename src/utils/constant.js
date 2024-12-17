@@ -165,9 +165,9 @@ export const errorType = {
     message: 'Curent weather data not found',
   },
 
-  histryWeatherNotFound: {
+  historyWeatherNotFound: {
     code: 13032,
-    message: 'Histry weather data not found',
+    message: 'History weather data not found',
   },
 };
 

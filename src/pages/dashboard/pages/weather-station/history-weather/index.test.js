@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { MemoryRouter } from 'react-router-dom';
-import HistryWeather from './index';
+import HistoryWeather from './index';
 import useFetch from 'hooks/useFetch';
 
 // Mock useFetch dynamically
@@ -81,7 +81,7 @@ describe('History weather component', () => {
 
     render(
       <MemoryRouter>
-        <HistryWeather />
+        <HistoryWeather />
       </MemoryRouter>
     );
 
@@ -104,7 +104,7 @@ describe('History weather component', () => {
 
     render(
       <MemoryRouter>
-        <HistryWeather />
+        <HistoryWeather />
       </MemoryRouter>
     );
 

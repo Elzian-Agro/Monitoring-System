@@ -1,6 +1,6 @@
 import React from 'react';
 import CurrentWeather from './current-weather';
-import HistryWeather from './histry-weather';
+import HistoryWeather from './history-weather';
 
 const WeatherStation = () => {
   return (
@@ -9,7 +9,7 @@ const WeatherStation = () => {
         <CurrentWeather />
       </div>
       <div className='flex flex-col rounded-md border border-gray-100 dark:border-gray-600 px-4 py-2 shadow-md'>
-        <HistryWeather />
+        <HistoryWeather />
       </div>
     </div>
   );
