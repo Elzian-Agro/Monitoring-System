@@ -51,7 +51,9 @@ const HistoryWeather = () => {
   const { t } = useTranslation();
 
   // Update the endpoint dynamically with range and intervel
-  const endpoint = `weather-station/history/${calculateStartDate(selectedRange)}/${calculateInterval(selectedInterval)}`;
+  const endpoint = `weather-station/history/${calculateStartDate(selectedRange)}/${calculateInterval(
+    selectedInterval
+  )}`;
 
   const { response: HistoryWeatherData, isLoading } = useFetch({
     endpoint,
@@ -83,10 +85,9 @@ const HistoryWeather = () => {
 
       let time = new Date(now);
       while (time >= lastDate) {
-        categories.push(time.toISOString());
+        categories.unshift(time.toISOString());
         time = new Date(time.getTime() - interval);
       }
-      categories.reverse();
 
       let hasData = false;
 
