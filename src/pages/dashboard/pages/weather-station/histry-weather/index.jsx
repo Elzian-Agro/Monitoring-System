@@ -212,7 +212,7 @@ const HistryWeather = () => {
         <h2 className='text-md text-gray-600 dark:text-gray-300'>{t('HISTORY WEATHER')}</h2>
 
         {/* Filters */}
-        <div className='flex flex-col xs:flex-row gap-2 xs:justify-end xs:items-center mb-4'>
+        <div className='flex flex-col xs:flex-row gap-2 md:justify-end xs:items-center'>
           <select
             className='border border-gray-300 dark:border-gray-500 rounded-md p-2 focus:outline-none dark:bg-secondary-dark-bg dark:text-white'
             value={selectedRange}
