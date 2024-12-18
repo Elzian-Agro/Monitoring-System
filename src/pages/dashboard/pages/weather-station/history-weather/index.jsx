@@ -41,11 +41,7 @@ const calculateInterval = (interval) => {
 const HistoryWeather = () => {
   const [selectedRange, setSelectedRange] = useState('Last 24 hours');
   const [selectedInterval, setSelectedInterval] = useState('1 min');
-  const [temperatureOptions, setTemperatureOptions] = useState(null);
-  const [humidityOptions, setHumidityOptions] = useState(null);
-  const [rainfallOptions, setRainfallOptions] = useState(null);
-  const [windSpeedOptions, setWindSpeedOptions] = useState(null);
-  const [lightOptions, setLightOptions] = useState(null);
+  const [chartOptions, setChartOptions] = useState({});
 
   const currentMode = useSelector(selectTheme);
   const { t } = useTranslation();
@@ -74,26 +70,24 @@ const HistoryWeather = () => {
     if (!HistoryWeatherData) return;
 
     const options = {};
+    const now = new Date();
+    now.setSeconds(0, 0);
+    const lastDate = new Date(now.getTime() - calculateStartDate(selectedRange));
+    const interval = calculateInterval(selectedInterval);
+
+    const categories = [];
+    let time = new Date(now);
+    while (time >= lastDate) {
+      categories.unshift(time.toISOString());
+      time = new Date(time.getTime() - interval);
+    }
 
     const generateSeriesData = (factor) => {
       const series = {};
-      const now = new Date();
-      now.setSeconds(0, 0);
-      const lastDate = new Date(now.getTime() - calculateStartDate(selectedRange));
-      const interval = calculateInterval(selectedInterval);
-      const categories = [];
-
-      let time = new Date(now);
-      while (time >= lastDate) {
-        categories.unshift(time.toISOString());
-        time = new Date(time.getTime() - interval);
-      }
-
       let hasData = false;
 
       HistoryWeatherData.forEach((device) => {
-        const deviceId = Object.keys(device)[0];
-        const deviceData = device[deviceId];
+        const [deviceId, deviceData] = Object.entries(device)[0];
 
         const seriesData = categories.map((date) => {
           if (Array.isArray(deviceData)) {
@@ -197,11 +191,10 @@ const HistoryWeather = () => {
         };
       });
 
-    setTemperatureOptions(options.temperature);
-    setHumidityOptions(options.humidity);
-    setRainfallOptions(options.rainfall);
-    setWindSpeedOptions(options.wind_speed);
-    setLightOptions(options.light);
+    // Compare if 'options' and 'chartOptions' have different values
+    if (JSON.stringify(options) !== JSON.stringify(chartOptions)) {
+      setChartOptions(options);
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedRange, selectedInterval, currentMode, HistoryWeatherData]);
@@ -244,44 +237,48 @@ const HistoryWeather = () => {
 
       {!isLoading && HistoryWeatherData && (
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
-          {temperatureOptions && (
+          {chartOptions.temperature && (
             <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
               <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
                 {t('Temperature')} (°C)
               </h1>
-              <HighchartsReact highcharts={Highcharts} options={temperatureOptions} />
+              <HighchartsReact highcharts={Highcharts} options={chartOptions.temperature} />
             </div>
           )}
-          {humidityOptions && (
+
+          {chartOptions.humidity && (
             <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
               <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
                 {t('Humidity')} (%)
               </h1>
-              <HighchartsReact highcharts={Highcharts} options={humidityOptions} />
+              <HighchartsReact highcharts={Highcharts} options={chartOptions.humidity} />
             </div>
           )}
-          {windSpeedOptions && (
+
+          {chartOptions.wind_speed && (
             <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
               <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
                 {t('Wind Speed')} (m/s)
               </h1>
-              <HighchartsReact highcharts={Highcharts} options={windSpeedOptions} />
+              <HighchartsReact highcharts={Highcharts} options={chartOptions.wind_speed} />
             </div>
           )}
-          {rainfallOptions && (
+
+          {chartOptions.rainfall && (
             <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
               <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
                 {t('Rainfall')} (mm)
               </h1>
-              <HighchartsReact highcharts={Highcharts} options={rainfallOptions} />
+              <HighchartsReact highcharts={Highcharts} options={chartOptions.rainfall} />
             </div>
           )}
-          {lightOptions && (
+
+          {chartOptions.light && (
             <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
               <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
                 {t('Light')} (lux)
               </h1>
-              <HighchartsReact highcharts={Highcharts} options={lightOptions} />
+              <HighchartsReact highcharts={Highcharts} options={chartOptions.light} />
             </div>
           )}
         </div>
