@@ -27,7 +27,17 @@ export const DeviceFactors = {
     'Electric Conductivity',
     'Soil Temperature',
   ],
-  'Weather Station': ['Temperature', 'Humidity', 'Rainfall', 'Wind Speed', 'Wind Direction', 'Light'],
+  'Weather Station': [
+    'Temperature',
+    'Humidity',
+    'Soil Moisture',
+    'Wind Speed',
+    'Wind Direction',
+    'Instantaneous Wind Speed',
+    'Rainfall',
+    'UV Radiation',
+    'illumination',
+  ],
 };
 
 export const menuMode = {
@@ -39,9 +49,12 @@ export const menuMode = {
 export const weatherStationChartTypes = {
   temperature: 'column',
   humidity: 'line',
-  rainfall: 'column',
+  soil_moisture: 'line',
   wind_speed: 'line',
-  light: 'line',
+  instantaneous_wind_speed: 'line',
+  rainfall: 'column',
+  uv_radiation: 'line',
+  illumination: 'line',
 };
 
 export const errorType = {
