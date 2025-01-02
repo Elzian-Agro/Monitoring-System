@@ -255,12 +255,12 @@ const HistoryWeather = () => {
             </div>
           )}
 
-          {chartOptions.wind_speed && (
+          {chartOptions.soil_moisture && (
             <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
               <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
-                {t('Wind Speed')} (m/s)
+                {t('Soil Moisture')} (%)
               </h1>
-              <HighchartsReact highcharts={Highcharts} options={chartOptions.wind_speed} />
+              <HighchartsReact highcharts={Highcharts} options={chartOptions.soil_moisture} />
             </div>
           )}
 
@@ -273,12 +273,39 @@ const HistoryWeather = () => {
             </div>
           )}
 
-          {chartOptions.light && (
+          {chartOptions.wind_speed && (
             <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
               <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
-                {t('Light')} (lux)
+                {t('Wind Speed')} (m/s)
               </h1>
-              <HighchartsReact highcharts={Highcharts} options={chartOptions.light} />
+              <HighchartsReact highcharts={Highcharts} options={chartOptions.wind_speed} />
+            </div>
+          )}
+
+          {chartOptions.instantaneous_wind_speed && (
+            <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+              <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+                {t('Instantaneous Wind Speed')} (m/s)
+              </h1>
+              <HighchartsReact highcharts={Highcharts} options={chartOptions.instantaneous_wind_speed} />
+            </div>
+          )}
+
+          {chartOptions.uv_radiation && (
+            <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+              <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+                {t('UV Radiation')} (W/m²)
+              </h1>
+              <HighchartsReact highcharts={Highcharts} options={chartOptions.uv_radiation} />
+            </div>
+          )}
+
+          {chartOptions.illumination && (
+            <div className='bg-white dark:bg-secondary-dark-bg rounded-md border border-gray-100 dark:border-gray-600 shadow-md shadow-black/5 p-1 w-full'>
+              <h1 className='text-center text-sm font-medium text-gray-600 dark:text-gray-100 mb-2'>
+                {t('Illumination')} (lux)
+              </h1>
+              <HighchartsReact highcharts={Highcharts} options={chartOptions.illumination} />
             </div>
           )}
         </div>
