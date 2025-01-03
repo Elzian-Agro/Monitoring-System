@@ -23,8 +23,6 @@ const calculateStartDate = (range) => {
 
 const calculateInterval = (interval) => {
   switch (interval) {
-    case '1 min':
-      return 60 * 1000;
     case '5 min':
       return 5 * 60 * 1000;
     case '30 min':
@@ -34,7 +32,7 @@ const calculateInterval = (interval) => {
     case '1 day':
       return 24 * 60 * 60 * 1000;
     default:
-      return 60 * 1000;
+      return 5 * 60 * 1000;
   }
 };
 
@@ -218,7 +216,6 @@ const HistoryWeather = () => {
             className='border border-gray-300 dark:border-gray-500 rounded-md p-2 focus:outline-none dark:bg-secondary-dark-bg dark:text-white'
             value={selectedInterval}
             onChange={(e) => setSelectedInterval(e.target.value)}>
-            <option>1 min</option>
             <option>5 min</option>
             <option>30 min</option>
             <option>1 hour</option>
