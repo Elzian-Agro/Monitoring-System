@@ -126,7 +126,7 @@ const CurrentWeather = () => {
           {selectedWeatherData?.humidity && (
             <div className='flex flex-row rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-sm'>
               <div className='flex items-end'>
-                <img src={HumidityIcon} alt='soil' className='w-auto h-16' />
+                <img src={HumidityIcon} alt='soil' className='w-auto h-[50px]' />
               </div>
 
               <div className='flex flex-col justify-end pl-4'>
@@ -154,6 +154,22 @@ const CurrentWeather = () => {
             </div>
           )}
 
+          {/* Rainfall  */}
+          {selectedWeatherData?.rainfall && (
+            <div className='flex flex-row rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-sm'>
+              <div className='flex items-end'>
+                <img src={RainfallIcon} alt='soil moisture' className='w-auto h-16' />
+              </div>
+
+              <div className='flex flex-col justify-end pl-4'>
+                <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>{t('Rainfall')}</h3>
+                <p className='text-2xl font-semibold' style={{ color: '#538cc6' }}>
+                  {selectedWeatherData.rainfall}mm
+                </p>
+              </div>
+            </div>
+          )}
+
           {/* Wind */}
           {selectedWeatherData?.soil_moisture && (
             <div className='flex flex-row rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-sm'>
@@ -170,22 +186,6 @@ const CurrentWeather = () => {
                     style={{ transform: `rotate(${selectedWeatherData.wind_direction || 0}deg)` }}
                   />
                 </div>
-              </div>
-            </div>
-          )}
-
-          {/* Rainfall  */}
-          {selectedWeatherData?.rainfall && (
-            <div className='flex flex-row rounded-md border border-gray-100 dark:border-gray-600 p-4 shadow-sm'>
-              <div className='flex items-end'>
-                <img src={RainfallIcon} alt='soil moisture' className='w-auto h-16' />
-              </div>
-
-              <div className='flex flex-col justify-end pl-4'>
-                <h3 className='text-sm font-medium text-gray-600 dark:text-gray-100'>{t('Rainfall')}</h3>
-                <p className='text-2xl font-semibold' style={{ color: '#538cc6' }}>
-                  {selectedWeatherData.rainfall}mm
-                </p>
               </div>
             </div>
           )}
